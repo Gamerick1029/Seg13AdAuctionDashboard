@@ -1,0 +1,2 @@
+hi, this is to test that git works and that i know how to use git
+my name rhymes with china
