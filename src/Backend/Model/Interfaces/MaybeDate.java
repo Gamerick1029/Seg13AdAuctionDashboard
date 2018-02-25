@@ -1,6 +1,6 @@
 package Backend.Model.Interfaces;
 
-import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by Benedict on 24/02/2018.
@@ -9,7 +9,7 @@ import java.text.SimpleDateFormat;
  */
 public class MaybeDate
 {
-    private SimpleDateFormat date;
+    private Date date;
     private boolean populated;
 
     public MaybeDate()
@@ -17,7 +17,7 @@ public class MaybeDate
         populated = false;
     }
 
-    public MaybeDate(SimpleDateFormat date)
+    public MaybeDate(Date date)
     {
         this.date = date;
         populated = true;
@@ -26,5 +26,5 @@ public class MaybeDate
     //I feel sure there is a better way to do this using exceptions,
     //But I just want to put this down quickly.
     public boolean hasDate() {return populated;}
-    public SimpleDateFormat getDate() {return date;}
+    public Date getDate() {return date;}
 }

@@ -1,6 +1,6 @@
 package Backend.Model.Interfaces;
 
-import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by Benedict on 24/02/2018.
@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat;
  */
 public interface ImpressionLog
 {
-    SimpleDateFormat getDate();
+    Date getDate();
     String getID();
 
     /*

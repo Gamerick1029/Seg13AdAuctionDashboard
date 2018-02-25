@@ -1,5 +1,5 @@
 package Backend.Model.Interfaces;
-import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by Benedict on 24/02/2018.
@@ -9,7 +9,7 @@ import java.text.SimpleDateFormat;
 
 public interface ClickLog
 {
-    SimpleDateFormat getDate(); //May need to adjust this date format
+    Date getDate(); //May need to adjust this date format
     String getID();    //Confirm if this is actually a UUID.
     float getCost();     //May need a long if we need massive accuracy.
 }

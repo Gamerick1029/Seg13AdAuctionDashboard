@@ -1,6 +1,7 @@
 package Backend.Model.Interfaces;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by Benedict on 24/02/2018.
@@ -13,7 +14,7 @@ public interface ServerLog
     So how do we represent that?
     Entry date is always populated, exit date is a Maybe
      */
-    SimpleDateFormat getEntryDate();
+    Date getEntryDate();
     String getID();
 
     //A sop to the fact that the date may not exist
