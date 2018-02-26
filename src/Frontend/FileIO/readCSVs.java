@@ -7,7 +7,9 @@ import com.opencsv.CSVReader;
 import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -29,7 +31,6 @@ public class readCSVs {
                 Date date = sdf.parse(tokens[0]);
                 String id = tokens[1]; //TODO: See if this can be turned in to a UUID
                 float cost = Float.parseFloat(tokens[2]);
-                System.out.println(date + "//" + id + "//" + cost);
             }
 
         } catch (FileNotFoundException e) {
@@ -46,14 +47,15 @@ public class readCSVs {
 
     //TODO: Make faster. Reading a 500MB file in to memory in one go to then work on it takes a long time and cripples lower end systems
     public static void readImpressions(File file) {
-        try (CSVReader reader = new CSVReader(new FileReader(file))){
-            long start = System.nanoTime();
+        List<TempImpressionHolder> impressions = new ArrayList<>(countLines(file)); //temporary impression store location. We pre-define the size of the array to improve average element insertion speeds
 
-            reader.readNext();
-            System.out.println("Reading lines");
-            List<String[]> lines = reader.readAll();
-            System.out.println("Lines read");
-            for (String[] tokens : lines){
+        try (CSVReader reader = new CSVReader(new FileReader(file))){
+
+            Iterator<String[]> tokenised = reader.iterator(); //Used over reader.readAll due to memory space issues
+
+            tokenised.next(); //Skips the header line
+            while (tokenised.hasNext()){
+                String[] tokens = tokenised.next();
                 Date date = sdf.parse(tokens[0]);
                 String id = tokens[1];//TODO: See if compatible with UUID
                 String ageRange = tokens[2];//TODO: Possibly to be changed in to Enum
@@ -69,10 +71,9 @@ public class readCSVs {
                 String context = tokens[5]; //TODO: possibly Enum
                 float impressionCost = Float.parseFloat(tokens[6]);
 
-
+                impressions.add(new TempImpressionHolder(date, id, ageRange, gender, income, context, impressionCost));
             }
 
-            System.out.println(System.nanoTime() - start);
         } catch (FileNotFoundException e) {
             System.err.println("Could not find file with name: " + file);
             e.printStackTrace();
@@ -89,6 +90,33 @@ public class readCSVs {
         //TODO: Read server logs
     }
 
+    // Modified function based on https://stackoverflow.com/a/14411695
+    private static int countLines(File file) {
+        System.out.println("Counting lines");
+        try (InputStream is = new BufferedInputStream(new FileInputStream(file))){
+            byte[] c = new byte[1024];
+            int count = 0;
+            int readChars = 0;
+            boolean endsWithoutNewLine = false;
+            while ((readChars = is.read(c)) != -1) {
+                for (int i = 0; i < readChars; ++i) {
+                    if (c[i] == '\n')
+                        ++count;
+                }
+                endsWithoutNewLine = (c[readChars - 1] != '\n');
+            }
+            if(endsWithoutNewLine) {
+                ++count;
+            }
+            System.out.println("Counted " + count + " lines");
+            return count;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
+        return 0;
+    }
 
 }
