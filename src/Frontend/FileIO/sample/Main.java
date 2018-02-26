@@ -14,7 +14,7 @@ public class Main extends Application {
     public static String loadDataScreenID = "loadDataScreen";
     public static String loadDataScreen = "LoadDataScreen.fxml";
     public static String viewDataScreenID = "viewDataScreen";
-    public static String viewDataScreen = "LoadDataScreen.fxml";
+    public static String viewDataScreen = "ViewDataScreen.fxml";
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -29,6 +29,7 @@ public class Main extends Application {
         root.getChildren().addAll(mainContainer);
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
+        primaryStage.setTitle("Ad Auction Dashboard");
         primaryStage.show();
     }
 
