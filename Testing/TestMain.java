@@ -6,7 +6,9 @@ public class TestMain {
 
     public static void main(String[] args){
         File clickLog = new File("TestCSVs/click_log.csv");
-        readCSVs.readClicks(clickLog);
+        File impressionLog = new File("TestCSVs/impression_log.csv");
+        //readCSVs.readClicks(clickLog);
+        readCSVs.readImpressions(impressionLog);
     }
 
 }

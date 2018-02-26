@@ -1,5 +1,7 @@
 package Frontend.FileIO;
 
+import Backend.Model.Interfaces.CustomRange;
+import Backend.Model.Interfaces.Gender;
 import com.opencsv.CSVReader;
 
 import java.io.*;
@@ -42,8 +44,45 @@ public class readCSVs {
         }
     }
 
-    public static void readImpressions(String fileName) {
-        //TODO: Read impressions
+    //TODO: Make faster. Reading a 500MB file in to memory in one go to then work on it takes a long time and cripples lower end systems
+    public static void readImpressions(File file) {
+        try (CSVReader reader = new CSVReader(new FileReader(file))){
+            long start = System.nanoTime();
+
+            reader.readNext();
+            System.out.println("Reading lines");
+            List<String[]> lines = reader.readAll();
+            System.out.println("Lines read");
+            for (String[] tokens : lines){
+                Date date = sdf.parse(tokens[0]);
+                String id = tokens[1];//TODO: See if compatible with UUID
+                String ageRange = tokens[2];//TODO: Possibly to be changed in to Enum
+
+                Gender gender;
+                switch(tokens[3]) {
+                    case "Male": gender = Gender.MALE; break;
+                    case "Female": gender = Gender.FEMALE; break;
+                    default: gender = Gender.OTHER;
+                }
+
+                String income = tokens[4]; //TODO: possibly Enum
+                String context = tokens[5]; //TODO: possibly Enum
+                float impressionCost = Float.parseFloat(tokens[6]);
+
+
+            }
+
+            System.out.println(System.nanoTime() - start);
+        } catch (FileNotFoundException e) {
+            System.err.println("Could not find file with name: " + file);
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Error when CSVparsing file with name: " + file);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            System.err.println("Error parsing DateTime from CSV in file with name: " + file);
+        }
     }
 
     public static void readServerLogs(String fileName) {
