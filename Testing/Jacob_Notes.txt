@@ -1,0 +1,4 @@
+Compare performance of CSVParser Iterator vs parser.readAll
+Normalise functions in readCSVs so they all use the same format
+Date=0 rather than MaybeDate?
+Iterator performance greater than readall
