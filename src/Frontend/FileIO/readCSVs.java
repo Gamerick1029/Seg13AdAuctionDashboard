@@ -1,6 +1,5 @@
 package Frontend.FileIO;
 
-import Backend.Model.Interfaces.CustomRange;
 import Backend.Model.Interfaces.Gender;
 import com.opencsv.CSVReader;
 
@@ -24,13 +23,15 @@ public class readCSVs {
     public static void readClicks(File file) {
 
         try (CSVReader reader = new CSVReader(new FileReader(file))){
-            reader.readNext();
-            List<String[]> lines = reader.readAll();
+            Iterator<String[]> lines = reader.iterator();
+            lines.next();
 
-            for (String[] tokens : lines){
+            while (lines.hasNext()){
+                String[] tokens = lines.next();
                 Date date = sdf.parse(tokens[0]);
-                String id = tokens[1]; //TODO: See if this can be turned in to a UUID
+                String id = tokens[1];
                 float cost = Float.parseFloat(tokens[2]);
+                //TODO: put above values in to model
             }
 
         } catch (FileNotFoundException e) {
@@ -45,9 +46,9 @@ public class readCSVs {
         }
     }
 
-    //TODO: Make faster. Reading a 500MB file in to memory in one go to then work on it takes a long time and cripples lower end systems
+    //TODO: Optimise if possible.
     public static void readImpressions(File file) {
-        List<TempImpressionHolder> impressions = new ArrayList<>(countLines(file)); //temporary impression store location. We pre-define the size of the array to improve average element insertion speeds
+        List<TempImpressionHolder> impressions = new ArrayList<>(countLines(file)); //temporary impression store location. We pre-define the size of the array to improve average insertion speeds
 
         try (CSVReader reader = new CSVReader(new FileReader(file))){
 
@@ -86,8 +87,31 @@ public class readCSVs {
         }
     }
 
-    public static void readServerLogs(String fileName) {
-        //TODO: Read server logs
+    public static void readServerLogs(File file) {
+        try (CSVReader reader = new CSVReader(new FileReader(file))){
+            Iterator<String[]> lines = reader.iterator();
+            lines.next();
+
+            while (lines.hasNext()){
+                String[] tokens = lines.next();
+                Date dateStart = sdf.parse(tokens[0]);
+                String id = tokens[1];
+                Date dateEnd = (tokens[2].equals("n/a") ? new Date(0) : sdf.parse(tokens[2])); //If date is n/a then set date to 0, else parse date
+                int pagesViewed = Integer.parseInt(tokens[3]);
+                boolean converted = (tokens[4].equals("Yes") ? true : false);
+                //TODO: put above values in to model
+            }
+
+        } catch (FileNotFoundException e) {
+            System.err.println("Could not find file with name: " + file);
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Error when CSVparsing file with name: " + file);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            System.err.println("Error parsing DateTime from CSV in file with name: " + file);
+        }
     }
 
     // Modified function based on https://stackoverflow.com/a/14411695
@@ -96,7 +120,7 @@ public class readCSVs {
         try (InputStream is = new BufferedInputStream(new FileInputStream(file))){
             byte[] c = new byte[1024];
             int count = 0;
-            int readChars = 0;
+            int readChars;
             boolean endsWithoutNewLine = false;
             while ((readChars = is.read(c)) != -1) {
                 for (int i = 0; i < readChars; ++i) {
