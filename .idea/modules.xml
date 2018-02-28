@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/BensPersonalTests/BensPersonalTests.iml" filepath="$PROJECT_DIR$/BensPersonalTests/BensPersonalTests.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/Seg13AdAuctionDashboard.iml" filepath="$PROJECT_DIR$/.idea/Seg13AdAuctionDashboard.iml" />
     </modules>
   </component>

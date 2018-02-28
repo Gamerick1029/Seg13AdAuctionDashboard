@@ -15,21 +15,28 @@ public class ClickData implements ClickLog
     private String id;
     private float cost;
 
+    public ClickData(Date date, String id, float cost)
+    {
+        this.date = date;
+        this.id = id;
+        this.cost = cost;
+    }
+
     @Override
     public Date getDate()
     {
-        return null;
+        return date;
     }
 
     @Override
     public String getID()
     {
-        return null;
+        return id;
     }
 
     @Override
     public float getCost()
     {
-        return 0;
+        return cost;
     }
 }
