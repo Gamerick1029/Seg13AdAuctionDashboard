@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Text?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="522.0" prefWidth="698.0" style="-fx-background-color: #6C6978;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Frontend.FileIO.sample.ViewDataController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="522.0" prefWidth="698.0" style="-fx-background-color: #6C6978;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Frontend.sample.ViewDataController">
    <children>
       <Text fill="#ebebeb" layoutX="49.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="➤ Total Number of Impressions">
          <font>

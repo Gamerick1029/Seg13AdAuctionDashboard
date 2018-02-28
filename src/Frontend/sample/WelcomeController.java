@@ -1,4 +1,4 @@
-package Frontend.FileIO.sample;
+package Frontend.sample;
 
 
 import javafx.event.ActionEvent;
