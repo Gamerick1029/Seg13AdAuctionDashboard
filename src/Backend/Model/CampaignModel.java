@@ -15,11 +15,11 @@ import java.util.List;
  */
 public class CampaignModel implements DataModel
 {
-    private List<ClickLog> ClickData;
-    private List<ImpressionLog> ImpressionData;
-    private List<ServerLog> ServerData;
+    private List<ClickLog> clickData;
+    private List<ImpressionLog> impressionData;
+    private List<ServerLog> serverData;
 
-    public CampaignModel(File ClickFile, File ImpressionFile, File ServerFile)
+    public CampaignModel(File clickFile, File impressionFile, File serverFile)
     {
 
     }
@@ -31,31 +31,31 @@ public class CampaignModel implements DataModel
     @Override
     public List<ClickLog> getClickData()
     {
-        return null;
+        return clickData;
     }
 
     @Override
     public List<ImpressionLog> getImpressionData()
     {
-        return null;
+        return impressionData;
     }
 
     @Override
     public List<ServerLog> getServerData()
     {
-        return null;
+        return serverData;
     }
 
     @Override
     public int getImpressionsNumber()
     {
-        return 0;
+        return impressionData.size();
     }
 
     @Override
     public int getClicksNumber()
     {
-        return 0;
+        return clickData.size();
     }
 
     @Override
