@@ -13,13 +13,13 @@
             <Font size="40.0" />
          </font>
       </Text>
-      <TextField editable="false" layoutX="90.0" layoutY="185.0" onMouseClicked="#loadImpressionsLogField" prefHeight="38.0" prefWidth="404.0" text="Load Impressions Log..." />
+      <TextField layoutX="90.0" layoutY="185.0" onMouseClicked="#loadImpressionsLogField" prefHeight="38.0" prefWidth="404.0" text="Load Impressions Log..." />
       <Button layoutX="519.0" layoutY="185.0" mnemonicParsing="false" onAction="#loadImpressionsLogButton" prefHeight="38.0" prefWidth="95.0" text="Browse" />
-      <TextField editable="false" layoutX="90.0" layoutY="310.0" onMouseClicked="#loadServerLogField" prefHeight="38.0" prefWidth="404.0" text="Load Server Log..." />
-      <TextField editable="false" layoutX="90.0" layoutY="245.0" onMouseClicked="#loadClickLogField" prefHeight="38.0" prefWidth="404.0" text="Load Click Log..." />
+      <TextField layoutX="90.0" layoutY="310.0" onMouseClicked="#loadServerLogField" prefHeight="38.0" prefWidth="404.0" text="Load Server Log..." />
+      <TextField layoutX="90.0" layoutY="245.0" onMouseClicked="#loadClickLogField" prefHeight="38.0" prefWidth="404.0" text="Load Click Log..." />
       <Button layoutX="519.0" layoutY="245.0" mnemonicParsing="false" onAction="#loadClickLogButton" prefHeight="38.0" prefWidth="95.0" text="Browse" />
       <Button layoutX="519.0" layoutY="310.0" mnemonicParsing="false" onAction="#loadServerLogButton" prefHeight="38.0" prefWidth="95.0" text="Browse" />
-      <Button layoutX="199.0" layoutY="432.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="143.0" text="Reset" />
-      <Button layoutX="423.0" layoutY="432.0" mnemonicParsing="false" onAction="#goToViewDataScreen" prefHeight="47.0" prefWidth="143.0" text="OK" />
+      <Button layoutX="199.0" layoutY="432.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="143.0" style="-fx-background-color: #BCBAC2;" text="Reset" />
+      <Button layoutX="423.0" layoutY="432.0" mnemonicParsing="false" onAction="#goToViewDataScreen" prefHeight="47.0" prefWidth="143.0" style="-fx-background-color: #BCBAC2;" text="OK" />
    </children>
 </Pane>

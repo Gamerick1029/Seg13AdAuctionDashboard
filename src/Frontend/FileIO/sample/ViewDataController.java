@@ -1,13 +1,14 @@
 package Frontend.FileIO.sample;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.stage.Stage;
 
+
 public class ViewDataController implements ScreenInterface {
 
     private ScreensController myController;
-    @FXML private javafx.scene.control.Button closeButton;
 
     @Override
     public void setScreenParent(ScreensController parent) {
@@ -21,7 +22,11 @@ public class ViewDataController implements ScreenInterface {
 
     @FXML
     private void closeApplication(ActionEvent event){
-        Stage stage = (Stage) closeButton.getScene().getWindow();
+        Stage stage = (Stage) myController.getScene().getWindow();
+        stage.setOnCloseRequest(t -> {
+            Platform.exit();
+            System.exit(0);
+        });
         stage.close();
     }
 }
