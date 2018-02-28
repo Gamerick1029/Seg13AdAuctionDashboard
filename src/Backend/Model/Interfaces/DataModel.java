@@ -1,6 +1,7 @@
 package Backend.Model.Interfaces;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /*
     DataModel holds the data that must be viewed by the UI
@@ -10,17 +11,17 @@ public interface DataModel {
     /*
         Returns an ArrayList of all the Click Logs
      */
-    ArrayList<ClickLog> getClickData();
+    List<ClickLog> getClickData();
 
     /*
         Returns an ArrayList of all the Impression Logs
     */
-    ArrayList<ImpressionLog> getImpressionData();
+    List<ImpressionLog> getImpressionData();
 
     /*
         Returns an ArrayList of all the Server Logs
      */
-    ArrayList<ServerLog> getServerData();
+    List<ServerLog> getServerData();
 
     /*
       Number of Impressions generated during a campaign

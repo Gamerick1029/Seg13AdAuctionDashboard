@@ -18,7 +18,7 @@ public interface ServerLog
     String getID();
 
     //A sop to the fact that the date may not exist
-    MaybeDate getExitDate();
+    Date getExitDate();
 
     /*
     In the short campaign the number of pages viewed is never more than 20.
