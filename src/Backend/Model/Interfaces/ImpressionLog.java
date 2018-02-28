@@ -14,7 +14,7 @@ public interface ImpressionLog
     /*
     Just the basic idea of having a range as an element of this
      */
-    CustomRange getAgeRange();
+    String getAgeRange();
 
     /*
     External enum declared for gender, just in case
