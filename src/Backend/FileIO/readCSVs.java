@@ -136,7 +136,6 @@ public class readCSVs {
 
     // Modified function based on https://stackoverflow.com/a/14411695
     private static int countLines(File file) {
-        System.out.println("Counting lines");
         try (InputStream is = new BufferedInputStream(new FileInputStream(file))){
             byte[] c = new byte[1024];
             int count = 0;
@@ -152,7 +151,6 @@ public class readCSVs {
             if(endsWithoutNewLine) {
                 ++count;
             }
-            System.out.println("Counted " + count + " lines");
             return count;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
