@@ -6,6 +6,9 @@ import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 
+import javax.swing.*;
+import java.io.File;
+
 public class LoadDataController implements ScreenInterface {
 
     private ScreensController myController;
@@ -25,7 +28,22 @@ public class LoadDataController implements ScreenInterface {
         FileChooser chooser = new FileChooser();
         chooser.setTitle("Select Impressions Log");
         Node node = (Node) event.getSource();
-        chooser.showOpenDialog(node.getScene().getWindow());
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CSV Files", "*.csv");
+        chooser.getExtensionFilters().add(extFilter);
+
+        File file = chooser.showOpenDialog(node.getScene().getWindow());
+
+        if (file != null) {
+            String fileName = file.getName();
+            String fileExtension = fileName.substring(fileName.indexOf(".") + 1, file.getName().length());
+            System.out.println("File extension: " + fileExtension);
+            String requiredExtension = "csv";
+            if (!requiredExtension.equals(fileExtension)) {
+                JOptionPane.showMessageDialog(null, "Selected file is not in the required format! " +
+                        "Please select a CSV file!", "Warning", 1);
+                chooser.showOpenDialog(node.getScene().getWindow());
+            }
+        }
     }
 
     @FXML
