@@ -1,6 +1,9 @@
 package Backend.FileIO;
 
+import Backend.Model.ClickData;
+import Backend.Model.ImpressionData;
 import Backend.Model.Interfaces.Gender;
+import Backend.Model.ServerData;
 import com.opencsv.CSVReader;
 
 import java.io.*;
@@ -20,7 +23,8 @@ public class readCSVs {
 
     private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss"); //DateTime format as specified in the CSV files
 
-    public static void readClicks(File file) {
+    public static List<ClickData> readClicks(File file) {
+        List<ClickData> clicks = new ArrayList<>(countLines(file));
 
         try (CSVReader reader = new CSVReader(new FileReader(file))){
             Iterator<String[]> lines = reader.iterator();
@@ -31,9 +35,11 @@ public class readCSVs {
                 Date date = sdf.parse(tokens[0]);
                 String id = tokens[1];
                 float cost = Float.parseFloat(tokens[2]);
-                //TODO: put above values in to model
+
+                clicks.add(new ClickData(date, id, cost));
             }
 
+            return clicks;
         } catch (FileNotFoundException e) {
             System.err.println("Could not find file with name: " + file);
             e.printStackTrace();
@@ -44,19 +50,22 @@ public class readCSVs {
             e.printStackTrace();
             System.err.println("Error parsing DateTime from CSV in file with name: " + file);
         }
+
+        return null;
+
     }
 
     //TODO: Optimise if possible.
-    public static void readImpressions(File file) {
-        List<TempImpressionHolder> impressions = new ArrayList<>(countLines(file)); //temporary impression store location. We pre-define the size of the array to improve average insertion speeds
+    public static List<ImpressionData> readImpressions(File file) {
+        List<ImpressionData> impressions = new ArrayList<>(countLines(file)); //We pre-define the size of the array to improve average insertion speeds
 
         try (CSVReader reader = new CSVReader(new FileReader(file))){
 
-            Iterator<String[]> tokenised = reader.iterator(); //Used over reader.readAll due to memory space issues
+            Iterator<String[]> lines = reader.iterator(); //Used over reader.readAll due to memory space issues
 
-            tokenised.next(); //Skips the header line
-            while (tokenised.hasNext()){
-                String[] tokens = tokenised.next();
+            lines.next(); //Skips the header line
+            while (lines.hasNext()){
+                String[] tokens = lines.next();
                 Date date = sdf.parse(tokens[0]);
                 String id = tokens[1];//TODO: See if compatible with UUID
                 String ageRange = tokens[2];//TODO: Possibly to be changed in to Enum
@@ -72,8 +81,10 @@ public class readCSVs {
                 String context = tokens[5]; //TODO: possibly Enum
                 float impressionCost = Float.parseFloat(tokens[6]);
 
-                impressions.add(new TempImpressionHolder(date, id, ageRange, gender, income, context, impressionCost));
+                impressions.add(new ImpressionData(date, id, ageRange, gender, income, context, impressionCost));
             }
+
+            return impressions;
 
         } catch (FileNotFoundException e) {
             System.err.println("Could not find file with name: " + file);
@@ -85,9 +96,14 @@ public class readCSVs {
             e.printStackTrace();
             System.err.println("Error parsing DateTime from CSV in file with name: " + file);
         }
+
+        return null;
+
     }
 
-    public static void readServerLogs(File file) {
+    public static List<ServerData> readServerLogs(File file) {
+        List<ServerData> serverLogs = new ArrayList<>(countLines(file));
+
         try (CSVReader reader = new CSVReader(new FileReader(file))){
             Iterator<String[]> lines = reader.iterator();
             lines.next();
@@ -99,9 +115,11 @@ public class readCSVs {
                 Date dateEnd = (tokens[2].equals("n/a") ? new Date(0) : sdf.parse(tokens[2])); //If date is n/a then set date to 0, else parse date
                 int pagesViewed = Integer.parseInt(tokens[3]);
                 boolean converted = (tokens[4].equals("Yes") ? true : false);
-                //TODO: put above values in to model
+
+                serverLogs.add(new ServerData(dateStart, id, dateEnd, pagesViewed, converted));
             }
 
+            return serverLogs;
         } catch (FileNotFoundException e) {
             System.err.println("Could not find file with name: " + file);
             e.printStackTrace();
@@ -112,6 +130,8 @@ public class readCSVs {
             e.printStackTrace();
             System.err.println("Error parsing DateTime from CSV in file with name: " + file);
         }
+
+        return null;
     }
 
     // Modified function based on https://stackoverflow.com/a/14411695
