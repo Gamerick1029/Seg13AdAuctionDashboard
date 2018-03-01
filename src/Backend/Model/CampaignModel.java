@@ -1,5 +1,6 @@
 package Backend.Model;
 
+import Backend.FileIO.readCSVs;
 import Backend.Model.Interfaces.ClickLog;
 import Backend.Model.Interfaces.DataModel;
 import Backend.Model.Interfaces.ImpressionLog;
@@ -21,7 +22,9 @@ public class CampaignModel implements DataModel {
     private List<ServerLog> serverData;
 
     public CampaignModel(File clickFile, File impressionFile, File serverFile) {
-
+        clickData = readCSVs.readClicks(clickFile);
+        impressionData = readCSVs.readImpressions(impressionFile);
+        serverData = readCSVs.readServerLogs(serverFile);
     }
 
     /*
