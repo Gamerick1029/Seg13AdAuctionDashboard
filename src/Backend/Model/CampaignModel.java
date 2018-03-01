@@ -13,15 +13,27 @@ import java.util.List;
  * This models stores all the data of the campaign as
  * internal lists
  */
-public class CampaignModel implements DataModel
-{
+public class CampaignModel implements DataModel {
+
     private List<ClickLog> clickData;
     private List<ImpressionLog> impressionData;
     private List<ServerLog> serverData;
 
-    public CampaignModel(File clickFile, File impressionFile, File serverFile)
-    {
+    public CampaignModel(File clickFile, File impressionFile, File serverFile) {
+    }
 
+
+    //Population commands
+    public void addClick(ClickLog cl) {
+        clickData.add(cl);
+    }
+
+    public void addImpression(ImpressionLog il) {
+        impressionData.add(il);
+    }
+
+    public void addServer(ServerLog sl) {
+        serverData.add(sl);
     }
 
 
@@ -29,86 +41,72 @@ public class CampaignModel implements DataModel
     TODO: Fill these in with proper mathematical functions
      */
     @Override
-    public List<ClickLog> getClickData()
-    {
+    public List<ClickLog> getClickData() {
         return clickData;
     }
 
     @Override
-    public List<ImpressionLog> getImpressionData()
-    {
+    public List<ImpressionLog> getImpressionData() {
         return impressionData;
     }
 
     @Override
-    public List<ServerLog> getServerData()
-    {
+    public List<ServerLog> getServerData() {
         return serverData;
     }
 
     @Override
-    public int getImpressionsNumber()
-    {
+    public int getImpressionsNumber() {
         return impressionData.size();
     }
 
     @Override
-    public int getClicksNumber()
-    {
+    public int getClicksNumber() {
         return clickData.size();
     }
 
     @Override
-    public int getUniquesNumber()
-    {
+    public int getUniquesNumber() {
         return 0;
     }
 
     @Override
-    public int getBouncesNumber()
-    {
+    public int getBouncesNumber() {
         return 0;
     }
 
     @Override
-    public int getConversionsNumber()
-    {
+    public int getConversionsNumber() {
         return 0;
     }
 
     @Override
-    public float getTotalCost()
-    {
+    public float getTotalCost() {
         return 0;
     }
 
     @Override
-    public float getCTR()
-    {
+    public float getCTR() {
         return 0;
     }
 
     @Override
-    public float getCPA()
-    {
+    public float getCPA() {
         return 0;
     }
 
     @Override
-    public float getCPC()
-    {
+    public float getCPC() {
         return 0;
     }
 
     @Override
-    public float getCPM()
-    {
+    public float getCPM() {
         return 0;
     }
 
     @Override
-    public float getBounceRate()
-    {
+    public float getBounceRate() {
         return 0;
     }
 }
