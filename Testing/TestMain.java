@@ -2,6 +2,7 @@ import Backend.FileIO.readCSVs;
 import Backend.Model.ClickData;
 import Backend.Model.ImpressionData;
 import Backend.Model.Interfaces.ServerLog;
+import Backend.Model.ServerData;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class TestMain {
 
         TestMain testMain = new TestMain();
         testMain.testCampaign(twoWeekClicks, twoWeekImpressions, twoWeekServer, "2 weeks");
-        testMain.testCampaign(twoMonthClicks, twoMonthImpressions, twoMonthServer, "2 months");
+//        testMain.testCampaign(twoMonthClicks, twoMonthImpressions, twoMonthServer, "2 months");
 
 
     }
@@ -32,7 +33,11 @@ public class TestMain {
 
         ArrayList<ClickData> clicks = (ArrayList)readCSVs.readClicks(clickLog);
         ArrayList<ImpressionData> impressions = (ArrayList)readCSVs.readImpressions(impressionLog);
-        ArrayList<ServerLog> serverLogs = (ArrayList)readCSVs.readServerLogs(serverLog);
+        ArrayList<ServerData> serverLogs = (ArrayList)readCSVs.readServerLogs(serverLog);
+
+        System.out.println(clicks.get(0).getID());
+        System.out.println(impressions.get(0).getAgeRange());
+        System.out.println(serverLogs.get(0).getConverted());
 
         System.out.println(campaignName + " campaign time to load (seconds): " + (System.nanoTime() - start)/1000000000.0);
 

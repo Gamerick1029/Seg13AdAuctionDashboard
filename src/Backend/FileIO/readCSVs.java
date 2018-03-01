@@ -2,7 +2,10 @@ package Backend.FileIO;
 
 import Backend.Model.ClickData;
 import Backend.Model.ImpressionData;
+import Backend.Model.Interfaces.ClickLog;
 import Backend.Model.Interfaces.Gender;
+import Backend.Model.Interfaces.ImpressionLog;
+import Backend.Model.Interfaces.ServerLog;
 import Backend.Model.ServerData;
 import com.opencsv.CSVReader;
 
@@ -23,8 +26,12 @@ public class readCSVs {
 
     private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss"); //DateTime format as specified in the CSV files
 
-    public static List<ClickData> readClicks(File file) {
-        List<ClickData> clicks = new ArrayList<>(countLines(file));
+    public static float fileProgress = 0;
+
+    public static List<ClickLog> readClicks(File file) {
+        int fileLength = countLines(file);
+
+        List<ClickLog> clicks = new ArrayList<>(fileLength);
 
         try (CSVReader reader = new CSVReader(new FileReader(file))){
             Iterator<String[]> lines = reader.iterator();
@@ -56,8 +63,8 @@ public class readCSVs {
     }
 
     //TODO: Optimise if possible.
-    public static List<ImpressionData> readImpressions(File file) {
-        List<ImpressionData> impressions = new ArrayList<>(countLines(file)); //We pre-define the size of the array to improve average insertion speeds
+    public static List<ImpressionLog> readImpressions(File file) {
+        List<ImpressionLog> impressions = new ArrayList<>(countLines(file)); //We pre-define the size of the array to improve average insertion speeds
 
         try (CSVReader reader = new CSVReader(new FileReader(file))){
 
@@ -101,8 +108,8 @@ public class readCSVs {
 
     }
 
-    public static List<ServerData> readServerLogs(File file) {
-        List<ServerData> serverLogs = new ArrayList<>(countLines(file));
+    public static List<ServerLog> readServerLogs(File file) {
+        List<ServerLog> serverLogs = new ArrayList<>(countLines(file));
 
         try (CSVReader reader = new CSVReader(new FileReader(file))){
             Iterator<String[]> lines = reader.iterator();
