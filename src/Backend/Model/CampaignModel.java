@@ -15,17 +15,14 @@ import java.util.List;
  * This models stores all the data of the campaign as
  * internal lists
  */
-public class CampaignModel implements DataModel
-{
+public class CampaignModel implements DataModel {
     private List<ClickLog> clickData;
     private List<ImpressionLog> impressionData;
     private List<ServerLog> serverData;
 
-    public CampaignModel(File clickFile, File impressionFile, File serverFile)
-    {
+    public CampaignModel(File clickFile, File impressionFile, File serverFile) {
 
     }
-
 
     /*
     TODO: Fill these in with proper mathematical functions
@@ -35,8 +32,7 @@ public class CampaignModel implements DataModel
          Return the List of ClickLogs of a Campaign
      */
     @Override
-    public List<ClickLog> getClickData()
-    {
+    public List<ClickLog> getClickData() {
         return clickData;
     }
 
@@ -44,8 +40,7 @@ public class CampaignModel implements DataModel
          Return the List of ImpressionLogs of a Campaign
     */
     @Override
-    public List<ImpressionLog> getImpressionData()
-    {
+    public List<ImpressionLog> getImpressionData() {
         return impressionData;
     }
 
@@ -53,8 +48,7 @@ public class CampaignModel implements DataModel
          Return the List of ServerLogs of a Campaign
     */
     @Override
-    public List<ServerLog> getServerData()
-    {
+    public List<ServerLog> getServerData() {
         return serverData;
     }
 
@@ -62,8 +56,7 @@ public class CampaignModel implements DataModel
         Returns the number of all Impressions of a Campaign
      */
     @Override
-    public int getImpressionsNumber()
-    {
+    public int getImpressionsNumber() {
         return impressionData.size();
     }
 
@@ -71,8 +64,7 @@ public class CampaignModel implements DataModel
         Returns the number of all Clicks of a Campaign
      */
     @Override
-    public int getClicksNumber()
-    {
+    public int getClicksNumber() {
         return clickData.size();
     }
 
@@ -80,8 +72,7 @@ public class CampaignModel implements DataModel
         Returns the number of all Uniques of a Campaign
      */
     @Override
-    public int getUniquesNumber()
-    {
+    public int getUniquesNumber() {
         return getUsersFromClickLog().size();
     }
 
@@ -89,11 +80,10 @@ public class CampaignModel implements DataModel
         Returns the number of all Bounces of a Campaign
      */
     @Override
-    public int getBouncesNumber()
-    {
+    public int getBouncesNumber() {
         int bouncesNumber = 0;
-        for(ServerLog sd : serverData){
-            if(sd.getPagesViewed() == 1 || ( sd.getExitDate() != null ) || ((sd.getExitDate().getTime() - sd.getEntryDate().getTime() <= 120000)) ){
+        for (ServerLog sd : serverData) {
+            if (sd.getPagesViewed() == 1 || (sd.getExitDate() != null) || ((sd.getExitDate().getTime() - sd.getEntryDate().getTime() <= 120000))) {
                 bouncesNumber++;
             }
         }
@@ -104,11 +94,10 @@ public class CampaignModel implements DataModel
         Returns the number of Conversions of a Campaign
     */
     @Override
-    public int getConversionsNumber()
-    {
+    public int getConversionsNumber() {
         int conversionsNumber = 0;
-        for(ServerLog sd : serverData)
-            if(sd.getConverted()){
+        for (ServerLog sd : serverData)
+            if (sd.getConverted()) {
                 conversionsNumber++;
             }
 
@@ -119,9 +108,9 @@ public class CampaignModel implements DataModel
         Returns the Total Cost of a Campaign
     */
     @Override
-    public float getTotalCost()
-    {   float totalCost = 0;
-        for(ClickLog cl : clickData){
+    public float getTotalCost() {
+        float totalCost = 0;
+        for (ClickLog cl : clickData) {
             totalCost += cl.getCost();
         }
         return totalCost;
@@ -131,9 +120,8 @@ public class CampaignModel implements DataModel
         Returns the average number of clicks per impression.
      */
     @Override
-    public float getCTR()
-    {
-        return getClicksNumber()/getImpressionsNumber();
+    public float getCTR() {
+        return getClicksNumber() / getImpressionsNumber();
     }
 
     /*
@@ -141,9 +129,8 @@ public class CampaignModel implements DataModel
          for each acquisition (i.e., conversion).
      */
     @Override
-    public float getCPA()
-    {
-        return getTotalCost()/getConversionsNumber();
+    public float getCPA() {
+        return getTotalCost() / getConversionsNumber();
     }
 
     /*
@@ -151,9 +138,8 @@ public class CampaignModel implements DataModel
          click.
      */
     @Override
-    public float getCPC()
-    {
-        return getTotalCost()/getClicksNumber();
+    public float getCPC() {
+        return getTotalCost() / getClicksNumber();
     }
 
     /*
@@ -163,9 +149,8 @@ public class CampaignModel implements DataModel
          to calculate the total cost of an ad campaign.
      */
     @Override
-    public float getCPM()
-    {
-        return ((getTotalCost()/getImpressionsNumber())*1000);
+    public float getCPM() {
+        return ((getTotalCost() / getImpressionsNumber()) * 1000);
     }
 
     /*
@@ -179,11 +164,11 @@ public class CampaignModel implements DataModel
     /*
         Returns a Set of the Unique Users from the ClickData.
      */
-    private Set<String> getUsersFromClickLog(){
+    private Set<String> getUsersFromClickLog() {
         Set<String> userSet = new HashSet<String>();
-        for(ClickLog cl : clickData){
+        for (ClickLog cl : clickData) {
             String clUser = cl.getID();
-            if(!userSet.contains(clUser)){
+            if (!userSet.contains(clUser)) {
                 userSet.add(clUser);
             }
         }
