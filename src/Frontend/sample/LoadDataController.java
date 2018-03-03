@@ -7,7 +7,6 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 
 import javax.swing.*;
 import java.io.File;
@@ -27,7 +26,7 @@ public class LoadDataController implements ScreenInterface {
     private File impressions;
     private File clicks;
     private File server;
-    private HashMap<File, String> files = new HashMap<>();
+    private HashMap<String, File> files = new HashMap<>();
 
     @Override
     public void setScreenParent(ScreensController parent) {
@@ -52,7 +51,7 @@ public class LoadDataController implements ScreenInterface {
         Node node = (Node) event.getSource();
         File file = loadData(node, title);
         if (file != null) {
-            if (files.containsValue(file.getName())) {
+            if (files.containsKey(file.getName())) {
                 impressionsLogField.setText(file.getName());
                 impressions = file;
             }
@@ -65,7 +64,7 @@ public class LoadDataController implements ScreenInterface {
         Node node = (Node) event.getSource();
         File file = loadData(node, title);
         if (file != null) {
-            if (files.containsValue(file.getName())) {
+            if (files.containsKey(file.getName())) {
                 impressionsLogField.setText(file.getName());
                 impressions = file;
             }
@@ -78,7 +77,7 @@ public class LoadDataController implements ScreenInterface {
         Node node = (Node) event.getSource();
         File file = loadData(node, title);
         if (file != null) {
-            if (files.containsValue(file.getName())) {
+            if (files.containsKey(file.getName())) {
                 clickLogField.setText(file.getName());
                 clicks = file;
             }
@@ -91,7 +90,7 @@ public class LoadDataController implements ScreenInterface {
         Node node = (Node) event.getSource();
         File file = loadData(node, title);
         if (file != null) {
-            if (files.containsValue(file.getName())) {
+            if (files.containsKey(file.getName())) {
                 clickLogField.setText(file.getName());
                 clicks = file;
             }
@@ -104,7 +103,7 @@ public class LoadDataController implements ScreenInterface {
         Node node = (Node) event.getSource();
         File file = loadData(node, title);
         if (file != null) {
-            if (files.containsValue(file.getName())) {
+            if (files.containsKey(file.getName())) {
                 serverLogField.setText(file.getName());
                 server = file;
             }
@@ -117,7 +116,7 @@ public class LoadDataController implements ScreenInterface {
         Node node = (Node) event.getSource();
         File file = loadData(node, title);
         if (file != null) {
-            if (files.containsValue(file.getName())) {
+            if (files.containsKey(file.getName())) {
                 serverLogField.setText(file.getName());
                 server = file;
             }
@@ -133,8 +132,8 @@ public class LoadDataController implements ScreenInterface {
         File file = chooser.showOpenDialog(node.getScene().getWindow());
         if (file != null) {
             fileName = file.getName();
-            if (!files.containsValue(fileName)) {
-                files.put(file, fileName);
+            if (!files.containsKey(fileName)) {
+                files.put(fileName, file);
                 String fileExtension = fileName.substring(fileName.indexOf(".") + 1, file.getName().length());
                 System.out.println("File extension: " + fileExtension);
                 String requiredExtension = "csv";
@@ -143,12 +142,11 @@ public class LoadDataController implements ScreenInterface {
                             "Please select a CSV file!", "Warning", 1);
                     chooser.showOpenDialog(node.getScene().getWindow());
                 }
-                System.out.println(files.values());
+                System.out.println(files.keySet());
                 return file;
             } else {
                 JOptionPane.showMessageDialog(null, "This file has already been loaded!"
                         , "Warning", 1);
-                //files . remove selected file
                 return null;
             }
         }
