@@ -30,6 +30,7 @@ public class ScreensController extends StackPane {
     public ScreensController(Stage stage) {
         super();
         this.stage = stage;
+        stage.setResizable(false);
     }
 
     //Add the screen to the collection
@@ -70,8 +71,14 @@ public class ScreensController extends StackPane {
             // by Rayna
             if(name == "viewDataScreen") {
             	//stage.setMaximized(true);
-            	stage.setHeight(650);
+            	stage.setHeight(630);
             	stage.setWidth(774);
+            }
+            
+            if(name == "loadDataScreen") {
+            	//stage.setMaximized(true);
+            	stage.setHeight(528);
+            	stage.setWidth(755);
             }
 
             if (!getChildren().isEmpty()) {    //if there is more than one screen
