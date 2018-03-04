@@ -65,13 +65,13 @@ public class ScreensController extends StackPane {
     public boolean setScreen(final String name) {
         if (screens.get(name) != null) {   //screen loaded
             final DoubleProperty opacity = opacityProperty();
-            
+
             // If the new screen is the View Data screen, make the window full screen
             // by Rayna
             if(name == "viewDataScreen") {
             	stage.setMaximized(true);
             }
-            
+
             if (!getChildren().isEmpty()) {    //if there is more than one screen
                 Timeline fade = new Timeline(
                         new KeyFrame(Duration.ZERO, new KeyValue(opacity, 1.0)),
