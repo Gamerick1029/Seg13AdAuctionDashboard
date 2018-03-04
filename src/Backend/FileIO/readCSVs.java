@@ -34,19 +34,19 @@ public class readCSVs {
         List<ClickLog> clicks = new ArrayList<>(fileLength);
 
         CSVReader reader = new CSVReader(new FileReader(file));
-            Iterator<String[]> lines = reader.iterator();
-            lines.next();
+        Iterator<String[]> lines = reader.iterator();
+        lines.next();
 
-            while (lines.hasNext()){
-                String[] tokens = lines.next();
-                Date date = sdf.parse(tokens[0]);
-                String id = tokens[1];
-                float cost = Float.parseFloat(tokens[2]);
+        while (lines.hasNext()){
+            String[] tokens = lines.next();
+            Date date = sdf.parse(tokens[0]);
+            String id = tokens[1];
+            float cost = Float.parseFloat(tokens[2]);
 
-                clicks.add(new ClickData(date, id, cost));
-            }
+            clicks.add(new ClickData(date, id, cost));
+        }
 
-            return clicks;
+        return clicks;
 
     }
 
@@ -58,30 +58,30 @@ public class readCSVs {
 
         CSVReader reader = new CSVReader(new FileReader(file));
 
-            Iterator<String[]> lines = reader.iterator(); //Used over reader.readAll due to memory space issues
+        Iterator<String[]> lines = reader.iterator(); //Used over reader.readAll due to memory space issues
 
-            lines.next(); //Skips the header line
-            while (lines.hasNext()){
-                String[] tokens = lines.next();
-                Date date = sdf.parse(tokens[0]);
-                String id = tokens[1];//TODO: See if compatible with UUID
-                String ageRange = tokens[2];//TODO: Possibly to be changed in to Enum
+        lines.next(); //Skips the header line
+        while (lines.hasNext()){
+            String[] tokens = lines.next();
+            Date date = sdf.parse(tokens[0]);
+            String id = tokens[1];//TODO: See if compatible with UUID
+            String ageRange = tokens[2];//TODO: Possibly to be changed in to Enum
 
-                Gender gender;
-                switch(tokens[3]) {
-                    case "Male": gender = Gender.MALE; break;
-                    case "Female": gender = Gender.FEMALE; break;
-                    default: gender = Gender.OTHER;
-                }
-
-                String income = tokens[4]; //TODO: possibly Enum
-                String context = tokens[5]; //TODO: possibly Enum
-                float impressionCost = Float.parseFloat(tokens[6]);
-
-                impressions.add(new ImpressionData(date, id, ageRange, gender, income, context, impressionCost));
+            Gender gender;
+            switch(tokens[3]) {
+                case "Male": gender = Gender.MALE; break;
+                case "Female": gender = Gender.FEMALE; break;
+                default: gender = Gender.OTHER;
             }
 
-            return impressions;
+            String income = tokens[4]; //TODO: possibly Enum
+            String context = tokens[5]; //TODO: possibly Enum
+            float impressionCost = Float.parseFloat(tokens[6]);
+
+            impressions.add(new ImpressionData(date, id, ageRange, gender, income, context, impressionCost));
+        }
+
+        return impressions;
 
     }
 
@@ -91,21 +91,21 @@ public class readCSVs {
         List<ServerLog> serverLogs = new ArrayList<>(fileLength);
 
         CSVReader reader = new CSVReader(new FileReader(file));
-            Iterator<String[]> lines = reader.iterator();
-            lines.next();
+        Iterator<String[]> lines = reader.iterator();
+        lines.next();
 
-            while (lines.hasNext()){
-                String[] tokens = lines.next();
-                Date dateStart = sdf.parse(tokens[0]);
-                String id = tokens[1];
-                Date dateEnd = (tokens[2].equals("n/a") ? new Date(0) : sdf.parse(tokens[2])); //If date is n/a then set date to 0, else parse date
-                int pagesViewed = Integer.parseInt(tokens[3]);
-                boolean converted = tokens[4].equals("Yes");
+        while (lines.hasNext()){
+            String[] tokens = lines.next();
+            Date dateStart = sdf.parse(tokens[0]);
+            String id = tokens[1];
+            Date dateEnd = (tokens[2].equals("n/a") ? new Date(0) : sdf.parse(tokens[2])); //If date is n/a then set date to 0, else parse date
+            int pagesViewed = Integer.parseInt(tokens[3]);
+            boolean converted = tokens[4].equals("Yes");
 
-                serverLogs.add(new ServerData(dateStart, id, dateEnd, pagesViewed, converted));
-            }
+            serverLogs.add(new ServerData(dateStart, id, dateEnd, pagesViewed, converted));
+        }
 
-            return serverLogs;
+        return serverLogs;
     }
 
     // Modified function based on https://stackoverflow.com/a/14411695

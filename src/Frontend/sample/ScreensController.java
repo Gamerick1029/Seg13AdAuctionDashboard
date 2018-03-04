@@ -1,9 +1,5 @@
 package Frontend.sample;
 
-import java.util.HashMap;
-import java.util.List;
-
-import Backend.Model.CampaignModel;
 import Backend.Model.Interfaces.DataModel;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -17,6 +13,8 @@ import javafx.scene.Parent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
+import java.util.HashMap;
 
 public class ScreensController extends StackPane {
 
