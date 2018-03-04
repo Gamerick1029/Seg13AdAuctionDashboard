@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -48,6 +49,7 @@ public class LoadDataController implements ScreenInterface {
             DataModel dataModel = new CampaignModel(clicks, impressions, server);
             myController.setDataModel(dataModel);
             myController.setScreen(Main.viewDataScreenID);
+            myController.getDataFieldPopulator().populateFields();
         }
     }
 
