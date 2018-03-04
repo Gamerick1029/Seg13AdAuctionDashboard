@@ -3,13 +3,20 @@ package Frontend.sample;
 import Backend.Model.CampaignModel;
 import Backend.Model.Interfaces.DataModel;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import javax.swing.*;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.text.ParseException;
 import java.util.HashMap;
 
 public class LoadDataController implements ScreenInterface {
@@ -34,29 +41,16 @@ public class LoadDataController implements ScreenInterface {
     }
 
     @FXML
-    private void goToViewDataScreen(ActionEvent event) {
+    private void goToViewDataScreen(ActionEvent event) throws FileNotFoundException, ParseException {
         if (files.size() < 3) {
             JOptionPane.showMessageDialog(null, "You need to select 3 files in order to load a campaign!"
                     , "Warning", 1);
         } else {
-
-            DataModel dataModel = null;
-
-
-            try {
-                dataModel = new CampaignModel(clicks, impressions, server);
-                myController.setDataModel(dataModel);
-                myController.setScreen(Main.viewDataScreenID);
-
-            } catch (Exception e) {
-
-                JOptionPane.showMessageDialog(null, e.getMessage()
-                        , "Warning", 1);
-            }
-
-
+            DataModel dataModel = new CampaignModel(clicks, impressions, server);
+            myController.setDataModel(dataModel);
+            myController.setScreen(Main.viewDataScreenID);
+            myController.getDataFieldPopulator().populateFields();
         }
-
     }
 
     @FXML

@@ -1,15 +1,9 @@
 package Frontend.sample;
 
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.stage.Window;
-import javafx.stage.WindowEvent;
 
 
 public class ViewDataController implements ScreenInterface {
@@ -36,22 +30,12 @@ public class ViewDataController implements ScreenInterface {
     @Override
     public void setScreenParent(ScreensController parent) {
         this.myController = parent;
+        myController.setDataFieldPopulator(new DataFieldPopulator(impressions, clicks, bounces, conversions, cost, clickRate, costAquisition, costConversion));
     }
 
     @FXML
     private void goToLoadDataScreen(ActionEvent event) {
         myController.setScreen(Main.loadDataScreenID);
-    }
-
-    public void populateScreen() {
-        impressions.setText(String.valueOf(myController.getDataModel().getImpressionsNumber()));
-        clicks.setText(String.valueOf(myController.getDataModel().getClicksNumber()));
-        bounces.setText(String.valueOf(myController.getDataModel().getBouncesNumber()));
-        conversions.setText(String.valueOf(myController.getDataModel().getConversionsNumber()));
-        cost.setText(String.valueOf(myController.getDataModel().getTotalCost()));
-        clickRate.setText(String.valueOf(myController.getDataModel().getCTR()));
-        costAquisition.setText(String.valueOf(myController.getDataModel().getCPA()));
-        costConversion.setText(String.valueOf(myController.getDataModel().getCPC()));
     }
 
     @FXML

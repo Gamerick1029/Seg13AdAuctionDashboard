@@ -20,6 +20,8 @@ import javafx.util.Duration;
 
 public class ScreensController extends StackPane {
 
+    private DataFieldPopulator dataFieldPopulator;
+
     //connects String ID of Screen to Node
     private HashMap<String, Node> screens = new HashMap<>();
 
@@ -53,7 +55,7 @@ public class ScreensController extends StackPane {
             addScreen(name, loadScreen);
             return true;
         } catch (Exception e) {
-            System.out.println(e.getStackTrace());
+            e.printStackTrace();
             return false;
         }
     }
@@ -65,13 +67,13 @@ public class ScreensController extends StackPane {
     public boolean setScreen(final String name) {
         if (screens.get(name) != null) {   //screen loaded
             final DoubleProperty opacity = opacityProperty();
-            
+
             // If the new screen is the View Data screen, make the window full screen
             // by Rayna
             if(name == "viewDataScreen") {
             	stage.setMaximized(true);
             }
-            
+
             if (!getChildren().isEmpty()) {    //if there is more than one screen
                 Timeline fade = new Timeline(
                         new KeyFrame(Duration.ZERO, new KeyValue(opacity, 1.0)),
@@ -116,10 +118,19 @@ public class ScreensController extends StackPane {
 
     public void setDataModel(DataModel dataModel) {
         this.dataModel = dataModel;
+        dataFieldPopulator.setDataModel(dataModel);
     }
 
     public DataModel getDataModel() {
         return dataModel;
     }
 
+
+    public DataFieldPopulator getDataFieldPopulator() {
+        return dataFieldPopulator;
+    }
+
+    public void setDataFieldPopulator(DataFieldPopulator dataFieldPopulator) {
+        this.dataFieldPopulator = dataFieldPopulator;
+    }
 }
