@@ -32,4 +32,7 @@ public class ViewDataController implements ScreenInterface {
         });
         stage.close();
     }
+
+
+
 }
