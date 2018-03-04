@@ -11,6 +11,7 @@ import javafx.stage.FileChooser;
 import javax.swing.*;
 import java.io.File;
 import java.util.HashMap;
+import java.util.Map;
 
 public class LoadDataController implements ScreenInterface {
 
@@ -39,10 +40,7 @@ public class LoadDataController implements ScreenInterface {
             JOptionPane.showMessageDialog(null, "You need to select 3 files in order to load a campaign!"
                     , "Warning", 1);
         } else {
-
             DataModel dataModel = null;
-
-
             try {
                 dataModel = new CampaignModel(clicks, impressions, server);
                 myController.setDataModel(dataModel);
@@ -50,14 +48,10 @@ public class LoadDataController implements ScreenInterface {
                 myController.getDataFieldPopulator().populateFields();
 
             } catch (Exception e) {
-
                 JOptionPane.showMessageDialog(null, e.getMessage()
                         , "Warning", 1);
             }
-
-
         }
-
     }
 
     @FXML
@@ -167,4 +161,14 @@ public class LoadDataController implements ScreenInterface {
         }
         return null;
     }
+
+    public void resetFields() {
+        for (Map.Entry<String, File> fileEntry : files.entrySet()) {
+            files.remove(fileEntry.getKey(), fileEntry.getValue());
+        }
+        impressionsLogField.setText("Load Impressions Log...");
+        clickLogField.setText("Load Click Log...");
+        serverLogField.setText("Load Server Log...");
+    }
+
 }
