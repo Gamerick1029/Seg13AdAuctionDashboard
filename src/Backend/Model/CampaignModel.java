@@ -10,8 +10,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.text.ParseException;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Benedict on 28/02/2018.
@@ -23,16 +23,39 @@ public class CampaignModel implements DataModel {
     private List<ImpressionLog> impressionData;
     private List<ServerLog> serverData;
 
-    public CampaignModel(File clickFile, File impressionFile, File serverFile) {
-        try {
-            clickData = readCSVs.readClicks(clickFile);
+    public CampaignModel(File clickFile, File impressionFile, File serverFile) throws Exception {
+    try{
             impressionData = readCSVs.readImpressions(impressionFile);
-            serverData = readCSVs.readServerLogs(serverFile);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+    } catch (ArrayIndexOutOfBoundsException | NumberFormatException | ParseException e) {
+
+        throw new  Exception("Invalid Impressiong Log file format!");
+    }
+            catch (FileNotFoundException e){
+                throw new  Exception("Impressiong Log file not found!");
+
+    }
+    try{
+        clickData = readCSVs.readClicks(clickFile);
+    } catch (ArrayIndexOutOfBoundsException | NumberFormatException | ParseException e) {
+
+        throw new  Exception("Invalid Clicks Log file format!");
+    }
+    catch (FileNotFoundException e){
+        throw new  Exception("ClickLog file not found!");
+
+    }
+
+    try{
+        serverData = readCSVs.readServerLogs(serverFile);
+    } catch (ArrayIndexOutOfBoundsException | NumberFormatException | ParseException e) {
+
+        throw new  Exception("Invalid Server Log file format!");
+    }
+    catch (FileNotFoundException e){
+        throw new  Exception("Server Log file not found!");
+
+    }
+
 
     }
 

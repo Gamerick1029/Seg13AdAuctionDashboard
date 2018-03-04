@@ -28,7 +28,7 @@ public class readCSVs {
 
     public static float fileProgress = 0;
 
-    public static List<ClickLog> readClicks(File file) throws FileNotFoundException, ParseException {
+    public static List<ClickLog> readClicks(File file) throws FileNotFoundException, ParseException, NumberFormatException, ArrayIndexOutOfBoundsException {
         int fileLength = countLines(file);
 
         List<ClickLog> clicks = new ArrayList<>(fileLength);
@@ -51,7 +51,7 @@ public class readCSVs {
     }
 
     //TODO: Optimise if possible.
-    public static List<ImpressionLog> readImpressions(File file) throws FileNotFoundException, ParseException {
+    public static List<ImpressionLog> readImpressions(File file) throws FileNotFoundException, ParseException, NumberFormatException, ArrayIndexOutOfBoundsException {
         int fileLength = countLines(file);
 
         List<ImpressionLog> impressions = new ArrayList<>(fileLength); //We pre-define the size of the array to improve average insertion speeds
@@ -85,7 +85,7 @@ public class readCSVs {
 
     }
 
-    public static List<ServerLog> readServerLogs(File file) throws FileNotFoundException, ParseException {
+    public static List<ServerLog> readServerLogs(File file) throws FileNotFoundException, ParseException, NumberFormatException, ArrayIndexOutOfBoundsException {
         int fileLength = countLines(file);
 
         List<ServerLog> serverLogs = new ArrayList<>(fileLength);
