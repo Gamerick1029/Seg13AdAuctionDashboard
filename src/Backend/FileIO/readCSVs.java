@@ -56,7 +56,7 @@ public class readCSVs {
 
         List<ImpressionLog> impressions = new ArrayList<>(fileLength); //We pre-define the size of the array to improve average insertion speeds
 
-        CSVReader reader = new CSVReader(new FileReader(file))
+        CSVReader reader = new CSVReader(new FileReader(file));
 
             Iterator<String[]> lines = reader.iterator(); //Used over reader.readAll due to memory space issues
 
