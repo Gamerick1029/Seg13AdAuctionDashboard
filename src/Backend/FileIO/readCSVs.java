@@ -28,12 +28,12 @@ public class readCSVs {
 
     public static float fileProgress = 0;
 
-    public static List<ClickLog> readClicks(File file) {
+    public static List<ClickLog> readClicks(File file) throws FileNotFoundException, ParseException {
         int fileLength = countLines(file);
 
         List<ClickLog> clicks = new ArrayList<>(fileLength);
 
-        try (CSVReader reader = new CSVReader(new FileReader(file))){
+        CSVReader reader = new CSVReader(new FileReader(file));
             Iterator<String[]> lines = reader.iterator();
             lines.next();
 
@@ -47,26 +47,16 @@ public class readCSVs {
             }
 
             return clicks;
-        } catch (FileNotFoundException e) {
-            System.err.println("Could not find file with name: " + file);
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.err.println("Error when CSVparsing file with name: " + file);
-        } catch (ParseException e) {
-            e.printStackTrace();
-            System.err.println("Error parsing DateTime from CSV in file with name: " + file);
-        }
-
-        return null;
 
     }
 
     //TODO: Optimise if possible.
-    public static List<ImpressionLog> readImpressions(File file) {
-        List<ImpressionLog> impressions = new ArrayList<>(countLines(file)); //We pre-define the size of the array to improve average insertion speeds
+    public static List<ImpressionLog> readImpressions(File file) throws FileNotFoundException, ParseException {
+        int fileLength = countLines(file);
 
-        try (CSVReader reader = new CSVReader(new FileReader(file))){
+        List<ImpressionLog> impressions = new ArrayList<>(fileLength); //We pre-define the size of the array to improve average insertion speeds
+
+        CSVReader reader = new CSVReader(new FileReader(file));
 
             Iterator<String[]> lines = reader.iterator(); //Used over reader.readAll due to memory space issues
 
@@ -93,25 +83,14 @@ public class readCSVs {
 
             return impressions;
 
-        } catch (FileNotFoundException e) {
-            System.err.println("Could not find file with name: " + file);
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.err.println("Error when CSVparsing file with name: " + file);
-        } catch (ParseException e) {
-            e.printStackTrace();
-            System.err.println("Error parsing DateTime from CSV in file with name: " + file);
-        }
-
-        return null;
-
     }
 
-    public static List<ServerLog> readServerLogs(File file) {
-        List<ServerLog> serverLogs = new ArrayList<>(countLines(file));
+    public static List<ServerLog> readServerLogs(File file) throws FileNotFoundException, ParseException {
+        int fileLength = countLines(file);
 
-        try (CSVReader reader = new CSVReader(new FileReader(file))){
+        List<ServerLog> serverLogs = new ArrayList<>(fileLength);
+
+        CSVReader reader = new CSVReader(new FileReader(file));
             Iterator<String[]> lines = reader.iterator();
             lines.next();
 
@@ -127,18 +106,6 @@ public class readCSVs {
             }
 
             return serverLogs;
-        } catch (FileNotFoundException e) {
-            System.err.println("Could not find file with name: " + file);
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.err.println("Error when CSVparsing file with name: " + file);
-        } catch (ParseException e) {
-            e.printStackTrace();
-            System.err.println("Error parsing DateTime from CSV in file with name: " + file);
-        }
-
-        return null;
     }
 
     // Modified function based on https://stackoverflow.com/a/14411695

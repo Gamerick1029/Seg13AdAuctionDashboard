@@ -124,7 +124,7 @@ public class CampaignModel implements DataModel {
      */
     @Override
     public float getCTR() {
-        return (float) (getClicksNumber() / getImpressionsNumber());
+        return (float) getClicksNumber() / (float) getImpressionsNumber();
     }
 
     /*
@@ -133,7 +133,7 @@ public class CampaignModel implements DataModel {
      */
     @Override
     public float getCPA() {
-        return (float) (getTotalCost() / getConversionsNumber());
+        return getTotalCost() / (float) getConversionsNumber();
     }
 
     /*
@@ -142,7 +142,7 @@ public class CampaignModel implements DataModel {
      */
     @Override
     public float getCPC() {
-        return (float) (getTotalCost() / getClicksNumber());
+        return getTotalCost() / (float) getClicksNumber();
     }
 
     /*
@@ -153,7 +153,7 @@ public class CampaignModel implements DataModel {
      */
     @Override
     public float getCPM() {
-        return (float) (((getTotalCost() / getImpressionsNumber()) * 1000));
+        return (getTotalCost() / (float) getImpressionsNumber()) * 1000;
     }
 
     /*
