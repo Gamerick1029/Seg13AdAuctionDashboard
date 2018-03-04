@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="528.0" prefWidth="755.0" style="-fx-background-color: #6C6978;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Frontend.sample.ViewDataController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onDragDetected="#populateScreen" onKeyPressed="#populateScreen" onMouseDragEntered="#populateScreen" onMouseMoved="#populateScreen" prefHeight="528.0" prefWidth="755.0" style="-fx-background-color: #6C6978;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Frontend.sample.ViewDataController">
    <children>
       <Text fill="#f2f2f2" layoutX="84.0" layoutY="50.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="➤ Total Number of Impressions">
          <font>
@@ -83,13 +83,13 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Text>
-      <TextField layoutX="433.0" layoutY="73.0" prefHeight="35.0" prefWidth="163.0" />
-      <TextField layoutX="433.0" layoutY="132.0" prefHeight="35.0" prefWidth="163.0" />
-      <TextField layoutX="433.0" layoutY="184.0" prefHeight="35.0" prefWidth="163.0" />
-      <TextField layoutX="433.0" layoutY="231.0" prefHeight="35.0" prefWidth="163.0" />
-      <TextField layoutX="433.0" layoutY="282.0" prefHeight="35.0" prefWidth="163.0" />
-      <TextField layoutX="433.0" layoutY="336.0" prefHeight="35.0" prefWidth="163.0" />
-      <TextField layoutX="433.0" layoutY="388.0" prefHeight="35.0" prefWidth="163.0" />
-      <TextField layoutX="433.0" layoutY="25.0" prefHeight="35.0" prefWidth="163.0" />
+      <TextField fx:id="clicks" layoutX="433.0" layoutY="73.0" prefHeight="35.0" prefWidth="163.0" />
+      <TextField fx:id="bounces" layoutX="433.0" layoutY="132.0" prefHeight="35.0" prefWidth="163.0" />
+      <TextField fx:id="conversions" layoutX="433.0" layoutY="184.0" prefHeight="35.0" prefWidth="163.0" />
+      <TextField fx:id="cost" layoutX="433.0" layoutY="231.0" prefHeight="35.0" prefWidth="163.0" />
+      <TextField fx:id="clickRate" layoutX="433.0" layoutY="282.0" prefHeight="35.0" prefWidth="163.0" />
+      <TextField fx:id="costAquisition" layoutX="433.0" layoutY="336.0" prefHeight="35.0" prefWidth="163.0" />
+      <TextField fx:id="costConversion" layoutX="433.0" layoutY="388.0" prefHeight="35.0" prefWidth="163.0" />
+      <TextField fx:id="impressions" layoutX="433.0" layoutY="25.0" prefHeight="35.0" prefWidth="163.0" />
    </children>
 </AnchorPane>

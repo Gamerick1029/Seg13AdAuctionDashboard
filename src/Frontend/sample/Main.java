@@ -14,6 +14,7 @@ public class Main extends Application {
     public static String viewDataScreenID = "viewDataScreen";
     public static String viewDataScreen = "ViewDataScreen.fxml";
 
+
     @Override
     public void start(Stage primaryStage) throws Exception{
         ScreensController mainContainer = new ScreensController();

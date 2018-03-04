@@ -1,6 +1,10 @@
 package Frontend.sample;
 
 import java.util.HashMap;
+import java.util.List;
+
+import Backend.Model.CampaignModel;
+import Backend.Model.Interfaces.DataModel;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -17,6 +21,7 @@ public class ScreensController extends StackPane {
 
     //connects String ID of Screen to Node
     private HashMap<String, Node> screens = new HashMap<>();
+    private DataModel dataModel;
 
     public ScreensController() {
         super();
@@ -43,7 +48,7 @@ public class ScreensController extends StackPane {
             addScreen(name, loadScreen);
             return true;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println(e.getStackTrace());
             return false;
         }
     }
@@ -64,6 +69,7 @@ public class ScreensController extends StackPane {
                             public void handle(ActionEvent t) {
                                 getChildren().remove(0);                    //remove the displayed screen
                                 getChildren().add(0, screens.get(name));     //add the screen
+
                                 Timeline fadeIn = new Timeline(
                                         new KeyFrame(Duration.ZERO, new KeyValue(opacity, 0.0)),
                                         new KeyFrame(new Duration(200), new KeyValue(opacity, 1.0)));
@@ -96,4 +102,13 @@ public class ScreensController extends StackPane {
             return true;
         }
     }
+
+    public void setDataModel(DataModel dataModel) {
+        this.dataModel = dataModel;
+    }
+
+    public DataModel getDataModel() {
+        return dataModel;
+    }
+
 }

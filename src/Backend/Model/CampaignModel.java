@@ -124,7 +124,7 @@ public class CampaignModel implements DataModel {
      */
     @Override
     public float getCTR() {
-        return getClicksNumber() / getImpressionsNumber();
+        return (float) getClicksNumber() / (float) getImpressionsNumber();
     }
 
     /*
@@ -133,7 +133,7 @@ public class CampaignModel implements DataModel {
      */
     @Override
     public float getCPA() {
-        return getTotalCost() / getConversionsNumber();
+        return getTotalCost() / (float) getConversionsNumber();
     }
 
     /*
@@ -142,7 +142,7 @@ public class CampaignModel implements DataModel {
      */
     @Override
     public float getCPC() {
-        return getTotalCost() / getClicksNumber();
+        return getTotalCost() / (float) getClicksNumber();
     }
 
     /*
@@ -153,7 +153,7 @@ public class CampaignModel implements DataModel {
      */
     @Override
     public float getCPM() {
-        return ((getTotalCost() / getImpressionsNumber()) * 1000);
+        return (getTotalCost() / (float) getImpressionsNumber()) * 1000;
     }
 
     /*
@@ -161,7 +161,7 @@ public class CampaignModel implements DataModel {
      */
     @Override
     public float getBounceRate() {
-        return getBouncesNumber() / getClicksNumber();
+        return (float) (getBouncesNumber() / getClicksNumber());
     }
 
     /*
@@ -170,10 +170,7 @@ public class CampaignModel implements DataModel {
     private Set<String> getUsersFromClickLog() {
         Set<String> userSet = new HashSet<String>();
         for (ClickLog cl : clickData) {
-            String clUser = cl.getID();
-            if (!userSet.contains(clUser)) {
-                userSet.add(clUser);
-            }
+                userSet.add(cl.getID());
         }
         return userSet;
     }
