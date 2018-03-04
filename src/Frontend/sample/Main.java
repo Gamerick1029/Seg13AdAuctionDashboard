@@ -16,7 +16,11 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        ScreensController mainContainer = new ScreensController();
+    	
+    	// Passing a reference to the stage - needed so that the screen can be fullscreened depending on the scene
+    	// - Rayna
+        ScreensController mainContainer = new ScreensController(primaryStage);
+        
         mainContainer.loadScreen(Main.welcomeScreenID, Main.welcomeScreen);
         mainContainer.loadScreen(Main.loadDataScreenID, Main.loadDataScreen);
         mainContainer.loadScreen(Main.viewDataScreenID, Main.viewDataScreen);
