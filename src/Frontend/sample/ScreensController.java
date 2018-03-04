@@ -24,6 +24,7 @@ public class ScreensController extends StackPane {
     private HashMap<String, Node> screens = new HashMap<>();
 
     private Stage stage;
+
     private DataModel dataModel;
 
     public ScreensController(Stage stage) {

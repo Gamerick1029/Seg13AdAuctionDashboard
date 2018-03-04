@@ -5,11 +5,13 @@ import Backend.Model.Interfaces.ServerLog;
 import Backend.Model.ServerData;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 public class TestMain {
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws FileNotFoundException, ParseException {
         File twoWeekClicks = new File("TestCSVs/2_week_campaign/click_log.csv");
         File twoWeekImpressions = new File("TestCSVs/2_week_campaign/impression_log.csv");
         File twoWeekServer = new File("TestCSVs/2_week_campaign/server_log.csv");
@@ -25,7 +27,7 @@ public class TestMain {
 
     }
 
-    public void testCampaign(File clickLog, File impressionLog, File serverLog, String campaignName){
+    public void testCampaign(File clickLog, File impressionLog, File serverLog, String campaignName) throws FileNotFoundException, ParseException {
 
         System.out.println("Starting test: " + campaignName);
 

@@ -100,7 +100,7 @@ public class readCSVs {
                 String id = tokens[1];
                 Date dateEnd = (tokens[2].equals("n/a") ? new Date(0) : sdf.parse(tokens[2])); //If date is n/a then set date to 0, else parse date
                 int pagesViewed = Integer.parseInt(tokens[3]);
-                boolean converted = (tokens[4].equals("Yes") ? true : false);
+                boolean converted = tokens[4].equals("Yes");
 
                 serverLogs.add(new ServerData(dateStart, id, dateEnd, pagesViewed, converted));
             }
