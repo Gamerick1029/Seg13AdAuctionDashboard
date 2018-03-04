@@ -41,11 +41,11 @@
          <font>
             <Font name="Ubuntu" size="14.0" />
          </font></Button>
-      <Button layoutX="199.0" layoutY="432.0" mnemonicParsing="false" onAction="#resetFields" prefHeight="47.0" prefWidth="143.0" style="-fx-background-color: #BCBAC2;" text="Reset">
+      <Button layoutX="199.0" layoutY="397.0" mnemonicParsing="false" onAction="#resetFields" prefHeight="47.0" prefWidth="143.0" style="-fx-background-color: #BCBAC2;" text="Reset">
          <font>
             <Font name="Ubuntu" size="19.0" />
          </font></Button>
-      <Button layoutX="423.0" layoutY="432.0" mnemonicParsing="false" onAction="#goToViewDataScreen" prefHeight="47.0" prefWidth="143.0" style="-fx-background-color: #BCBAC2;" text="OK">
+      <Button layoutX="423.0" layoutY="397.0" mnemonicParsing="false" onAction="#goToViewDataScreen" prefHeight="47.0" prefWidth="143.0" style="-fx-background-color: #BCBAC2;" text="OK">
          <font>
             <Font name="Ubuntu" size="19.0" />
          </font></Button>
