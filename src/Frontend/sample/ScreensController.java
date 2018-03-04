@@ -69,7 +69,9 @@ public class ScreensController extends StackPane {
             // If the new screen is the View Data screen, make the window full screen
             // by Rayna
             if(name == "viewDataScreen") {
-            	stage.setMaximized(true);
+            	//stage.setMaximized(true);
+            	stage.setHeight(650);
+            	stage.setWidth(774);
             }
 
             if (!getChildren().isEmpty()) {    //if there is more than one screen
