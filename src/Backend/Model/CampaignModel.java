@@ -7,6 +7,8 @@ import Backend.Model.Interfaces.ImpressionLog;
 import Backend.Model.Interfaces.ServerLog;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.text.ParseException;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.List;
@@ -22,9 +24,16 @@ public class CampaignModel implements DataModel {
     private List<ServerLog> serverData;
 
     public CampaignModel(File clickFile, File impressionFile, File serverFile) {
-        clickData = readCSVs.readClicks(clickFile);
-        impressionData = readCSVs.readImpressions(impressionFile);
-        serverData = readCSVs.readServerLogs(serverFile);
+        try {
+            clickData = readCSVs.readClicks(clickFile);
+            impressionData = readCSVs.readImpressions(impressionFile);
+            serverData = readCSVs.readServerLogs(serverFile);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
     }
 
     /*

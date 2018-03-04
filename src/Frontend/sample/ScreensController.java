@@ -22,15 +22,12 @@ public class ScreensController extends StackPane {
 
     //connects String ID of Screen to Node
     private HashMap<String, Node> screens = new HashMap<>();
-<<<<<<< HEAD
     private Stage stage;
     
-    public ScreensController(Stage stage) {
-=======
+
     private DataModel dataModel;
 
-    public ScreensController() {
->>>>>>> branch 'master' of https://github.com/Gamerick1029/Seg13AdAuctionDashboard
+    public ScreensController(Stage stage) {
         super();
         this.stage = stage;
     }
