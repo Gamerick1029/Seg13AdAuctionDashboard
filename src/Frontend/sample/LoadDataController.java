@@ -27,6 +27,9 @@ public class LoadDataController implements ScreenInterface {
     private File impressions;
     private File clicks;
     private File server;
+    private File currentImpressions;
+    private File currentClick;
+    private File currentServer;
     private HashMap<String, File> files = new HashMap<>();
 
     @Override
@@ -60,7 +63,13 @@ public class LoadDataController implements ScreenInterface {
         Node node = (Node) event.getSource();
         File file = loadData(node, title);
         if (file != null) {
-            if (files.containsKey(file.getName())) {
+            if (currentImpressions == null) {
+                currentImpressions = file;
+                impressionsLogField.setText(file.getName());
+                impressions = file;
+            } else {
+                files.remove(currentImpressions.getName());
+                currentImpressions = file;
                 impressionsLogField.setText(file.getName());
                 impressions = file;
             }
@@ -73,7 +82,13 @@ public class LoadDataController implements ScreenInterface {
         Node node = (Node) event.getSource();
         File file = loadData(node, title);
         if (file != null) {
-            if (files.containsKey(file.getName())) {
+            if (currentImpressions == null) {
+                currentImpressions = file;
+                impressionsLogField.setText(file.getName());
+                impressions = file;
+            } else {
+                files.remove(currentImpressions.getName());
+                currentImpressions = file;
                 impressionsLogField.setText(file.getName());
                 impressions = file;
             }
@@ -86,7 +101,13 @@ public class LoadDataController implements ScreenInterface {
         Node node = (Node) event.getSource();
         File file = loadData(node, title);
         if (file != null) {
-            if (files.containsKey(file.getName())) {
+            if (currentClick == null) {
+                currentClick = file;
+                clickLogField.setText(file.getName());
+                clicks = file;
+            } else {
+                files.remove(currentClick.getName());
+                currentClick = file;
                 clickLogField.setText(file.getName());
                 clicks = file;
             }
@@ -99,7 +120,13 @@ public class LoadDataController implements ScreenInterface {
         Node node = (Node) event.getSource();
         File file = loadData(node, title);
         if (file != null) {
-            if (files.containsKey(file.getName())) {
+            if (currentClick == null) {
+                currentClick = file;
+                clickLogField.setText(file.getName());
+                clicks = file;
+            } else {
+                files.remove(currentClick.getName());
+                currentClick = file;
                 clickLogField.setText(file.getName());
                 clicks = file;
             }
@@ -112,7 +139,13 @@ public class LoadDataController implements ScreenInterface {
         Node node = (Node) event.getSource();
         File file = loadData(node, title);
         if (file != null) {
-            if (files.containsKey(file.getName())) {
+            if (currentServer == null) {
+                currentServer = file;
+                serverLogField.setText(file.getName());
+                server = file;
+            } else {
+                files.remove(currentServer.getName());
+                currentServer = file;
                 serverLogField.setText(file.getName());
                 server = file;
             }
@@ -125,7 +158,13 @@ public class LoadDataController implements ScreenInterface {
         Node node = (Node) event.getSource();
         File file = loadData(node, title);
         if (file != null) {
-            if (files.containsKey(file.getName())) {
+            if (currentServer == null) {
+                currentServer = file;
+                serverLogField.setText(file.getName());
+                server = file;
+            } else {
+                files.remove(currentServer.getName());
+                currentServer = file;
                 serverLogField.setText(file.getName());
                 server = file;
             }
@@ -151,7 +190,6 @@ public class LoadDataController implements ScreenInterface {
                             "Please select a CSV file!", "Warning", 1);
                     chooser.showOpenDialog(node.getScene().getWindow());
                 }
-                System.out.println(files.keySet());
                 return file;
             } else {
                 JOptionPane.showMessageDialog(null, "This file has already been loaded!"
