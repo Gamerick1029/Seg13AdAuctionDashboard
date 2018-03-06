@@ -118,7 +118,7 @@ public class CampaignModel implements DataModel {
     public int getBouncesNumber() {
         int bouncesNumber = 0;
         for (ServerLog sd : serverData) {
-            if (sd.getPagesViewed() == 1 || (sd.getExitDate() != null) || ((sd.getExitDate().getTime() - sd.getEntryDate().getTime() <= 120000))) {
+            if (sd.getPagesViewed() == 1 || (sd.getExitDate() != null) && ((sd.getExitDate().getTime() - sd.getEntryDate().getTime() <= 120000))) {
                 bouncesNumber++;
             }
         }
@@ -165,7 +165,7 @@ public class CampaignModel implements DataModel {
      */
     @Override
     public float getCPA() {
-        return getTotalCost() / (float) getConversionsNumber();
+        return (float) getTotalCost() / (float) getConversionsNumber();
     }
 
     /*
@@ -174,7 +174,7 @@ public class CampaignModel implements DataModel {
      */
     @Override
     public float getCPC() {
-        return getTotalCost() / (float) getClicksNumber();
+        return (float) getTotalCost() / (float) getClicksNumber();
     }
 
     /*
@@ -185,7 +185,7 @@ public class CampaignModel implements DataModel {
      */
     @Override
     public float getCPM() {
-        return (getTotalCost() / (float) getImpressionsNumber()) * 1000;
+        return (float) (getTotalCost() / (float) getImpressionsNumber()) * 1000;
     }
 
     /*
@@ -193,7 +193,11 @@ public class CampaignModel implements DataModel {
      */
     @Override
     public float getBounceRate() {
-        return (float) (getBouncesNumber() / getClicksNumber());
+        if(getClicksNumber() != 0)
+        return (float) (getBouncesNumber() / (float) getClicksNumber());
+        else{
+            return (float) 0.0;
+        }
     }
 
     /*
