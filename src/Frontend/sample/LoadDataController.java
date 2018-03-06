@@ -205,6 +205,11 @@ public class LoadDataController implements ScreenInterface {
         impressionsLogField.setText("Load Impressions Log...");
         clickLogField.setText("Load Click Log...");
         serverLogField.setText("Load Server Log...");
+
+        //Blank out current files to correctly reload new ones
+        currentClick = null;
+        currentImpressions = null;
+        currentServer = null;
     }
 
 }
