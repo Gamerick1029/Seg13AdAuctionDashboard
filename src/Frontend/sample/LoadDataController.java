@@ -201,9 +201,7 @@ public class LoadDataController implements ScreenInterface {
     }
 
     public void resetFields() {
-        for (Map.Entry<String, File> fileEntry : files.entrySet()) {
-            files.remove(fileEntry.getKey(), fileEntry.getValue());
-        }
+        files.clear();
         impressionsLogField.setText("Load Impressions Log...");
         clickLogField.setText("Load Click Log...");
         serverLogField.setText("Load Server Log...");
