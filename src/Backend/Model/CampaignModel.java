@@ -28,10 +28,10 @@ public class CampaignModel implements DataModel {
             impressionData = readCSVs.readImpressions(impressionFile);
     } catch (ArrayIndexOutOfBoundsException | NumberFormatException | ParseException e) {
 
-        throw new  Exception("Invalid Impressiong Log file format!");
+        throw new  Exception("Invalid Impression Log file format!");
     }
             catch (FileNotFoundException e){
-                throw new  Exception("Impressiong Log file not found!");
+                throw new  Exception("Impression Log file not found!");
 
     }
     try{
