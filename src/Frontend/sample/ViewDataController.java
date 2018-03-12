@@ -48,6 +48,10 @@ public class ViewDataController implements ScreenInterface {
         stage.close();
     }
 
-
+    @FXML
+    private void goToCampaignScreen(){
+        myController.setScreen(Main.campaignScreenID);
+        myController.getCampaignDataPopulator().populateGraph();
+    }
 
 }
