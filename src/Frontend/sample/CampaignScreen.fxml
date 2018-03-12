@@ -143,12 +143,7 @@
       </Pane>
       <Pane layoutX="200.0" layoutY="680.0" prefHeight="78.0" prefWidth="930.0" style="-fx-background-color: #42404D;">
          <children>
-            <ChoiceBox layoutX="79.0" layoutY="21.0" prefHeight="36.0" prefWidth="251.0">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </ChoiceBox>
-            <RadioButton layoutX="512.0" layoutY="29.0" mnemonicParsing="false" text="1 Day" textFill="WHITE">
+            <RadioButton layoutX="528.0" layoutY="29.0" mnemonicParsing="false" text="By Day" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
@@ -156,7 +151,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </RadioButton>
-            <RadioButton layoutX="603.0" layoutY="29.0" mnemonicParsing="false" text="1 Week" textFill="WHITE">
+            <RadioButton layoutX="619.0" layoutY="29.0" mnemonicParsing="false" text="By Week" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
@@ -164,7 +159,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </RadioButton>
-            <RadioButton layoutX="702.0" layoutY="29.0" mnemonicParsing="false" text="1 Month" textFill="WHITE">
+            <RadioButton layoutX="721.0" layoutY="29.0" mnemonicParsing="false" text="1 Month" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
@@ -172,14 +167,11 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </RadioButton>
-            <RadioButton layoutX="810.0" layoutY="29.0" mnemonicParsing="false" text="3 Months" textFill="WHITE">
+            <Text fill="WHITE" layoutX="413.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Timescale:">
                <font>
-                  <Font name="System Bold" size="15.0" />
+                  <Font size="20.0" />
                </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </RadioButton>
+            </Text>
          </children>
       </Pane>
       <Text fill="WHITE" layoutX="224.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Campaigns:">
@@ -187,11 +179,37 @@
             <Font size="18.0" />
          </font>
       </Text>
-      <Text fill="#f2f2f2" layoutX="328.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="+" wrappingWidth="20.5224609375">
+      <TextField editable="false" layoutX="376.0" layoutY="29.0" prefHeight="27.0" prefWidth="117.0" style="-fx-background-color: #DCDCDC;" text="Campaign One    ≡ ">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></TextField>
+      <TextField alignment="CENTER" editable="false" layoutX="329.0" layoutY="23.0" prefHeight="25.0" prefWidth="28.0" style="-fx-background-color: #42404D;" text="+">
          <font>
-            <Font name="System Bold" size="31.0" />
+            <Font name="System Bold" size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </TextField>
+      <TextField editable="false" layoutX="505.0" layoutY="29.0" prefHeight="27.0" prefWidth="117.0" style="-fx-background-color: #DCDCDC;" text="Campaign Two    ≡ ">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </TextField>
+      <TextField editable="false" layoutX="649.0" layoutY="29.0" prefHeight="27.0" prefWidth="127.0" style="-fx-background-color: #DCDCDC;" text="Campaign Three      ≡ ">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </TextField>
+      <Text fill="WHITE" layoutX="217.0" layoutY="198.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Impressions">
+         <font>
+            <Font size="20.0" />
          </font>
       </Text>
-      <TextField layoutX="376.0" layoutY="29.0" prefHeight="27.0" prefWidth="108.0" style="-fx-background-color: #DCDCDC;" text="Campaign One ≡ " />
+      <ChoiceBox layoutX="863.0" layoutY="172.0" pickOnBounds="false" prefHeight="36.0" prefWidth="251.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ChoiceBox>
    </children>
 </AnchorPane>

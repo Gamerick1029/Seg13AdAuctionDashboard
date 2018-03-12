@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="758.0"  style="-fx-background-color: #6C6978;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Frontend.sample.ViewDataController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="758.0" style="-fx-background-color: #6C6978;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Frontend.sample.ViewDataController">
    <children>
       <Text fill="#f2f2f2" layoutX="153.0" layoutY="134.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▸ Impressions">
          <font>
@@ -41,7 +41,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Text>
-      <Button layoutX="388.0" layoutY="522.0" mnemonicParsing="false" onAction="#closeApplication" prefHeight="48.0" prefWidth="163.0" style="-fx-background-color: #BCBAC2;" text="Close">
+      <Button layoutX="388.0" layoutY="522.0" mnemonicParsing="false" onAction="#goToCampaignScreen" prefHeight="48.0" prefWidth="163.0" style="-fx-background-color: #BCBAC2;" text="View Details">
          <font>
             <Font name="Ubuntu" size="18.0" />
          </font>
@@ -128,7 +128,6 @@
             <Font name="Ubuntu" size="36.0" />
          </font>
       </Text>
-      <Button layoutX="619.0" layoutY="264.0" mnemonicParsing="false" onAction="#goToCampaignScreen" text="Button" />
 
                </children>
 </AnchorPane>
