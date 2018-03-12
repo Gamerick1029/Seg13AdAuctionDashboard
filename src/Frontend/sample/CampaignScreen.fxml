@@ -21,12 +21,12 @@
       </LineChart>
       <Pane layoutX="1130.0" prefHeight="758.0" prefWidth="200.0" style="-fx-background-color: #42404D;">
          <children>
-            <Text fill="WHITE" layoutX="52.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Campaign 2" underline="true">
+            <Text fill="#f2f2f2" layoutX="41.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Filter Metrics" wrappingWidth="117.4697265625">
                <font>
-                  <Font size="18.0" />
+                  <Font name="System Bold" size="18.0" />
                </font>
             </Text>
-            <Text fill="#f2f2f2" layoutX="25.0" layoutY="194.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▸ Impressions">
+            <Text fill="#f2f2f2" layoutX="101.0" layoutY="182.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="Audience ◀">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -34,7 +34,7 @@
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </Text>
-            <Text fill="#f2f2f2" layoutX="25.0" layoutY="444.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▸ Click-Through Rate">
+            <Text fill="#f2f2f2" layoutX="142.0" layoutY="231.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="Age ◀">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -42,7 +42,7 @@
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </Text>
-            <Text fill="#f2f2f2" layoutX="25.0" layoutY="244.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▸ Clicks">
+            <Text fill="#f2f2f2" layoutX="111.0" layoutY="283.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="Context ◀">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -50,7 +50,7 @@
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </Text>
-            <Text fill="#f2f2f2" layoutX="25.0" layoutY="294.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▸ Bounces">
+            <Text fill="#f2f2f2" layoutX="112.0" layoutY="386.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="Income ◀">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -58,31 +58,7 @@
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </Text>
-            <Text fill="#f2f2f2" layoutX="25.0" layoutY="394.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▸ Total Cost">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-               <font>
-                  <Font name="Ubuntu" size="18.0" />
-               </font>
-            </Text>
-            <Text fill="#f2f2f2" layoutX="22.0" layoutY="587.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▸ Average Cost per Click" wrappingWidth="166.0166015625">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-               <font>
-                  <Font name="Ubuntu" size="18.0" />
-               </font>
-            </Text>
-            <Text fill="#f2f2f2" layoutX="26.0" layoutY="505.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▸ Average Cost per Aquisition" wrappingWidth="184.423828125">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-               <font>
-                  <Font name="Ubuntu" size="18.0" />
-               </font>
-            </Text>
-            <Text fill="#f2f2f2" layoutX="25.0" layoutY="344.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▸ Conversions">
+            <Text fill="#f2f2f2" layoutX="135.0" layoutY="333.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="Date ◀">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -94,12 +70,7 @@
       </Pane>
       <Pane prefHeight="758.0" prefWidth="200.0" style="-fx-background-color: #42404D;">
          <children>
-            <Text fill="WHITE" layoutX="52.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Campaign 1" underline="true">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Text>
-            <Text fill="#f2f2f2" layoutX="14.0" layoutY="332.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▸ Conversions">
+            <Text fill="#f2f2f2" layoutX="14.0" layoutY="332.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Conversions">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -107,7 +78,7 @@
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </Text>
-            <Text fill="#f2f2f2" layoutX="15.0" layoutY="493.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▸ Average Cost per Aquisition" wrappingWidth="184.423828125">
+            <Text fill="#f2f2f2" layoutX="15.0" layoutY="487.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Average Cost per Aquisition" wrappingWidth="184.423828125">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -115,7 +86,7 @@
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </Text>
-            <Text fill="#f2f2f2" layoutX="11.0" layoutY="575.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▸ Average Cost per Click" wrappingWidth="166.0166015625">
+            <Text fill="#f2f2f2" layoutX="13.0" layoutY="558.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Average Cost per Click" wrappingWidth="166.0166015625">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -123,7 +94,7 @@
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </Text>
-            <Text fill="#f2f2f2" layoutX="14.0" layoutY="382.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▸ Total Cost">
+            <Text fill="#f2f2f2" layoutX="14.0" layoutY="382.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Total Cost">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -131,7 +102,7 @@
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </Text>
-            <Text fill="#f2f2f2" layoutX="14.0" layoutY="282.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▸ Bounces">
+            <Text fill="#f2f2f2" layoutX="14.0" layoutY="282.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Bounces">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -139,7 +110,7 @@
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </Text>
-            <Text fill="#f2f2f2" layoutX="14.0" layoutY="232.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▸ Clicks">
+            <Text fill="#f2f2f2" layoutX="14.0" layoutY="232.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Clicks">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -147,7 +118,7 @@
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </Text>
-            <Text fill="#f2f2f2" layoutX="14.0" layoutY="432.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▸ Click-Through Rate">
+            <Text fill="#f2f2f2" layoutX="14.0" layoutY="432.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Click-Through Rate">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -155,7 +126,7 @@
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </Text>
-            <Text fill="#f2f2f2" layoutX="14.0" layoutY="182.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▸ Impressions">
+            <Text fill="#f2f2f2" layoutX="14.0" layoutY="182.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Impressions">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -163,9 +134,9 @@
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </Text>
-            <Text fill="WHITE" layoutX="21.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt; Back">
+            <Text fill="#f2f2f2" layoutX="24.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Campaign Metrics" wrappingWidth="166.0166015625">
                <font>
-                  <Font name="System Bold" size="20.0" />
+                  <Font name="System Bold" size="18.0" />
                </font>
             </Text>
          </children>
@@ -211,5 +182,16 @@
             </RadioButton>
          </children>
       </Pane>
+      <Text fill="WHITE" layoutX="224.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Campaigns:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text fill="#f2f2f2" layoutX="328.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="+" wrappingWidth="20.5224609375">
+         <font>
+            <Font name="System Bold" size="31.0" />
+         </font>
+      </Text>
+      <TextField layoutX="376.0" layoutY="29.0" prefHeight="27.0" prefWidth="108.0" style="-fx-background-color: #DCDCDC;" text="Campaign One ≡ " />
    </children>
 </AnchorPane>
