@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="758.0" style="-fx-background-color: #6C6978;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Frontend.sample.ViewDataController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="758.0" style="-fx-background-color: #595454;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Frontend.sample.ViewDataController">
    <children>
       <Text fill="#f2f2f2" layoutX="153.0" layoutY="134.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▸ Impressions">
          <font>
@@ -41,7 +41,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Text>
-      <Button layoutX="388.0" layoutY="522.0" mnemonicParsing="false" onAction="#goToCampaignScreen" prefHeight="48.0" prefWidth="163.0" style="-fx-background-color: #BCBAC2;" text="View Details">
+      <Button layoutX="388.0" layoutY="522.0" mnemonicParsing="false" onAction="#goToCampaignScreen" prefHeight="48.0" prefWidth="163.0" style="-fx-background-color: #C6C6C6;" text="View Details">
          <font>
             <Font name="Ubuntu" size="18.0" />
          </font>
@@ -62,7 +62,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Text>
-      <Button layoutX="189.0" layoutY="522.0" mnemonicParsing="false" onAction="#goToLoadDataScreen" prefHeight="48.0" prefWidth="163.0" style="-fx-background-color: #BCBAC2;" text="Back">
+      <Button layoutX="189.0" layoutY="522.0" mnemonicParsing="false" onAction="#goToLoadDataScreen" prefHeight="48.0" prefWidth="163.0" style="-fx-background-color: #C6C6C6;" text="Back">
          <font>
             <Font name="Ubuntu" size="18.0" />
          </font>
@@ -83,42 +83,42 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Text>
-      <TextField fx:id="clicks" editable="false" layoutX="447.0" layoutY="160.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #42404D; -fx-text-fill: #ffffff;">
+      <TextField fx:id="clicks" editable="false" layoutX="447.0" layoutY="160.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #333030; -fx-text-fill: #ffffff;">
          <font>
             <Font name="Ubuntu" size="18.0" />
          </font>
       </TextField>
-      <TextField fx:id="bounces" editable="false" layoutX="447.0" layoutY="210.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #42404D; -fx-text-fill: #ffffff;">
+      <TextField fx:id="bounces" editable="false" layoutX="447.0" layoutY="210.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #333030; -fx-text-fill: #ffffff;">
          <font>
             <Font name="Ubuntu" size="18.0" />
          </font>
       </TextField>
-      <TextField fx:id="conversions" editable="false" layoutX="447.0" layoutY="260.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #42404D; -fx-text-fill: #ffffff;">
+      <TextField fx:id="conversions" editable="false" layoutX="447.0" layoutY="260.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #333030; -fx-text-fill: #ffffff;">
          <font>
             <Font name="Ubuntu" size="18.0" />
          </font>
       </TextField>
-      <TextField fx:id="cost" editable="false" layoutX="447.0" layoutY="310.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #42404D; -fx-text-fill: #ffffff;">
+      <TextField fx:id="cost" editable="false" layoutX="447.0" layoutY="310.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #333030; -fx-text-fill: #ffffff;">
          <font>
             <Font name="Ubuntu" size="18.0" />
          </font>
       </TextField>
-      <TextField fx:id="clickRate" editable="false" layoutX="447.0" layoutY="360.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #42404D; -fx-text-fill: #ffffff;">
+      <TextField fx:id="clickRate" editable="false" layoutX="447.0" layoutY="360.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #333030; -fx-text-fill: #ffffff;">
          <font>
             <Font name="Ubuntu" size="18.0" />
          </font>
       </TextField>
-      <TextField fx:id="costAquisition" editable="false" layoutX="447.0" layoutY="410.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #42404D; -fx-text-fill: #ffffff;">
+      <TextField fx:id="costAquisition" editable="false" layoutX="447.0" layoutY="410.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #333030; -fx-text-fill: #ffffff;">
          <font>
             <Font name="Ubuntu" size="18.0" />
          </font>
       </TextField>
-      <TextField fx:id="costConversion" editable="false" layoutX="447.0" layoutY="460.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #42404D; -fx-text-fill: #ffffff;">
+      <TextField fx:id="costConversion" editable="false" layoutX="447.0" layoutY="460.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #333030; -fx-text-fill: #ffffff;">
          <font>
             <Font name="Ubuntu" size="18.0" />
          </font>
       </TextField>
-      <TextField fx:id="impressions" editable="false" layoutX="447.0" layoutY="110.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #42404D; -fx-text-fill: #ffffff;">
+      <TextField fx:id="impressions" editable="false" layoutX="447.0" layoutY="110.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #333030; -fx-text-fill: #ffffff;">
          <font>
             <Font name="Ubuntu" size="18.0" />
          </font>

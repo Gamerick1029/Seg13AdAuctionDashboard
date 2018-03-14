@@ -9,24 +9,24 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="724.0" prefWidth="1317.0" style="-fx-background-color: #6C6978;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Frontend.sample.CampaignController">
+<AnchorPane prefHeight="724.0" prefWidth="1317.0" style="-fx-background-color: #595454;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Frontend.sample.CampaignController">
    <children>
-      <LineChart fx:id="lineChart" layoutX="217.0" layoutY="214.0" legendVisible="false" prefHeight="452.0" prefWidth="897.0" style="-fx-background-color: #DCDCDC;" title="Campaign Name" GridPane.columnIndex="1" GridPane.rowIndex="2">
+      <LineChart fx:id="lineChart" layoutX="284.0" layoutY="264.0" legendVisible="false" prefHeight="452.0" prefWidth="870.0" style="-fx-background-color: #807B7B;" title="Campaign Name" GridPane.columnIndex="1" GridPane.rowIndex="2">
         <xAxis>
-          <CategoryAxis label="Campaign Something" side="BOTTOM" fx:id="x" />
+          <CategoryAxis label="Campaign Something" side="BOTTOM" tickLabelFill="WHITE" fx:id="x" />
         </xAxis>
         <yAxis>
           <NumberAxis fx:id="y" label="Campaign Something" side="LEFT" tickLabelFill="#2f2e2e" />
         </yAxis>
       </LineChart>
-      <Pane layoutX="1130.0" prefHeight="758.0" prefWidth="200.0" style="-fx-background-color: #42404D;">
+      <Pane layoutX="1163.0" prefHeight="758.0" prefWidth="176.0" style="-fx-background-color: #333030;">
          <children>
             <Text fill="#f2f2f2" layoutX="41.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Filter Metrics" wrappingWidth="117.4697265625">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Text>
-            <Text fill="#f2f2f2" layoutX="101.0" layoutY="182.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="Audience ◀">
+            <Text fill="#f2f2f2" layoutX="69.0" layoutY="185.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="Audience ◀">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -34,7 +34,7 @@
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </Text>
-            <Text fill="#f2f2f2" layoutX="142.0" layoutY="231.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="Age ◀">
+            <Text fill="#f2f2f2" layoutX="103.0" layoutY="296.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="Age ◀">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -42,7 +42,7 @@
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </Text>
-            <Text fill="#f2f2f2" layoutX="111.0" layoutY="283.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="Context ◀">
+            <Text fill="#f2f2f2" layoutX="75.0" layoutY="432.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="Context ◀">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -50,7 +50,7 @@
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </Text>
-            <Text fill="#f2f2f2" layoutX="112.0" layoutY="386.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="Income ◀">
+            <Text fill="#f2f2f2" layoutX="77.0" layoutY="622.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="Income ◀">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -58,7 +58,7 @@
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </Text>
-            <Text fill="#f2f2f2" layoutX="135.0" layoutY="333.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="Date ◀">
+            <Text fill="#f2f2f2" layoutX="100.0" layoutY="524.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="Date ◀">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -66,11 +66,23 @@
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </Text>
+            <CheckBox layoutX="14.0" layoutY="340.0" mnemonicParsing="false" text="&lt; 18" textFill="WHITE" />
+            <CheckBox layoutX="14.0" layoutY="362.0" mnemonicParsing="false" text="&lt; 18" textFill="WHITE" />
+            <CheckBox layoutX="14.0" layoutY="388.0" mnemonicParsing="false" text="&lt; 18" textFill="WHITE" />
+            <CheckBox layoutX="103.0" layoutY="388.0" mnemonicParsing="false" text="&lt; 18" textFill="WHITE" />
+            <CheckBox layoutX="103.0" layoutY="340.0" mnemonicParsing="false" text="&lt; 18" textFill="WHITE" />
+            <CheckBox layoutX="103.0" layoutY="362.0" mnemonicParsing="false" text="&lt; 18" textFill="WHITE" />
+            <CheckBox layoutX="103.0" layoutY="577.0" mnemonicParsing="false" text="&lt; 18" textFill="WHITE" />
+            <CheckBox layoutX="90.0" layoutY="211.0" mnemonicParsing="false" text="&lt; 18" textFill="WHITE" />
+            <CheckBox layoutX="103.0" layoutY="640.0" mnemonicParsing="false" text="&lt; 18" textFill="WHITE" />
+            <CheckBox layoutX="103.0" layoutY="548.0" mnemonicParsing="false" text="&lt; 18" textFill="WHITE" />
+            <CheckBox layoutX="103.0" layoutY="669.0" mnemonicParsing="false" text="&lt; 18" textFill="WHITE" />
+            <CheckBox layoutX="100.0" layoutY="447.0" mnemonicParsing="false" text="&lt; 18" textFill="WHITE" />
          </children>
       </Pane>
-      <Pane prefHeight="758.0" prefWidth="200.0" style="-fx-background-color: #42404D;">
+      <Pane prefHeight="758.0" prefWidth="277.0" style="-fx-background-color: #333030;">
          <children>
-            <Text fill="#f2f2f2" layoutX="14.0" layoutY="332.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Conversions">
+            <Text fill="#f2f2f2" layoutX="10.0" layoutY="442.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Conversions">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -78,7 +90,7 @@
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </Text>
-            <Text fill="#f2f2f2" layoutX="15.0" layoutY="487.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Average Cost per Aquisition" wrappingWidth="184.423828125">
+            <Text fill="#f2f2f2" layoutX="9.0" layoutY="619.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Aquisition" wrappingWidth="184.423828125">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -86,7 +98,7 @@
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </Text>
-            <Text fill="#f2f2f2" layoutX="13.0" layoutY="558.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Average Cost per Click" wrappingWidth="166.0166015625">
+            <Text fill="#f2f2f2" layoutX="9.0" layoutY="668.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Cost per Click" wrappingWidth="166.0166015625">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -94,7 +106,7 @@
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </Text>
-            <Text fill="#f2f2f2" layoutX="14.0" layoutY="382.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Total Cost">
+            <Text fill="#f2f2f2" layoutX="10.0" layoutY="496.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Total Cost">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -102,7 +114,7 @@
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </Text>
-            <Text fill="#f2f2f2" layoutX="14.0" layoutY="282.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Bounces">
+            <Text fill="#f2f2f2" layoutX="10.0" layoutY="392.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Bounces">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -110,7 +122,7 @@
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </Text>
-            <Text fill="#f2f2f2" layoutX="14.0" layoutY="232.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Clicks">
+            <Text fill="#f2f2f2" layoutX="10.0" layoutY="342.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Clicks">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -118,7 +130,7 @@
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </Text>
-            <Text fill="#f2f2f2" layoutX="14.0" layoutY="432.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Click-Through Rate">
+            <Text fill="#f2f2f2" layoutX="11.0" layoutY="560.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Click Rate">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -126,7 +138,7 @@
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </Text>
-            <Text fill="#f2f2f2" layoutX="14.0" layoutY="182.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Impressions">
+            <Text fill="#f2f2f2" layoutX="10.0" layoutY="292.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Impressions">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -134,82 +146,110 @@
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </Text>
-            <Text fill="#f2f2f2" layoutX="24.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Campaign Metrics" wrappingWidth="166.0166015625">
+            <Text fill="#f2f2f2" layoutX="55.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Campaign Metrics" wrappingWidth="166.0166015625">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Text>
-         </children>
-      </Pane>
-      <Pane layoutX="200.0" layoutY="680.0" prefHeight="78.0" prefWidth="930.0" style="-fx-background-color: #42404D;">
-         <children>
-            <RadioButton layoutX="528.0" layoutY="29.0" mnemonicParsing="false" text="By Day" textFill="WHITE">
+            <TextField fx:id="costConversion" editable="false" layoutX="140.0" layoutY="265.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
                <font>
-                  <Font name="System Bold" size="15.0" />
+                  <Font name="Ubuntu" size="18.0" />
                </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </RadioButton>
-            <RadioButton layoutX="619.0" layoutY="29.0" mnemonicParsing="false" text="By Week" textFill="WHITE">
+            </TextField>
+            <TextField fx:id="costConversion1" editable="false" layoutX="140.0" layoutY="415.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
                <font>
-                  <Font name="System Bold" size="15.0" />
+                  <Font name="Ubuntu" size="18.0" />
                </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </RadioButton>
-            <RadioButton layoutX="721.0" layoutY="29.0" mnemonicParsing="false" text="1 Month" textFill="WHITE">
+            </TextField>
+            <TextField fx:id="costConversion2" editable="false" layoutX="140.0" layoutY="470.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
                <font>
-                  <Font name="System Bold" size="15.0" />
+                  <Font name="Ubuntu" size="18.0" />
                </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </RadioButton>
-            <Text fill="WHITE" layoutX="413.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Timescale:">
+            </TextField>
+            <TextField fx:id="costConversion3" editable="false" layoutX="140.0" layoutY="534.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
                <font>
-                  <Font size="20.0" />
+                  <Font name="Ubuntu" size="18.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="costConversion4" editable="false" layoutX="140.0" layoutY="593.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
+               <font>
+                  <Font name="Ubuntu" size="18.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="costConversion5" editable="false" layoutX="140.0" layoutY="642.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
+               <font>
+                  <Font name="Ubuntu" size="18.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="costConversion11" editable="false" layoutX="140.0" layoutY="365.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
+               <font>
+                  <Font name="Ubuntu" size="18.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="costConversion12" editable="false" layoutX="140.0" layoutY="315.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
+               <font>
+                  <Font name="Ubuntu" size="18.0" />
+               </font>
+            </TextField>
+            <Text layoutX="17.0" layoutY="187.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+            <Text fill="#f2f2f2" layoutX="17.0" layoutY="196.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Campaign:" wrappingWidth="166.0166015625">
+               <font>
+                  <Font name="System Bold" size="18.0" />
                </font>
             </Text>
+            <MenuButton layoutX="116.0" layoutY="169.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="152.0" style="-fx-background-color: #807B7B;" text="Campaign" textFill="WHITE">
+               <font>
+                  <Font size="19.0" />
+               </font>
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Action 1" />
+                  <MenuItem mnemonicParsing="false" text="Action 2" />
+               </items>
+            </MenuButton>
          </children>
       </Pane>
-      <Text fill="WHITE" layoutX="224.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Campaigns:">
+      <RadioButton layoutX="1026.0" layoutY="727.0" mnemonicParsing="false" text="1 Month" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
          <font>
-            <Font size="18.0" />
+            <Font name="System Bold" size="15.0" />
          </font>
-      </Text>
-      <TextField editable="false" layoutX="376.0" layoutY="29.0" prefHeight="27.0" prefWidth="117.0" style="-fx-background-color: #DCDCDC;" text="Campaign One    ≡ ">
+      </RadioButton>
+      <RadioButton layoutX="833.0" layoutY="727.0" mnemonicParsing="false" text="By Day" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />
-         </cursor></TextField>
-      <TextField alignment="CENTER" editable="false" layoutX="329.0" layoutY="23.0" prefHeight="25.0" prefWidth="28.0" style="-fx-background-color: #42404D;" text="+">
+         </cursor>
          <font>
-            <Font name="System Bold" size="18.0" />
+            <Font name="System Bold" size="15.0" />
          </font>
+      </RadioButton>
+      <RadioButton layoutX="924.0" layoutY="727.0" mnemonicParsing="false" text="By Week" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
-      </TextField>
-      <TextField editable="false" layoutX="505.0" layoutY="29.0" prefHeight="27.0" prefWidth="117.0" style="-fx-background-color: #DCDCDC;" text="Campaign Two    ≡ ">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </TextField>
-      <TextField editable="false" layoutX="649.0" layoutY="29.0" prefHeight="27.0" prefWidth="127.0" style="-fx-background-color: #DCDCDC;" text="Campaign Three      ≡ ">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </TextField>
-      <Text fill="WHITE" layoutX="217.0" layoutY="198.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Impressions">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </RadioButton>
+      <Text fill="WHITE" layoutX="718.0" layoutY="745.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Timescale:">
          <font>
             <Font size="20.0" />
          </font>
       </Text>
-      <ChoiceBox layoutX="863.0" layoutY="172.0" pickOnBounds="false" prefHeight="36.0" prefWidth="251.0">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </ChoiceBox>
+      <TextField editable="false" layoutX="284.0" layoutY="218.0" prefHeight="36.0" prefWidth="166.0" style="-fx-background-color: #C6C6C6;" text="Impressions">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </TextField>
+      <MenuButton layoutX="960.0" layoutY="218.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="194.0" style="-fx-background-color: #C6C6C6;" text="Histogram">
+        <items>
+          <MenuItem mnemonicParsing="false" text="Action 1" />
+          <MenuItem mnemonicParsing="false" text="Action 2" />
+        </items>
+         <font>
+            <Font size="19.0" />
+         </font>
+      </MenuButton>
    </children>
 </AnchorPane>
