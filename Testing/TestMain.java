@@ -1,30 +1,86 @@
 import Backend.FileIO.readCSVs;
+import Backend.FileIO.ReadCSVsToDB;
+import Backend.MagicDB;
 import Backend.Model.ClickData;
 import Backend.Model.ImpressionData;
-import Backend.Model.Interfaces.ServerLog;
 import Backend.Model.ServerData;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.sql.*;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class TestMain {
 
-    public static void main(String[] args) throws FileNotFoundException, ParseException {
-        File twoWeekClicks = new File("TestCSVs/2_week_campaign/click_log.csv");
-        File twoWeekImpressions = new File("TestCSVs/2_week_campaign/impression_log.csv");
-        File twoWeekServer = new File("TestCSVs/2_week_campaign/server_log.csv");
+    private String DBUrl = "jdbc:mariadb://" + MagicDB.defaultHost + ":" + MagicDB.defaultPort + "/" + MagicDB.dbName;
 
-        File twoMonthClicks = new File("TestCSVs/2_month_campaign/click_log.csv");
-        File twoMonthImpressions = new File("TestCSVs/2_month_campaign/impression_log.csv");
-        File twoMonthServer = new File("TestCSVs/2_month_campaign/server_log.csv");
+    public static void main(String[] args) throws FileNotFoundException, ParseException, SQLException {
 
         TestMain testMain = new TestMain();
-        testMain.testCampaign(twoWeekClicks, twoWeekImpressions, twoWeekServer, "2 weeks");
-//        testMain.testCampaign(twoMonthClicks, twoMonthImpressions, twoMonthServer, "2 months");
+        testMain.databaseTesting();
 
+    }
 
+    public void databaseTesting() throws SQLException {
+        Scanner in = new Scanner(System.in);
+
+        System.out.print("User: ");
+        String user = in.nextLine();
+
+        System.out.print("Pass: ");
+        String pass = in.nextLine();
+
+        //This is what creates the connection to the remote Database. We throw all statements through here
+        Connection connection = DriverManager.getConnection(DBUrl, user, pass);
+
+        //This just loops over building and executing statements with pretty output to System.Out
+        while (true){
+            StringBuilder sb = new StringBuilder();
+
+            System.out.print("SQL statement (Ends with ';'): ");
+            String statement = in.nextLine();
+
+            while (statement.charAt(statement.length() - 1) != ';') {
+                System.out.print("> ");
+                statement = statement + in.nextLine();
+            }
+
+            try{
+                //The following lines attempt to execute the statement on the Database. Returns true if there
+                //is a result to grab (Usually because of SELECT based statements), false if no output to receive
+                //(CREATE, INSERT, etc), and errors out if the statement is not valid SQL
+                Statement stmt = connection.createStatement();
+                Boolean result = stmt.execute(statement);
+
+                if (result){
+                    //We grab the result and store it in a local object
+                    ResultSet rs = stmt.getResultSet();
+
+                    //We print out the results in a human readable way to Standard Out
+                    prettyPrintResult(rs);
+
+                }
+            } catch (SQLException e) {
+                //Tells us which bit of our SQL we got wrong
+                System.out.println(e.getMessage());
+            }
+
+        }
+    }
+
+    private void prettyPrintResult(ResultSet rs) throws SQLException {
+        ResultSetMetaData rsmd = rs.getMetaData();
+        int columnsNumber = rsmd.getColumnCount();
+
+        while (rs.next()) {
+            for (int i = 1; i <= columnsNumber; i++) {
+                if (i > 1) System.out.print(" | ");
+                System.out.print(rs.getString(i));
+            }
+            System.out.println();
+        }
     }
 
     public void testCampaign(File clickLog, File impressionLog, File serverLog, String campaignName) throws FileNotFoundException, ParseException {

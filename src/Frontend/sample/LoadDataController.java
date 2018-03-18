@@ -47,8 +47,8 @@ public class LoadDataController implements ScreenInterface {
             try {
                 dataModel = new CampaignModel(clicks, impressions, server);
                 myController.setDataModel(dataModel);
-                myController.setScreen(Main.viewDataScreenID);
                 myController.getDataFieldPopulator().populateFields();
+                myController.setScreen(Main.viewDataScreenID);
 
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, e.getMessage()

@@ -21,7 +21,6 @@ import java.util.List;
  * Created by Jacob on 23/02/2018.
  * Holds static functions for loading each of the 3 CSVs in to the application
  */
-
 public class readCSVs {
 
     private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss"); //DateTime format as specified in the CSV files
