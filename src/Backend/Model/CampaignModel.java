@@ -9,9 +9,7 @@ import Backend.Model.Interfaces.ServerLog;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.text.ParseException;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by Benedict on 28/02/2018.
@@ -95,6 +93,15 @@ public class CampaignModel implements DataModel {
         return impressionData.size();
     }
 
+    @Override
+    /*
+    DEAD FUNCTION
+     */
+    public Map<Date, Integer> getImpressionsByInterval(Date interval)
+    {
+        return null;
+    }
+
     /*
         Returns the number of all Clicks of a Campaign
      */
@@ -104,11 +111,29 @@ public class CampaignModel implements DataModel {
     }
 
     /*
+    DEAD FUNCTION
+     */
+    @Override
+    public Map<Date, Integer> getClicksByInterval(Date interval)
+    {
+        return null;
+    }
+
+    /*
         Returns the number of all Uniques of a Campaign
      */
     @Override
     public int getUniquesNumber() {
         return getUsersFromClickLog().size();
+    }
+
+    /*
+    DEAD FUNCTION
+     */
+    @Override
+    public Map<Date, Integer> getUniquesByInterval(Date interval)
+    {
+        return null;
     }
 
     /*
@@ -126,6 +151,15 @@ public class CampaignModel implements DataModel {
     }
 
     /*
+    DEAD FUNCTION
+     */
+    @Override
+    public Map<Date, Integer> getBouncesByInterval(Date interval)
+    {
+        return null;
+    }
+
+    /*
         Returns the number of Conversions of a Campaign
     */
     @Override
@@ -137,6 +171,15 @@ public class CampaignModel implements DataModel {
             }
 
         return conversionsNumber;
+    }
+
+    /*
+    DEAD FUNCTION
+     */
+    @Override
+    public Map<Date, Integer> getConversionsByInterval(Date interval)
+    {
+        return null;
     }
 
     /*
@@ -152,11 +195,29 @@ public class CampaignModel implements DataModel {
     }
 
     /*
+    DEAD FUNCTION
+     */
+    @Override
+    public Map<Date, Float> getCostByInterval(Date interval)
+    {
+        return null;
+    }
+
+    /*
         Returns the average number of clicks per impression.
      */
     @Override
     public float getCTR() {
         return (float) getClicksNumber() / (float) getImpressionsNumber();
+    }
+
+    /*
+    DEAD FUNCTION
+     */
+    @Override
+    public Map<Date, Float> getCTRByInterval(Date interval)
+    {
+        return null;
     }
 
     /*
@@ -169,12 +230,30 @@ public class CampaignModel implements DataModel {
     }
 
     /*
+    DEAD FUNCTION
+     */
+    @Override
+    public Map<Date, Float> getCPAByInterval(Date interval)
+    {
+        return null;
+    }
+
+    /*
         Returns the average amount of money spent on an advertising campaign for each
          click.
      */
     @Override
     public float getCPC() {
         return (float) getTotalCost() / (float) getClicksNumber();
+    }
+
+    /*
+    DEAD FUNCTION
+     */
+    @Override
+    public Map<Date, Float> getCPCByInterval(Date interval)
+    {
+        return null;
     }
 
     /*
@@ -189,6 +268,15 @@ public class CampaignModel implements DataModel {
     }
 
     /*
+    DEAD FUNCTION
+     */
+    @Override
+    public Map<Date, Float> getCPMByInterval(Date interval)
+    {
+        return null;
+    }
+
+    /*
         The average number of bounces per click.
      */
     @Override
@@ -198,6 +286,15 @@ public class CampaignModel implements DataModel {
         else{
             return (float) 0.0;
         }
+    }
+
+    /*
+    DEAD FUNCTION
+     */
+    @Override
+    public Map<Date, Float> getBounceRateByInterval(Date interval)
+    {
+        return null;
     }
 
     /*

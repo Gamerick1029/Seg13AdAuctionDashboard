@@ -5,7 +5,12 @@ import Backend.Model.Interfaces.DataModel;
 import Backend.Model.Interfaces.ImpressionLog;
 import Backend.Model.Interfaces.ServerLog;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Benedict on 28/02/2018.
@@ -13,6 +18,31 @@ import java.util.List;
  */
 public class DataModelStub implements DataModel
 {
+    private Map<Date, Integer> intMap;
+    private Map<Date, Float> floatMap;
+
+    public DataModelStub()
+    {
+        SimpleDateFormat df = new SimpleDateFormat();
+        df.applyPattern("dd/mm/yyyy");
+        intMap = new HashMap<>();
+        floatMap = new HashMap<>();
+        try
+        {
+            intMap.put(df.parse("01/01/0001"), 1);
+            intMap.put(df.parse("02/02/0002"), 2);
+            intMap.put(df.parse("03/03/0003"), 3);
+
+            floatMap.put(df.parse("01/01/0001"), 1.0f);
+            floatMap.put(df.parse("02/02/0002"), 2.0f);
+            floatMap.put(df.parse("03/03/0003"), 3.0f);
+        } catch(ParseException pe)
+        {
+            System.err.println("Error parsing stub date formats!");
+            System.err.println("Stub map values will be blank");
+            pe.printStackTrace();
+        }
+    }
 
     @Override
     public List<ClickLog> getClickData()
@@ -39,9 +69,21 @@ public class DataModelStub implements DataModel
     }
 
     @Override
+    public Map<Date, Integer> getImpressionsByInterval(Date interval)
+    {
+        return intMap;
+    }
+
+    @Override
     public int getClicksNumber()
     {
         return 2;
+    }
+
+    @Override
+    public Map<Date, Integer> getClicksByInterval(Date interval)
+    {
+        return intMap;
     }
 
     @Override
@@ -51,9 +93,21 @@ public class DataModelStub implements DataModel
     }
 
     @Override
+    public Map<Date, Integer> getUniquesByInterval(Date interval)
+    {
+        return intMap;
+    }
+
+    @Override
     public int getBouncesNumber()
     {
         return 4;
+    }
+
+    @Override
+    public Map<Date, Integer> getBouncesByInterval(Date interval)
+    {
+        return intMap;
     }
 
     @Override
@@ -63,9 +117,21 @@ public class DataModelStub implements DataModel
     }
 
     @Override
+    public Map<Date, Integer> getConversionsByInterval(Date interval)
+    {
+        return intMap;
+    }
+
+    @Override
     public float getTotalCost()
     {
         return 6.0f;
+    }
+
+    @Override
+    public Map<Date, Float> getCostByInterval(Date interval)
+    {
+        return floatMap;
     }
 
     @Override
@@ -75,9 +141,21 @@ public class DataModelStub implements DataModel
     }
 
     @Override
+    public Map<Date, Float> getCTRByInterval(Date interval)
+    {
+        return floatMap;
+    }
+
+    @Override
     public float getCPA()
     {
         return 8.0f;
+    }
+
+    @Override
+    public Map<Date, Float> getCPAByInterval(Date interval)
+    {
+        return floatMap;
     }
 
     @Override
@@ -87,14 +165,32 @@ public class DataModelStub implements DataModel
     }
 
     @Override
+    public Map<Date, Float> getCPCByInterval(Date interval)
+    {
+        return floatMap;
+    }
+
+    @Override
     public float getCPM()
     {
         return 10.0f;
     }
 
     @Override
+    public Map<Date, Float> getCPMByInterval(Date interval)
+    {
+        return floatMap;
+    }
+
+    @Override
     public float getBounceRate()
     {
         return 11.0f;
+    }
+
+    @Override
+    public Map<Date, Float> getBounceRateByInterval(Date interval)
+    {
+        return floatMap;
     }
 }
