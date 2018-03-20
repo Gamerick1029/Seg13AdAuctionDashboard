@@ -101,9 +101,20 @@ public class CampaignModelName implements DataModel {
     /*
     DEAD FUNCTION
      */
-    public Map<Date, Integer> getImpressionsByInterval(Date interval)
-    {
-        return null;
+    public Map<Date, Integer> getImpressionsByInterval(Date startInterval, Date endInterval)
+    {   Map<Date,Integer> tempImpressInterv = new HashMap<>();
+        for(ImpressionLog il: impressionData){
+            Date logDate = il.getDate();
+            int impressionNo = 0;
+            if(logDate.after(startInterval)&&logDate.before(endInterval)){
+                impressionNo ++;
+                if(tempImpressInterv.keySet().contains(logDate)){
+                    impressionNo += tempImpressInterv.get(logDate);
+                }
+                tempImpressInterv.put(logDate,impressionNo);
+            }
+        }
+        return tempImpressInterv;
     }
 
     /*
@@ -118,9 +129,21 @@ public class CampaignModelName implements DataModel {
     DEAD FUNCTION
      */
     @Override
-    public Map<Date, Integer> getClicksByInterval(Date interval)
+    public Map<Date, Integer> getClicksByInterval(Date startInterval, Date endInterval)
     {
-        return null;
+        Map<Date,Integer> tempClicksInterv = new HashMap<>();
+        for(ClickLog cl: clickData){
+            int clickNo = 0;
+            Date logDate = cl.getDate();
+            if(logDate.after(startInterval)&&logDate.before(endInterval)){
+                clickNo++;
+                if(tempClicksInterv.keySet().contains(logDate)){
+                    clickNo += tempClicksInterv.get(logDate);
+                }
+                tempClicksInterv.put(logDate,clickNo);
+            }
+        }
+        return tempClicksInterv;
     }
 
     /*
@@ -135,9 +158,15 @@ public class CampaignModelName implements DataModel {
     DEAD FUNCTION
      */
     @Override
-    public Map<Date, Integer> getUniquesByInterval(Date interval)
+    public Map<Date, Integer> getUniquesByInterval(Date startInterval, Date endInterval)
     {
-        return null;
+        Map<Date, Set<String>> usersMap = getUsersByInterval(startInterval,endInterval);
+        Map<Date,Integer> tempUniquesInterv = new HashMap<>();
+        Set<Date> dateSet = usersMap.keySet();
+        for(Date dt: dateSet){
+            tempUniquesInterv.put(dt,usersMap.get(dt).size());
+        }
+        return tempUniquesInterv;
     }
 
     /*
@@ -158,9 +187,25 @@ public class CampaignModelName implements DataModel {
     DEAD FUNCTION
      */
     @Override
-    public Map<Date, Integer> getBouncesByInterval(Date interval)
+    public Map<Date, Integer> getBouncesByInterval(Date startInterval,Date endInterval)
     {
-        return null;
+        Map<Date,Integer> tempBouncesInterv = new HashMap<>();
+        for(ServerLog sl: serverData){
+            int bouncesNumber = 0;
+            Date entryLogDate = sl.getEntryDate();
+            Date exitLogDate = sl.getEntryDate();
+            if((entryLogDate.after(startInterval)&&entryLogDate.before(endInterval)) && (exitLogDate.after(startInterval)&&exitLogDate.before(endInterval)) ){
+                if (sl.getPagesViewed() == 1 || (exitLogDate != null) && ((entryLogDate.getTime() - exitLogDate.getTime() <= 120000))) {
+                    bouncesNumber++;
+                }
+                if(tempBouncesInterv.keySet().contains(sl.getEntryDate())) {
+                    bouncesNumber += tempBouncesInterv.get(sl.getEntryDate());
+                }
+            }
+
+            tempBouncesInterv.put(sl.getEntryDate(),bouncesNumber);
+        }
+        return tempBouncesInterv;
     }
 
     /*
@@ -181,9 +226,25 @@ public class CampaignModelName implements DataModel {
     DEAD FUNCTION
      */
     @Override
-    public Map<Date, Integer> getConversionsByInterval(Date interval)
+    public Map<Date, Integer> getConversionsByInterval(Date startInterval, Date endInterval)
     {
-        return null;
+        Map<Date,Integer> tempBouncesInterv = new HashMap<>();
+        for(ServerLog sl: serverData){
+            int conversionsNumber = 0;
+            Date entryLogDate = sl.getEntryDate();
+            Date exitLogDate = sl.getEntryDate();
+            if((entryLogDate.after(startInterval)&&entryLogDate.before(endInterval)) && (exitLogDate.after(startInterval)&&exitLogDate.before(endInterval)) ){
+                if(sl.getConverted()) {
+                    conversionsNumber++;
+                }
+                if(tempBouncesInterv.keySet().contains(entryLogDate)) {
+                    conversionsNumber += tempBouncesInterv.get(entryLogDate);
+                }
+            }
+
+            tempBouncesInterv.put(sl.getEntryDate(),conversionsNumber);
+        }
+        return tempBouncesInterv;
     }
 
     /*
@@ -202,9 +263,21 @@ public class CampaignModelName implements DataModel {
     DEAD FUNCTION
      */
     @Override
-    public Map<Date, Float> getCostByInterval(Date interval)
+    public Map<Date, Float> getCostByInterval(Date startInterval, Date endInterval)
     {
-        return null;
+        Map<Date,Float> tempClickCostInterv = new HashMap<>();
+        for(ClickLog cl: clickData){
+            float totalCost = 0;
+            Date logDate = cl.getDate();
+            if(logDate.after(startInterval)&&logDate.before(endInterval)){
+                totalCost += cl.getCost();
+                if(tempClickCostInterv.keySet().contains(logDate)){
+                    totalCost += tempClickCostInterv.get(logDate);
+                }
+                tempClickCostInterv.put(logDate,totalCost);
+            }
+        }
+        return tempClickCostInterv;
     }
 
     /*
@@ -219,9 +292,20 @@ public class CampaignModelName implements DataModel {
     DEAD FUNCTION
      */
     @Override
-    public Map<Date, Float> getCTRByInterval(Date interval)
+    public Map<Date, Float> getCTRByInterval(Date startInterval, Date endInterval)
     {
-        return null;
+        Map<Date, Float> ctrByInterval = new HashMap<>();
+        Map<Date, Integer> getClicksNumber = getClicksByInterval(startInterval,endInterval);
+        Map<Date, Integer> getImpressionNumber = getImpressionsByInterval(startInterval,endInterval);
+
+        for(Date logDate: getClicksNumber.keySet()){
+
+            ctrByInterval.put(logDate,((float) getClicksNumber.get(logDate) / (float) getImpressionNumber.get(logDate)));
+
+        }
+
+
+        return ctrByInterval;
     }
 
     /*
@@ -237,9 +321,20 @@ public class CampaignModelName implements DataModel {
     DEAD FUNCTION
      */
     @Override
-    public Map<Date, Float> getCPAByInterval(Date interval)
+    public Map<Date, Float> getCPAByInterval(Date startInterval,Date endInterval)
     {
-        return null;
+        Map<Date, Float> ctaByInterval = new HashMap<>();
+        Map<Date, Float> getTotalCosts = getCostByInterval(startInterval,endInterval);
+        Map<Date, Integer> getConversionsNumber = getConversionsByInterval(startInterval,endInterval);
+
+        for(Date logDate: getTotalCosts.keySet()){
+
+            ctaByInterval.put(logDate,((float) getTotalCosts.get(logDate) / (float) getConversionsNumber.get(logDate)));
+
+        }
+
+
+        return ctaByInterval;
     }
 
     /*
@@ -255,9 +350,20 @@ public class CampaignModelName implements DataModel {
     DEAD FUNCTION
      */
     @Override
-    public Map<Date, Float> getCPCByInterval(Date interval)
+    public Map<Date, Float> getCPCByInterval(Date startInterval, Date endInterval)
     {
-        return null;
+        Map<Date, Float> cpcByInterval = new HashMap<>();
+        Map<Date, Float> getTotalCosts = getCostByInterval(startInterval,endInterval);
+        Map<Date, Integer> getClicksNumber = getClicksByInterval(startInterval,endInterval);
+
+        for(Date logDate: getTotalCosts.keySet()){
+
+            cpcByInterval.put(logDate,((float) getTotalCosts.get(logDate) / (float) getClicksNumber.get(logDate)));
+
+        }
+
+
+        return cpcByInterval;
     }
 
     /*
@@ -275,9 +381,20 @@ public class CampaignModelName implements DataModel {
     DEAD FUNCTION
      */
     @Override
-    public Map<Date, Float> getCPMByInterval(Date interval)
+    public Map<Date, Float> getCPMByInterval(Date startInterval, Date endInterval)
     {
-        return null;
+        Map<Date, Float> cpmByInterval = new HashMap<>();
+        Map<Date, Float> getTotalCosts = getCostByInterval(startInterval,endInterval);
+        Map<Date, Integer> getImpressionsNumber = getImpressionsByInterval(startInterval,endInterval);
+
+        for(Date logDate: getTotalCosts.keySet()){
+
+            cpmByInterval.put(logDate,((float) (getTotalCosts.get(logDate) / (float) getImpressionsNumber.get(logDate)) * 1000));
+
+        }
+
+
+        return cpmByInterval;
     }
 
     /*
@@ -285,7 +402,7 @@ public class CampaignModelName implements DataModel {
      */
     @Override
     public float getBounceRate() {
-        if(getClicksNumber() != 0)
+        if(getClicksNumber() > 0)
             return (float) (getBouncesNumber() / (float) getClicksNumber());
         else{
             return (float) 0.0;
@@ -296,9 +413,24 @@ public class CampaignModelName implements DataModel {
     DEAD FUNCTION
      */
     @Override
-    public Map<Date, Float> getBounceRateByInterval(Date interval)
+    public Map<Date, Float> getBounceRateByInterval(Date startInterval, Date endInterval)
     {
-        return null;
+        Map<Date, Float> ctaByInterval = new HashMap<>();
+        Map<Date, Integer> getBouncesNumber = getBouncesByInterval(startInterval,endInterval);
+        Map<Date, Integer> getClicksNumber = getClicksByInterval(startInterval,endInterval);
+
+        for(Date logDate: getBouncesNumber.keySet()){
+            int clickNo = getClicksNumber.get(logDate);;
+            if(clickNo > 0 )
+                ctaByInterval.put(logDate,((float) getBouncesNumber.get(logDate) / (float) getClicksNumber.get(logDate)));
+            else{
+                ctaByInterval.put(logDate,((float) getBouncesNumber.get(logDate) / (float) 0.0));
+            }
+
+        }
+
+
+        return ctaByInterval;
     }
 
     /*
@@ -318,5 +450,23 @@ public class CampaignModelName implements DataModel {
 
     private void setCampaignName(String campaignName) {
         this.campaignName = campaignName;
+    }
+
+    public Map<Date, Set<String>> getUsersByInterval(Date startInterval, Date endInterval) {
+
+        Map<Date, Set<String>> usersInterv = new HashMap<>();
+        for (ClickLog cl : clickData) {
+            Date logDate = cl.getDate();
+            Set<String> users = new HashSet<>();
+            if (logDate.after(startInterval) && logDate.before(endInterval)) {
+
+                if (usersInterv.keySet().contains(logDate)) {
+                    users.addAll(usersInterv.get(logDate));
+                }
+                usersInterv.put(logDate, users);
+            }
+
+        }
+        return usersInterv;
     }
 }

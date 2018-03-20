@@ -1,9 +1,9 @@
 package Backend.Model.Interfaces;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /*
     DataModel holds the data that must be viewed by the UI
@@ -30,41 +30,41 @@ public interface DataModel {
     */
     int getImpressionsNumber();
 
-    Map<Date, Integer> getImpressionsByInterval(Date interval);
+    Map<Date, Integer> getImpressionsByInterval(Date startInterval, Date endInterval);
 
     int getClicksNumber();
 
-    Map<Date, Integer> getClicksByInterval(Date interval);
+    Map<Date, Integer> getClicksByInterval(Date startInterval, Date endInterval);
 
     int getUniquesNumber();
 
-    Map<Date, Integer> getUniquesByInterval(Date interval);
+    Map<Date, Integer> getUniquesByInterval(Date startInterval, Date endInterval);
 
     int getBouncesNumber();
 
-    Map<Date, Integer> getBouncesByInterval(Date interval);
+    Map<Date, Integer> getBouncesByInterval(Date startInterval, Date endInterval);
 
     int getConversionsNumber();
 
-    Map<Date, Integer> getConversionsByInterval(Date interval);
+    Map<Date, Integer> getConversionsByInterval(Date startInterval, Date endInterval);
 
     float getTotalCost();
 
-    Map<Date, Float> getCostByInterval(Date interval);
+    Map<Date, Float> getCostByInterval(Date startInterval, Date endInterval);
 
     /*
         The average number of clicks per impression.
     */
     float getCTR();
 
-    Map<Date, Float> getCTRByInterval(Date interval);
+    Map<Date, Float> getCTRByInterval(Date startInterval, Date endInterval);
 
     /*
         The average amount of money spent on an advertising campaign.
     */
     float getCPA();
 
-    Map<Date, Float> getCPAByInterval(Date interval);
+    Map<Date, Float> getCPAByInterval(Date startInterval, Date endInterval);
 
     /*
         The average amount of money spent on an advertising campaign for each
@@ -72,7 +72,7 @@ public interface DataModel {
     */
     float getCPC();
 
-    Map<Date, Float> getCPCByInterval(Date interval);
+    Map<Date, Float> getCPCByInterval(Date startInterval, Date endInterval);
 
     /*
         The average amount of money spent on an advertising
@@ -80,13 +80,15 @@ public interface DataModel {
     */
     float getCPM();
 
-    Map<Date, Float> getCPMByInterval(Date interval);
+    Map<Date, Float> getCPMByInterval(Date startInterval, Date endInterval);
 
     /*
         The average number of bounces per click.
     */
     float getBounceRate();
 
-    Map<Date, Float> getBounceRateByInterval(Date interval);
+    Map<Date, Float> getBounceRateByInterval(Date startInterval, Date endInterval);
+
+    Map<Date, Set<String>> getUsersByInterval(Date startInterval, Date endInterval);
     
 }

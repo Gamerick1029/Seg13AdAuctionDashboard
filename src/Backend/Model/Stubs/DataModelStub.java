@@ -7,10 +7,7 @@ import Backend.Model.Interfaces.ServerLog;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Benedict on 28/02/2018.
@@ -69,10 +66,10 @@ public class DataModelStub implements DataModel
     }
 
     @Override
-    public Map<Date, Integer> getImpressionsByInterval(Date interval)
-    {
-        return intMap;
+    public Map<Date, Integer> getImpressionsByInterval(Date startInterval, Date endInterval) {
+        return null;
     }
+
 
     @Override
     public int getClicksNumber()
@@ -81,10 +78,10 @@ public class DataModelStub implements DataModel
     }
 
     @Override
-    public Map<Date, Integer> getClicksByInterval(Date interval)
-    {
-        return intMap;
+    public Map<Date, Integer> getClicksByInterval(Date startInterval, Date endInterval) {
+        return null;
     }
+
 
     @Override
     public int getUniquesNumber()
@@ -93,9 +90,8 @@ public class DataModelStub implements DataModel
     }
 
     @Override
-    public Map<Date, Integer> getUniquesByInterval(Date interval)
-    {
-        return intMap;
+    public Map<Date, Integer> getUniquesByInterval(Date startInterval, Date endInterval) {
+        return null;
     }
 
     @Override
@@ -105,10 +101,10 @@ public class DataModelStub implements DataModel
     }
 
     @Override
-    public Map<Date, Integer> getBouncesByInterval(Date interval)
-    {
-        return intMap;
+    public Map<Date, Integer> getBouncesByInterval(Date startInterval, Date endInterval) {
+        return null;
     }
+
 
     @Override
     public int getConversionsNumber()
@@ -117,10 +113,10 @@ public class DataModelStub implements DataModel
     }
 
     @Override
-    public Map<Date, Integer> getConversionsByInterval(Date interval)
-    {
-        return intMap;
+    public Map<Date, Integer> getConversionsByInterval(Date startInterval, Date endInterval) {
+        return null;
     }
+
 
     @Override
     public float getTotalCost()
@@ -129,10 +125,10 @@ public class DataModelStub implements DataModel
     }
 
     @Override
-    public Map<Date, Float> getCostByInterval(Date interval)
-    {
-        return floatMap;
+    public Map<Date, Float> getCostByInterval(Date startInterval, Date endInterval) {
+        return null;
     }
+
 
     @Override
     public float getCTR()
@@ -141,10 +137,10 @@ public class DataModelStub implements DataModel
     }
 
     @Override
-    public Map<Date, Float> getCTRByInterval(Date interval)
-    {
-        return floatMap;
+    public Map<Date, Float> getCTRByInterval(Date startInterval, Date endInterval) {
+        return null;
     }
+
 
     @Override
     public float getCPA()
@@ -153,10 +149,10 @@ public class DataModelStub implements DataModel
     }
 
     @Override
-    public Map<Date, Float> getCPAByInterval(Date interval)
-    {
-        return floatMap;
+    public Map<Date, Float> getCPAByInterval(Date startInterval, Date endInterval) {
+        return null;
     }
+
 
     @Override
     public float getCPC()
@@ -165,9 +161,8 @@ public class DataModelStub implements DataModel
     }
 
     @Override
-    public Map<Date, Float> getCPCByInterval(Date interval)
-    {
-        return floatMap;
+    public Map<Date, Float> getCPCByInterval(Date startInterval, Date endInterval) {
+        return null;
     }
 
     @Override
@@ -177,10 +172,10 @@ public class DataModelStub implements DataModel
     }
 
     @Override
-    public Map<Date, Float> getCPMByInterval(Date interval)
-    {
-        return floatMap;
+    public Map<Date, Float> getCPMByInterval(Date startInterval, Date endInterval) {
+        return null;
     }
+
 
     @Override
     public float getBounceRate()
@@ -189,8 +184,14 @@ public class DataModelStub implements DataModel
     }
 
     @Override
-    public Map<Date, Float> getBounceRateByInterval(Date interval)
-    {
-        return floatMap;
+    public Map<Date, Float> getBounceRateByInterval(Date startInterval, Date endInterval) {
+        return null;
     }
+
+    @Override
+    public Map<Date, Set<String>> getUsersByInterval(Date startInterval, Date endInterval) {
+        return null;
+    }
+
+
 }
