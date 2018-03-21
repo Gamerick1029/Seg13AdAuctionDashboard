@@ -1,6 +1,6 @@
 package Frontend.sample;
 
-import Backend.Model.CampaignModel;
+import Backend.Model.CampaignModelName;
 import Backend.Model.Interfaces.DataModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,7 +11,6 @@ import javafx.stage.FileChooser;
 import javax.swing.*;
 import java.io.File;
 import java.util.HashMap;
-import java.util.Map;
 
 public class LoadDataController implements ScreenInterface {
 
@@ -22,8 +21,10 @@ public class LoadDataController implements ScreenInterface {
     private javafx.scene.control.TextField clickLogField;
     @FXML
     private javafx.scene.control.TextField serverLogField;
+    @FXML
+    private javafx.scene.control.TextField campaignName;
 
-
+    private String currentName = null;
     private File impressions;
     private File clicks;
     private File server;
@@ -39,17 +40,21 @@ public class LoadDataController implements ScreenInterface {
 
     @FXML
     private void goToViewDataScreen(ActionEvent event) {
+        currentName = campaignName.getText();
         if (files.size() < 3) {
             JOptionPane.showMessageDialog(null, "You need to select 3 files in order to load a campaign!"
                     , "Warning", 1);
+        } else if (currentName.equals("")) {
+            JOptionPane.showMessageDialog(null, "You need to input a campaign name before continuing!"
+                    , "Warning", 1);
         } else {
+            System.out.println("Campaign name: " + currentName);
             DataModel dataModel = null;
             try {
-                dataModel = new CampaignModel(clicks, impressions, server);
+                dataModel = new CampaignModelName(currentName,clicks, impressions, server);
                 myController.setDataModel(dataModel);
                 myController.getDataFieldPopulator().populateFields();
                 myController.setScreen(Main.viewDataScreenID);
-
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, e.getMessage()
                         , "Warning", 1);
@@ -183,7 +188,6 @@ public class LoadDataController implements ScreenInterface {
             if (!files.containsKey(fileName)) {
                 files.put(fileName, file);
                 String fileExtension = fileName.substring(fileName.indexOf(".") + 1, file.getName().length());
-                System.out.println("File extension: " + fileExtension);
                 String requiredExtension = "csv";
                 if (!requiredExtension.equals(fileExtension)) {
                     JOptionPane.showMessageDialog(null, "Selected file is not in the required format! " +
@@ -202,14 +206,17 @@ public class LoadDataController implements ScreenInterface {
 
     public void resetFields() {
         files.clear();
-        impressionsLogField.setText("Load Impressions Log...");
-        clickLogField.setText("Load Click Log...");
-        serverLogField.setText("Load Server Log...");
+        impressionsLogField.setPromptText("Load Impressions Log...");
+        clickLogField.setPromptText("Load Click Log...");
+        serverLogField.setPromptText("Load Server Log...");
+        campaignName.setPromptText("Input Campaign Name...");
+        campaignName.setText("");
 
         //Blank out current files to correctly reload new ones
         currentClick = null;
         currentImpressions = null;
         currentServer = null;
+        currentName = null;
     }
 
 }

@@ -59,6 +59,10 @@ public class ScreensController extends StackPane {
                 stage.setHeight(650);
                 stage.setWidth(758);
             }
+            if (name == "loadDataScreen") {
+                stage.setWidth(758);
+                stage.setHeight(630);
+            }
             if (name == "campaignScreen") {
                 stage.setMaximized(true);
             }
