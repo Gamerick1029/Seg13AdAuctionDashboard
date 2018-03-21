@@ -129,6 +129,11 @@ public class DataModelStub implements DataModel
         return null;
     }
 
+    @Override
+    public float getOverallCostByInterval(Date startInterval, Date endInterval) {
+        return 0;
+    }
+
 
     @Override
     public float getCTR()

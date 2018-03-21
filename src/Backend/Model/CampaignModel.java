@@ -19,6 +19,7 @@ import java.util.*;
 public class CampaignModel implements DataModel {
 
 
+    private String campaignName;
     private List<ClickLog> clickData;
     private List<ImpressionLog> impressionData;
     private List<ServerLog> serverData;
@@ -109,8 +110,9 @@ public class CampaignModel implements DataModel {
                 if(tempImpressInterv.keySet().contains(logDate)){
                     impressionNo += tempImpressInterv.get(logDate);
                 }
-                tempImpressInterv.put(logDate,impressionNo);
+
             }
+            tempImpressInterv.put(logDate,impressionNo);
         }
         return tempImpressInterv;
     }
@@ -162,6 +164,7 @@ public class CampaignModel implements DataModel {
         Map<Date,Integer> tempUniquesInterv = new HashMap<>();
         Set<Date> dateSet = usersMap.keySet();
         for(Date dt: dateSet){
+
             tempUniquesInterv.put(dt,usersMap.get(dt).size());
         }
         return tempUniquesInterv;
@@ -230,17 +233,19 @@ public class CampaignModel implements DataModel {
         for(ServerLog sl: serverData){
             int conversionsNumber = 0;
             Date entryLogDate = sl.getEntryDate();
-            Date exitLogDate = sl.getEntryDate();
+            Date exitLogDate = sl.getExitDate();
             if((entryLogDate.after(startInterval)&&entryLogDate.before(endInterval)) && (exitLogDate.after(startInterval)&&exitLogDate.before(endInterval)) ){
                 if(sl.getConverted()) {
                     conversionsNumber++;
+                    if(tempBouncesInterv.keySet().contains(entryLogDate)) {
+                        conversionsNumber += tempBouncesInterv.get(entryLogDate);
+                    }
+                    tempBouncesInterv.put(sl.getEntryDate(),conversionsNumber);
                 }
-                if(tempBouncesInterv.keySet().contains(entryLogDate)) {
-                    conversionsNumber += tempBouncesInterv.get(entryLogDate);
-                }
+
             }
 
-            tempBouncesInterv.put(sl.getEntryDate(),conversionsNumber);
+
         }
         return tempBouncesInterv;
     }
@@ -276,6 +281,21 @@ public class CampaignModel implements DataModel {
             }
         }
         return tempClickCostInterv;
+    }
+
+    /*
+DEAD FUNCTION
+ */
+    @Override
+    public float getOverallCostByInterval(Date startInterval, Date endInterval)
+    {
+        Map<Date,Float> tempClickCostInterv = getCostByInterval(startInterval,endInterval);
+        float overall = 0;
+        for(Date dt : tempClickCostInterv.keySet()){
+            overall += tempClickCostInterv.get(dt);
+        }
+
+        return overall;
     }
 
     /*
@@ -454,6 +474,7 @@ public class CampaignModel implements DataModel {
                 if (usersInterv.keySet().contains(logDate)) {
                     users.addAll(usersInterv.get(logDate));
                 }
+                users.add(cl.getID());
                 usersInterv.put(logDate, users);
             }
 

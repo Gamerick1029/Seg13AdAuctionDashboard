@@ -53,8 +53,13 @@ public interface DataModel {
     Map<Date, Float> getCostByInterval(Date startInterval, Date endInterval);
 
     /*
-        The average number of clicks per impression.
-    */
+DEAD FUNCTION
+ */
+    float getOverallCostByInterval(Date startInterval, Date endInterval);
+
+    /*
+            The average number of clicks per impression.
+        */
     float getCTR();
 
     Map<Date, Float> getCTRByInterval(Date startInterval, Date endInterval);
