@@ -9,9 +9,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="724.0" prefWidth="1317.0" style="-fx-background-color: #595454;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Frontend.sample.CampaignController">
+<AnchorPane prefHeight="752.0" prefWidth="1339.0" style="-fx-background-color: #595454;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Frontend.sample.CampaignController">
    <children>
-      <LineChart fx:id="lineChart" layoutX="284.0" layoutY="264.0" legendVisible="false" prefHeight="452.0" prefWidth="870.0" style="-fx-background-color: #807B7B;" title="Campaign Name" GridPane.columnIndex="1" GridPane.rowIndex="2">
+      <LineChart fx:id="lineChart" layoutX="283.0" layoutY="251.0" legendVisible="false" prefHeight="452.0" prefWidth="870.0" style="-fx-background-color: #807B7B;" title="Campaign Name" GridPane.columnIndex="1" GridPane.rowIndex="2">
         <xAxis>
           <CategoryAxis label="Campaign Something" side="BOTTOM" tickLabelFill="WHITE" fx:id="x" />
         </xAxis>
@@ -151,42 +151,42 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Text>
-            <TextField fx:id="costConversion" editable="false" layoutX="140.0" layoutY="265.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
+            <TextField fx:id="impressions" editable="false" layoutX="140.0" layoutY="265.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
                <font>
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </TextField>
-            <TextField fx:id="costConversion1" editable="false" layoutX="140.0" layoutY="415.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
+            <TextField fx:id="conversions" editable="false" layoutX="140.0" layoutY="415.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
                <font>
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </TextField>
-            <TextField fx:id="costConversion2" editable="false" layoutX="140.0" layoutY="470.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
+            <TextField fx:id="cost" editable="false" layoutX="140.0" layoutY="470.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
                <font>
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </TextField>
-            <TextField fx:id="costConversion3" editable="false" layoutX="140.0" layoutY="534.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
+            <TextField fx:id="clickRate" editable="false" layoutX="140.0" layoutY="534.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
                <font>
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </TextField>
-            <TextField fx:id="costConversion4" editable="false" layoutX="140.0" layoutY="593.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
+            <TextField fx:id="costAquisition" editable="false" layoutX="140.0" layoutY="593.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
                <font>
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </TextField>
-            <TextField fx:id="costConversion5" editable="false" layoutX="140.0" layoutY="642.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
+            <TextField fx:id="costConversion" editable="false" layoutX="140.0" layoutY="642.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
                <font>
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </TextField>
-            <TextField fx:id="costConversion11" editable="false" layoutX="140.0" layoutY="365.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
+            <TextField fx:id="bounces" editable="false" layoutX="140.0" layoutY="365.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
                <font>
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </TextField>
-            <TextField fx:id="costConversion12" editable="false" layoutX="140.0" layoutY="315.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
+            <TextField fx:id="clicks" editable="false" layoutX="140.0" layoutY="315.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
                <font>
                   <Font name="Ubuntu" size="18.0" />
                </font>
@@ -197,18 +197,18 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Text>
-            <MenuButton layoutX="116.0" layoutY="169.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="152.0" style="-fx-background-color: #807B7B;" text="Campaign" textFill="WHITE">
+            <MenuButton fx:id="campaignName" layoutX="116.0" layoutY="169.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="152.0" style="-fx-background-color: #807B7B;" text="Campaign" textFill="WHITE">
                <font>
                   <Font size="19.0" />
                </font>
                <items>
-                  <MenuItem mnemonicParsing="false" text="Action 1" />
-                  <MenuItem mnemonicParsing="false" text="Action 2" />
+                  <MenuItem mnemonicParsing="false" text="Action 1" visible="false" />
+                  <MenuItem mnemonicParsing="false" text="Action 2" visible="false" />
                </items>
             </MenuButton>
          </children>
       </Pane>
-      <RadioButton layoutX="1026.0" layoutY="727.0" mnemonicParsing="false" text="1 Month" textFill="WHITE">
+      <RadioButton fx:id="monthTick" layoutX="1065.0" layoutY="720.0" mnemonicParsing="false" text="1 Month" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -216,7 +216,7 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </RadioButton>
-      <RadioButton layoutX="833.0" layoutY="727.0" mnemonicParsing="false" text="By Day" textFill="WHITE">
+      <RadioButton fx:id="dayTick" layoutX="872.0" layoutY="720.0" mnemonicParsing="false" text="By Day" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -224,7 +224,7 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </RadioButton>
-      <RadioButton layoutX="924.0" layoutY="727.0" mnemonicParsing="false" text="By Week" textFill="WHITE">
+      <RadioButton fx:id="weekTick" layoutX="963.0" layoutY="720.0" mnemonicParsing="false" text="By Week" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -232,24 +232,40 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </RadioButton>
-      <Text fill="WHITE" layoutX="718.0" layoutY="745.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Timescale:">
+      <Text fill="WHITE" layoutX="757.0" layoutY="738.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Timescale:">
          <font>
             <Font size="20.0" />
          </font>
       </Text>
-      <TextField editable="false" layoutX="284.0" layoutY="218.0" prefHeight="36.0" prefWidth="166.0" style="-fx-background-color: #C6C6C6;" text="Impressions">
+      <TextField editable="false" layoutX="283.0" layoutY="205.0" prefHeight="36.0" prefWidth="166.0" style="-fx-background-color: #C6C6C6;" text="Impressions">
          <font>
             <Font size="19.0" />
          </font>
       </TextField>
-      <MenuButton layoutX="960.0" layoutY="218.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="194.0" style="-fx-background-color: #C6C6C6;" text="Histogram">
+      <MenuButton fx:id="graphType" layoutX="959.0" layoutY="205.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="194.0" style="-fx-background-color: #C6C6C6;" text="Line Chart">
         <items>
-          <MenuItem mnemonicParsing="false" text="Action 1" />
-          <MenuItem mnemonicParsing="false" text="Action 2" />
+          <MenuItem mnemonicParsing="false" text="Bar Chart" />
+          <MenuItem mnemonicParsing="false" text="Pie Chart" />
         </items>
          <font>
             <Font size="19.0" />
          </font>
       </MenuButton>
+      <Text fill="WHITE" layoutX="303.0" layoutY="59.0" onMouseClicked="#addNewCampaign" strokeType="OUTSIDE" strokeWidth="0.0" text="Add New Campaign">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Text>
+      <Text fill="#cdcccc" layoutX="472.0" layoutY="65.0" onMouseClicked="#addNewCampaign" strokeType="OUTSIDE" strokeWidth="0.0" text="+" wrappingWidth="37.43359375">
+         <font>
+            <Font name="System Bold" size="40.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Text>
    </children>
 </AnchorPane>

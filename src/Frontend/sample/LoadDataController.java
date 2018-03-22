@@ -48,13 +48,14 @@ public class LoadDataController implements ScreenInterface {
             JOptionPane.showMessageDialog(null, "You need to input a campaign name before continuing!"
                     , "Warning", 1);
         } else {
-            System.out.println("Campaign name: " + currentName);
+            //System.out.println("Campaign name: " + currentName);
             DataModel dataModel = null;
             try {
                 dataModel = new CampaignModelName(currentName,clicks, impressions, server);
                 myController.setDataModel(dataModel);
                 myController.getDataFieldPopulator().populateFields();
-                myController.setScreen(Main.viewDataScreenID);
+                myController.getCampaignDataPopulator().populateGraph();
+                myController.setScreen(Main.campaignScreenID);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, e.getMessage()
                         , "Warning", 1);

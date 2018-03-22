@@ -51,6 +51,7 @@ public class ViewDataController implements ScreenInterface {
     @FXML
     private void goToCampaignScreen(){
         myController.setScreen(Main.campaignScreenID);
+        myController.getDataFieldPopulator().populateFields();
         myController.getCampaignDataPopulator().populateGraph();
     }
 
