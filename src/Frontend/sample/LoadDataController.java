@@ -1,6 +1,6 @@
 package Frontend.sample;
 
-import Backend.Model.CampaignModelName;
+import Backend.Model.CampaignModel;
 import Backend.Model.Interfaces.DataModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -51,7 +51,7 @@ public class LoadDataController implements ScreenInterface {
             //System.out.println("Campaign name: " + currentName);
             DataModel dataModel = null;
             try {
-                dataModel = new CampaignModelName(currentName,clicks, impressions, server);
+                dataModel = new CampaignModel(currentName,clicks, impressions, server);
                 myController.setDataModel(dataModel);
                 myController.getDataFieldPopulator().populateFields();
                 myController.getCampaignDataPopulator().populateGraph();

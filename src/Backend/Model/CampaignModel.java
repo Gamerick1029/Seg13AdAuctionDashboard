@@ -15,18 +15,16 @@ import java.util.*;
  * Created by Benedict on 28/02/2018.
  * This models stores all the data of the campaign as
  * internal lists
- *
- * DEPRECATED
  */
-public class CampaignModel{
+public class CampaignModel implements DataModel {
 
 
-
+    private String campaignName;
     private List<ClickLog> clickData;
     private List<ImpressionLog> impressionData;
     private List<ServerLog> serverData;
 
-    public CampaignModel(File clickFile, File impressionFile, File serverFile) throws Exception {
+    public CampaignModel(String name, File clickFile, File impressionFile, File serverFile) throws Exception {
         try{
             impressionData = readCSVs.readImpressions(impressionFile);
         } catch (ArrayIndexOutOfBoundsException | NumberFormatException | ParseException e) {
@@ -58,6 +56,7 @@ public class CampaignModel{
             throw new  Exception("Server Log file not found!");
 
         }
+        campaignName = name;
 
 
     }
@@ -69,7 +68,7 @@ public class CampaignModel{
     /*
          Return the List of ClickLogs of a Campaign
      */
-    //@Override
+    @Override
     public List<ClickLog> getClickData() {
         return clickData;
     }
@@ -77,7 +76,7 @@ public class CampaignModel{
     /*
          Return the List of ImpressionLogs of a Campaign
     */
-    //@Override
+    @Override
     public List<ImpressionLog> getImpressionData() {
         return impressionData;
     }
@@ -85,7 +84,7 @@ public class CampaignModel{
     /*
          Return the List of ServerLogs of a Campaign
     */
-    //@Override
+    @Override
     public List<ServerLog> getServerData() {
         return serverData;
     }
@@ -93,12 +92,12 @@ public class CampaignModel{
     /*
         Returns the number of all Impressions of a Campaign
      */
-    ////@Override
+    @Override
     public int getImpressionsNumber() {
         return impressionData.size();
     }
 
-    //@Override
+    @Override
     /*
     DEAD FUNCTION
      */
@@ -119,7 +118,13 @@ public class CampaignModel{
         return tempImpressInterv;
     }
 
-    //@Override
+    @Override
+    public Map<Date, Integer> getImpressionsByInterval(Date startInterval, Date endInterval, long step)
+    {
+        return getImpressionsByInterval(startInterval, endInterval);
+    }
+
+    @Override
     public int getOverallImpressionsByInterval(Date startInterval, Date endInterval)
     {   Map<Date,Integer> tempImpressInterv = getImpressionsByInterval(startInterval,endInterval);
         int overallImpressions = 0;
@@ -132,7 +137,7 @@ public class CampaignModel{
     /*
         Returns the number of all Clicks of a Campaign
      */
-    //@Override
+    @Override
     public int getClicksNumber() {
         return clickData.size();
     }
@@ -140,7 +145,7 @@ public class CampaignModel{
     /*
     DEAD FUNCTION
      */
-    //@Override
+    @Override
     public Map<Date, Integer> getClicksByInterval(Date startInterval, Date endInterval)
     {
         Map<Date,Integer> tempClicksInterv = new HashMap<>();
@@ -158,7 +163,13 @@ public class CampaignModel{
         return tempClicksInterv;
     }
 
-    //@Override
+    @Override
+    public Map<Date, Integer> getClicksByInterval(Date startInterval, Date endInterval, long step)
+    {
+        return getClicksByInterval(startInterval, endInterval);
+    }
+
+    @Override
     public int getOverallClicksByInterval(Date startInterval, Date endInterval)
     {
         Map<Date,Integer> tempClicksInterv = getClicksByInterval(startInterval,endInterval);
@@ -172,7 +183,7 @@ public class CampaignModel{
     /*
         Returns the number of all Uniques of a Campaign
      */
-    //@Override
+    @Override
     public int getUniquesNumber() {
         return getUsersFromClickLog().size();
     }
@@ -180,7 +191,7 @@ public class CampaignModel{
     /*
     DEAD FUNCTION
      */
-    //@Override
+    @Override
     public Map<Date, Integer> getUniquesByInterval(Date startInterval, Date endInterval)
     {
         Map<Date, Set<String>> usersMap = getUsersByInterval(startInterval,endInterval);
@@ -193,7 +204,13 @@ public class CampaignModel{
         return tempUniquesInterv;
     }
 
-    //@Override
+    @Override
+    public Map<Date, Integer> getUniquesByInterval(Date startInterval, Date endInterval, long step)
+    {
+        return getUniquesByInterval(startInterval, endInterval);
+    }
+
+    @Override
     public int getOverallUniquesByInterval(Date startInterval, Date endInterval)
     {
         Map<Date,Integer> tempUniquesInterv = getUniquesByInterval(startInterval,endInterval);
@@ -207,7 +224,7 @@ public class CampaignModel{
     /*
         Returns the number of all Bounces of a Campaign
      */
-    //@Override
+    @Override
     public int getBouncesNumber() {
         int bouncesNumber = 0;
         for (ServerLog sd : serverData) {
@@ -221,7 +238,7 @@ public class CampaignModel{
     /*
     DEAD FUNCTION
      */
-    //@Override
+    @Override
     public Map<Date, Integer> getBouncesByInterval(Date startInterval,Date endInterval)
     {
         Map<Date,Integer> tempBouncesInterv = new HashMap<>();
@@ -243,7 +260,13 @@ public class CampaignModel{
         return tempBouncesInterv;
     }
 
-    //@Override
+    @Override
+    public Map<Date, Integer> getBouncesByInterval(Date startInterval, Date endInterval, long step)
+    {
+        return getBouncesByInterval(startInterval, endInterval);
+    }
+
+    @Override
     public int getOverallBouncesByInterval(Date startInterval, Date endInterval)
     {
         Map<Date,Integer> tempBouncesInterv = getBouncesByInterval(startInterval,endInterval);
@@ -259,7 +282,7 @@ public class CampaignModel{
     /*
         Returns the number of Conversions of a Campaign
     */
-    //@Override
+    @Override
     public int getConversionsNumber() {
         int conversionsNumber = 0;
         for (ServerLog sd : serverData)
@@ -273,7 +296,7 @@ public class CampaignModel{
     /*
     DEAD FUNCTION
      */
-    //@Override
+    @Override
     public Map<Date, Integer> getConversionsByInterval(Date startInterval, Date endInterval)
     {
         Map<Date,Integer> tempBouncesInterv = new HashMap<>();
@@ -297,7 +320,13 @@ public class CampaignModel{
         return tempBouncesInterv;
     }
 
-    //@Override
+    @Override
+    public Map<Date, Integer> getConversionsByInterval(Date startInterval, Date endInterval, long step)
+    {
+        return getConversionsByInterval(startInterval, endInterval);
+    }
+
+    @Override
     public int getOverallConversionsByInterval(Date startInterval, Date endInterval)
     {
         Map<Date,Integer> tempConversionsInterv = getConversionsByInterval(startInterval,endInterval);
@@ -311,7 +340,7 @@ public class CampaignModel{
     /*
         Returns the Total Cost of a Campaign
     */
-    //@Override
+    @Override
     public float getTotalCost() {
         float totalCost = 0;
         for (ClickLog cl : clickData) {
@@ -323,7 +352,7 @@ public class CampaignModel{
     /*
     DEAD FUNCTION
      */
-    //@Override
+    @Override
     public Map<Date, Float> getCostByInterval(Date startInterval, Date endInterval)
     {
         Map<Date,Float> tempClickCostInterv = new HashMap<>();
@@ -341,11 +370,17 @@ public class CampaignModel{
         return tempClickCostInterv;
     }
 
+    @Override
+    public Map<Date, Float> getCostByInterval(Date startInterval, Date endInterval, long step)
+    {
+        return getCostByInterval(startInterval, endInterval);
+    }
+
 
     /*
 DEAD FUNCTION
  */
-    //@Override
+    @Override
     public float getOverallCostByInterval(Date startInterval, Date endInterval)
     {
         Map<Date,Float> tempClickCostInterv = getCostByInterval(startInterval,endInterval);
@@ -360,7 +395,7 @@ DEAD FUNCTION
     /*
         Returns the average number of clicks per impression.
      */
-    //@Override
+    @Override
     public float getCTR() {
         return (float) getClicksNumber() / (float) getImpressionsNumber();
     }
@@ -368,7 +403,7 @@ DEAD FUNCTION
     /*
     DEAD FUNCTION
      */
-    //@Override
+    @Override
     public Map<Date, Float> getCTRByInterval(Date startInterval, Date endInterval)
     {
         Map<Date, Float> ctrByInterval = new HashMap<>();
@@ -385,7 +420,13 @@ DEAD FUNCTION
         return ctrByInterval;
     }
 
-    //@Override
+    @Override
+    public Map<Date, Float> getCTRByInterval(Date startInterval, Date endInterval, long step)
+    {
+        return getCTRByInterval(startInterval, endInterval);
+    }
+
+    @Override
     public float getOverallCTRByInterval(Date startInterval, Date endInterval)
     {
         return ((float) getOverallClicksByInterval(startInterval,endInterval) / (float) getOverallImpressionsByInterval(startInterval,endInterval));
@@ -394,7 +435,7 @@ DEAD FUNCTION
         Returns the average amount of money spent on an advertising campaign
          for each acquisition (i.e., conversion).
      */
-    //@Override
+    @Override
     public float getCPA() {
         return (float) getTotalCost() / (float) getConversionsNumber();
     }
@@ -402,7 +443,7 @@ DEAD FUNCTION
     /*
     DEAD FUNCTION
      */
-    //@Override
+    @Override
     public Map<Date, Float> getCPAByInterval(Date startInterval,Date endInterval)
     {
         Map<Date, Float> cpaByInterval = new HashMap<>();
@@ -416,7 +457,7 @@ DEAD FUNCTION
 
             }
             if(getTotalCosts.containsKey(logDate) && getConversionsNumber.containsKey(logDate))
-                cpa += (float) getTotalCosts.get(logDate) / (float) getConversionsNumber.get(logDate);
+            cpa += (float) getTotalCosts.get(logDate) / (float) getConversionsNumber.get(logDate);
             cpaByInterval.put(logDate, (cpa));
         }
 
@@ -424,7 +465,13 @@ DEAD FUNCTION
         return cpaByInterval;
     }
 
-    //@Override
+    @Override
+    public Map<Date, Float> getCPAByInterval(Date startInterval, Date endInterval, long step)
+    {
+        return getCPAByInterval(startInterval, endInterval);
+    }
+
+    @Override
     public float getOverallCPAByInterval(Date startInterval, Date endInterval)
     {
         return ((float) getOverallCostByInterval(startInterval,endInterval) / (float) getOverallConversionsByInterval(startInterval,endInterval));
@@ -434,7 +481,7 @@ DEAD FUNCTION
         Returns the average amount of money spent on an advertising campaign for each
          click.
      */
-    //@Override
+    @Override
     public float getCPC() {
         return (float) getTotalCost() / (float) getClicksNumber();
     }
@@ -442,7 +489,7 @@ DEAD FUNCTION
     /*
     DEAD FUNCTION
      */
-    //@Override
+    @Override
     public Map<Date, Float> getCPCByInterval(Date startInterval, Date endInterval)
     {
         Map<Date, Float> cpcByInterval = new HashMap<>();
@@ -459,7 +506,13 @@ DEAD FUNCTION
         return cpcByInterval;
     }
 
-    //@Override
+    @Override
+    public Map<Date, Float> getCPCByInterval(Date startInterval, Date endInterval, long step)
+    {
+        return getCPCByInterval(startInterval, endInterval);
+    }
+
+    @Override
     public float getOverallCPCByInterval(Date startInterval, Date endInterval)
     {
         return ((float) getOverallCostByInterval(startInterval,endInterval) / (float) getOverallClicksByInterval(startInterval,endInterval));
@@ -471,7 +524,7 @@ DEAD FUNCTION
          More commonly, a CPM rate is set by a platform for its advertising space and used
          to calculate the total cost of an ad campaign.
      */
-    //@Override
+    @Override
     public float getCPM() {
         return (float) (getTotalCost() / (float) getImpressionsNumber()) * 1000;
     }
@@ -479,7 +532,7 @@ DEAD FUNCTION
     /*
     DEAD FUNCTION
      */
-    //@Override
+    @Override
     public Map<Date, Float> getCPMByInterval(Date startInterval, Date endInterval)
     {
         Map<Date, Float> cpmByInterval = new HashMap<>();
@@ -496,7 +549,13 @@ DEAD FUNCTION
         return cpmByInterval;
     }
 
-    //@Override
+    @Override
+    public Map<Date, Float> getCPMByInterval(Date startInterval, Date endInterval, long step)
+    {
+        return getCPMByInterval(startInterval, endInterval);
+    }
+
+    @Override
     public float getOverallCPMByInterval(Date startInterval, Date endInterval)
     {
         return ( (float) (getOverallCostByInterval(startInterval,endInterval) / (float) getOverallImpressionsByInterval(startInterval,endInterval)) * 1000);
@@ -505,7 +564,7 @@ DEAD FUNCTION
     /*
         The average number of bounces per click.
      */
-    //@Override
+    @Override
     public float getBounceRate() {
         if(getClicksNumber() > 0)
             return (float) (getBouncesNumber() / (float) getClicksNumber());
@@ -517,7 +576,7 @@ DEAD FUNCTION
     /*
     DEAD FUNCTION
      */
-    //@Override
+    @Override
     public Map<Date, Float> getBounceRateByInterval(Date startInterval, Date endInterval)
     {
         Map<Date, Float> bounceRateByInterval = new HashMap<>();
@@ -541,7 +600,13 @@ DEAD FUNCTION
         return bounceRateByInterval;
     }
 
-    //@Override
+    @Override
+    public Map<Date, Float> getBounceRateByInterval(Date startInterval, Date endInterval, long step)
+    {
+        return getBounceRateByInterval(startInterval, endInterval);
+    }
+
+    @Override
     public float getOverallBounceRateByInterval(Date startInterval, Date endInterval)
     {
 
@@ -562,6 +627,13 @@ DEAD FUNCTION
         return userSet;
     }
 
+    private String getCampaignName() {
+        return campaignName;
+    }
+
+    private void setCampaignName(String campaignName) {
+        this.campaignName = campaignName;
+    }
 
     public Map<Date, Set<String>> getUsersByInterval(Date startInterval, Date endInterval) {
 
@@ -582,7 +654,13 @@ DEAD FUNCTION
         return usersInterv;
     }
 
-    //@Override
+    @Override
+    public Map<Date, Set<String>> getUsersByInterval(Date startInterval, Date endInterval, long step)
+    {
+        return getUsersByInterval(startInterval, endInterval);
+    }
+
+    @Override
     public Set<String> getOverallUsersRateByInterval(Date startInterval, Date endInterval)
     {
         Map<Date,Set<String>> tempUsersInterv = getUsersByInterval(startInterval,endInterval);
