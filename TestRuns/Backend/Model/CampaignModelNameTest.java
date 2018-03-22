@@ -492,4 +492,145 @@ public class CampaignModelNameTest extends TestCase {
         e.printStackTrace();
     }
     }
+
+    public void testGetOverallImpressionsByInterval() {
+        try{
+        CampaignModelName cm = new CampaignModelName("Fanta",new File(path + "TestRuns/Backend/Model/TestSamples/click_log.csv"),new File(path+"TestRuns/Backend/Model/TestSamples/impression_log.csv"),new File(path+"TestRuns/Backend/Model/TestSamples/server_log.csv"));
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date start = dateFormat.parse("2015-01-01 12:00:59");
+        Date end = dateFormat.parse("2015-01-01 12:05:00");
+        Assert.assertEquals((int) 4 , (int)cm.getOverallImpressionsByInterval(start,end));
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+
+    }
+
+    public void testGetOverallClicksByInterval() {
+        try{
+            CampaignModelName cm = new CampaignModelName("Fanta",new File(path + "TestRuns/Backend/Model/TestSamples/click_log.csv"),new File(path+"TestRuns/Backend/Model/TestSamples/impression_log.csv"),new File(path+"TestRuns/Backend/Model/TestSamples/server_log.csv"));
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date start = dateFormat.parse("2015-01-13 08:57:55");
+            Date end = dateFormat.parse("2015-01-13 08:59:12");
+            Assert.assertEquals((int) 2 , (int)cm.getOverallClicksByInterval(start,end));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void testGetOverallUniquesByInterval() {
+        try{
+            CampaignModelName cm = new CampaignModelName("Fanta",new File(path + "TestRuns/Backend/Model/TestSamples/click_log.csv"),new File(path+"TestRuns/Backend/Model/TestSamples/impression_log.csv"),new File(path+"TestRuns/Backend/Model/TestSamples/server_log.csv"));
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date start = dateFormat.parse("2015-01-13 08:56:55");
+            Date end = dateFormat.parse("2015-01-13 08:59:12");
+            Assert.assertEquals((int) 4 , (int)cm.getOverallUniquesByInterval(start,end));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void testGetOverallBouncesByInterval() {
+        try{
+            CampaignModelName cm = new CampaignModelName("Fanta",new File(path + "TestRuns/Backend/Model/TestSamples/click_log.csv"),new File(path+"TestRuns/Backend/Model/TestSamples/impression_log.csv"),new File(path+"TestRuns/Backend/Model/TestSamples/server_log.csv"));
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date start = dateFormat.parse("2015-01-01 12:01:21");
+            Date end = dateFormat.parse("2015-01-01 12:04:16");
+            Assert.assertEquals((int) 4 , (int)cm.getOverallBouncesByInterval(start,end));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void testGetOverallConversionsByInterval() {
+        try{
+            CampaignModelName cm = new CampaignModelName("Fanta",new File(path + "TestRuns/Backend/Model/TestSamples/click_log.csv"),new File(path+"TestRuns/Backend/Model/TestSamples/impression_log.csv"),new File(path+"TestRuns/Backend/Model/TestSamples/server_log.csv"));
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date start = dateFormat.parse("2015-01-01 12:01:21");
+            Date end = dateFormat.parse("2015-01-01 12:30:00");
+            Assert.assertEquals((int) 1 , (int)cm.getOverallConversionsByInterval(start,end));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+//------------------------------------------------------
+    public void testGetCTRByInterval() {
+        try{
+            CampaignModelName cm = new CampaignModelName("Fanta",new File(path + "TestRuns/Backend/Model/TestSamples/click_logMetrics.csv"),new File(path+"TestRuns/Backend/Model/TestSamples/impression_logMetrics.csv"),new File(path+"TestRuns/Backend/Model/TestSamples/server_logMetrics.csv"));
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date start = dateFormat.parse("2015-01-01 12:01:21");
+            Date end = dateFormat.parse("2015-01-01 12:30:00");
+            Date specific = dateFormat.parse("2015-01-01 12:04:29");
+            Assert.assertEquals((float) 1.0 , (float)cm.getCTRByInterval(start,end).get(specific));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void testGetOverallCTRByInterval() {
+        try{
+            CampaignModelName cm = new CampaignModelName("Fanta",new File(path + "TestRuns/Backend/Model/TestSamples/click_logMetrics.csv"),new File(path+"TestRuns/Backend/Model/TestSamples/impression_logMetrics.csv"),new File(path+"TestRuns/Backend/Model/TestSamples/server_logMetrics.csv"));
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date start = dateFormat.parse("2015-01-01 12:01:21");
+            Date end = dateFormat.parse("2015-01-01 12:30:00");
+            Assert.assertEquals((float) 1.0 , (float)cm.getOverallCTRByInterval(start,end));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void testGetOverallCPAByInterval() {
+        try{
+            CampaignModelName cm = new CampaignModelName("Fanta",new File(path + "TestRuns/Backend/Model/TestSamples/click_logMetrics.csv"),new File(path+"TestRuns/Backend/Model/TestSamples/impression_logMetrics.csv"),new File(path+"TestRuns/Backend/Model/TestSamples/server_logMetrics.csv"));
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date start = dateFormat.parse("2015-01-01 12:01:21");
+            Date end = dateFormat.parse("2015-01-01 12:30:00");
+            Assert.assertEquals((float) 77.299995 , (float)cm.getOverallCPAByInterval(start,end));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void testGetOverallCPCByInterval() {
+        try{
+            CampaignModelName cm = new CampaignModelName("Fanta",new File(path + "TestRuns/Backend/Model/TestSamples/click_logMetrics.csv"),new File(path+"TestRuns/Backend/Model/TestSamples/impression_logMetrics.csv"),new File(path+"TestRuns/Backend/Model/TestSamples/server_logMetrics.csv"));
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date start = dateFormat.parse("2015-01-01 12:01:21");
+            Date end = dateFormat.parse("2015-01-01 12:30:00");
+            Assert.assertEquals((float) 12.883332 , (float)cm.getOverallCPCByInterval(start,end));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void testGetOverallCPMByInterval() {
+        try{
+            CampaignModelName cm = new CampaignModelName("Fanta",new File(path + "TestRuns/Backend/Model/TestSamples/click_logMetrics.csv"),new File(path+"TestRuns/Backend/Model/TestSamples/impression_logMetrics.csv"),new File(path+"TestRuns/Backend/Model/TestSamples/server_logMetrics.csv"));
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date start = dateFormat.parse("2015-01-01 12:01:21");
+            Date end = dateFormat.parse("2015-01-01 12:30:00");
+            Assert.assertEquals((float) 12883.332 , (float)cm.getOverallCPMByInterval(start,end));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+    public void testGetOverallBounceRateByInterval() {
+        try{
+            CampaignModelName cm = new CampaignModelName("Fanta",new File(path + "TestRuns/Backend/Model/TestSamples/click_logMetrics.csv"),new File(path+"TestRuns/Backend/Model/TestSamples/impression_log.csv"),new File(path+"TestRuns/Backend/Model/TestSamples/server_log.csv"));
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date start = dateFormat.parse("2015-01-01 12:01:21");
+            Date end = dateFormat.parse("2015-01-01 12:30:00");
+            Assert.assertEquals((float) 1.0 , (float)cm.getOverallBounceRateByInterval(start,end));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

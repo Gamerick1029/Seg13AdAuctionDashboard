@@ -19,7 +19,7 @@ import java.util.*;
 public class CampaignModel implements DataModel {
 
 
-    private String campaignName;
+
     private List<ClickLog> clickData;
     private List<ImpressionLog> impressionData;
     private List<ServerLog> serverData;
@@ -117,6 +117,16 @@ public class CampaignModel implements DataModel {
         return tempImpressInterv;
     }
 
+    @Override
+    public int getOverallImpressionsByInterval(Date startInterval, Date endInterval)
+    {   Map<Date,Integer> tempImpressInterv = getImpressionsByInterval(startInterval,endInterval);
+        int overallImpressions = 0;
+        for(Date dt: tempImpressInterv.keySet()){
+            overallImpressions += tempImpressInterv.get(dt);
+        }
+        return overallImpressions;
+    }
+
     /*
         Returns the number of all Clicks of a Campaign
      */
@@ -146,6 +156,17 @@ public class CampaignModel implements DataModel {
         return tempClicksInterv;
     }
 
+    @Override
+    public int getOverallClicksByInterval(Date startInterval, Date endInterval)
+    {
+        Map<Date,Integer> tempClicksInterv = getClicksByInterval(startInterval,endInterval);
+        int overallClicks = 0;
+        for(Date dt: tempClicksInterv.keySet()){
+            overallClicks += tempClicksInterv.get(dt);
+        }
+        return overallClicks;
+    }
+
     /*
         Returns the number of all Uniques of a Campaign
      */
@@ -168,6 +189,17 @@ public class CampaignModel implements DataModel {
             tempUniquesInterv.put(dt,usersMap.get(dt).size());
         }
         return tempUniquesInterv;
+    }
+
+    @Override
+    public int getOverallUniquesByInterval(Date startInterval, Date endInterval)
+    {
+        Map<Date,Integer> tempUniquesInterv = getUniquesByInterval(startInterval,endInterval);
+        int overallUniques = 0;
+        for(Date dt: tempUniquesInterv.keySet()){
+            overallUniques += tempUniquesInterv.get(dt);
+        }
+        return overallUniques;
     }
 
     /*
@@ -208,6 +240,19 @@ public class CampaignModel implements DataModel {
         }
         return tempBouncesInterv;
     }
+
+    @Override
+    public int getOverallBouncesByInterval(Date startInterval, Date endInterval)
+    {
+        Map<Date,Integer> tempBouncesInterv = getBouncesByInterval(startInterval,endInterval);
+        int overallBounces = 0;
+        for(Date dt: tempBouncesInterv.keySet()){
+            overallBounces += tempBouncesInterv.get(dt);
+        }
+        return overallBounces;
+    }
+
+
 
     /*
         Returns the number of Conversions of a Campaign
@@ -250,6 +295,17 @@ public class CampaignModel implements DataModel {
         return tempBouncesInterv;
     }
 
+    @Override
+    public int getOverallConversionsByInterval(Date startInterval, Date endInterval)
+    {
+        Map<Date,Integer> tempConversionsInterv = getConversionsByInterval(startInterval,endInterval);
+        int overallConversions = 0;
+        for(Date dt: tempConversionsInterv.keySet()){
+            overallConversions += tempConversionsInterv.get(dt);
+        }
+        return overallConversions;
+    }
+
     /*
         Returns the Total Cost of a Campaign
     */
@@ -282,6 +338,7 @@ public class CampaignModel implements DataModel {
         }
         return tempClickCostInterv;
     }
+
 
     /*
 DEAD FUNCTION
@@ -326,6 +383,11 @@ DEAD FUNCTION
         return ctrByInterval;
     }
 
+    @Override
+    public float getOverallCTRByInterval(Date startInterval, Date endInterval)
+    {
+        return ((float) getOverallClicksByInterval(startInterval,endInterval) / (float) getOverallImpressionsByInterval(startInterval,endInterval));
+    }
     /*
         Returns the average amount of money spent on an advertising campaign
          for each acquisition (i.e., conversion).
@@ -341,18 +403,29 @@ DEAD FUNCTION
     @Override
     public Map<Date, Float> getCPAByInterval(Date startInterval,Date endInterval)
     {
-        Map<Date, Float> ctaByInterval = new HashMap<>();
+        Map<Date, Float> cpaByInterval = new HashMap<>();
         Map<Date, Float> getTotalCosts = getCostByInterval(startInterval,endInterval);
         Map<Date, Integer> getConversionsNumber = getConversionsByInterval(startInterval,endInterval);
 
         for(Date logDate: getTotalCosts.keySet()){
+            float cpa = 0;
+            if(cpaByInterval.containsKey(logDate)) {
+                cpa += cpaByInterval.get(logDate);
 
-            ctaByInterval.put(logDate,((float) getTotalCosts.get(logDate) / (float) getConversionsNumber.get(logDate)));
-
+            }
+            if(getTotalCosts.containsKey(logDate) && getConversionsNumber.containsKey(logDate))
+                cpa += (float) getTotalCosts.get(logDate) / (float) getConversionsNumber.get(logDate);
+            cpaByInterval.put(logDate, (cpa));
         }
 
 
-        return ctaByInterval;
+        return cpaByInterval;
+    }
+
+    @Override
+    public float getOverallCPAByInterval(Date startInterval, Date endInterval)
+    {
+        return ((float) getOverallCostByInterval(startInterval,endInterval) / (float) getOverallConversionsByInterval(startInterval,endInterval));
     }
 
     /*
@@ -382,6 +455,12 @@ DEAD FUNCTION
 
 
         return cpcByInterval;
+    }
+
+    @Override
+    public float getOverallCPCByInterval(Date startInterval, Date endInterval)
+    {
+        return ((float) getOverallCostByInterval(startInterval,endInterval) / (float) getOverallClicksByInterval(startInterval,endInterval));
     }
 
     /*
@@ -415,6 +494,12 @@ DEAD FUNCTION
         return cpmByInterval;
     }
 
+    @Override
+    public float getOverallCPMByInterval(Date startInterval, Date endInterval)
+    {
+        return ( (float) (getOverallCostByInterval(startInterval,endInterval) / (float) getOverallImpressionsByInterval(startInterval,endInterval)) * 1000);
+    }
+
     /*
         The average number of bounces per click.
      */
@@ -433,23 +518,36 @@ DEAD FUNCTION
     @Override
     public Map<Date, Float> getBounceRateByInterval(Date startInterval, Date endInterval)
     {
-        Map<Date, Float> ctaByInterval = new HashMap<>();
+        Map<Date, Float> bounceRateByInterval = new HashMap<>();
         Map<Date, Integer> getBouncesNumber = getBouncesByInterval(startInterval,endInterval);
         Map<Date, Integer> getClicksNumber = getClicksByInterval(startInterval,endInterval);
 
         for(Date logDate: getBouncesNumber.keySet()){
-            int clickNo = getClicksNumber.get(logDate);;
-            if(clickNo > 0 )
-                ctaByInterval.put(logDate,((float) getBouncesNumber.get(logDate) / (float) getClicksNumber.get(logDate)));
-            else{
-                ctaByInterval.put(logDate,((float) getBouncesNumber.get(logDate) / (float) 0.0));
+            int clickNo = 0;
+            float bounceRate = 1;
+            if(getClicksNumber.containsKey(logDate) && getBouncesNumber.containsKey(logDate)) {
+                clickNo += getClicksNumber.get(logDate);
+                if (clickNo > 0) {
+                    bounceRate = ((float) getBouncesNumber.get(logDate) / clickNo);
+                }
+                bounceRateByInterval.put(logDate, bounceRate);
             }
 
         }
 
 
-        return ctaByInterval;
+        return bounceRateByInterval;
     }
+
+    @Override
+    public float getOverallBounceRateByInterval(Date startInterval, Date endInterval)
+    {
+
+        return ((float) getOverallBouncesByInterval(startInterval,endInterval)/ (float) getOverallClicksByInterval(startInterval,endInterval));
+    }
+
+
+
 
     /*
         Returns a Set of the Unique Users from the ClickData.
@@ -481,4 +579,18 @@ DEAD FUNCTION
         }
         return usersInterv;
     }
+
+    @Override
+    public Set<String> getOverallUsersRateByInterval(Date startInterval, Date endInterval)
+    {
+        Map<Date,Set<String>> tempUsersInterv = getUsersByInterval(startInterval,endInterval);
+        Set<String> users = new HashSet<>();
+        for(Date dt: tempUsersInterv.keySet()){
+            users.addAll(tempUsersInterv.get(dt));
+        }
+        return users;
+    }
+
+
+
 }
