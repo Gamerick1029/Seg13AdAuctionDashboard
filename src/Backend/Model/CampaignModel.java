@@ -19,6 +19,7 @@ import java.util.*;
 public class CampaignModel implements DataModel {
 
 
+
     private List<ClickLog> clickData;
     private List<ImpressionLog> impressionData;
     private List<ServerLog> serverData;
@@ -385,12 +386,7 @@ DEAD FUNCTION
     @Override
     public float getOverallCTRByInterval(Date startInterval, Date endInterval)
     {
-        Map<Date,Float> tempCTRInterv = getCTRByInterval(startInterval,endInterval);
-        float overallCTR = 0;
-        for(Date dt: tempCTRInterv.keySet()){
-            overallCTR += tempCTRInterv.get(dt);
-        }
-        return overallCTR;
+        return ((float) getOverallClicksByInterval(startInterval,endInterval) / (float) getOverallImpressionsByInterval(startInterval,endInterval));
     }
     /*
         Returns the average amount of money spent on an advertising campaign
@@ -412,9 +408,14 @@ DEAD FUNCTION
         Map<Date, Integer> getConversionsNumber = getConversionsByInterval(startInterval,endInterval);
 
         for(Date logDate: getTotalCosts.keySet()){
+            float cpa = 0;
+            if(cpaByInterval.containsKey(logDate)) {
+                cpa += cpaByInterval.get(logDate);
 
-            cpaByInterval.put(logDate,((float) getTotalCosts.get(logDate) / (float) getConversionsNumber.get(logDate)));
-
+            }
+            if(getTotalCosts.containsKey(logDate) && getConversionsNumber.containsKey(logDate))
+                cpa += (float) getTotalCosts.get(logDate) / (float) getConversionsNumber.get(logDate);
+            cpaByInterval.put(logDate, (cpa));
         }
 
 
@@ -424,12 +425,7 @@ DEAD FUNCTION
     @Override
     public float getOverallCPAByInterval(Date startInterval, Date endInterval)
     {
-        Map<Date,Float> tempCPAInterv = getCPAByInterval(startInterval,endInterval);
-        float overallCPA = 0;
-        for(Date dt: tempCPAInterv.keySet()){
-            overallCPA += tempCPAInterv.get(dt);
-        }
-        return overallCPA;
+        return ((float) getOverallCostByInterval(startInterval,endInterval) / (float) getOverallConversionsByInterval(startInterval,endInterval));
     }
 
     /*
@@ -464,12 +460,7 @@ DEAD FUNCTION
     @Override
     public float getOverallCPCByInterval(Date startInterval, Date endInterval)
     {
-        Map<Date,Float> tempCPCInterv = getCPCByInterval(startInterval,endInterval);
-        float overallCPC = 0;
-        for(Date dt: tempCPCInterv.keySet()){
-            overallCPC += tempCPCInterv.get(dt);
-        }
-        return overallCPC;
+        return ((float) getOverallCostByInterval(startInterval,endInterval) / (float) getOverallClicksByInterval(startInterval,endInterval));
     }
 
     /*
@@ -506,12 +497,7 @@ DEAD FUNCTION
     @Override
     public float getOverallCPMByInterval(Date startInterval, Date endInterval)
     {
-        Map<Date,Float> tempCPMInterv = getCPMByInterval(startInterval,endInterval);
-        float overallCPM = 0;
-        for(Date dt: tempCPMInterv.keySet()){
-            overallCPM += tempCPMInterv.get(dt);
-        }
-        return overallCPM;
+        return ( (float) (getOverallCostByInterval(startInterval,endInterval) / (float) getOverallImpressionsByInterval(startInterval,endInterval)) * 1000);
     }
 
     /*
@@ -537,11 +523,14 @@ DEAD FUNCTION
         Map<Date, Integer> getClicksNumber = getClicksByInterval(startInterval,endInterval);
 
         for(Date logDate: getBouncesNumber.keySet()){
-            int clickNo = getClicksNumber.get(logDate);;
-            if(clickNo > 0 )
-                bounceRateByInterval.put(logDate,((float) getBouncesNumber.get(logDate) / (float) getClicksNumber.get(logDate)));
-            else{
-                bounceRateByInterval.put(logDate,((float) getBouncesNumber.get(logDate) / (float) 0.0));
+            int clickNo = 0;
+            float bounceRate = 1;
+            if(getClicksNumber.containsKey(logDate) && getBouncesNumber.containsKey(logDate)) {
+                clickNo += getClicksNumber.get(logDate);
+                if (clickNo > 0) {
+                    bounceRate = ((float) getBouncesNumber.get(logDate) / clickNo);
+                }
+                bounceRateByInterval.put(logDate, bounceRate);
             }
 
         }
@@ -553,12 +542,8 @@ DEAD FUNCTION
     @Override
     public float getOverallBounceRateByInterval(Date startInterval, Date endInterval)
     {
-        Map<Date,Float> tempCPMInterv = getBounceRateByInterval(startInterval,endInterval);
-        float overallBounceRate = 0;
-        for(Date dt: tempCPMInterv.keySet()){
-            overallBounceRate += tempCPMInterv.get(dt);
-        }
-        return overallBounceRate;
+
+        return ((float) getOverallBouncesByInterval(startInterval,endInterval)/ (float) getOverallClicksByInterval(startInterval,endInterval));
     }
 
 
@@ -574,7 +559,6 @@ DEAD FUNCTION
         }
         return userSet;
     }
-
 
 
     public Map<Date, Set<String>> getUsersByInterval(Date startInterval, Date endInterval) {
