@@ -71,6 +71,12 @@ public class DataModelStub implements DataModel
     }
 
     @Override
+    public Map<Date, Integer> getImpressionsByInterval(Date startInterval, Date endInterval, long step)
+    {
+        return null;
+    }
+
+    @Override
     public int getOverallImpressionsByInterval(Date startInterval, Date endInterval) {
         return 0;
     }
@@ -84,6 +90,12 @@ public class DataModelStub implements DataModel
 
     @Override
     public Map<Date, Integer> getClicksByInterval(Date startInterval, Date endInterval) {
+        return null;
+    }
+
+    @Override
+    public Map<Date, Integer> getClicksByInterval(Date startInterval, Date endInterval, long step)
+    {
         return null;
     }
 
@@ -105,6 +117,12 @@ public class DataModelStub implements DataModel
     }
 
     @Override
+    public Map<Date, Integer> getUniquesByInterval(Date startInterval, Date endInterval, long step)
+    {
+        return null;
+    }
+
+    @Override
     public int getOverallUniquesByInterval(Date startInterval, Date endInterval) {
         return 0;
     }
@@ -117,6 +135,12 @@ public class DataModelStub implements DataModel
 
     @Override
     public Map<Date, Integer> getBouncesByInterval(Date startInterval, Date endInterval) {
+        return null;
+    }
+
+    @Override
+    public Map<Date, Integer> getBouncesByInterval(Date startInterval, Date endInterval, long step)
+    {
         return null;
     }
 
@@ -138,6 +162,12 @@ public class DataModelStub implements DataModel
     }
 
     @Override
+    public Map<Date, Integer> getConversionsByInterval(Date startInterval, Date endInterval, long step)
+    {
+        return null;
+    }
+
+    @Override
     public int getOverallConversionsByInterval(Date startInterval, Date endInterval) {
         return 0;
     }
@@ -151,6 +181,12 @@ public class DataModelStub implements DataModel
 
     @Override
     public Map<Date, Float> getCostByInterval(Date startInterval, Date endInterval) {
+        return null;
+    }
+
+    @Override
+    public Map<Date, Float> getCostByInterval(Date startInterval, Date endInterval, long step)
+    {
         return null;
     }
 
@@ -172,6 +208,12 @@ public class DataModelStub implements DataModel
     }
 
     @Override
+    public Map<Date, Float> getCTRByInterval(Date startInterval, Date endInterval, long step)
+    {
+        return null;
+    }
+
+    @Override
     public float getOverallCTRByInterval(Date startInterval, Date endInterval) {
         return 0;
     }
@@ -185,6 +227,12 @@ public class DataModelStub implements DataModel
 
     @Override
     public Map<Date, Float> getCPAByInterval(Date startInterval, Date endInterval) {
+        return null;
+    }
+
+    @Override
+    public Map<Date, Float> getCPAByInterval(Date startInterval, Date endInterval, long step)
+    {
         return null;
     }
 
@@ -206,6 +254,12 @@ public class DataModelStub implements DataModel
     }
 
     @Override
+    public Map<Date, Float> getCPCByInterval(Date startInterval, Date endInterval, long step)
+    {
+        return null;
+    }
+
+    @Override
     public float getOverallCPCByInterval(Date startInterval, Date endInterval) {
         return 0;
     }
@@ -218,6 +272,12 @@ public class DataModelStub implements DataModel
 
     @Override
     public Map<Date, Float> getCPMByInterval(Date startInterval, Date endInterval) {
+        return null;
+    }
+
+    @Override
+    public Map<Date, Float> getCPMByInterval(Date startInterval, Date endInterval, long step)
+    {
         return null;
     }
 
@@ -239,12 +299,24 @@ public class DataModelStub implements DataModel
     }
 
     @Override
+    public Map<Date, Float> getBounceRateByInterval(Date startInterval, Date endInterval, long step)
+    {
+        return null;
+    }
+
+    @Override
     public float getOverallBounceRateByInterval(Date startInterval, Date endInterval) {
         return 0;
     }
 
     @Override
     public Map<Date, Set<String>> getUsersByInterval(Date startInterval, Date endInterval) {
+        return null;
+    }
+
+    @Override
+    public Map<Date, Set<String>> getUsersByInterval(Date startInterval, Date endInterval, long step)
+    {
         return null;
     }
 
