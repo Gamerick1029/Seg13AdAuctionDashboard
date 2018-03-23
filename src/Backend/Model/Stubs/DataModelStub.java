@@ -67,13 +67,13 @@ public class DataModelStub implements DataModel
 
     @Override
     public Map<Date, Integer> getImpressionsByInterval(Date startInterval, Date endInterval) {
-        return null;
+        return intMap;
     }
 
     @Override
     public Map<Date, Integer> getImpressionsByInterval(Date startInterval, Date endInterval, long step)
     {
-        return null;
+        return intMap;
     }
 
     @Override
@@ -90,13 +90,13 @@ public class DataModelStub implements DataModel
 
     @Override
     public Map<Date, Integer> getClicksByInterval(Date startInterval, Date endInterval) {
-        return null;
+        return intMap;
     }
 
     @Override
     public Map<Date, Integer> getClicksByInterval(Date startInterval, Date endInterval, long step)
     {
-        return null;
+        return intMap;
     }
 
     @Override
@@ -113,13 +113,13 @@ public class DataModelStub implements DataModel
 
     @Override
     public Map<Date, Integer> getUniquesByInterval(Date startInterval, Date endInterval) {
-        return null;
+        return intMap;
     }
 
     @Override
     public Map<Date, Integer> getUniquesByInterval(Date startInterval, Date endInterval, long step)
     {
-        return null;
+        return intMap;
     }
 
     @Override
@@ -135,13 +135,13 @@ public class DataModelStub implements DataModel
 
     @Override
     public Map<Date, Integer> getBouncesByInterval(Date startInterval, Date endInterval) {
-        return null;
+        return intMap;
     }
 
     @Override
     public Map<Date, Integer> getBouncesByInterval(Date startInterval, Date endInterval, long step)
     {
-        return null;
+        return intMap;
     }
 
     @Override
@@ -158,13 +158,13 @@ public class DataModelStub implements DataModel
 
     @Override
     public Map<Date, Integer> getConversionsByInterval(Date startInterval, Date endInterval) {
-        return null;
+        return intMap;
     }
 
     @Override
     public Map<Date, Integer> getConversionsByInterval(Date startInterval, Date endInterval, long step)
     {
-        return null;
+        return intMap;
     }
 
     @Override
@@ -181,13 +181,13 @@ public class DataModelStub implements DataModel
 
     @Override
     public Map<Date, Float> getCostByInterval(Date startInterval, Date endInterval) {
-        return null;
+        return floatMap;
     }
 
     @Override
     public Map<Date, Float> getCostByInterval(Date startInterval, Date endInterval, long step)
     {
-        return null;
+        return floatMap;
     }
 
     @Override
@@ -204,13 +204,13 @@ public class DataModelStub implements DataModel
 
     @Override
     public Map<Date, Float> getCTRByInterval(Date startInterval, Date endInterval) {
-        return null;
+        return floatMap;
     }
 
     @Override
     public Map<Date, Float> getCTRByInterval(Date startInterval, Date endInterval, long step)
     {
-        return null;
+        return floatMap;
     }
 
     @Override
@@ -227,13 +227,13 @@ public class DataModelStub implements DataModel
 
     @Override
     public Map<Date, Float> getCPAByInterval(Date startInterval, Date endInterval) {
-        return null;
+        return floatMap;
     }
 
     @Override
     public Map<Date, Float> getCPAByInterval(Date startInterval, Date endInterval, long step)
     {
-        return null;
+        return floatMap;
     }
 
     @Override
@@ -250,13 +250,13 @@ public class DataModelStub implements DataModel
 
     @Override
     public Map<Date, Float> getCPCByInterval(Date startInterval, Date endInterval) {
-        return null;
+        return floatMap;
     }
 
     @Override
     public Map<Date, Float> getCPCByInterval(Date startInterval, Date endInterval, long step)
     {
-        return null;
+        return floatMap;
     }
 
     @Override
@@ -272,13 +272,13 @@ public class DataModelStub implements DataModel
 
     @Override
     public Map<Date, Float> getCPMByInterval(Date startInterval, Date endInterval) {
-        return null;
+        return floatMap;
     }
 
     @Override
     public Map<Date, Float> getCPMByInterval(Date startInterval, Date endInterval, long step)
     {
-        return null;
+        return floatMap;
     }
 
     @Override
@@ -295,13 +295,13 @@ public class DataModelStub implements DataModel
 
     @Override
     public Map<Date, Float> getBounceRateByInterval(Date startInterval, Date endInterval) {
-        return null;
+        return floatMap;
     }
 
     @Override
     public Map<Date, Float> getBounceRateByInterval(Date startInterval, Date endInterval, long step)
     {
-        return null;
+        return floatMap;
     }
 
     @Override
