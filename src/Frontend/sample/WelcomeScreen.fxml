@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.shape.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -57,5 +58,6 @@
             <Font name="Ubuntu" size="36.0" />
          </font>
       </Text>
+      <Hyperlink layoutX="315.0" layoutY="470.0" onAction="#goToStubView" text="Load Debug Stub View" textAlignment="CENTER" />
    </children>
 </AnchorPane>
