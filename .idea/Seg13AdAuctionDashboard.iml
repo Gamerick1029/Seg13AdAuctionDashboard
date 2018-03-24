@@ -6,6 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Testing" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/TestRuns" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/sqlScripts" type="java-resource" />
       <excludeFolder url="file://$MODULE_DIR$/TestCSVs" />
     </content>
     <orderEntry type="inheritedJdk" />

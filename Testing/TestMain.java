@@ -7,6 +7,7 @@ import Backend.Model.ServerData;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.*;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -16,11 +17,17 @@ public class TestMain {
 
     private String DBUrl = "jdbc:mariadb://" + MagicDB.defaultHost + ":" + MagicDB.defaultPort + "/" + MagicDB.dbName;
 
-    public static void main(String[] args) throws FileNotFoundException, ParseException, SQLException {
+    private static final String defClickLog = "TestCSVs/2_week_campaign/click_log.csv";
+    private static final String defImpressionLog = "TestCSVs/2_week_campaign/impression_log.csv";
+    private static final String defServerLog = "TestCSVs/2_week_campaign/server_log.csv";
 
-        TestMain testMain = new TestMain();
-        testMain.databaseTesting();
+    public static void main(String[] args) throws IOException, ParseException, SQLException {
 
+//        TestMain testMain = new TestMain();
+//        testMain.databaseTesting();
+
+        ReadCSVsToDB readCSVsToDB = new ReadCSVsToDB("test", new File(defClickLog), new File(defImpressionLog), new File(defServerLog), args[0], args[1]);
+        System.out.println("Success!");
     }
 
     public void databaseTesting() throws SQLException {

@@ -17,6 +17,8 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import static Backend.FileIO.FileHelpers.countLines;
+
 /**
  * Created by Jacob on 23/02/2018.
  * Holds static functions for loading each of the 3 CSVs in to the application
@@ -49,7 +51,6 @@ public class readCSVs {
 
     }
 
-    //TODO: Optimise if possible.
     public static List<ImpressionLog> readImpressions(File file) throws FileNotFoundException, ParseException, NumberFormatException, ArrayIndexOutOfBoundsException {
         int fileLength = countLines(file);
 
@@ -105,33 +106,6 @@ public class readCSVs {
         }
 
         return serverLogs;
-    }
-
-    // Modified function based on https://stackoverflow.com/a/14411695
-    private static int countLines(File file) {
-        try (InputStream is = new BufferedInputStream(new FileInputStream(file))){
-            byte[] c = new byte[1024];
-            int count = 0;
-            int readChars;
-            boolean endsWithoutNewLine = false;
-            while ((readChars = is.read(c)) != -1) {
-                for (int i = 0; i < readChars; ++i) {
-                    if (c[i] == '\n')
-                        ++count;
-                }
-                endsWithoutNewLine = (c[readChars - 1] != '\n');
-            }
-            if(endsWithoutNewLine) {
-                ++count;
-            }
-            return count;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return 0;
     }
 
 }
