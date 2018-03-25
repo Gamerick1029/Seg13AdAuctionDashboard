@@ -11,7 +11,7 @@
 
 <AnchorPane prefHeight="752.0" prefWidth="1339.0" style="-fx-background-color: #595454;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Frontend.sample.CampaignController">
    <children>
-      <LineChart fx:id="lineChart" layoutX="283.0" layoutY="251.0" legendVisible="false" prefHeight="452.0" prefWidth="870.0" style="-fx-background-color: #807B7B;" title="Campaign Name" GridPane.columnIndex="1" GridPane.rowIndex="2">
+      <LineChart fx:id="lineChart" layoutX="283.0" layoutY="299.0" legendVisible="false" prefHeight="452.0" prefWidth="870.0" style="-fx-background-color: #807B7B;" title="Campaign Name" GridPane.columnIndex="1" GridPane.rowIndex="2">
         <xAxis>
           <CategoryAxis label="Campaign Something" side="BOTTOM" tickLabelFill="WHITE" fx:id="x" />
         </xAxis>
@@ -208,50 +208,7 @@
             </MenuButton>
          </children>
       </Pane>
-      <RadioButton fx:id="monthTick" layoutX="1065.0" layoutY="720.0" mnemonicParsing="false" text="1 Month" textFill="WHITE">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-         <font>
-            <Font name="System Bold" size="15.0" />
-         </font>
-      </RadioButton>
-      <RadioButton fx:id="dayTick" layoutX="872.0" layoutY="720.0" mnemonicParsing="false" text="By Day" textFill="WHITE">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-         <font>
-            <Font name="System Bold" size="15.0" />
-         </font>
-      </RadioButton>
-      <RadioButton fx:id="weekTick" layoutX="963.0" layoutY="720.0" mnemonicParsing="false" text="By Week" textFill="WHITE">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-         <font>
-            <Font name="System Bold" size="15.0" />
-         </font>
-      </RadioButton>
-      <Text fill="WHITE" layoutX="757.0" layoutY="738.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Timescale:">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Text>
-      <TextField editable="false" layoutX="283.0" layoutY="205.0" prefHeight="36.0" prefWidth="166.0" style="-fx-background-color: #C6C6C6;" text="Impressions">
-         <font>
-            <Font size="19.0" />
-         </font>
-      </TextField>
-      <MenuButton fx:id="graphType" layoutX="959.0" layoutY="205.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="194.0" style="-fx-background-color: #C6C6C6;" text="Line Chart">
-        <items>
-          <MenuItem mnemonicParsing="false" text="Bar Chart" />
-          <MenuItem mnemonicParsing="false" text="Pie Chart" />
-        </items>
-         <font>
-            <Font size="19.0" />
-         </font>
-      </MenuButton>
-      <Text fill="WHITE" layoutX="303.0" layoutY="59.0" onMouseClicked="#addNewCampaign" strokeType="OUTSIDE" strokeWidth="0.0" text="Add New Campaign">
+      <Text fill="WHITE" layoutX="280.0" layoutY="44.0" onMouseClicked="#addNewCampaign" strokeType="OUTSIDE" strokeWidth="0.0" text="Add New Campaign">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
@@ -259,7 +216,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Text>
-      <Text fill="#cdcccc" layoutX="472.0" layoutY="65.0" onMouseClicked="#addNewCampaign" strokeType="OUTSIDE" strokeWidth="0.0" text="+" wrappingWidth="37.43359375">
+      <Text fill="#cdcccc" layoutX="449.0" layoutY="50.0" onMouseClicked="#addNewCampaign" strokeType="OUTSIDE" strokeWidth="0.0" text="+" wrappingWidth="37.43359375">
          <font>
             <Font name="System Bold" size="40.0" />
          </font>
@@ -267,5 +224,44 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Text>
+      <MenuButton fx:id="graphType" layoutX="959.0" layoutY="255.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="194.0" style="-fx-background-color: #C6C6C6;" text="Line Chart">
+         <font>
+            <Font size="19.0" />
+         </font>
+         <items>
+            <MenuItem mnemonicParsing="false" text="Bar Chart" />
+            <MenuItem mnemonicParsing="false" text="Pie Chart" />
+         </items>
+      </MenuButton>
+      <Text fill="WHITE" layoutX="283.0" layoutY="284.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Timescale:">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <RadioButton fx:id="weekTick" layoutX="489.0" layoutY="266.0" mnemonicParsing="false" text="By Week" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </RadioButton>
+      <RadioButton fx:id="dayTick" layoutX="398.0" layoutY="266.0" mnemonicParsing="false" text="By Day" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </RadioButton>
+      <RadioButton fx:id="monthTick" layoutX="591.0" layoutY="266.0" mnemonicParsing="false" text="1 Month" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </RadioButton>
+      <TableView fx:id="campaignsTable" layoutX="294.0" layoutY="49.0" prefHeight="200.0" prefWidth="227.0" />
    </children>
 </AnchorPane>

@@ -2,7 +2,6 @@ package Backend.Model;
 
 import Backend.FileIO.readCSVs;
 import Backend.Model.Interfaces.ClickLog;
-import Backend.Model.Interfaces.DataModel;
 import Backend.Model.Interfaces.ImpressionLog;
 import Backend.Model.Interfaces.ServerLog;
 
@@ -593,7 +592,5 @@ DEAD FUNCTION
         }
         return users;
     }
-
-
 
 }
