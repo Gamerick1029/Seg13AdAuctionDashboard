@@ -30,6 +30,7 @@ public class Main extends Application {
         Group root = new Group();
         root.getChildren().addAll(mainContainer);
         Scene scene = new Scene(root);
+        scene.getStylesheets().add("Frontend/sample/StyleSheet.css");
         primaryStage.setScene(scene);
         primaryStage.setTitle("Ad Auction Dashboard");
         primaryStage.show();

@@ -9,6 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
@@ -80,7 +81,6 @@ public class ExampleController implements ScreenInterface {
         this.myController = parent;
         myController.setDataFieldPopulator(new DataFieldPopulator(campaignName, campaignOne, impressionsF, clicksF, bouncesF, conversionsF, totalCostF, clickRateF, aquisitionF, costPerClickF));
         myController.setCampaignDataPopulator(new CampaignDataPopulator(x, y, lineChart));
-
         impressions.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
                     showImpressions(campaignName.getText());
@@ -372,7 +372,20 @@ public class ExampleController implements ScreenInterface {
     }
 
     private void showImpressions(String name) {
-        System.out.println("Impressions for: " + name);
+        //Just for testing
+        lineChart.getData().clear();
+        XYChart.Series series = new XYChart.Series();
+        series.getData().add(new XYChart.Data("Something", 3));
+        series.getData().add(new XYChart.Data("2", 15));
+        series.getData().add(new XYChart.Data("3", 32));
+        series.getData().add(new XYChart.Data("4", 1));
+        series.getData().add(new XYChart.Data("5", 8));
+        series.getData().add(new XYChart.Data("Else", 30));
+        series.getData().add(new XYChart.Data("7", 7));
+        series.getData().add(new XYChart.Data("8", 4));
+        series.setName(name);
+
+        lineChart.getData().add(series);
     }
 
     private void showClicks(String name) {

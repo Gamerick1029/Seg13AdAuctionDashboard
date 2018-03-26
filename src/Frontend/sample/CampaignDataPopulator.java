@@ -27,6 +27,7 @@ public class CampaignDataPopulator {
         campaign1.getData().add(new XYChart.Data("6", 36));
         campaign1.getData().add(new XYChart.Data("7", 27));
         campaign1.getData().add(new XYChart.Data("8", 44));
+        campaign1.setName("Campaign 1");
 
         XYChart.Series campaign2 = new XYChart.Series();
         campaign2.getData().add(new XYChart.Data("1", 123));
@@ -37,7 +38,10 @@ public class CampaignDataPopulator {
         campaign2.getData().add(new XYChart.Data("6", 136));
         campaign2.getData().add(new XYChart.Data("7", 127));
         campaign2.getData().add(new XYChart.Data("8", 144));
+        campaign2.setName("Campaign 2");
+
         lineChart.getData().addAll(campaign1, campaign2);
+
     }
 
 }
