@@ -627,7 +627,7 @@ DEAD FUNCTION
         return userSet;
     }
 
-    private String getCampaignName() {
+    public String getCampaignName() {
         return campaignName;
     }
 

@@ -1,13 +1,11 @@
 package Frontend.sample;
 
-import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
@@ -57,13 +55,13 @@ public class CampaignController implements ScreenInterface {
         myController.setDataFieldPopulator(new DataFieldPopulator(impressions, clicks, bounces, conversions, cost, clickRate, costAquisition, costConversion));
         myController.setCampaignDataPopulator(new CampaignDataPopulator(x, y, lineChart));
 
-        campaignsTable.setPrefSize(265, 150);
+       /* campaignsTable.setPrefSize(265, 150);
         campaigns.add(new Campaign("Campaign 1"));
         campaigns.stream().forEach((campaign) -> {
             campaignsTable.getItems().add(campaign);
-        });
+        });*/
 
-        TableColumn<Campaign, String> nameColumn =
+        /*TableColumn<Campaign, String> nameColumn =
                 new TableColumn<>("Campaign");
         nameColumn.setPrefWidth(150);
         nameColumn.setCellValueFactory(
@@ -74,15 +72,36 @@ public class CampaignController implements ScreenInterface {
                 new TableColumn<>("Display");
         displayColumn.setPrefWidth(50);
         displayColumn.setCellValueFactory(
-                new PropertyValueFactory<Campaign, String>("displayed")
+                new PropertyValueFactory<>("displayed")
         );
+
         TableColumn<Campaign, String> removeColumn =
                 new TableColumn<>("Remove");
-        displayColumn.setPrefWidth(50);
+        removeColumn.setPrefWidth(50);
         removeColumn.setCellValueFactory(
-                new PropertyValueFactory<Campaign, String>("remove")
-        );
-        campaignsTable.getColumns().setAll(nameColumn, displayColumn, removeColumn);
+                new PropertyValueFactory<>("remove")
+        );*/
+        /*campaignsTable.setRowFactory(new Callback<TableView<Campaign>, TableRow<Campaign>>() {
+            @Override
+            public TableRow<Campaign> call(TableView<Campaign> p) {
+                final TableRow<Campaign> row = new TableRow<Campaign>();
+                row.setOnDragEntered(new EventHandler<DragEvent>() {
+                    @Override
+                    public void handle(DragEvent t) {
+                        setSelection(row);
+                        System.out.println("HIII");
+                    }
+                });
+                row.setOnDragDetected(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent t) {
+                        setSelection(row);
+                    }
+                });
+                return row;
+            }
+        });*/
+        //campaignsTable.getColumns().setAll(nameColumn, displayColumn, removeColumn);
     }
 
     @FXML
@@ -274,4 +293,14 @@ public class CampaignController implements ScreenInterface {
             }
         }
     }
+//    private void setSelection(IndexedCell cell) {
+//        if (cell.isSelected()) {
+//            System.out.println("False enter");
+//            campaignsTable.getSelectionModel().clearSelection(cell.getIndex());
+//        } else {
+//            System.out.println("Select");
+//            campaignsTable.getSelectionModel().select(cell.getIndex());
+//        }
+//    }
+
 }

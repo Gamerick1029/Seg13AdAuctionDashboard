@@ -1,10 +1,14 @@
 package Frontend.sample;
 
 import Backend.Model.Interfaces.DataModel;
+import javafx.scene.control.CheckMenuItem;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.TextField;
 
 public class DataFieldPopulator {
 
+    private MenuButton menuButton;
+    private CheckMenuItem menuItem;
     private TextField impressions;
     private TextField clicks;
     private TextField bounces;
@@ -15,7 +19,9 @@ public class DataFieldPopulator {
     private TextField costConversion;
     private DataModel dataModel;
 
-    public DataFieldPopulator(TextField impressions, TextField clicks, TextField bounces, TextField conversions, TextField cost, TextField clickRate, TextField costAquisition, TextField costConversion) {
+    public DataFieldPopulator(MenuButton menuButton, CheckMenuItem menuItem, TextField impressions, TextField clicks, TextField bounces, TextField conversions, TextField cost, TextField clickRate, TextField costAquisition, TextField costConversion) {
+        this.menuButton = menuButton;
+        this.menuItem = menuItem;
         this.impressions = impressions;
         this.clicks = clicks;
         this.bounces = bounces;
@@ -27,6 +33,8 @@ public class DataFieldPopulator {
     }
 
     public void populateFields(){
+        menuButton.setText(/*dataModel.getCampaignName()*/ "Campaign Name");
+        menuItem.setText(/*dataModel.getCampaignName()*/ "Campaign Name");
         impressions.setText(String.valueOf(dataModel.getImpressionsNumber()));
         clicks.setText(String.valueOf(dataModel.getClicksNumber()));
         bounces.setText(String.valueOf(dataModel.getBouncesNumber()));

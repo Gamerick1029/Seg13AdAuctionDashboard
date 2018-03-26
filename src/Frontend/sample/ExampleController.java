@@ -1,6 +1,9 @@
 package Frontend.sample;
 
+import Backend.Model.CampaignModel;
 import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.chart.CategoryAxis;
@@ -21,25 +24,42 @@ import java.util.List;
 public class ExampleController implements ScreenInterface {
 
     private ScreensController myController;
+    private CampaignModel campaignModel;
     private File currentImpressions;
     private File currentClick;
     private File currentServer;
     @FXML
-    private javafx.scene.control.TextField impressions;
+    private javafx.scene.control.TextField impressionsF;
     @FXML
-    private javafx.scene.control.TextField clicks;
+    private javafx.scene.control.TextField clicksF;
     @FXML
-    private javafx.scene.control.TextField bounces;
+    private javafx.scene.control.TextField bouncesF;
     @FXML
-    private javafx.scene.control.TextField conversions;
+    private javafx.scene.control.TextField conversionsF;
     @FXML
-    private javafx.scene.control.TextField cost;
+    private javafx.scene.control.TextField totalCostF;
     @FXML
-    private javafx.scene.control.TextField clickRate;
+    private javafx.scene.control.TextField clickRateF;
     @FXML
-    private javafx.scene.control.TextField costAquisition;
+    private javafx.scene.control.TextField aquisitionF;
     @FXML
-    private javafx.scene.control.TextField costConversion;
+    private javafx.scene.control.TextField costPerClickF;
+    @FXML
+    private javafx.scene.text.Text impressions;
+    @FXML
+    private javafx.scene.text.Text clicks;
+    @FXML
+    private javafx.scene.text.Text bounces;
+    @FXML
+    private javafx.scene.text.Text conversions;
+    @FXML
+    private javafx.scene.text.Text totalCost;
+    @FXML
+    private javafx.scene.text.Text clickRate;
+    @FXML
+    private javafx.scene.text.Text aquisition;
+    @FXML
+    private javafx.scene.text.Text costPerClick;
     @FXML
     private CategoryAxis x;
     @FXML
@@ -48,18 +68,68 @@ public class ExampleController implements ScreenInterface {
     private LineChart<?, ?> lineChart;
     @FXML
     private TableView campaignsTable;
+    @FXML
+    private MenuButton campaignName;
+    @FXML
+    private CheckMenuItem campaignOne;
+    @FXML
+    private CheckMenuItem campaignTwo;
+    @FXML
+    private CheckMenuItem campaignThree;
 
     private List<Campaign> campaigns = new ArrayList<>();
 
     @Override
     public void setScreenParent(ScreensController parent) {
         this.myController = parent;
-        myController.setDataFieldPopulator(new DataFieldPopulator(impressions, clicks, bounces, conversions, cost, clickRate, costAquisition, costConversion));
+        myController.setDataFieldPopulator(new DataFieldPopulator(campaignName, campaignOne, impressionsF, clicksF, bouncesF, conversionsF, totalCostF, clickRateF, aquisitionF, costPerClickF));
         myController.setCampaignDataPopulator(new CampaignDataPopulator(x, y, lineChart));
 
-        campaignsTable.setPrefSize(260, 150);
+        impressions.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                e -> {
+                    showImpressions(campaignName.getText());
+                });
+        clicks.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                e -> {
+                    showClicks(campaignName.getText());
+                });
+        bounces.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                e -> {
+                    showBounces(campaignName.getText());
+                });
+        conversions.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                e -> {
+                    showConversion(campaignName.getText());
+                });
+        totalCost.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                e -> {
+                    showTotalCost(campaignName.getText());
+                });
+        clickRate.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                e -> {
+                    showClickRate(campaignName.getText());
+                });
+        aquisition.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                e -> {
+                    showAquisition(campaignName.getText());
+                });
+        conversions.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                e -> {
+                    showCostPerClick(campaignName.getText());
+                });
+
+
+        campaignsTable.setPrefSize(265, 150);
         campaignsTable.setPlaceholder(new Label("No campaigns loaded!"));
         campaigns.add(new Campaign("Campaign 1"));
+        campaignOne.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent t) {
+                campaignOne.setSelected(true);
+                campaignTwo.setSelected(false);
+                campaignThree.setSelected(false);
+                setMetrics(campaignOne.getText());
+            }
+        });
         campaigns.stream().forEach((campaign) -> {
             campaignsTable.getItems().add(campaign);
             campaign.getRemove().addEventHandler(MouseEvent.MOUSE_CLICKED,
@@ -93,11 +163,6 @@ public class ExampleController implements ScreenInterface {
     }
 
     @FXML
-    private void goToProgressBarScreen() {
-
-    }
-
-    @FXML
     private void addNewCampaign(MouseEvent event) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.initStyle(StageStyle.UTILITY);
@@ -105,9 +170,9 @@ public class ExampleController implements ScreenInterface {
         alert.setContentText("Input Campaign Details:");
 
         Label campaignNameL = new Label("Campaign Name");
-        TextField campaignName = new TextField();
-        campaignName.setPrefWidth(300);
-        campaignName.setPromptText("Input Campaign Name...");
+        TextField campaignNameF = new TextField();
+        campaignNameF.setPrefWidth(300);
+        campaignNameF.setPromptText("Input Campaign Name...");
 
         Label impressionsL = new Label("Impressions Log");
         TextField impressionsF = new TextField();
@@ -248,7 +313,7 @@ public class ExampleController implements ScreenInterface {
         content.setPrefSize(400, 200);
 
         content.add(campaignNameL, 0, 0);
-        content.add(campaignName, 0, 1);
+        content.add(campaignNameF, 0, 1);
 
         content.add(impressionsL, 0, 3);
         content.add(impressionsF, 0, 4);
@@ -269,12 +334,12 @@ public class ExampleController implements ScreenInterface {
                 JOptionPane.showMessageDialog(null, "You need to select 3 files in order to load a campaign!"
                         , "Warning", 1);
                 addNewCampaign(event);
-            } else if (campaignName.getText().equals("")) {
+            } else if (campaignNameF.getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "You need to input a campaign name before continuing!"
                         , "Warning", 1);
                 addNewCampaign(event);
             } else {
-                Campaign campaign = new Campaign(campaignName.getText());
+                Campaign campaign = new Campaign(campaignNameF.getText());
                 campaigns.add(campaign);
                 campaignsTable.getItems().add(campaign);
                 campaigns.stream().forEach((c) -> {
@@ -284,9 +349,68 @@ public class ExampleController implements ScreenInterface {
                                 campaignsTable.getItems().remove(c);
                             });
                 });
+                if (!campaignTwo.isVisible()) {
+                    campaignTwo.setVisible(true);
+                    campaignTwo.setText(campaignNameF.getText());
+                    campaignTwo.setOnAction(new EventHandler<ActionEvent>() {
+                        public void handle(ActionEvent t) {
+                            campaignOne.setSelected(false);
+                            campaignTwo.setSelected(true);
+                            campaignThree.setSelected(false);
+                            setMetrics(campaignTwo.getText());
+                        }
+                    });
+                } else if (!campaignThree.isVisible()) {
+                    campaignThree.setVisible(true);
+                    campaignThree.setText(campaignNameF.getText());
+                    campaignThree.setOnAction(new EventHandler<ActionEvent>() {
+                        public void handle(ActionEvent t) {
+                            campaignOne.setSelected(false);
+                            campaignTwo.setSelected(false);
+                            campaignThree.setSelected(true);
+                            setMetrics(campaignThree.getText());
+                        }
+                    });
+                }
                 System.out.println("Number of campaigns: " + campaigns.size());
             }
         }
     }
 
+    private void setMetrics(String name) {
+        campaignName.setText(name);
+        System.out.println(name);
+    }
+
+    private void showImpressions(String name) {
+        System.out.println("Impressions for: " + name);
+    }
+
+    private void showClicks(String name) {
+
+    }
+
+    private void showBounces(String name) {
+
+    }
+
+    private void showConversion(String name) {
+
+    }
+
+    private void showTotalCost(String name) {
+
+    }
+
+    private void showClickRate(String name) {
+
+    }
+
+    private void showAquisition(String name) {
+
+    }
+
+    private void showCostPerClick(String name) {
+
+    }
 }

@@ -82,7 +82,7 @@
       </Pane>
       <Pane prefHeight="758.0" prefWidth="277.0" style="-fx-background-color: #333030;">
          <children>
-            <Text fill="#f2f2f2" layoutX="10.0" layoutY="442.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Conversions">
+            <Text fx:id="conversions" fill="#f2f2f2" layoutX="10.0" layoutY="442.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Conversions">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -90,7 +90,7 @@
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </Text>
-            <Text fill="#f2f2f2" layoutX="9.0" layoutY="619.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Aquisition" wrappingWidth="184.423828125">
+            <Text fx:id="aquisition" fill="#f2f2f2" layoutX="9.0" layoutY="619.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Aquisition" wrappingWidth="184.423828125">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -98,7 +98,7 @@
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </Text>
-            <Text fill="#f2f2f2" layoutX="9.0" layoutY="668.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Cost per Click" wrappingWidth="166.0166015625">
+            <Text fx:id="costPerClick" fill="#f2f2f2" layoutX="9.0" layoutY="668.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Cost per Click" wrappingWidth="166.0166015625">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -106,7 +106,7 @@
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </Text>
-            <Text fill="#f2f2f2" layoutX="10.0" layoutY="496.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Total Cost">
+            <Text fx:id="totalCost" fill="#f2f2f2" layoutX="10.0" layoutY="496.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Total Cost">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -114,7 +114,7 @@
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </Text>
-            <Text fill="#f2f2f2" layoutX="10.0" layoutY="392.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Bounces">
+            <Text fx:id="bounces" fill="#f2f2f2" layoutX="10.0" layoutY="392.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Bounces">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -122,7 +122,7 @@
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </Text>
-            <Text fill="#f2f2f2" layoutX="10.0" layoutY="342.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Clicks">
+            <Text fx:id="clicks" fill="#f2f2f2" layoutX="10.0" layoutY="342.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Clicks">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -130,7 +130,7 @@
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </Text>
-            <Text fill="#f2f2f2" layoutX="11.0" layoutY="560.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Click Rate">
+            <Text fx:id="clickRate" fill="#f2f2f2" layoutX="11.0" layoutY="560.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Click Rate">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -138,7 +138,7 @@
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </Text>
-            <Text fill="#f2f2f2" layoutX="10.0" layoutY="292.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Impressions">
+            <Text fx:id="impressions" fill="#f2f2f2" layoutX="10.0" layoutY="292.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Impressions">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -151,42 +151,42 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Text>
-            <TextField fx:id="impressions" editable="false" layoutX="140.0" layoutY="265.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
+            <TextField fx:id="impressionsF" editable="false" layoutX="140.0" layoutY="265.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
                <font>
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </TextField>
-            <TextField fx:id="conversions" editable="false" layoutX="140.0" layoutY="415.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
+            <TextField fx:id="conversionsF" editable="false" layoutX="140.0" layoutY="415.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
                <font>
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </TextField>
-            <TextField fx:id="cost" editable="false" layoutX="140.0" layoutY="470.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
+            <TextField fx:id="totalCostF" editable="false" layoutX="140.0" layoutY="470.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
                <font>
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </TextField>
-            <TextField fx:id="clickRate" editable="false" layoutX="140.0" layoutY="534.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
+            <TextField fx:id="clickRateF" editable="false" layoutX="140.0" layoutY="534.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
                <font>
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </TextField>
-            <TextField fx:id="costAquisition" editable="false" layoutX="140.0" layoutY="593.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
+            <TextField fx:id="aquisitionF" editable="false" layoutX="140.0" layoutY="593.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
                <font>
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </TextField>
-            <TextField fx:id="costConversion" editable="false" layoutX="140.0" layoutY="642.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
+            <TextField fx:id="costPerClickF" editable="false" layoutX="140.0" layoutY="642.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
                <font>
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </TextField>
-            <TextField fx:id="bounces" editable="false" layoutX="140.0" layoutY="365.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
+            <TextField fx:id="bouncesF" editable="false" layoutX="140.0" layoutY="365.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
                <font>
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </TextField>
-            <TextField fx:id="clicks" editable="false" layoutX="140.0" layoutY="315.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
+            <TextField fx:id="clicksF" editable="false" layoutX="140.0" layoutY="315.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
                <font>
                   <Font name="Ubuntu" size="18.0" />
                </font>
@@ -202,8 +202,9 @@
                   <Font size="19.0" />
                </font>
                <items>
-                  <MenuItem mnemonicParsing="false" text="Action 1" visible="false" />
-                  <MenuItem mnemonicParsing="false" text="Action 2" visible="false" />
+                  <CheckMenuItem fx:id="campaignOne" mnemonicParsing="false" selected="true" />
+                  <CheckMenuItem fx:id="campaignTwo" mnemonicParsing="false" visible="false" />
+                  <CheckMenuItem fx:id="campaignThree" mnemonicParsing="false" visible="false" />
                </items>
             </MenuButton>
          </children>
