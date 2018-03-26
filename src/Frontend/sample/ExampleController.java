@@ -72,10 +72,6 @@ public class ExampleController implements ScreenInterface {
     private MenuButton campaignName;
     @FXML
     private CheckMenuItem campaignOne;
-    @FXML
-    private CheckMenuItem campaignTwo;
-    @FXML
-    private CheckMenuItem campaignThree;
 
     private List<Campaign> campaigns = new ArrayList<>();
 
@@ -113,7 +109,7 @@ public class ExampleController implements ScreenInterface {
                 e -> {
                     showAquisition(campaignName.getText());
                 });
-        conversions.addEventHandler(MouseEvent.MOUSE_CLICKED,
+        costPerClick.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
                     showCostPerClick(campaignName.getText());
                 });
@@ -124,9 +120,12 @@ public class ExampleController implements ScreenInterface {
         campaigns.add(new Campaign("Campaign 1"));
         campaignOne.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent t) {
+                for (MenuItem menuItem : campaignName.getItems()) {
+                    if (menuItem instanceof CheckMenuItem) {
+                        ((CheckMenuItem) menuItem).setSelected(false);
+                    }
+                }
                 campaignOne.setSelected(true);
-                campaignTwo.setSelected(false);
-                campaignThree.setSelected(false);
                 setMetrics(campaignOne.getText());
             }
         });
@@ -349,29 +348,19 @@ public class ExampleController implements ScreenInterface {
                                 campaignsTable.getItems().remove(c);
                             });
                 });
-                if (!campaignTwo.isVisible()) {
-                    campaignTwo.setVisible(true);
-                    campaignTwo.setText(campaignNameF.getText());
-                    campaignTwo.setOnAction(new EventHandler<ActionEvent>() {
-                        public void handle(ActionEvent t) {
-                            campaignOne.setSelected(false);
-                            campaignTwo.setSelected(true);
-                            campaignThree.setSelected(false);
-                            setMetrics(campaignTwo.getText());
+                CheckMenuItem checkMenuItem = new CheckMenuItem(campaignNameF.getText());
+                checkMenuItem.setOnAction(new EventHandler<ActionEvent>() {
+                    public void handle(ActionEvent t) {
+                        for (MenuItem menuItem : campaignName.getItems()) {
+                            if (menuItem instanceof CheckMenuItem) {
+                                ((CheckMenuItem) menuItem).setSelected(false);
+                            }
                         }
-                    });
-                } else if (!campaignThree.isVisible()) {
-                    campaignThree.setVisible(true);
-                    campaignThree.setText(campaignNameF.getText());
-                    campaignThree.setOnAction(new EventHandler<ActionEvent>() {
-                        public void handle(ActionEvent t) {
-                            campaignOne.setSelected(false);
-                            campaignTwo.setSelected(false);
-                            campaignThree.setSelected(true);
-                            setMetrics(campaignThree.getText());
-                        }
-                    });
-                }
+                        checkMenuItem.setSelected(true);
+                        setMetrics(checkMenuItem.getText());
+                    }
+                });
+                campaignName.getItems().add(checkMenuItem);
                 System.out.println("Number of campaigns: " + campaigns.size());
             }
         }

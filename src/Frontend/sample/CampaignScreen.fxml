@@ -203,8 +203,6 @@
                </font>
                <items>
                   <CheckMenuItem fx:id="campaignOne" mnemonicParsing="false" selected="true" />
-                  <CheckMenuItem fx:id="campaignTwo" mnemonicParsing="false" visible="false" />
-                  <CheckMenuItem fx:id="campaignThree" mnemonicParsing="false" visible="false" />
                </items>
             </MenuButton>
          </children>
