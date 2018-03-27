@@ -18,6 +18,9 @@ import java.util.*;
  */
 public class CampaignModel implements DataModel {
 
+    private static Date MINDATE = new Date(Long.MIN_VALUE);
+    private static Date MAXDATE = new Date(Long.MAX_VALUE);
+
 
     private String campaignName;
     private List<ClickLog> clickData;
@@ -125,6 +128,12 @@ public class CampaignModel implements DataModel {
     }
 
     @Override
+    public Map<Date, Integer> getFullImpressions(long step)
+    {
+        return getImpressionsByInterval(MINDATE, MAXDATE, step);
+    }
+
+    @Override
     public int getOverallImpressionsByInterval(Date startInterval, Date endInterval)
     {   Map<Date,Integer> tempImpressInterv = getImpressionsByInterval(startInterval,endInterval);
         int overallImpressions = 0;
@@ -170,6 +179,12 @@ public class CampaignModel implements DataModel {
     }
 
     @Override
+    public Map<Date, Integer> getFullClicks(long step)
+    {
+        return getClicksByInterval(MINDATE, MAXDATE, step);
+    }
+
+    @Override
     public int getOverallClicksByInterval(Date startInterval, Date endInterval)
     {
         Map<Date,Integer> tempClicksInterv = getClicksByInterval(startInterval,endInterval);
@@ -208,6 +223,12 @@ public class CampaignModel implements DataModel {
     public Map<Date, Integer> getUniquesByInterval(Date startInterval, Date endInterval, long step)
     {
         return getUniquesByInterval(startInterval, endInterval);
+    }
+
+    @Override
+    public Map<Date, Integer> getFullUniques(long step)
+    {
+        return getUniquesByInterval(MINDATE, MAXDATE, step);
     }
 
     @Override
@@ -264,6 +285,12 @@ public class CampaignModel implements DataModel {
     public Map<Date, Integer> getBouncesByInterval(Date startInterval, Date endInterval, long step)
     {
         return getBouncesByInterval(startInterval, endInterval);
+    }
+
+    @Override
+    public Map<Date, Integer> getFullBounces(long step)
+    {
+        return getBouncesByInterval(MINDATE, MAXDATE, step);
     }
 
     @Override
@@ -327,6 +354,12 @@ public class CampaignModel implements DataModel {
     }
 
     @Override
+    public Map<Date, Integer> getFullConversions(long step)
+    {
+        return getConversionsByInterval(MINDATE, MAXDATE, step);
+    }
+
+    @Override
     public int getOverallConversionsByInterval(Date startInterval, Date endInterval)
     {
         Map<Date,Integer> tempConversionsInterv = getConversionsByInterval(startInterval,endInterval);
@@ -374,6 +407,12 @@ public class CampaignModel implements DataModel {
     public Map<Date, Float> getCostByInterval(Date startInterval, Date endInterval, long step)
     {
         return getCostByInterval(startInterval, endInterval);
+    }
+
+    @Override
+    public Map<Date, Float> getFullCost(long step)
+    {
+        return getCostByInterval(MINDATE, MAXDATE, step);
     }
 
 
@@ -427,6 +466,12 @@ DEAD FUNCTION
     }
 
     @Override
+    public Map<Date, Float> getFullCTR(long step)
+    {
+        return getCTRByInterval(MINDATE, MAXDATE, step);
+    }
+
+    @Override
     public float getOverallCTRByInterval(Date startInterval, Date endInterval)
     {
         return ((float) getOverallClicksByInterval(startInterval,endInterval) / (float) getOverallImpressionsByInterval(startInterval,endInterval));
@@ -472,6 +517,12 @@ DEAD FUNCTION
     }
 
     @Override
+    public Map<Date, Float> getFullCPA(long step)
+    {
+        return getCPAByInterval(MINDATE, MAXDATE, step);
+    }
+
+    @Override
     public float getOverallCPAByInterval(Date startInterval, Date endInterval)
     {
         return ((float) getOverallCostByInterval(startInterval,endInterval) / (float) getOverallConversionsByInterval(startInterval,endInterval));
@@ -510,6 +561,12 @@ DEAD FUNCTION
     public Map<Date, Float> getCPCByInterval(Date startInterval, Date endInterval, long step)
     {
         return getCPCByInterval(startInterval, endInterval);
+    }
+
+    @Override
+    public Map<Date, Float> getFullCPC(long step)
+    {
+        return (getCPCByInterval(MINDATE, MAXDATE, step));
     }
 
     @Override
@@ -553,6 +610,12 @@ DEAD FUNCTION
     public Map<Date, Float> getCPMByInterval(Date startInterval, Date endInterval, long step)
     {
         return getCPMByInterval(startInterval, endInterval);
+    }
+
+    @Override
+    public Map<Date, Float> getFullCPM(long step)
+    {
+        return getCPMByInterval(MINDATE, MAXDATE, step);
     }
 
     @Override
@@ -607,6 +670,12 @@ DEAD FUNCTION
     }
 
     @Override
+    public Map<Date, Float> getFullBounceRate(long step)
+    {
+        return getBounceRateByInterval(MINDATE, MAXDATE, step);
+    }
+
+    @Override
     public float getOverallBounceRateByInterval(Date startInterval, Date endInterval)
     {
 
@@ -619,7 +688,7 @@ DEAD FUNCTION
     /*
         Returns a Set of the Unique Users from the ClickData.
      */
-    private Set<String> getUsersFromClickLog() {
+    public Set<String> getUsersFromClickLog() {
         Set<String> userSet = new HashSet<String>();
         for (ClickLog cl : clickData) {
             userSet.add(cl.getID());
@@ -631,7 +700,7 @@ DEAD FUNCTION
         return campaignName;
     }
 
-    private void setCampaignName(String campaignName) {
+    public void setCampaignName(String campaignName) {
         this.campaignName = campaignName;
     }
 
@@ -658,6 +727,12 @@ DEAD FUNCTION
     public Map<Date, Set<String>> getUsersByInterval(Date startInterval, Date endInterval, long step)
     {
         return getUsersByInterval(startInterval, endInterval);
+    }
+
+    @Override
+    public Map<Date, Set<String>> getFullUsers(long step)
+    {
+        return getUsersByInterval(MINDATE, MAXDATE, step);
     }
 
     @Override
