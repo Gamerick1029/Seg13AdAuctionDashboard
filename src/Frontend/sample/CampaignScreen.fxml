@@ -11,7 +11,7 @@
 
 <AnchorPane prefHeight="752.0" prefWidth="1339.0" style="-fx-background-color: #595454;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Frontend.sample.ExampleController">
    <children>
-      <LineChart fx:id="lineChart" layoutX="277.0" layoutY="237.0" prefHeight="452.0" prefWidth="870.0" style="-fx-background-color: #807B7B;" title="Campaign Name" verticalGridLinesVisible="false" GridPane.columnIndex="1" GridPane.rowIndex="2">
+      <LineChart fx:id="lineChart" layoutX="288.0" layoutY="237.0" prefHeight="452.0" prefWidth="859.0" style="-fx-background-color: #807B7B;" title="Line Chart" verticalGridLinesVisible="false" GridPane.columnIndex="1" GridPane.rowIndex="2">
         <xAxis>
           <CategoryAxis label="Campaign Something" side="BOTTOM" tickLabelFill="WHITE" fx:id="x" />
         </xAxis>
@@ -223,21 +223,22 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Text>
-      <MenuButton fx:id="graphType" layoutX="953.0" layoutY="193.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="194.0" style="-fx-background-color: #C6C6C6;" text="Line Chart">
+      <MenuButton fx:id="graphType" layoutX="886.0" layoutY="183.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="261.0" style="-fx-background-color: #C6C6C6;" text="Line Chart">
          <font>
             <Font size="19.0" />
          </font>
          <items>
-            <MenuItem mnemonicParsing="false" text="Bar Chart" />
-            <MenuItem mnemonicParsing="false" text="Pie Chart" />
+            <CheckMenuItem fx:id="lineType" mnemonicParsing="false" selected="true" text="Line Chart" />
+            <CheckMenuItem fx:id="barType" mnemonicParsing="false" text="Bar Chart" />
+            <CheckMenuItem fx:id="pieType" mnemonicParsing="false" text="Pie Chart" />
          </items>
       </MenuButton>
-      <Text fill="WHITE" layoutX="277.0" layoutY="222.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Timescale:">
+      <Text fill="WHITE" layoutX="288.0" layoutY="226.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Timescale:">
          <font>
             <Font size="20.0" />
          </font>
       </Text>
-      <RadioButton fx:id="weekTick" layoutX="483.0" layoutY="204.0" mnemonicParsing="false" text="By Week" textFill="WHITE">
+      <RadioButton fx:id="weekTick" layoutX="494.0" layoutY="208.0" mnemonicParsing="false" text="By Week" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -245,7 +246,7 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </RadioButton>
-      <RadioButton fx:id="dayTick" layoutX="392.0" layoutY="204.0" mnemonicParsing="false" text="By Day" textFill="WHITE">
+      <RadioButton fx:id="dayTick" layoutX="403.0" layoutY="208.0" mnemonicParsing="false" text="By Day" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -253,7 +254,7 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </RadioButton>
-      <RadioButton fx:id="monthTick" layoutX="585.0" layoutY="204.0" mnemonicParsing="false" text="1 Month" textFill="WHITE">
+      <RadioButton fx:id="monthTick" layoutX="596.0" layoutY="208.0" mnemonicParsing="false" text="1 Month" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -261,6 +262,15 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </RadioButton>
-      <TableView fx:id="campaignsTable" layoutX="548.0" layoutY="33.0" prefHeight="131.0" prefWidth="227.0" />
+      <TableView fx:id="campaignsTable" layoutX="886.0" layoutY="12.0" prefHeight="156.0" prefWidth="261.0" />
+      <BarChart fx:id="barChart" layoutX="289.0" layoutY="237.0" prefHeight="452.0" prefWidth="859.0" style="-fx-background-color: #807B7B;" title="Bar Chart" visible="false">
+        <xAxis>
+          <CategoryAxis label="Campaign Something" side="BOTTOM" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis label="Campaign Something" side="LEFT" />
+        </yAxis>
+      </BarChart>
+      <PieChart fx:id="pieChart" layoutX="288.0" layoutY="237.0" prefHeight="452.0" prefWidth="859.0" style="-fx-background-color: #807B7B;" title="Pie Chart" visible="false" />
    </children>
 </AnchorPane>

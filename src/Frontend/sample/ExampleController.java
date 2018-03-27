@@ -1,15 +1,9 @@
 package Frontend.sample;
 
-import Backend.Model.CampaignModel;
 import javafx.beans.property.ReadOnlyStringWrapper;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
+import javafx.scene.chart.*;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
@@ -25,7 +19,6 @@ import java.util.List;
 public class ExampleController implements ScreenInterface {
 
     private ScreensController myController;
-    private CampaignModel campaignModel;
     private File currentImpressions;
     private File currentClick;
     private File currentServer;
@@ -68,19 +61,32 @@ public class ExampleController implements ScreenInterface {
     @FXML
     private LineChart<?, ?> lineChart;
     @FXML
+    private BarChart<?, ?> barChart;
+    @FXML
+    private PieChart pieChart;
+    @FXML
     private TableView campaignsTable;
+    @FXML
+    private MenuButton graphType;
     @FXML
     private MenuButton campaignName;
     @FXML
     private CheckMenuItem campaignOne;
+    @FXML
+    private CheckMenuItem lineType;
+    @FXML
+    private CheckMenuItem barType;
+    @FXML
+    private CheckMenuItem pieType;
 
+    private String currentMetricDisplayed = "Impressions";
     private List<Campaign> campaigns = new ArrayList<>();
 
     @Override
     public void setScreenParent(ScreensController parent) {
         this.myController = parent;
         myController.setDataFieldPopulator(new DataFieldPopulator(campaignName, campaignOne, impressionsF, clicksF, bouncesF, conversionsF, totalCostF, clickRateF, aquisitionF, costPerClickF));
-        myController.setCampaignDataPopulator(new CampaignDataPopulator(x, y, lineChart));
+        myController.setCampaignDataPopulator(new CampaignDataPopulator(x, y, lineChart, barChart, pieChart));
         impressions.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
                     showImpressions(campaignName.getText());
@@ -113,24 +119,40 @@ public class ExampleController implements ScreenInterface {
                 e -> {
                     showCostPerClick(campaignName.getText());
                 });
-
-
+        lineType.setOnAction(t -> {
+            changeToLineChart();
+        });
+        barType.setOnAction(t -> {
+            changeToBarChart();
+        });
+        pieType.setOnAction(t -> {
+            changeToPieChart();
+        });
         campaignsTable.setPrefSize(265, 150);
         campaignsTable.setPlaceholder(new Label("No campaigns loaded!"));
+
+        //TODO: Get the name of the loaded campaign
         campaigns.add(new Campaign("Campaign 1"));
-        campaignOne.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent t) {
-                for (MenuItem menuItem : campaignName.getItems()) {
-                    if (menuItem instanceof CheckMenuItem) {
-                        ((CheckMenuItem) menuItem).setSelected(false);
-                    }
+        campaignOne.setOnAction(t -> {
+            for (MenuItem menuItem : campaignName.getItems()) {
+                if (menuItem instanceof CheckMenuItem) {
+                    ((CheckMenuItem) menuItem).setSelected(false);
                 }
-                campaignOne.setSelected(true);
-                setMetrics(campaignOne.getText());
             }
+            campaignOne.setSelected(true);
+            setMetrics(campaignOne.getText());
         });
         campaigns.stream().forEach((campaign) -> {
             campaignsTable.getItems().add(campaign);
+            campaign.getDisplayed().addEventHandler(MouseEvent.MOUSE_CLICKED,
+                    e -> {
+                        if (campaign.getDisplayed().isSelected()) {
+                            showCampaignOnGraph(campaign.getName());
+                        } else {
+                            hideCampaignFromGraph(campaign.getName());
+                        }
+
+                    });
             campaign.getRemove().addEventHandler(MouseEvent.MOUSE_CLICKED,
                     e -> {
                         campaigns.remove(campaign);
@@ -337,82 +359,164 @@ public class ExampleController implements ScreenInterface {
                 JOptionPane.showMessageDialog(null, "You need to input a campaign name before continuing!"
                         , "Warning", 1);
                 addNewCampaign(event);
-            } else {
+            } else { // If a campaign is loaded correctly:
                 Campaign campaign = new Campaign(campaignNameF.getText());
+                //Adding the new campaign to the Campaigns table
                 campaigns.add(campaign);
+                //Adding a new CheckMenuItem for the new campaign
                 campaignsTable.getItems().add(campaign);
+                // For each campaign in the Campaigns table,
+                // add EventHandlers for the Displayed CheckBox button and the Remove button
                 campaigns.stream().forEach((c) -> {
+                    c.getDisplayed().addEventHandler(MouseEvent.MOUSE_CLICKED,
+                            e -> {
+                                if (c.getDisplayed().isSelected()) {
+                                    showCampaignOnGraph(c.getName());
+                                } else {
+                                    hideCampaignFromGraph(c.getName());
+                                }
+                            });
                     c.getRemove().addEventHandler(MouseEvent.MOUSE_CLICKED,
                             e -> {
+                                //OnClick on Remove Campaign button,
+                                // remove the campaign from the list of campaigns and from the table
                                 campaigns.remove(c);
                                 campaignsTable.getItems().remove(c);
                             });
                 });
+                //Creating a new CheckMenuItem for the new campaign
                 CheckMenuItem checkMenuItem = new CheckMenuItem(campaignNameF.getText());
-                checkMenuItem.setOnAction(new EventHandler<ActionEvent>() {
-                    public void handle(ActionEvent t) {
-                        for (MenuItem menuItem : campaignName.getItems()) {
-                            if (menuItem instanceof CheckMenuItem) {
-                                ((CheckMenuItem) menuItem).setSelected(false);
-                            }
-                        }
-                        checkMenuItem.setSelected(true);
-                        setMetrics(checkMenuItem.getText());
+                //Adding an EventHandler for the new CheckMenuItem
+                //OnSelected, set the rest of the CheckMenuItems to false and the selected one to true
+                //and set the metric fields with the selected campaign's data
+                checkMenuItem.setOnAction(t -> {
+                    for (MenuItem menuItem : campaignName.getItems()) {
+                        ((CheckMenuItem) menuItem).setSelected(false);
                     }
+                    checkMenuItem.setSelected(true);
+                    setMetrics(checkMenuItem.getText());
                 });
+                //Adding the new CheckMenuItem to the MenuButton for the current campaigns
                 campaignName.getItems().add(checkMenuItem);
-                System.out.println("Number of campaigns: " + campaigns.size());
             }
         }
     }
 
+    /*
+    Sets the TextFields with the selected campaign's metrics
+     */
     private void setMetrics(String name) {
         campaignName.setText(name);
-        System.out.println(name);
+
+        //TODO: Find campaign by name, then set fields with metrics
+
+        impressionsF.setText(String.valueOf(56));
+        clicksF.setText(String.valueOf(3.6));
+        bouncesF.setText(String.valueOf(6));
+        conversionsF.setText(String.valueOf(16));
+        totalCostF.setText(String.valueOf(8));
+        clickRateF.setText(String.valueOf(0.2));
+        aquisitionF.setText(String.valueOf(0.9));
+        costPerClickF.setText(String.valueOf(1));
+    }
+
+    /*
+    Displays a selected campaign on the graph
+     */
+    private void showCampaignOnGraph(String name) {
+        // Find campaign from list of campaigns
+        switch (currentMetricDisplayed) {
+            case "Impressions": showImpressions(name);
+            case "Clicks": showClicks(name);
+            case "Bounces": showBounces(name);
+            case "Conversions": showConversion(name);
+            case "TotalCost": showTotalCost(name);
+            case "ClickRate": showClickRate(name);
+            case "Aquisition": showAquisition(name);
+            case "CostPerClick": showCostPerClick(name);
+        }
+
+    }
+
+    private void hideCampaignFromGraph(String name) {
+        //lineChart.getData().remove(findCampaignByName(name));
+    }
+
+    private void changeToLineChart() {
+        graphType.setText("Line Chart");
+        lineChart.setVisible(true);
+        pieChart.setVisible(false);
+        barChart.setVisible(false);
+        lineType.setSelected(true);
+        barType.setSelected(false);
+        pieType.setSelected(false);
+    }
+
+    private void changeToBarChart() {
+        graphType.setText("Bar Chart");
+        lineChart.setVisible(false);
+        pieChart.setVisible(false);
+        barChart.setVisible(true);
+        lineType.setSelected(false);
+        barType.setSelected(true);
+        pieType.setSelected(false);
+    }
+
+    private void changeToPieChart() {
+        graphType.setText("Pie Chart");
+        lineChart.setVisible(false);
+        pieChart.setVisible(true);
+        barChart.setVisible(false);
+        lineType.setSelected(false);
+        barType.setSelected(false);
+        pieType.setSelected(true);
     }
 
     private void showImpressions(String name) {
-        //Just for testing
-        lineChart.getData().clear();
-        XYChart.Series series = new XYChart.Series();
-        series.getData().add(new XYChart.Data("Something", 3));
-        series.getData().add(new XYChart.Data("2", 15));
-        series.getData().add(new XYChart.Data("3", 32));
-        series.getData().add(new XYChart.Data("4", 1));
-        series.getData().add(new XYChart.Data("5", 8));
-        series.getData().add(new XYChart.Data("Else", 30));
-        series.getData().add(new XYChart.Data("7", 7));
-        series.getData().add(new XYChart.Data("8", 4));
-        series.setName(name);
-
-        lineChart.getData().add(series);
+        currentMetricDisplayed = "Impressions";
+        //Show on all types of graphs
+        XYChart.Series campaign1 = new XYChart.Series();
+        campaign1.getData().add(new XYChart.Data("1", 123));
+        campaign1.getData().add(new XYChart.Data("2", 145));
+        campaign1.getData().add(new XYChart.Data("3", 162));
+        campaign1.getData().add(new XYChart.Data("4", 111));
+        lineChart.setTitle("Impressions");
+        campaign1.setName(name);
+        lineChart.getData().add(campaign1);
     }
 
     private void showClicks(String name) {
-
+        currentMetricDisplayed = "Clicks";
+        //Show on all types of graphs
     }
 
     private void showBounces(String name) {
-
+        currentMetricDisplayed = "Bounces";
+        //Show on all types of graphs
     }
 
     private void showConversion(String name) {
-
+        currentMetricDisplayed = "Conversions";
+        //Show on all types of graphs
     }
 
     private void showTotalCost(String name) {
-
+        currentMetricDisplayed = "TotalCost";
+        //Show on all types of graphs
     }
 
     private void showClickRate(String name) {
-
+        currentMetricDisplayed = "ClickRate";
+        //Show on all types of graphs
     }
 
     private void showAquisition(String name) {
-
+        currentMetricDisplayed = "Aquisition";
+        //Show on all types of graphs
     }
 
     private void showCostPerClick(String name) {
-
+        currentMetricDisplayed = "CostPerClick";
+        //Show on all types of graphs
     }
 }

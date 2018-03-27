@@ -12,6 +12,7 @@ public class Campaign {
     public Campaign(String name) {
         this.name = name;
         this.displayed = new CheckBox();
+        displayed.setSelected(true);
         this.remove = new Button("✖");
     }
 
