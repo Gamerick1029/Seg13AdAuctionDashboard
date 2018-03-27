@@ -52,7 +52,7 @@ public class CampaignController implements ScreenInterface {
     @Override
     public void setScreenParent(ScreensController parent) {
         this.myController = parent;
-        //BUGSHIFT: Just added null for these values to allow it to run
+        //BUG SHIFT: Just added null for these values to allow it to run
         //Will need to be replaced with legitimate values
         myController.setDataFieldPopulator(new DataFieldPopulator(null, null, impressions, clicks, bounces, conversions, cost, clickRate, costAquisition, costConversion));
         myController.setCampaignDataPopulator(new CampaignDataPopulator(x, y, lineChart));

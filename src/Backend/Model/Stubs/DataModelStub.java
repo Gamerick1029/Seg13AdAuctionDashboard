@@ -60,6 +60,9 @@ public class DataModelStub implements DataModel
     }
 
     @Override
+    public String getName() {return "Stub";}
+
+    @Override
     public int getImpressionsNumber()
     {
         return 1;

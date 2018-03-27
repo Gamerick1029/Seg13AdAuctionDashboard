@@ -25,6 +25,9 @@ public interface DataModel {
      */
     List<ServerLog> getServerData();
 
+
+    String getName();
+
     /*
       Number of Impressions generated during a campaign
     */
