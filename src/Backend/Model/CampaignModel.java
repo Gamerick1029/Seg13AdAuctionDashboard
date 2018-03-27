@@ -18,6 +18,9 @@ import java.util.*;
  */
 public class CampaignModel implements DataModel {
 
+    private static Date MINDATE = new Date(Long.MIN_VALUE);
+    private static Date MAXDATE = new Date(Long.MAX_VALUE);
+
 
     private String campaignName;
     private List<ClickLog> clickData;
@@ -121,7 +124,13 @@ public class CampaignModel implements DataModel {
     @Override
     public Map<Date, Integer> getImpressionsByInterval(Date startInterval, Date endInterval, long step)
     {
-        return getImpressionsByInterval(startInterval, endInterval);
+        return groupI(step, getImpressionsByInterval(startInterval, endInterval));
+    }
+
+    @Override
+    public Map<Date, Integer> getFullImpressions(long step)
+    {
+        return groupI(step, getImpressionsByInterval(MINDATE, MAXDATE, step));
     }
 
     @Override
@@ -166,7 +175,13 @@ public class CampaignModel implements DataModel {
     @Override
     public Map<Date, Integer> getClicksByInterval(Date startInterval, Date endInterval, long step)
     {
-        return getClicksByInterval(startInterval, endInterval);
+        return groupI(step, getClicksByInterval(startInterval, endInterval));
+    }
+
+    @Override
+    public Map<Date, Integer> getFullClicks(long step)
+    {
+        return resolveI(groupMap(step, getClicksByInterval(MINDATE, MAXDATE, step)));
     }
 
     @Override
@@ -207,7 +222,13 @@ public class CampaignModel implements DataModel {
     @Override
     public Map<Date, Integer> getUniquesByInterval(Date startInterval, Date endInterval, long step)
     {
-        return getUniquesByInterval(startInterval, endInterval);
+        return groupI(step, getUniquesByInterval(startInterval, endInterval));
+    }
+
+    @Override
+    public Map<Date, Integer> getFullUniques(long step)
+    {
+        return groupI(step, getUniquesByInterval(MINDATE, MAXDATE, step));
     }
 
     @Override
@@ -263,7 +284,13 @@ public class CampaignModel implements DataModel {
     @Override
     public Map<Date, Integer> getBouncesByInterval(Date startInterval, Date endInterval, long step)
     {
-        return getBouncesByInterval(startInterval, endInterval);
+        return groupI(step, getBouncesByInterval(startInterval, endInterval));
+    }
+
+    @Override
+    public Map<Date, Integer> getFullBounces(long step)
+    {
+        return groupI(step, getBouncesByInterval(MINDATE, MAXDATE, step));
     }
 
     @Override
@@ -323,7 +350,13 @@ public class CampaignModel implements DataModel {
     @Override
     public Map<Date, Integer> getConversionsByInterval(Date startInterval, Date endInterval, long step)
     {
-        return getConversionsByInterval(startInterval, endInterval);
+        return groupI(step, getConversionsByInterval(startInterval, endInterval));
+    }
+
+    @Override
+    public Map<Date, Integer> getFullConversions(long step)
+    {
+        return groupI(step, getConversionsByInterval(MINDATE, MAXDATE, step));
     }
 
     @Override
@@ -373,7 +406,13 @@ public class CampaignModel implements DataModel {
     @Override
     public Map<Date, Float> getCostByInterval(Date startInterval, Date endInterval, long step)
     {
-        return getCostByInterval(startInterval, endInterval);
+        return groupF(step, getCostByInterval(startInterval, endInterval));
+    }
+
+    @Override
+    public Map<Date, Float> getFullCost(long step)
+    {
+        return groupF(step, getCostByInterval(MINDATE, MAXDATE, step));
     }
 
 
@@ -423,7 +462,13 @@ DEAD FUNCTION
     @Override
     public Map<Date, Float> getCTRByInterval(Date startInterval, Date endInterval, long step)
     {
-        return getCTRByInterval(startInterval, endInterval);
+        return groupF(step, getCTRByInterval(startInterval, endInterval));
+    }
+
+    @Override
+    public Map<Date, Float> getFullCTR(long step)
+    {
+        return groupF(step, getCTRByInterval(MINDATE, MAXDATE, step));
     }
 
     @Override
@@ -468,7 +513,13 @@ DEAD FUNCTION
     @Override
     public Map<Date, Float> getCPAByInterval(Date startInterval, Date endInterval, long step)
     {
-        return getCPAByInterval(startInterval, endInterval);
+        return groupF(step, getCPAByInterval(startInterval, endInterval));
+    }
+
+    @Override
+    public Map<Date, Float> getFullCPA(long step)
+    {
+        return groupF(step, getCPAByInterval(MINDATE, MAXDATE, step));
     }
 
     @Override
@@ -509,7 +560,13 @@ DEAD FUNCTION
     @Override
     public Map<Date, Float> getCPCByInterval(Date startInterval, Date endInterval, long step)
     {
-        return getCPCByInterval(startInterval, endInterval);
+        return groupF(step, getCPCByInterval(startInterval, endInterval));
+    }
+
+    @Override
+    public Map<Date, Float> getFullCPC(long step)
+    {
+        return groupF(step, getCPCByInterval(MINDATE, MAXDATE, step));
     }
 
     @Override
@@ -552,7 +609,13 @@ DEAD FUNCTION
     @Override
     public Map<Date, Float> getCPMByInterval(Date startInterval, Date endInterval, long step)
     {
-        return getCPMByInterval(startInterval, endInterval);
+        return groupF(step, getCPMByInterval(startInterval, endInterval));
+    }
+
+    @Override
+    public Map<Date, Float> getFullCPM(long step)
+    {
+        return groupF(step, getCPMByInterval(MINDATE, MAXDATE, step));
     }
 
     @Override
@@ -603,7 +666,13 @@ DEAD FUNCTION
     @Override
     public Map<Date, Float> getBounceRateByInterval(Date startInterval, Date endInterval, long step)
     {
-        return getBounceRateByInterval(startInterval, endInterval);
+        return groupF(step, getBounceRateByInterval(startInterval, endInterval));
+    }
+
+    @Override
+    public Map<Date, Float> getFullBounceRate(long step)
+    {
+        return groupF(step, getBounceRateByInterval(MINDATE, MAXDATE, step));
     }
 
     @Override
@@ -619,7 +688,7 @@ DEAD FUNCTION
     /*
         Returns a Set of the Unique Users from the ClickData.
      */
-    private Set<String> getUsersFromClickLog() {
+    public Set<String> getUsersFromClickLog() {
         Set<String> userSet = new HashSet<String>();
         for (ClickLog cl : clickData) {
             userSet.add(cl.getID());
@@ -627,11 +696,11 @@ DEAD FUNCTION
         return userSet;
     }
 
-    public String getCampaignName() {
+    public String getName() {
         return campaignName;
     }
 
-    private void setCampaignName(String campaignName) {
+    public void setCampaignName(String campaignName) {
         this.campaignName = campaignName;
     }
 
@@ -661,6 +730,12 @@ DEAD FUNCTION
     }
 
     @Override
+    public Map<Date, Set<String>> getFullUsers(long step)
+    {
+        return getUsersByInterval(MINDATE, MAXDATE, step);
+    }
+
+    @Override
     public Set<String> getOverallUsersRateByInterval(Date startInterval, Date endInterval)
     {
         Map<Date,Set<String>> tempUsersInterv = getUsersByInterval(startInterval,endInterval);
@@ -671,6 +746,95 @@ DEAD FUNCTION
         return users;
     }
 
+    /*
+    A helper method to group a map by specified step values
+    Probably an unnecessarily complicated method. Having specific types might have
+    simplified this
+     */
+    private <T> Map<Date, List<T>> groupMap(long step, Map<Date, T> map)
+    {
+        int total = map.size();
+        int current = 0;
+        Date start = getEarliestDate(map.keySet());
+        Date end = new Date(start.getTime() + step);
+        Map<Date, List<T>> output = new HashMap<>();
+        while(current<total)
+        {
+            List<T> listable = new ArrayList<>();
+            for(Date d : map.keySet())
+            {
+                //Admin decision. Include the early date, exclude the later date
+                if(d.before(end) && (d.after(start) || d.equals(start)))
+                {
+                    listable.add(map.get(d));
+                    current++;
+                }
+            }
+            output.put(start, listable);
+            start = new Date(end.getTime());
+            end = new Date(end.getTime()+step);
+        }
 
+        return output;
+    }
+
+    private Map<Date, Float> resolveF(Map<Date, List<Float>> in)
+    {
+        Map<Date, Float> out = new HashMap<>();
+        for(Date d : in.keySet())
+        {
+            float sum = 0f;
+            for(Float f : in.get(d))
+            {
+                sum= sum + f;
+            }
+            out.put(d, sum);
+        }
+        return out;
+    }
+
+    private Map<Date, Integer> resolveI(Map<Date, List<Integer>> in)
+    {
+        Map<Date, Integer> out = new HashMap<>();
+        for(Date d : in.keySet())
+        {
+            int sum = 0;
+            for(Integer i : in.get(d))
+            {
+                sum += i;
+            }
+            out.put(d, sum);
+        }
+        return out;
+    }
+
+//    pr
+
+    /*
+    Another helper method to get the starting date
+     */
+    private Date getEarliestDate(Set<Date> dates)
+    {
+        Date output = MAXDATE;
+        for(Date d : dates)
+        {
+            if(d.before(output))
+                output = d;
+        }
+        return output;
+    }
+
+    /*
+    These methods simplify the control chain for this.
+     */
+    private Map<Date, Integer> groupI(long step, Map<Date, Integer> in)
+    {
+        return resolveI(groupMap(step, in));
+    }
+
+    private Map<Date, Float> groupF(long step, Map<Date, Float> in)
+    {
+        return resolveF(groupMap(step, in));
+    }
 
 }

@@ -1,6 +1,6 @@
 import Backend.FileIO.readCSVs;
 import Backend.FileIO.ReadCSVsToDB;
-import Backend.MagicDB;
+import Backend.DBHelper;
 import Backend.Model.ClickData;
 import Backend.Model.ImpressionData;
 import Backend.Model.ServerData;
@@ -15,8 +15,6 @@ import java.util.Scanner;
 
 public class TestMain {
 
-    private String DBUrl = "jdbc:mariadb://" + MagicDB.defaultHost + ":" + MagicDB.defaultPort + "/" + MagicDB.dbName;
-
     private static final String defClickLog = "TestCSVs/2_week_campaign/click_log.csv";
     private static final String defImpressionLog = "TestCSVs/2_week_campaign/impression_log.csv";
     private static final String defServerLog = "TestCSVs/2_week_campaign/server_log.csv";
@@ -26,11 +24,29 @@ public class TestMain {
 //        TestMain testMain = new TestMain();
 //        testMain.databaseTesting();
 
-        ReadCSVsToDB readCSVsToDB = new ReadCSVsToDB("test", new File(defClickLog), new File(defImpressionLog), new File(defServerLog), args[0], args[1]);
+
+//        Runnable runnable = () -> {
+//            while(true){
+//                System.out.println(ReadCSVsToDB.impressionProgress);
+//                try {
+//                    Thread.sleep(100);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        };
+//
+//        new Thread(runnable).start();
+
+        DBHelper dbh = new DBHelper(args[0], args[1]);
+        Connection connection = dbh.getDefaultConnection();
+
+//        ReadCSVsToDB.makeCampaign(connection, "test", new File(defClickLog), new File(defImpressionLog), new File(defServerLog));
+        System.out.println(dbh.getCampaigns());
         System.out.println("Success!");
     }
 
-    public void databaseTesting() throws SQLException {
+    public void databaseTesting(Connection connection) throws SQLException {
         Scanner in = new Scanner(System.in);
 
         System.out.print("User: ");
@@ -38,9 +54,6 @@ public class TestMain {
 
         System.out.print("Pass: ");
         String pass = in.nextLine();
-
-        //This is what creates the connection to the remote Database. We throw all statements through here
-        Connection connection = DriverManager.getConnection(DBUrl, user, pass);
 
         //This just loops over building and executing statements with pretty output to System.Out
         while (true){

@@ -60,6 +60,9 @@ public class DataModelStub implements DataModel
     }
 
     @Override
+    public String getName() {return "Stub";}
+
+    @Override
     public int getImpressionsNumber()
     {
         return 1;
@@ -72,6 +75,12 @@ public class DataModelStub implements DataModel
 
     @Override
     public Map<Date, Integer> getImpressionsByInterval(Date startInterval, Date endInterval, long step)
+    {
+        return intMap;
+    }
+
+    @Override
+    public Map<Date, Integer> getFullImpressions(long step)
     {
         return intMap;
     }
@@ -100,6 +109,12 @@ public class DataModelStub implements DataModel
     }
 
     @Override
+    public Map<Date, Integer> getFullClicks(long step)
+    {
+        return intMap;
+    }
+
+    @Override
     public int getOverallClicksByInterval(Date startInterval, Date endInterval) {
         return 0;
     }
@@ -123,6 +138,12 @@ public class DataModelStub implements DataModel
     }
 
     @Override
+    public Map<Date, Integer> getFullUniques(long step)
+    {
+        return intMap;
+    }
+
+    @Override
     public int getOverallUniquesByInterval(Date startInterval, Date endInterval) {
         return 0;
     }
@@ -140,6 +161,12 @@ public class DataModelStub implements DataModel
 
     @Override
     public Map<Date, Integer> getBouncesByInterval(Date startInterval, Date endInterval, long step)
+    {
+        return intMap;
+    }
+
+    @Override
+    public Map<Date, Integer> getFullBounces(long step)
     {
         return intMap;
     }
@@ -168,6 +195,12 @@ public class DataModelStub implements DataModel
     }
 
     @Override
+    public Map<Date, Integer> getFullConversions(long step)
+    {
+        return intMap;
+    }
+
+    @Override
     public int getOverallConversionsByInterval(Date startInterval, Date endInterval) {
         return 0;
     }
@@ -186,6 +219,12 @@ public class DataModelStub implements DataModel
 
     @Override
     public Map<Date, Float> getCostByInterval(Date startInterval, Date endInterval, long step)
+    {
+        return floatMap;
+    }
+
+    @Override
+    public Map<Date, Float> getFullCost(long step)
     {
         return floatMap;
     }
@@ -214,6 +253,12 @@ public class DataModelStub implements DataModel
     }
 
     @Override
+    public Map<Date, Float> getFullCTR(long step)
+    {
+        return floatMap;
+    }
+
+    @Override
     public float getOverallCTRByInterval(Date startInterval, Date endInterval) {
         return 0;
     }
@@ -232,6 +277,12 @@ public class DataModelStub implements DataModel
 
     @Override
     public Map<Date, Float> getCPAByInterval(Date startInterval, Date endInterval, long step)
+    {
+        return floatMap;
+    }
+
+    @Override
+    public Map<Date, Float> getFullCPA(long step)
     {
         return floatMap;
     }
@@ -260,6 +311,12 @@ public class DataModelStub implements DataModel
     }
 
     @Override
+    public Map<Date, Float> getFullCPC(long step)
+    {
+        return floatMap;
+    }
+
+    @Override
     public float getOverallCPCByInterval(Date startInterval, Date endInterval) {
         return 0;
     }
@@ -277,6 +334,12 @@ public class DataModelStub implements DataModel
 
     @Override
     public Map<Date, Float> getCPMByInterval(Date startInterval, Date endInterval, long step)
+    {
+        return floatMap;
+    }
+
+    @Override
+    public Map<Date, Float> getFullCPM(long step)
     {
         return floatMap;
     }
@@ -305,6 +368,12 @@ public class DataModelStub implements DataModel
     }
 
     @Override
+    public Map<Date, Float> getFullBounceRate(long step)
+    {
+        return floatMap;
+    }
+
+    @Override
     public float getOverallBounceRateByInterval(Date startInterval, Date endInterval) {
         return 0;
     }
@@ -316,6 +385,12 @@ public class DataModelStub implements DataModel
 
     @Override
     public Map<Date, Set<String>> getUsersByInterval(Date startInterval, Date endInterval, long step)
+    {
+        return null;
+    }
+
+    @Override
+    public Map<Date, Set<String>> getFullUsers(long step)
     {
         return null;
     }

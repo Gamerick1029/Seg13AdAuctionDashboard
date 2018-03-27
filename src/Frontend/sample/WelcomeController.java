@@ -1,7 +1,5 @@
 package Frontend.sample;
 
-
-import Backend.Model.CampaignModel;
 import Backend.Model.Interfaces.DataModel;
 import Backend.Model.Stubs.DataModelStub;
 import javafx.event.ActionEvent;
