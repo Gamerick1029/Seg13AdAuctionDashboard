@@ -33,6 +33,12 @@ public interface DataModel {
     */
     int getImpressionsNumber();
 
+    /*
+    Retrieve impression data.
+    startInterval - Date to start sampling from
+    endInterval - Date to finish sampling at
+    step - Number of milliseconds between each grouping
+     */
     Map<Date, Integer> getImpressionsByInterval(Date startInterval, Date endInterval);
     Map<Date, Integer> getImpressionsByInterval(Date startInterval, Date endInterval, long step);
     Map<Date, Integer> getFullImpressions(long step);

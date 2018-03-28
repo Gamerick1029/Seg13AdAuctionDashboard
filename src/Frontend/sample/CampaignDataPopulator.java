@@ -29,10 +29,12 @@ public class CampaignDataPopulator {
         this.pieChart = pieChart;
     }
 
+    public void setDataModel(DataModel dm) { this.dataModel = dm; }
+
     public void populateGraph() {
 
         //TODO: Get Impressions for loaded campaign and dispay for LineChart, BarChart, PieChart
-        dataModel = new DataModelStub();
+        //dataModel = new DataModelStub();
 
         XYChart.Series campaignImpressionsLC = new XYChart.Series();
         XYChart.Series campaignImpressionsBC = new XYChart.Series();
@@ -41,7 +43,8 @@ public class CampaignDataPopulator {
         campaignImpressionsLC.setName(dataModel.getName() + "Impressions");
         campaignImpressionsBC.setName(dataModel.getName() + "Impressions");
 
-        for (Map.Entry<Date, Integer> entry : dataModel.getFullImpressions(10).entrySet()) {
+        //Step by Day
+        for (Map.Entry<Date, Integer> entry : dataModel.getFullImpressions(1000*60*60*24).entrySet()) {
             Date key = entry.getKey();
             Integer value = entry.getValue();
             campaignImpressionsLC.getData().add(new XYChart.Data(String.valueOf(key), value));
@@ -54,6 +57,17 @@ public class CampaignDataPopulator {
         barChart.setCategoryGap(20);
         barChart.getData().add(campaignImpressionsBC);
         pieChart.setData(campaignImpressionsPC);
+
+
+//        XYChart.Series campaign3 = new XYChart.Series();
+//        for(Map.Entry<Date, Integer> e : dm.getFullImpressions(1000*60*24*7).entrySet())
+//        {
+//            campaign3.getData().add(new XYChart.Data(e.getKey().toString(), e.getValue()));
+//        }
+//        campaign3.setName("Campaign 3");
+//
+//        lineChart.getData().addAll(campaign1, campaign2, campaign3);
+
 
     }
 

@@ -111,6 +111,7 @@ public class ScreensController extends StackPane {
     public void setDataModel(DataModel dataModel) {
         this.dataModel = dataModel;
         dataFieldPopulator.setDataModel(dataModel);
+        campaignDataPopulator.setDataModel(dataModel);
     }
 
     public DataModel getDataModel() {

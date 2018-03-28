@@ -54,8 +54,8 @@ public class CampaignController implements ScreenInterface {
         this.myController = parent;
         //BUG SHIFT: Just added null for these values to allow it to run
         //Will need to be replaced with legitimate values
-        myController.setDataFieldPopulator(new DataFieldPopulator(null, null, impressions, clicks, bounces, conversions, cost, clickRate, costAquisition, costConversion));
-        myController.setCampaignDataPopulator(new CampaignDataPopulator(x, y, lineChart));
+//        myController.setDataFieldPopulator(new DataFieldPopulator(null, null, impressions, clicks, bounces, conversions, cost, clickRate, costAquisition, costConversion));
+//        myController.setCampaignDataPopulator(new CampaignDataPopulator(x, y, lineChart));
 
        /* campaignsTable.setPrefSize(265, 150);
         campaigns.add(new Campaign("Campaign 1"));
