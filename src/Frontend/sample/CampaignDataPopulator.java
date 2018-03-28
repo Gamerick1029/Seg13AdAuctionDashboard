@@ -49,16 +49,16 @@ public class CampaignDataPopulator {
         campaignImpressionsAC.setName(dataModel.getName() + " Impressions");
 
         //Step by Day
-        campaignImpressionsLC.setData(sortMap(dataModel.getFullImpressions(1000*60*60*24)));
+        ObservableList<XYChart.Data> fullData = sortMap(dataModel.getFullImpressions(1000*60*60*24));
+        campaignImpressionsLC.setData(fullData);
+        campaignImpressionsAC.setData(fullData);
+        campaignImpressionsBC.setData(fullData);
 
-//        for (Map.Entry<Date, Integer> entry : dataModel.getFullImpressions(1000*60*60*24).entrySet()) {
-//            Date key = entry.getKey();
-//            Integer value = entry.getValue();
-//            campaignImpressionsLC.getData().add(new XYChart.Data(key.getTime(), value));
-//            campaignImpressionsBC.getData().add(new XYChart.Data(String.valueOf(key), value));
-//            campaignImpressionsPC.add(new PieChart.Data(String.valueOf(key), value));
-//
-//        }
+        for (Map.Entry<Date, Integer> entry : dataModel.getFullImpressions(1000*60*60*24).entrySet()) {
+            Date key = entry.getKey();
+            Integer value = entry.getValue();
+            campaignImpressionsPC.add(new PieChart.Data(String.valueOf(key), value));
+        }
         lineChart.getData().add(campaignImpressionsLC);
         barChart.setBarGap(3);
         barChart.setCategoryGap(20);
