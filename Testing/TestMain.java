@@ -21,10 +21,6 @@ public class TestMain {
 
     public static void main(String[] args) throws IOException, ParseException, SQLException {
 
-//        TestMain testMain = new TestMain();
-//        testMain.databaseTesting();
-
-
 //        Runnable runnable = () -> {
 //            while(true){
 //                System.out.println(ReadCSVsToDB.impressionProgress);
@@ -40,9 +36,11 @@ public class TestMain {
 
         DBHelper dbh = new DBHelper(args[0], args[1]);
         Connection connection = dbh.getDefaultConnection();
+        TestMain testMain = new TestMain();
+        testMain.databaseTesting(connection);
 
 //        ReadCSVsToDB.makeCampaign(connection, "test", new File(defClickLog), new File(defImpressionLog), new File(defServerLog));
-        System.out.println(dbh.getCampaigns());
+//        System.out.println(dbh.getCampaigns());
         System.out.println("Success!");
     }
 
@@ -57,7 +55,6 @@ public class TestMain {
 
         //This just loops over building and executing statements with pretty output to System.Out
         while (true){
-            StringBuilder sb = new StringBuilder();
 
             System.out.print("SQL statement (Ends with ';'): ");
             String statement = in.nextLine();
@@ -66,6 +63,8 @@ public class TestMain {
                 System.out.print("> ");
                 statement = statement + in.nextLine();
             }
+
+            if (statement.equals("exit;")) {break;}
 
             try{
                 //The following lines attempt to execute the statement on the Database. Returns true if there

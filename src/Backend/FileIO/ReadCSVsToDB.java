@@ -16,9 +16,9 @@ public class ReadCSVsToDB {
 
     private static final String DefaultDataBaseIP = "hobbithouse.me";
 
-    private static int clickProgress = 0;
+    public static int clickProgress = 0;
     public static float impressionProgress = 0;
-    private static int serverProgress = 0;
+    public static int serverProgress = 0;
 
     private static String campaignName;
     private static File clickLog;
@@ -140,21 +140,12 @@ public class ReadCSVsToDB {
             fwUsers.write(id + "," + gender + "," + ageRange + "," + income + "\n");
             fwImpressions.write(date + "," + id + "," + context + "," + impressionCost + "\n");
 
-//            System.out.println(id + "," + gender + "," + ageRange + "," + income + "\n");
-//            System.out.println(date + "," + id + "," + context + "," + impressionCost + "\n");
-
         }
 
-//        System.out.println((System.nanoTime() - start)/1000000000.0);
-
-        long startLoadDataINFILE = System.nanoTime();
         stmt.execute("LOAD DATA LOCAL INFILE '" + users.getAbsolutePath() + "' INTO TABLE " + userTableName
                         + " FIELDS TERMINATED BY ',';");
         stmt.execute("LOAD DATA LOCAL INFILE '" + impressions.getAbsolutePath() + "' INTO TABLE " + impressionTableName
                 + " FIELDS TERMINATED BY ',';");
-//        System.out.println((System.nanoTime() - startLoadDataINFILE)/1000000000.0);
-
-
         clickProgress = 100;
     }
 
