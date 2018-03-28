@@ -789,10 +789,10 @@ DEAD FUNCTION
     private <T> Map<Date, List<T>> groupMap(long step, Map<Date, T> map)
     {
         System.out.println("Starting to group");
-        int total = map.size();
-        int current = 0;
+//        int total = map.size();
+//        int current = 0;
         Date start = getEarliestDate(map.keySet());
-        Date end = new Date(start.getTime() + step);
+//        Date end = new Date(start.getTime() + step);
         Map<Date, List<T>> output = new HashMap<>();
         Map<Long, List<T>> groups = new HashMap<>();
         for(Date d : map.keySet())

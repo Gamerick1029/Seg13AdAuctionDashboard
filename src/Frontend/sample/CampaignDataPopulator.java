@@ -4,12 +4,15 @@ import Backend.Model.Interfaces.DataModel;
 import Backend.Model.Stubs.DataModelStub;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 public class CampaignDataPopulator {
@@ -44,14 +47,16 @@ public class CampaignDataPopulator {
         campaignImpressionsBC.setName(dataModel.getName() + "Impressions");
 
         //Step by Day
-        for (Map.Entry<Date, Integer> entry : dataModel.getFullImpressions(1000*60*60*24).entrySet()) {
-            Date key = entry.getKey();
-            Integer value = entry.getValue();
-            campaignImpressionsLC.getData().add(new XYChart.Data(String.valueOf(key), value));
-            campaignImpressionsBC.getData().add(new XYChart.Data(String.valueOf(key), value));
-            campaignImpressionsPC.add(new PieChart.Data(String.valueOf(key), value));
+        campaignImpressionsLC.setData(sortMap(dataModel.getFullImpressions(1000*60*60*24)));
 
-        }
+//        for (Map.Entry<Date, Integer> entry : dataModel.getFullImpressions(1000*60*60*24).entrySet()) {
+//            Date key = entry.getKey();
+//            Integer value = entry.getValue();
+//            campaignImpressionsLC.getData().add(new XYChart.Data(key.getTime(), value));
+//            campaignImpressionsBC.getData().add(new XYChart.Data(String.valueOf(key), value));
+//            campaignImpressionsPC.add(new PieChart.Data(String.valueOf(key), value));
+//
+//        }
         lineChart.getData().add(campaignImpressionsLC);
         barChart.setBarGap(3);
         barChart.setCategoryGap(20);
@@ -69,6 +74,25 @@ public class CampaignDataPopulator {
 //        lineChart.getData().addAll(campaign1, campaign2, campaign3);
 
 
+    }
+
+    private static <T> ObservableList<XYChart.Data> sortMap(Map<Date, T> in)
+    {
+        List<Date> unsortedDates = new ArrayList<>();
+        for(Date d : in.keySet())
+        {
+            unsortedDates.add(d);
+        }
+        SortedList<Date> sortedDates = new SortedList<Date>(FXCollections.observableList(unsortedDates)).sorted();
+        //Need to sort the data here
+        List<XYChart.Data> output = new ArrayList<>();
+        for(Date d : sortedDates)
+        {
+            output.add(new XYChart.Data(d.toString(), in.get(d)));
+        }
+
+        ObservableList<XYChart.Data> myout = FXCollections.observableList(output);
+        return myout;
     }
 
 }
