@@ -13,6 +13,11 @@ import javax.swing.*;
 import java.io.File;
 import java.util.HashMap;
 
+/**
+ * Created by Yoana on 25/02/2018.
+ * This class is the controller for the Load Data Screen
+ * and implements all the functionality for the FXML file.
+ */
 public class LoadDataController implements ScreenInterface {
 
     private ScreensController myController;

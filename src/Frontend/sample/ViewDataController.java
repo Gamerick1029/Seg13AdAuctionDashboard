@@ -5,7 +5,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.stage.Stage;
 
-
+/**
+ * Created by Yoana on 25/02/2018.
+ * This class is the controller for the View Data Screen
+ * and implements all the functionality for the FXML file.
+ */
 public class ViewDataController implements ScreenInterface {
 
     private ScreensController myController;

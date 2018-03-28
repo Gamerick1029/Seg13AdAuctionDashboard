@@ -16,6 +16,10 @@ import javafx.util.Duration;
 
 import java.util.HashMap;
 
+/**
+ * Created by Yoana on 25/02/2018.
+ * This class loads all of the screens when the application is started.
+ */
 public class ScreensController extends StackPane {
 
     private DataFieldPopulator dataFieldPopulator;
@@ -27,7 +31,7 @@ public class ScreensController extends StackPane {
     public ScreensController(Stage stage) {
         super();
         this.stage = stage;
-        stage.setResizable(false);
+        stage.setResizable(true);
     }
 
     public void addScreen(String name, Node screen) {

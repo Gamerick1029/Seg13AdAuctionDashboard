@@ -16,6 +16,11 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Created by Yoana on 28/02/2018.
+ * This class is the controller for the Campaign Screen
+ * and implements all the functionality for the FXML file.
+ */
 public class CampaignController implements ScreenInterface {
 
     private ScreensController myController;
