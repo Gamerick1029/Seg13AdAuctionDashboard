@@ -1,8 +1,8 @@
 package Frontend.sample;
 
-import Backend.Model.Interfaces.DataModel;
-import Backend.Model.Stubs.DataModelStub;
 import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.chart.*;
@@ -15,14 +15,11 @@ import javafx.stage.StageStyle;
 
 import javax.swing.*;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class ExampleController implements ScreenInterface {
 
     private ScreensController myController;
-    private DataModel dataModel = new DataModelStub();
     private File currentImpressions;
     private File currentClick;
     private File currentServer;
@@ -86,6 +83,17 @@ public class ExampleController implements ScreenInterface {
     private CheckMenuItem pieType;
     @FXML
     private CheckMenuItem areaType;
+    @FXML
+    private RadioButton byDay;
+    @FXML
+    private RadioButton byWeek;
+    @FXML
+    private RadioButton byMonth;
+
+    private XYChart.Series campaignMetricLC;
+    private XYChart.Series campaignMetricBC;
+    private XYChart.Series campaignMetricAC;
+    private ObservableList<PieChart.Data> campaignMetricPC;
 
     private String currentMetricDisplayed = "Impressions";
     private List<Campaign> campaigns = new ArrayList<>();
@@ -139,11 +147,25 @@ public class ExampleController implements ScreenInterface {
         pieType.setOnAction(t -> {
             changeToPieChart();
         });
+        byDay.setOnAction(r -> {
+            if (byDay.isSelected()) {
+                groupByDay();
+            }
+        });
+        byWeek.setOnAction(r -> {
+            if (byWeek.isSelected()) {
+                groupByWeek();
+            }
+        });
+        byMonth.setOnAction(r -> {
+            if (byMonth.isSelected()) {
+                groupByMonth();
+            }
+        });
         campaignsTable.setPrefSize(265, 150);
         campaignsTable.setPlaceholder(new Label("No campaigns loaded!"));
 
-        //TODO: Get the name of the loaded campaign
-        campaigns.add(new Campaign(dataModel.getName()));
+        campaigns.add(new Campaign("some name"));
         campaignOne.setOnAction(t -> {
             for (MenuItem menuItem : campaignName.getItems()) {
                 if (menuItem instanceof CheckMenuItem) {
@@ -439,22 +461,29 @@ public class ExampleController implements ScreenInterface {
         switch (currentMetricDisplayed) {
             case "Impressions":
                 showImpressions(name);
+                break;
             case "Clicks":
                 showClicks(name);
+                break;
             case "Bounces":
                 showBounces(name);
+                break;
             case "Conversions":
                 showConversion(name);
+                break;
             case "TotalCost":
                 showTotalCost(name);
+                break;
             case "ClickRate":
                 showClickRate(name);
+                break;
             case "Aquisition":
                 showAquisition(name);
+                break;
             case "CostPerClick":
                 showCostPerClick(name);
+                break;
         }
-
     }
 
     private void hideCampaignFromGraph(String name) {
@@ -466,6 +495,21 @@ public class ExampleController implements ScreenInterface {
             }
         }
         lineChart.getData().remove(name);
+        barChart.getData().remove(name);
+        areaChart.getData().remove(name);
+        pieChart.getData().remove(name);
+    }
+
+    private void groupByDay() {
+
+    }
+
+    private void groupByWeek() {
+
+    }
+
+    private void groupByMonth() {
+
     }
 
     private void changeToLineChart() {
@@ -518,49 +562,125 @@ public class ExampleController implements ScreenInterface {
 
     private void showImpressions(String name) {
         currentMetricDisplayed = "Impressions";
-        //Show on all types of graphs
-        XYChart.Series campaign1 = new XYChart.Series();
-        campaign1.getData().add(new XYChart.Data("1", 123));
-        campaign1.getData().add(new XYChart.Data("2", 145));
-        campaign1.getData().add(new XYChart.Data("3", 162));
-        campaign1.getData().add(new XYChart.Data("4", 111));
-        lineChart.setTitle("Impressions");
-        campaign1.setName(name);
-        lineChart.getData().add(campaign1);
+        populateMetric("Impressions");
     }
 
     private void showClicks(String name) {
         currentMetricDisplayed = "Clicks";
-        //Show on all types of graphs
+        populateMetric("Clicks");
     }
 
     private void showBounces(String name) {
         currentMetricDisplayed = "Bounces";
-        //Show on all types of graphs
+        populateMetric("Bounces");
     }
 
     private void showConversion(String name) {
         currentMetricDisplayed = "Conversions";
-        //Show on all types of graphs
+        populateMetric("Conversions");
     }
 
     private void showTotalCost(String name) {
         currentMetricDisplayed = "TotalCost";
-        //Show on all types of graphs
+        populateMetric("TotalCost");
     }
 
     private void showClickRate(String name) {
         currentMetricDisplayed = "ClickRate";
-        //Show on all types of graphs
+        populateMetric("ClickRate");
     }
 
     private void showAquisition(String name) {
         currentMetricDisplayed = "Aquisition";
-        //Show on all types of graphs
+        populateMetric("Aquisition");
     }
 
     private void showCostPerClick(String name) {
         currentMetricDisplayed = "CostPerClick";
-        //Show on all types of graphs
+        populateMetric("CostPerClick");
+    }
+
+    private void populateMetric(String name) {
+        lineChart.getData().clear();
+        barChart.getData().clear();
+        areaChart.getData().clear();
+        pieChart.getData().clear();
+        campaignMetricLC = new XYChart.Series();
+        campaignMetricBC = new XYChart.Series();
+        campaignMetricAC = new XYChart.Series();
+        campaignMetricPC = FXCollections.observableArrayList();
+
+        campaignMetricLC.setName(myController.getDataModel().getName() + " " + name);
+        campaignMetricBC.setName(myController.getDataModel().getName() + " " + name);
+        campaignMetricAC.setName(myController.getDataModel().getName() + " " + name);
+
+        switch (name) {
+            case "Impressions":
+                for (Map.Entry<Date, Integer> entry : myController.getDataModel().getFullImpressions(1000 * 60 * 60 * 24).entrySet()) {
+                    Date key = entry.getKey();
+                    Integer value = entry.getValue();
+                    addData(key, value);
+                }
+                break;
+            case "Clicks":
+                for (Map.Entry<Date, Integer> entry : myController.getDataModel().getFullClicks(1000 * 60 * 60 * 24).entrySet()) {
+                    Date key = entry.getKey();
+                    Integer value = entry.getValue();
+                    addData(key, value);
+                }
+                break;
+            case "Bounces":
+                for (Map.Entry<Date, Integer> entry : myController.getDataModel().getFullBounces(1000 * 60 * 60 * 24).entrySet()) {
+                    Date key = entry.getKey();
+                    Integer value = entry.getValue();
+                    addData(key, value);
+                }
+                break;
+            case "Conversions":
+                for (Map.Entry<Date, Integer> entry : myController.getDataModel().getFullConversions(1000 * 60 * 60 * 24).entrySet()) {
+                    Date key = entry.getKey();
+                    Integer value = entry.getValue();
+                    addData(key, value);
+                }
+                break;
+            case "TotalCost":
+                for (Map.Entry<Date, Float> entry : myController.getDataModel().getFullCost(1000 * 60 * 60 * 24).entrySet()) {
+                    Date key = entry.getKey();
+                    Float value = entry.getValue();
+                    addData(key, Math.round(value));
+                }
+                break;
+            case "ClickRate":
+                for (Map.Entry<Date, Float> entry : myController.getDataModel().getFullCTR(1000 * 60 * 60 * 24).entrySet()) {
+                    Date key = entry.getKey();
+                    Float value = entry.getValue();
+                    addData(key, Math.round(value));
+                }
+            case "Aquisition":
+                for (Map.Entry<Date, Float> entry : myController.getDataModel().getFullCPA(1000 * 60 * 60 * 24).entrySet()) {
+                    Date key = entry.getKey();
+                    Float value = entry.getValue();
+                    addData(key, Math.round(value));
+                }
+                break;
+            case "CostPerClick":
+                for (Map.Entry<Date, Float> entry : myController.getDataModel().getFullCPC(1000 * 60 * 60 * 24).entrySet()) {
+                    Date key = entry.getKey();
+                    Float value = entry.getValue();
+                    addData(key, Math.round(value));
+                }
+                break;
+        }
+        lineChart.getData().add(campaignMetricLC);
+        barChart.getData().add(campaignMetricBC);
+        areaChart.getData().add(campaignMetricAC);
+        pieChart.setData(campaignMetricPC);
+    }
+
+    private void addData(Date key, Integer value) {
+        campaignMetricLC.getData().add(new XYChart.Data(String.valueOf(key), value));
+        campaignMetricBC.getData().add(new XYChart.Data(String.valueOf(key), value));
+        campaignMetricAC.getData().add(new XYChart.Data(String.valueOf(key), value));
+        campaignMetricPC.add(new PieChart.Data(String.valueOf(key), value));
     }
 }

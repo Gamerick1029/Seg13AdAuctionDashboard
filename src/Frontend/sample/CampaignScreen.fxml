@@ -19,65 +19,77 @@
           <NumberAxis fx:id="y" label="Campaign Something" side="LEFT" tickLabelFill="WHITE" />
         </yAxis>
       </LineChart>
-      <Pane layoutX="1163.0" prefHeight="758.0" prefWidth="176.0" style="-fx-background-color: #333030;">
+      <Pane layoutX="1155.0" prefHeight="758.0" prefWidth="210.0" style="-fx-background-color: #333030;">
          <children>
-            <Text fill="#f2f2f2" layoutX="41.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Filter Metrics" wrappingWidth="117.4697265625">
+            <Text fill="#f2f2f2" layoutX="19.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Filter Metrics" wrappingWidth="139.4697265625">
                <font>
-                  <Font name="System Bold" size="18.0" />
+                  <Font name="System Bold" size="21.0" />
                </font>
             </Text>
-            <Text fill="#f2f2f2" layoutX="69.0" layoutY="185.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="Audience ◀">
+            <Text fill="#f2f2f2" layoutX="96.0" layoutY="139.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="Audience ◀">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
                <font>
-                  <Font name="Ubuntu" size="18.0" />
+                  <Font name="System Bold" size="20.0" />
                </font>
             </Text>
-            <Text fill="#f2f2f2" layoutX="103.0" layoutY="296.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="Age ◀">
+            <CheckBox layoutX="14.0" layoutY="545.0" mnemonicParsing="false" text="Entertainment" textFill="WHITE" />
+            <Text fill="#cdc2c2" layoutX="157.0" layoutY="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Age">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Text fill="#cdc2c2" layoutX="137.0" layoutY="294.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Income">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Text fill="#cdc2c2" layoutX="138.0" layoutY="463.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gender">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Text fill="#f2f2f2" layoutX="134.0" layoutY="638.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="Date ◀">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
                <font>
-                  <Font name="Ubuntu" size="18.0" />
+                  <Font name="System Bold" size="20.0" />
                </font>
             </Text>
-            <Text fill="#f2f2f2" layoutX="75.0" layoutY="432.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="Context ◀">
+            <Text fill="#f2f2f2" layoutX="103.0" layoutY="530.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="Context ◀">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
                <font>
-                  <Font name="Ubuntu" size="18.0" />
+                  <Font name="System Bold" size="20.0" />
                </font>
             </Text>
-            <Text fill="#f2f2f2" layoutX="77.0" layoutY="622.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="Income ◀">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-               <font>
-                  <Font name="Ubuntu" size="18.0" />
-               </font>
-            </Text>
-            <Text fill="#f2f2f2" layoutX="100.0" layoutY="524.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="Date ◀">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-               <font>
-                  <Font name="Ubuntu" size="18.0" />
-               </font>
-            </Text>
-            <CheckBox layoutX="14.0" layoutY="340.0" mnemonicParsing="false" text="&lt; 18" textFill="WHITE" />
-            <CheckBox layoutX="14.0" layoutY="362.0" mnemonicParsing="false" text="&lt; 18" textFill="WHITE" />
-            <CheckBox layoutX="14.0" layoutY="388.0" mnemonicParsing="false" text="&lt; 18" textFill="WHITE" />
-            <CheckBox layoutX="103.0" layoutY="388.0" mnemonicParsing="false" text="&lt; 18" textFill="WHITE" />
-            <CheckBox layoutX="103.0" layoutY="340.0" mnemonicParsing="false" text="&lt; 18" textFill="WHITE" />
-            <CheckBox layoutX="103.0" layoutY="362.0" mnemonicParsing="false" text="&lt; 18" textFill="WHITE" />
-            <CheckBox layoutX="103.0" layoutY="577.0" mnemonicParsing="false" text="&lt; 18" textFill="WHITE" />
-            <CheckBox layoutX="90.0" layoutY="211.0" mnemonicParsing="false" text="&lt; 18" textFill="WHITE" />
-            <CheckBox layoutX="103.0" layoutY="640.0" mnemonicParsing="false" text="&lt; 18" textFill="WHITE" />
-            <CheckBox layoutX="103.0" layoutY="548.0" mnemonicParsing="false" text="&lt; 18" textFill="WHITE" />
-            <CheckBox layoutX="103.0" layoutY="669.0" mnemonicParsing="false" text="&lt; 18" textFill="WHITE" />
-            <CheckBox layoutX="100.0" layoutY="447.0" mnemonicParsing="false" text="&lt; 18" textFill="WHITE" />
+            <CheckBox layoutX="119.0" layoutY="223.0" mnemonicParsing="false" text="50 - 69" textFill="WHITE" />
+            <CheckBox layoutX="119.0" layoutY="201.0" mnemonicParsing="false" text="19 - 29" textFill="WHITE" />
+            <CheckBox layoutX="119.0" layoutY="246.0" mnemonicParsing="false" text="&gt; 90" textFill="WHITE" />
+            <CheckBox layoutX="14.0" layoutY="246.0" mnemonicParsing="false" text="70 - 89" textFill="WHITE" />
+            <CheckBox layoutX="14.0" layoutY="223.0" mnemonicParsing="false" text="30 - 49" textFill="WHITE" />
+            <CheckBox layoutX="14.0" layoutY="201.0" mnemonicParsing="false" text="&lt; 18" textFill="WHITE" />
+            <CheckBox layoutX="14.0" layoutY="331.0" mnemonicParsing="false" text="19 000 - 29 000" textFill="WHITE" />
+            <CheckBox layoutX="14.0" layoutY="308.0" mnemonicParsing="false" text="&lt; 19 000" textFill="WHITE" />
+            <CheckBox layoutX="14.0" layoutY="356.0" mnemonicParsing="false" text="29 000 - 59 000" textFill="WHITE" />
+            <CheckBox layoutX="14.0" layoutY="402.0" mnemonicParsing="false" text="89 000 - 100 000" textFill="WHITE" />
+            <CheckBox layoutX="14.0" layoutY="379.0" mnemonicParsing="false" text="59 000 - 89 000" textFill="WHITE" />
+            <CheckBox layoutX="14.0" layoutY="425.0" mnemonicParsing="false" text="&gt; 100 000" textFill="WHITE" />
+            <CheckBox layoutX="69.0" layoutY="479.0" mnemonicParsing="false" text="Female" textFill="WHITE" />
+            <CheckBox layoutX="14.0" layoutY="479.0" mnemonicParsing="false" text="Male " textFill="WHITE" />
+            <CheckBox layoutX="139.0" layoutY="479.0" mnemonicParsing="false" text="Other" textFill="WHITE" />
+            <CheckBox layoutX="14.0" layoutY="568.0" mnemonicParsing="false" text="Shopping" textFill="WHITE" />
+            <CheckBox layoutX="14.0" layoutY="592.0" mnemonicParsing="false" text="Social Media" textFill="WHITE" />
+            <CheckBox layoutX="116.0" layoutY="592.0" mnemonicParsing="false" text="Food" textFill="WHITE" />
+            <CheckBox layoutX="116.0" layoutY="568.0" mnemonicParsing="false" text="Healthcare" textFill="WHITE" />
+            <CheckBox layoutX="116.0" layoutY="545.0" mnemonicParsing="false" text="Sports" textFill="WHITE" />
+            <CheckBox layoutX="13.0" layoutY="646.0" mnemonicParsing="false" text="Food" textFill="WHITE" />
+            <CheckBox layoutX="13.0" layoutY="670.0" mnemonicParsing="false" text="Food" textFill="WHITE" />
+            <CheckBox layoutX="13.0" layoutY="693.0" mnemonicParsing="false" text="Food" textFill="WHITE" />
+            <CheckBox layoutX="13.0" layoutY="716.0" mnemonicParsing="false" text="Food" textFill="WHITE" />
          </children>
       </Pane>
       <Pane prefHeight="758.0" prefWidth="277.0" style="-fx-background-color: #333030;">
@@ -239,7 +251,7 @@
             <Font size="20.0" />
          </font>
       </Text>
-      <RadioButton fx:id="weekTick" layoutX="494.0" layoutY="208.0" mnemonicParsing="false" text="By Week" textFill="WHITE">
+      <RadioButton fx:id="byWeek" layoutX="494.0" layoutY="208.0" mnemonicParsing="false" text="By Week" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -247,7 +259,7 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </RadioButton>
-      <RadioButton fx:id="dayTick" layoutX="403.0" layoutY="208.0" mnemonicParsing="false" text="By Day" textFill="WHITE">
+      <RadioButton fx:id="byDay" layoutX="403.0" layoutY="208.0" mnemonicParsing="false" selected="true" text="By Day" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -255,7 +267,7 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </RadioButton>
-      <RadioButton fx:id="monthTick" layoutX="596.0" layoutY="208.0" mnemonicParsing="false" text="1 Month" textFill="WHITE">
+      <RadioButton fx:id="byMonth" layoutX="596.0" layoutY="208.0" mnemonicParsing="false" text="By Month" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
