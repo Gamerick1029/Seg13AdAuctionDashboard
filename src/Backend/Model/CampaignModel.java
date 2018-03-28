@@ -105,8 +105,11 @@ public class CampaignModel implements DataModel {
     DEAD FUNCTION
      */
     public Map<Date, Integer> getImpressionsByInterval(Date startInterval, Date endInterval)
-    {   Map<Date,Integer> tempImpressInterv = new HashMap<>();
+    {
+        System.out.println("Starting to gather Impressions");
+        Map<Date,Integer> tempImpressInterv = new HashMap<>();
         for(ImpressionLog il: impressionData){
+            //System.out.println(il.getDate());
             Date logDate = il.getDate();
             int impressionNo = 0;
             if(logDate.after(startInterval)&&logDate.before(endInterval)){
@@ -118,6 +121,7 @@ public class CampaignModel implements DataModel {
             }
             tempImpressInterv.put(logDate,impressionNo);
         }
+        System.out.println("Data Gathered");
         return tempImpressInterv;
     }
 
@@ -130,6 +134,7 @@ public class CampaignModel implements DataModel {
     @Override
     public Map<Date, Integer> getFullImpressions(long step)
     {
+        System.out.println("Getting Impressions");
         return groupI(step, getImpressionsByInterval(MINDATE, MAXDATE, step));
     }
 
@@ -751,15 +756,18 @@ DEAD FUNCTION
     Probably an unnecessarily complicated method. Having specific types might have
     simplified this
      */
-    private <T> Map<Date, List<T>> groupMap(long step, Map<Date, T> map)
+    private <T> Map<Date, List<T>> groupMapOld(long step, Map<Date, T> map)
     {
+        System.out.println("Starting to group");
         int total = map.size();
         int current = 0;
         Date start = getEarliestDate(map.keySet());
         Date end = new Date(start.getTime() + step);
         Map<Date, List<T>> output = new HashMap<>();
+        Map<Integer, List<T>> groups = new HashMap<>();
         while(current<total)
         {
+            System.out.println(current);
             List<T> listable = new ArrayList<>();
             for(Date d : map.keySet())
             {
@@ -773,6 +781,33 @@ DEAD FUNCTION
             output.put(start, listable);
             start = new Date(end.getTime());
             end = new Date(end.getTime()+step);
+        }
+
+        return output;
+    }
+
+    private <T> Map<Date, List<T>> groupMap(long step, Map<Date, T> map)
+    {
+        System.out.println("Starting to group");
+        int total = map.size();
+        int current = 0;
+        Date start = getEarliestDate(map.keySet());
+        Date end = new Date(start.getTime() + step);
+        Map<Date, List<T>> output = new HashMap<>();
+        Map<Long, List<T>> groups = new HashMap<>();
+        for(Date d : map.keySet())
+            {
+                long pos = Math.floorDiv(d.getTime()-start.getTime(), step);
+                if(!groups.containsKey(pos))
+                {
+                    groups.put(pos, new ArrayList<>());
+                }
+                groups.get(pos).add(map.get(d));
+
+            }
+        for(Long pos : groups.keySet())
+        {
+            output.put(new Date(start.getTime() + (pos * step)), groups.get(pos));
         }
 
         return output;
@@ -795,6 +830,7 @@ DEAD FUNCTION
 
     private Map<Date, Integer> resolveI(Map<Date, List<Integer>> in)
     {
+        System.out.println("Starting to Resolve");
         Map<Date, Integer> out = new HashMap<>();
         for(Date d : in.keySet())
         {
@@ -805,6 +841,7 @@ DEAD FUNCTION
             }
             out.put(d, sum);
         }
+        System.out.println("Ending resolve");
         return out;
     }
 

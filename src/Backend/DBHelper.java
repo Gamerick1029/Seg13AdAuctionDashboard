@@ -20,7 +20,7 @@ public class DBHelper {
     private Connection connection;
 
     /**
-     * Middleman for acquiring a connection to the database.
+     * Middleman for acquiring a connection to the database. Establishes a connection using default settings.
      * @param user
      * @param pass
      * @throws SQLException
