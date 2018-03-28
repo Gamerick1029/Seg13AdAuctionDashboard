@@ -1,5 +1,6 @@
 package Frontend.sample;
 
+import Backend.DBHelper;
 import Backend.Model.CampaignModel;
 import Backend.Model.Interfaces.DataModel;
 import javafx.event.ActionEvent;
@@ -32,6 +33,7 @@ public class LoadDataController implements ScreenInterface {
     private File currentClick;
     private File currentServer;
     private HashMap<String, File> files = new HashMap<>();
+    private DBHelper dbHelper;
 
     @Override
     public void setScreenParent(ScreensController parent) {
@@ -48,16 +50,15 @@ public class LoadDataController implements ScreenInterface {
             JOptionPane.showMessageDialog(null, "You need to input a campaign name before continuing!"
                     , "Warning", 1);
         } else {
-            //System.out.println("Campaign name: " + currentName);
             DataModel dataModel = null;
             try {
-                dataModel = new CampaignModel(currentName,clicks, impressions, server);
+                dataModel = new CampaignModel(currentName, clicks, impressions, server);
                 myController.setDataModel(dataModel);
                 myController.getDataFieldPopulator().populateFields();
                 myController.getCampaignDataPopulator().populateGraph();
                 myController.setScreen(Main.campaignScreenID);
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, e.getMessage()
+                JOptionPane.showMessageDialog(null, "Cannot load campaign! Please try again."
                         , "Warning", 1);
             }
         }
