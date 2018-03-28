@@ -1,5 +1,7 @@
 package Frontend.sample;
 
+import Backend.Model.Interfaces.DataModel;
+import Backend.Model.Stubs.DataModelStub;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -14,11 +16,13 @@ import javafx.stage.StageStyle;
 import javax.swing.*;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class ExampleController implements ScreenInterface {
 
     private ScreensController myController;
+    private DataModel dataModel = new DataModelStub();
     private File currentImpressions;
     private File currentClick;
     private File currentServer;
@@ -63,6 +67,8 @@ public class ExampleController implements ScreenInterface {
     @FXML
     private BarChart<?, ?> barChart;
     @FXML
+    private AreaChart<?, ?> areaChart;
+    @FXML
     private PieChart pieChart;
     @FXML
     private TableView campaignsTable;
@@ -78,6 +84,8 @@ public class ExampleController implements ScreenInterface {
     private CheckMenuItem barType;
     @FXML
     private CheckMenuItem pieType;
+    @FXML
+    private CheckMenuItem areaType;
 
     private String currentMetricDisplayed = "Impressions";
     private List<Campaign> campaigns = new ArrayList<>();
@@ -86,7 +94,7 @@ public class ExampleController implements ScreenInterface {
     public void setScreenParent(ScreensController parent) {
         this.myController = parent;
         myController.setDataFieldPopulator(new DataFieldPopulator(campaignName, campaignOne, impressionsF, clicksF, bouncesF, conversionsF, totalCostF, clickRateF, aquisitionF, costPerClickF));
-        myController.setCampaignDataPopulator(new CampaignDataPopulator(x, y, lineChart, barChart, pieChart));
+        myController.setCampaignDataPopulator(new CampaignDataPopulator(x, y, lineChart, barChart, pieChart, areaChart));
         impressions.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
                     showImpressions(campaignName.getText());
@@ -125,6 +133,9 @@ public class ExampleController implements ScreenInterface {
         barType.setOnAction(t -> {
             changeToBarChart();
         });
+        areaType.setOnAction(t -> {
+            changeToAreaChart();
+        });
         pieType.setOnAction(t -> {
             changeToPieChart();
         });
@@ -132,7 +143,7 @@ public class ExampleController implements ScreenInterface {
         campaignsTable.setPlaceholder(new Label("No campaigns loaded!"));
 
         //TODO: Get the name of the loaded campaign
-        campaigns.add(new Campaign("Campaign 1"));
+        campaigns.add(new Campaign(dataModel.getName()));
         campaignOne.setOnAction(t -> {
             for (MenuItem menuItem : campaignName.getItems()) {
                 if (menuItem instanceof CheckMenuItem) {
@@ -426,29 +437,46 @@ public class ExampleController implements ScreenInterface {
     private void showCampaignOnGraph(String name) {
         // Find campaign from list of campaigns
         switch (currentMetricDisplayed) {
-            case "Impressions": showImpressions(name);
-            case "Clicks": showClicks(name);
-            case "Bounces": showBounces(name);
-            case "Conversions": showConversion(name);
-            case "TotalCost": showTotalCost(name);
-            case "ClickRate": showClickRate(name);
-            case "Aquisition": showAquisition(name);
-            case "CostPerClick": showCostPerClick(name);
+            case "Impressions":
+                showImpressions(name);
+            case "Clicks":
+                showClicks(name);
+            case "Bounces":
+                showBounces(name);
+            case "Conversions":
+                showConversion(name);
+            case "TotalCost":
+                showTotalCost(name);
+            case "ClickRate":
+                showClickRate(name);
+            case "Aquisition":
+                showAquisition(name);
+            case "CostPerClick":
+                showCostPerClick(name);
         }
 
     }
 
     private void hideCampaignFromGraph(String name) {
-        //lineChart.getData().remove(findCampaignByName(name));
+        Iterator<Campaign> iter = null;
+        iter = campaigns.iterator();
+        while (iter.hasNext()) {
+            if (iter.next().getName().equals(name)) {
+
+            }
+        }
+        lineChart.getData().remove(name);
     }
 
     private void changeToLineChart() {
         graphType.setText("Line Chart");
         lineChart.setVisible(true);
         pieChart.setVisible(false);
+        areaChart.setVisible(false);
         barChart.setVisible(false);
         lineType.setSelected(true);
         barType.setSelected(false);
+        areaType.setSelected(false);
         pieType.setSelected(false);
     }
 
@@ -456,9 +484,23 @@ public class ExampleController implements ScreenInterface {
         graphType.setText("Bar Chart");
         lineChart.setVisible(false);
         pieChart.setVisible(false);
+        areaChart.setVisible(false);
         barChart.setVisible(true);
         lineType.setSelected(false);
         barType.setSelected(true);
+        areaType.setSelected(false);
+        pieType.setSelected(false);
+    }
+
+    private void changeToAreaChart() {
+        graphType.setText("Area Chart");
+        lineChart.setVisible(false);
+        pieChart.setVisible(false);
+        barChart.setVisible(false);
+        areaChart.setVisible(true);
+        lineType.setSelected(false);
+        barType.setSelected(false);
+        areaType.setSelected(true);
         pieType.setSelected(false);
     }
 
@@ -466,9 +508,11 @@ public class ExampleController implements ScreenInterface {
         graphType.setText("Pie Chart");
         lineChart.setVisible(false);
         pieChart.setVisible(true);
+        areaChart.setVisible(false);
         barChart.setVisible(false);
         lineType.setSelected(false);
         barType.setSelected(false);
+        areaType.setSelected(false);
         pieType.setSelected(true);
     }
 
