@@ -16,7 +16,7 @@
           <CategoryAxis label="Campaign Something" side="BOTTOM" tickLabelFill="WHITE" fx:id="x" />
         </xAxis>
         <yAxis>
-          <NumberAxis fx:id="y" label="Campaign Something" side="LEFT" tickLabelFill="#2f2e2e" />
+          <NumberAxis fx:id="y" label="Campaign Something" side="LEFT" tickLabelFill="WHITE" />
         </yAxis>
       </LineChart>
       <Pane layoutX="1163.0" prefHeight="758.0" prefWidth="176.0" style="-fx-background-color: #333030;">
@@ -231,6 +231,7 @@
             <CheckMenuItem fx:id="lineType" mnemonicParsing="false" selected="true" text="Line Chart" />
             <CheckMenuItem fx:id="barType" mnemonicParsing="false" text="Bar Chart" />
             <CheckMenuItem fx:id="pieType" mnemonicParsing="false" text="Pie Chart" />
+            <CheckMenuItem fx:id="areaType" mnemonicParsing="false" text="Area Chart" />
          </items>
       </MenuButton>
       <Text fill="WHITE" layoutX="288.0" layoutY="226.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Timescale:">
@@ -272,5 +273,13 @@
         </yAxis>
       </BarChart>
       <PieChart fx:id="pieChart" layoutX="288.0" layoutY="237.0" prefHeight="452.0" prefWidth="859.0" style="-fx-background-color: #807B7B;" title="Pie Chart" visible="false" />
+      <AreaChart fx:id="areaChart" layoutX="289.0" layoutY="237.0" prefHeight="452.0" prefWidth="859.0" style="-fx-background-color: #807B7B;" title="Area Chart" visible="false">
+        <xAxis>
+          <CategoryAxis label="Campaign Something" side="BOTTOM" tickLabelFill="#fcfafa" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis label="Campaign Something" side="LEFT" tickLabelFill="#f8f6f6" />
+        </yAxis>
+      </AreaChart>
    </children>
 </AnchorPane>
