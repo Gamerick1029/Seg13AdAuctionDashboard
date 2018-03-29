@@ -3,6 +3,11 @@ package Frontend.sample;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 
+/**
+ * Created by Yoana on 28/02/2018.
+ * This class acts as the means for populating the Campaigns Table
+ * and contains a Display and Remove button for all campaigns.
+ */
 public class Campaign {
 
     private String name;

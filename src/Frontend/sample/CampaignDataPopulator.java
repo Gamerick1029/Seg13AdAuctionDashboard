@@ -14,6 +14,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Created by Yoana on 28/02/2018.
+ * This class populates Impressions data in the graph before
+ * the Campaign Screen is displayed.
+ */
 public class CampaignDataPopulator {
 
     private CategoryAxis x;

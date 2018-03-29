@@ -5,6 +5,11 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * Created by Yoana on 25/02/2018.
+ * This class is used to run the application and
+ * connect all of the screen controllers to the FXML files.
+ */
 public class Main extends Application {
 
     public static String welcomeScreenID = "welcomeScreen";
