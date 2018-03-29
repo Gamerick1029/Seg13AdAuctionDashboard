@@ -454,9 +454,14 @@ DEAD FUNCTION
         Map<Date, Integer> getClicksNumber = getClicksByInterval(startInterval,endInterval);
         Map<Date, Integer> getImpressionNumber = getImpressionsByInterval(startInterval,endInterval);
 
+        /*
+        NOTE: A CTR is only registered if a click and impression
+        happen on the same instant. Is this correct?
+         */
         for(Date logDate: getClicksNumber.keySet()){
 
-            ctrByInterval.put(logDate,((float) getClicksNumber.get(logDate) / (float) getImpressionNumber.get(logDate)));
+            if(getImpressionNumber.keySet().contains(logDate))
+                ctrByInterval.put(logDate,((float) getClicksNumber.get(logDate) / (float) getImpressionNumber.get(logDate)));
 
         }
 
