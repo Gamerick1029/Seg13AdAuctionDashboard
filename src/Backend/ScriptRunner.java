@@ -1,4 +1,4 @@
-package Backend.FileIO;
+package Backend;
 
 /*
  * Slightly modified version of the com.ibatis.common.jdbc.ScriptRunner class
