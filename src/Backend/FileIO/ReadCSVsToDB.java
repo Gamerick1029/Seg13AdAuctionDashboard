@@ -1,6 +1,7 @@
 package Backend.FileIO;
 
 import Backend.DBHelper;
+import Backend.ScriptRunner;
 import com.opencsv.CSVReader;
 
 import java.io.*;
@@ -53,25 +54,13 @@ public class ReadCSVsToDB {
     }
 
     private static void createTables() throws IOException, SQLException {
-        String fileContents = FileHelpers.readFileToString("sqlScripts/sqlCreateTables.sql", Charset.defaultCharset());
-        fileContents = fileContents.replaceAll("\\[CAMPAIGN]", campaignName);
-        File temp = File.createTempFile("sqlRegexed", ".sql");
-        temp.deleteOnExit();
 
         //Adds the campaign Name to the table of campaigns
         //TODO: Currently does not discriminate on existing campaigns and will overwrite them. Need to decide what to do about that
         dbConnection.createStatement().execute("INSERT INTO campaignNames VALUES ('" + campaignName +"') ON DUPLICATE KEY UPDATE name=name;");
 
-        FileOutputStream fis = new FileOutputStream(temp);
-        fis.write(fileContents.getBytes());
-        fis.close();
-
-        ScriptRunner sr = new ScriptRunner(dbConnection, true, true);
-        try {
-            sr.runScript(new BufferedReader(new FileReader(temp)));
-        } catch (IOException e) {
-            throw new IOException("Could not access sql Scripts File at sqlScripts/sqlCreateTables.sql");
-        }
+        DBHelper dbh = new DBHelper(dbConnection);
+        dbh.executeScriptWithVariable(new File("sqlScripts/sqlCreateTables.sql"), campaignName);
     }
 
     private static void loadFilesToDB(){

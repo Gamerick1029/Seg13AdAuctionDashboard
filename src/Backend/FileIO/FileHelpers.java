@@ -34,9 +34,9 @@ public class FileHelpers {
         return 0;
     }
 
-    //Function from https://stackoverflow.com/a/326440
-    public static String readFileToString(String path, Charset encoding) throws IOException {
-        byte[] encoded = Files.readAllBytes(Paths.get(path));
+    // Modified function from https://stackoverflow.com/a/326440
+    public static String readFileToString(File file, Charset encoding) throws IOException {
+        byte[] encoded = Files.readAllBytes(file.toPath());
         return new String(encoded, encoding);
     }
 }
