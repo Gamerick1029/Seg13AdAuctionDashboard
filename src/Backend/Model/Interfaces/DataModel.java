@@ -39,48 +39,48 @@ public interface DataModel {
     endInterval - Date to finish sampling at
     step - Number of milliseconds between each grouping
      */
-    Map<Date, Integer> getImpressionsByInterval(Date startInterval, Date endInterval);
-    Map<Date, Integer> getImpressionsByInterval(Date startInterval, Date endInterval, long step);
+//    Map<Date, Integer> getImpressionsByInterval(Date startInterval, Date endInterval);
+//    Map<Date, Integer> getImpressionsByInterval(Date startInterval, Date endInterval, long step);
     Map<Date, Integer> getFullImpressions(long step);
 
     int getOverallImpressionsByInterval(Date startInterval, Date endInterval);
 
     int getClicksNumber();
 
-    Map<Date, Integer> getClicksByInterval(Date startInterval, Date endInterval);
-    Map<Date, Integer> getClicksByInterval(Date startInterval, Date endInterval, long step);
+//    Map<Date, Integer> getClicksByInterval(Date startInterval, Date endInterval);
+//    Map<Date, Integer> getClicksByInterval(Date startInterval, Date endInterval, long step);
     Map<Date, Integer> getFullClicks(long step);
 
     int getOverallClicksByInterval(Date startInterval, Date endInterval);
 
     int getUniquesNumber();
 
-    Map<Date, Integer> getUniquesByInterval(Date startInterval, Date endInterval);
-    Map<Date, Integer> getUniquesByInterval(Date startInterval, Date endInterval, long step);
+//    Map<Date, Integer> getUniquesByInterval(Date startInterval, Date endInterval);
+//    Map<Date, Integer> getUniquesByInterval(Date startInterval, Date endInterval, long step);
     Map<Date, Integer> getFullUniques(long step);
 
     int getOverallUniquesByInterval(Date startInterval, Date endInterval);
 
     int getBouncesNumber();
 
-    Map<Date, Integer> getBouncesByInterval(Date startInterval, Date endInterval);
-    Map<Date, Integer> getBouncesByInterval(Date startInterval, Date endInterval, long step);
+//    Map<Date, Integer> getBouncesByInterval(Date startInterval, Date endInterval);
+//    Map<Date, Integer> getBouncesByInterval(Date startInterval, Date endInterval, long step);
     Map<Date, Integer> getFullBounces(long step);
 
     int getOverallBouncesByInterval(Date startInterval, Date endInterval);
 
     int getConversionsNumber();
 
-    Map<Date, Integer> getConversionsByInterval(Date startInterval, Date endInterval);
-    Map<Date, Integer> getConversionsByInterval(Date startInterval, Date endInterval, long step);
+//    Map<Date, Integer> getConversionsByInterval(Date startInterval, Date endInterval);
+//    Map<Date, Integer> getConversionsByInterval(Date startInterval, Date endInterval, long step);
     Map<Date, Integer> getFullConversions(long step);
 
     int getOverallConversionsByInterval(Date startInterval, Date endInterval);
 
     float getTotalCost();
 
-    Map<Date, Float> getCostByInterval(Date startInterval, Date endInterval);
-    Map<Date, Float> getCostByInterval(Date startInterval, Date endInterval, long step);
+//    Map<Date, Float> getCostByInterval(Date startInterval, Date endInterval);
+//    Map<Date, Float> getCostByInterval(Date startInterval, Date endInterval, long step);
     Map<Date, Float> getFullCost(long step);
 
     /*
@@ -93,8 +93,8 @@ DEAD FUNCTION
         */
     float getCTR();
 
-    Map<Date, Float> getCTRByInterval(Date startInterval, Date endInterval);
-    Map<Date, Float> getCTRByInterval(Date startInterval, Date endInterval, long step);
+//    Map<Date, Float> getCTRByInterval(Date startInterval, Date endInterval);
+//    Map<Date, Float> getCTRByInterval(Date startInterval, Date endInterval, long step);
     Map<Date, Float> getFullCTR(long step);
 
     float getOverallCTRByInterval(Date startInterval, Date endInterval);
@@ -104,8 +104,8 @@ DEAD FUNCTION
         */
     float getCPA();
 
-    Map<Date, Float> getCPAByInterval(Date startInterval, Date endInterval);
-    Map<Date, Float> getCPAByInterval(Date startInterval, Date endInterval, long step);
+//    Map<Date, Float> getCPAByInterval(Date startInterval, Date endInterval);
+//    Map<Date, Float> getCPAByInterval(Date startInterval, Date endInterval, long step);
     Map<Date, Float> getFullCPA(long step);
 
     float getOverallCPAByInterval(Date startInterval, Date endInterval);
@@ -116,8 +116,8 @@ DEAD FUNCTION
         */
     float getCPC();
 
-    Map<Date, Float> getCPCByInterval(Date startInterval, Date endInterval);
-    Map<Date, Float> getCPCByInterval(Date startInterval, Date endInterval, long step);
+//    Map<Date, Float> getCPCByInterval(Date startInterval, Date endInterval);
+//    Map<Date, Float> getCPCByInterval(Date startInterval, Date endInterval, long step);
     Map<Date, Float> getFullCPC(long step);
 
     float getOverallCPCByInterval(Date startInterval, Date endInterval);
@@ -128,8 +128,8 @@ DEAD FUNCTION
         */
     float getCPM();
 
-    Map<Date, Float> getCPMByInterval(Date startInterval, Date endInterval);
-    Map<Date, Float> getCPMByInterval(Date startInterval, Date endInterval, long step);
+//    Map<Date, Float> getCPMByInterval(Date startInterval, Date endInterval);
+//    Map<Date, Float> getCPMByInterval(Date startInterval, Date endInterval, long step);
     Map<Date, Float> getFullCPM(long step);
 
     float getOverallCPMByInterval(Date startInterval, Date endInterval);
@@ -139,15 +139,21 @@ DEAD FUNCTION
         */
     float getBounceRate();
 
-    Map<Date, Float> getBounceRateByInterval(Date startInterval, Date endInterval);
-    Map<Date, Float> getBounceRateByInterval(Date startInterval, Date endInterval, long step);
+//    Map<Date, Float> getBounceRateByInterval(Date startInterval, Date endInterval);
+//    Map<Date, Float> getBounceRateByInterval(Date startInterval, Date endInterval, long step);
     Map<Date, Float> getFullBounceRate(long step);
 
     float getOverallBounceRateByInterval(Date startInterval, Date endInterval);
 
-    Map<Date, Set<String>> getUsersByInterval(Date startInterval, Date endInterval);
-    Map<Date, Set<String>> getUsersByInterval(Date startInterval, Date endInterval, long step);
+//    Map<Date, Set<String>> getUsersByInterval(Date startInterval, Date endInterval);
+//    Map<Date, Set<String>> getUsersByInterval(Date startInterval, Date endInterval, long step);
     Map<Date, Set<String>> getFullUsers(long step);
 
-    Set<String> getOverallUsersRateByInterval(Date startInterval, Date endInterval);
+//    Set<String> getOverallUsersRateByInterval(Date startInterval, Date endInterval);
+
+    /*
+    Filter Getter and Setters
+     */
+    Filter getFilter();
+    void setFilter(Filter f);
 }
