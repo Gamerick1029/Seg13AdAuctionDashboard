@@ -1,10 +1,7 @@
 package Backend.Model;
 
 import Backend.FileIO.readCSVs;
-import Backend.Model.Interfaces.ClickLog;
-import Backend.Model.Interfaces.DataModel;
-import Backend.Model.Interfaces.ImpressionLog;
-import Backend.Model.Interfaces.ServerLog;
+import Backend.Model.Interfaces.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -26,6 +23,7 @@ public class CampaignModel implements DataModel {
     private List<ClickLog> clickData;
     private List<ImpressionLog> impressionData;
     private List<ServerLog> serverData;
+    private Filter filter;
 
     public CampaignModel(String name, File clickFile, File impressionFile, File serverFile) throws Exception {
         try{
@@ -61,7 +59,8 @@ public class CampaignModel implements DataModel {
         }
         campaignName = name;
 
-
+        //Add permissive filter
+        filter = new Filter();
     }
 
     /*
@@ -100,10 +99,6 @@ public class CampaignModel implements DataModel {
         return impressionData.size();
     }
 
-    @Override
-    /*
-    DEAD FUNCTION
-     */
     public Map<Date, Integer> getImpressionsByInterval(Date startInterval, Date endInterval)
     {
         System.out.println("Starting to gather Impressions");
@@ -125,7 +120,7 @@ public class CampaignModel implements DataModel {
         return tempImpressInterv;
     }
 
-    @Override
+
     public Map<Date, Integer> getImpressionsByInterval(Date startInterval, Date endInterval, long step)
     {
         return groupI(step, getImpressionsByInterval(startInterval, endInterval));
@@ -159,7 +154,7 @@ public class CampaignModel implements DataModel {
     /*
     DEAD FUNCTION
      */
-    @Override
+
     public Map<Date, Integer> getClicksByInterval(Date startInterval, Date endInterval)
     {
         Map<Date,Integer> tempClicksInterv = new HashMap<>();
@@ -177,7 +172,7 @@ public class CampaignModel implements DataModel {
         return tempClicksInterv;
     }
 
-    @Override
+
     public Map<Date, Integer> getClicksByInterval(Date startInterval, Date endInterval, long step)
     {
         return groupI(step, getClicksByInterval(startInterval, endInterval));
@@ -208,10 +203,7 @@ public class CampaignModel implements DataModel {
         return getUsersFromClickLog().size();
     }
 
-    /*
-    DEAD FUNCTION
-     */
-    @Override
+
     public Map<Date, Integer> getUniquesByInterval(Date startInterval, Date endInterval)
     {
         Map<Date, Set<String>> usersMap = getUsersByInterval(startInterval,endInterval);
@@ -224,7 +216,7 @@ public class CampaignModel implements DataModel {
         return tempUniquesInterv;
     }
 
-    @Override
+
     public Map<Date, Integer> getUniquesByInterval(Date startInterval, Date endInterval, long step)
     {
         return groupI(step, getUniquesByInterval(startInterval, endInterval));
@@ -264,7 +256,7 @@ public class CampaignModel implements DataModel {
     /*
     DEAD FUNCTION
      */
-    @Override
+
     public Map<Date, Integer> getBouncesByInterval(Date startInterval,Date endInterval)
     {
         Map<Date,Integer> tempBouncesInterv = new HashMap<>();
@@ -286,7 +278,7 @@ public class CampaignModel implements DataModel {
         return tempBouncesInterv;
     }
 
-    @Override
+
     public Map<Date, Integer> getBouncesByInterval(Date startInterval, Date endInterval, long step)
     {
         return groupI(step, getBouncesByInterval(startInterval, endInterval));
@@ -328,7 +320,7 @@ public class CampaignModel implements DataModel {
     /*
     DEAD FUNCTION
      */
-    @Override
+
     public Map<Date, Integer> getConversionsByInterval(Date startInterval, Date endInterval)
     {
         Map<Date,Integer> tempBouncesInterv = new HashMap<>();
@@ -352,7 +344,7 @@ public class CampaignModel implements DataModel {
         return tempBouncesInterv;
     }
 
-    @Override
+
     public Map<Date, Integer> getConversionsByInterval(Date startInterval, Date endInterval, long step)
     {
         return groupI(step, getConversionsByInterval(startInterval, endInterval));
@@ -390,7 +382,7 @@ public class CampaignModel implements DataModel {
     /*
     DEAD FUNCTION
      */
-    @Override
+
     public Map<Date, Float> getCostByInterval(Date startInterval, Date endInterval)
     {
         Map<Date,Float> tempClickCostInterv = new HashMap<>();
@@ -408,7 +400,7 @@ public class CampaignModel implements DataModel {
         return tempClickCostInterv;
     }
 
-    @Override
+
     public Map<Date, Float> getCostByInterval(Date startInterval, Date endInterval, long step)
     {
         return groupF(step, getCostByInterval(startInterval, endInterval));
@@ -447,7 +439,7 @@ DEAD FUNCTION
     /*
     DEAD FUNCTION
      */
-    @Override
+
     public Map<Date, Float> getCTRByInterval(Date startInterval, Date endInterval)
     {
         Map<Date, Float> ctrByInterval = new HashMap<>();
@@ -469,7 +461,7 @@ DEAD FUNCTION
         return ctrByInterval;
     }
 
-    @Override
+
     public Map<Date, Float> getCTRByInterval(Date startInterval, Date endInterval, long step)
     {
         return groupF(step, getCTRByInterval(startInterval, endInterval));
@@ -498,7 +490,7 @@ DEAD FUNCTION
     /*
     DEAD FUNCTION
      */
-    @Override
+
     public Map<Date, Float> getCPAByInterval(Date startInterval,Date endInterval)
     {
         Map<Date, Float> cpaByInterval = new HashMap<>();
@@ -520,7 +512,7 @@ DEAD FUNCTION
         return cpaByInterval;
     }
 
-    @Override
+
     public Map<Date, Float> getCPAByInterval(Date startInterval, Date endInterval, long step)
     {
         return groupF(step, getCPAByInterval(startInterval, endInterval));
@@ -550,7 +542,7 @@ DEAD FUNCTION
     /*
     DEAD FUNCTION
      */
-    @Override
+
     public Map<Date, Float> getCPCByInterval(Date startInterval, Date endInterval)
     {
         Map<Date, Float> cpcByInterval = new HashMap<>();
@@ -567,7 +559,7 @@ DEAD FUNCTION
         return cpcByInterval;
     }
 
-    @Override
+
     public Map<Date, Float> getCPCByInterval(Date startInterval, Date endInterval, long step)
     {
         return groupF(step, getCPCByInterval(startInterval, endInterval));
@@ -599,7 +591,7 @@ DEAD FUNCTION
     /*
     DEAD FUNCTION
      */
-    @Override
+
     public Map<Date, Float> getCPMByInterval(Date startInterval, Date endInterval)
     {
         Map<Date, Float> cpmByInterval = new HashMap<>();
@@ -616,7 +608,7 @@ DEAD FUNCTION
         return cpmByInterval;
     }
 
-    @Override
+
     public Map<Date, Float> getCPMByInterval(Date startInterval, Date endInterval, long step)
     {
         return groupF(step, getCPMByInterval(startInterval, endInterval));
@@ -649,7 +641,7 @@ DEAD FUNCTION
     /*
     DEAD FUNCTION
      */
-    @Override
+
     public Map<Date, Float> getBounceRateByInterval(Date startInterval, Date endInterval)
     {
         Map<Date, Float> bounceRateByInterval = new HashMap<>();
@@ -673,7 +665,7 @@ DEAD FUNCTION
         return bounceRateByInterval;
     }
 
-    @Override
+
     public Map<Date, Float> getBounceRateByInterval(Date startInterval, Date endInterval, long step)
     {
         return groupF(step, getBounceRateByInterval(startInterval, endInterval));
@@ -733,7 +725,7 @@ DEAD FUNCTION
         return usersInterv;
     }
 
-    @Override
+
     public Map<Date, Set<String>> getUsersByInterval(Date startInterval, Date endInterval, long step)
     {
         return getUsersByInterval(startInterval, endInterval);
@@ -746,6 +738,18 @@ DEAD FUNCTION
     }
 
     @Override
+    public Filter getFilter()
+    {
+        return filter;
+    }
+
+    @Override
+    public void setFilter(Filter f)
+    {
+        this.filter = f;
+    }
+
+
     public Set<String> getOverallUsersRateByInterval(Date startInterval, Date endInterval)
     {
         Map<Date,Set<String>> tempUsersInterv = getUsersByInterval(startInterval,endInterval);
