@@ -1,8 +1,10 @@
 import Backend.FileIO.readCSVs;
 import Backend.FileIO.ReadCSVsToDB;
 import Backend.DBHelper;
+import Backend.Model.CampaignModelDB;
 import Backend.Model.ClickData;
 import Backend.Model.ImpressionData;
+import Backend.Model.Interfaces.DataModelDB;
 import Backend.Model.ServerData;
 
 import java.io.File;
@@ -33,6 +35,8 @@ public class TestMain {
 //        };
 //
 //        new Thread(runnable).start();
+
+        DataModelDB campaignModelDB = new CampaignModelDB();
 
         DBHelper dbh = new DBHelper(args[0], args[1]);
         Connection connection = dbh.getDefaultConnection();

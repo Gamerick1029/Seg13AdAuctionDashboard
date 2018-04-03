@@ -2,6 +2,7 @@ package Backend.Model;
 
 import Backend.DBHelper;
 import Backend.Model.Interfaces.DataModelDB;
+import Backend.Model.Interfaces.Filter;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -74,12 +75,15 @@ public class CampaignModelDB implements DataModelDB {
 
     @Override
     public int getOverallImpressionsByInterval(String campaignName, Date startInterval, Date endInterval) throws SQLException{
-        Map<Date, Integer> tempImpressInterv = getImpressionsByInterval(campaignName, startInterval, endInterval);
-        int overallImpressions = 0;
-        for (Date dt : tempImpressInterv.keySet()) {
-            overallImpressions ++ ;
-        }
-        return overallImpressions;
+        return getImpressionsByInterval(campaignName, startInterval, endInterval).size();
+        //I'm pretty sure the below code can be replaced with the above, but I've left it here just in case
+
+//        Map<Date, Integer> tempImpressInterv = getImpressionsByInterval(campaignName, startInterval, endInterval);
+//        int overallImpressions = 0;
+//        for (Date dt : tempImpressInterv.keySet()) {
+//            overallImpressions ++ ;
+//        }
+//        return overallImpressions;
     }
 
     /*
