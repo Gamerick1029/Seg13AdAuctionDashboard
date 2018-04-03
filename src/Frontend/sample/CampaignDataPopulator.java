@@ -9,10 +9,7 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Yoana on 28/02/2018.
@@ -38,8 +35,8 @@ public class CampaignDataPopulator {
         this.pieChart = pieChart;
     }
 
-    public void setDataModel(DataModel dm) {
-        this.dataModel = dm;
+    public void setCurrentDataModel(DataModel dataModel) {
+        this.dataModel = dataModel;
     }
 
     public void populateGraph() {

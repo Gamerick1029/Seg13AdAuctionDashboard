@@ -1,5 +1,7 @@
 package Backend.Model.Interfaces;
 
+import java.util.Date;
+
 public class Filter
 {
     /*
@@ -26,6 +28,9 @@ public class Filter
     public boolean contextHobbies;
     public boolean contextTravel;
 
+    private Date startDate;
+    private Date endDate;
+
     /*
     By default, filter allows everything;
      */
@@ -51,5 +56,29 @@ public class Filter
         contextBlog = true;
         contextHobbies = true;
         contextTravel = true;
+
+        startDate = new Date(Long.MIN_VALUE);
+        endDate = new Date(Long.MAX_VALUE);
     }
+
+    public Date getStartDate()
+    {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate)
+    {
+        startDate = this.startDate;
+    }
+
+    public Date getEndDate()
+    {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate)
+    {
+        endDate = this.endDate;
+    }
+
 }

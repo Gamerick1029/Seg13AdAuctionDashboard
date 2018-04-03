@@ -14,6 +14,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.awt.*;
 import java.util.HashMap;
 
 /**
@@ -26,7 +27,8 @@ public class ScreensController extends StackPane {
     private CampaignDataPopulator campaignDataPopulator;
     private HashMap<String, Node> screens = new HashMap<>();
     private Stage stage;
-    private DataModel dataModel;
+    public DataModel currentModel;
+    private HashMap<String, DataModel> dataModelMap;
 
     public ScreensController(Stage stage) {
         super();
@@ -57,8 +59,10 @@ public class ScreensController extends StackPane {
     }
 
     public boolean setScreen(final String name) {
-        if (screens.get(name) != null) {   //screen loaded
+        if (screens.get(name) != null) {   //if the screen is loaded
             final DoubleProperty opacity = opacityProperty();
+            Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
             if (name == "viewDataScreen") {
                 stage.setHeight(650);
                 stage.setWidth(758);
@@ -69,6 +73,7 @@ public class ScreensController extends StackPane {
             }
             if (name == "campaignScreen") {
                 stage.setMaximized(true);
+                //stage.getScene().getWindow().setLocation(screenSize.width/2-stage.getScene().getWindow().getSize().width/2, dim.height/2-this.getSize().height/2);
             }
 
             if (!getChildren().isEmpty()) {
@@ -112,16 +117,35 @@ public class ScreensController extends StackPane {
         }
     }
 
-    public void setDataModel(DataModel dataModel) {
-        this.dataModel = dataModel;
-        dataFieldPopulator.setDataModel(dataModel);
-        campaignDataPopulator.setDataModel(dataModel);
+    public HashMap<String, DataModel> getDataModelMap() {
+        return dataModelMap;
     }
 
-    public DataModel getDataModel() {
-        return dataModel;
+    public void setDataModelMap(HashMap<String, DataModel> dataModelMap) {
+        this.dataModelMap = dataModelMap;
+        dataFieldPopulator.setCurrentDataModel(currentModel);
+        campaignDataPopulator.setCurrentDataModel(currentModel);
     }
 
+    public DataModel getCurrentModel() {
+        return currentModel;
+    }
+
+    public void setCurrentModel(DataModel currentModel) {
+        this.currentModel = currentModel;
+    }
+
+    public void addDataModel(String name, DataModel dataModel) {
+        dataModelMap.put(name, dataModel);
+    }
+
+    public void removeDataModel(String name) {
+        dataModelMap.remove(name);
+    }
+
+    public DataModel getDataModel(String name) {
+        return dataModelMap.get(name);
+    }
 
     public DataFieldPopulator getDataFieldPopulator() {
         return dataFieldPopulator;

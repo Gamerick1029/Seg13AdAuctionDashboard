@@ -18,7 +18,6 @@ public class CampaignModel implements DataModel {
     private static Date MINDATE = new Date(Long.MIN_VALUE);
     private static Date MAXDATE = new Date(Long.MAX_VALUE);
 
-
     private String campaignName;
     private List<ClickLog> clickData;
     private List<ImpressionLog> impressionData;
