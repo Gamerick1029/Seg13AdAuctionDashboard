@@ -81,7 +81,7 @@ public class DBHelper {
 
     public void executeScriptWithVariable(File scripts, String var) throws IOException {
         String fileContents = FileHelpers.readFileToString(scripts, Charset.defaultCharset());
-        fileContents = fileContents.replaceAll("\\[CAMPAIGN]", var);
+        fileContents = fileContents.replaceAll("\\[VAR]", var);
         File temp = File.createTempFile("sqlRegexed", ".sql");
         temp.deleteOnExit();
 
