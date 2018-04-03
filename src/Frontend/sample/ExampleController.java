@@ -13,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.StageStyle;
 
@@ -100,7 +101,61 @@ public class ExampleController implements ScreenInterface {
     @FXML
     private RadioButton byMonth;
     @FXML
-    private ProgressIndicator progressIndicator;
+    private CheckBox age90;
+    @FXML
+    private CheckBox age50to69;
+    @FXML
+    private CheckBox age70to89;
+    @FXML
+    private CheckBox age30to49;
+    @FXML
+    private CheckBox age19to29;
+    @FXML
+    private CheckBox age18;
+    @FXML
+    private CheckBox income29;
+    @FXML
+    private CheckBox income19;
+    @FXML
+    private CheckBox income59;
+    @FXML
+    private CheckBox income100;
+    @FXML
+    private CheckBox income89;
+    @FXML
+    private CheckBox income100more;
+    @FXML
+    private CheckBox female;
+    @FXML
+    private CheckBox male;
+    @FXML
+    private CheckBox other;
+    @FXML
+    private CheckBox shopping;
+    @FXML
+    private CheckBox social;
+    @FXML
+    private CheckBox food;
+    @FXML
+    private CheckBox healthcare;
+    @FXML
+    private CheckBox sport;
+    @FXML
+    private CheckBox entertainment;
+    @FXML
+    private TextField startDay;
+    @FXML
+    private TextField endDay;
+    @FXML
+    private MenuButton startMonth;
+    @FXML
+    private MenuButton endMonth;
+    @FXML
+    private TextField startYear;
+    @FXML
+    private TextField endYear;
+    @FXML
+    private Text searchDate;
 
     private XYChart.Series campaignMetricLC;
     private XYChart.Series campaignMetricBC;
@@ -195,6 +250,197 @@ public class ExampleController implements ScreenInterface {
                 groupByMonth();
             }
         });
+
+        age90.setOnAction(r -> {
+            if (age90.isSelected()) {
+                filterGraph(age90.getText());
+            } else {
+                filterUnselected(age90.getText());
+            }
+        });
+        age50to69.setOnAction(r -> {
+            if (age50to69.isSelected()) {
+                filterGraph(age50to69.getText());
+            }
+        });
+        age70to89.setOnAction(r -> {
+            if (age70to89.isSelected()) {
+                filterGraph(age70to89.getText());
+            } else {
+                filterUnselected(age70to89.getText());
+            }
+        });
+        age30to49.setOnAction(r -> {
+            if (age30to49.isSelected()) {
+                filterGraph(age30to49.getText());
+            } else {
+                filterUnselected(age30to49.getText());
+            }
+        });
+        age19to29.setOnAction(r -> {
+            if (age19to29.isSelected()) {
+                filterGraph(age19to29.getText());
+            } else {
+                filterUnselected(age19to29.getText());
+            }
+        });
+        age18.setOnAction(r -> {
+            if (age18.isSelected()) {
+                filterGraph(age18.getText());
+            } else {
+                filterUnselected(age18.getText());
+            }
+        });
+        income29.setOnAction(r -> {
+            if (income29.isSelected()) {
+                filterGraph(income29.getText());
+            } else {
+                filterUnselected(income29.getText());
+            }
+        });
+        income19.setOnAction(r -> {
+            if (income19.isSelected()) {
+                filterGraph(income19.getText());
+            } else {
+                filterUnselected(income19.getText());
+            }
+        });
+        income59.setOnAction(r -> {
+            if (income59.isSelected()) {
+                filterGraph(income59.getText());
+            } else {
+                filterUnselected(income59.getText());
+            }
+        });
+        income100.setOnAction(r -> {
+            if (income100.isSelected()) {
+                filterGraph(income100.getText());
+            } else {
+                filterUnselected(income100.getText());
+            }
+        });
+        income89.setOnAction(r -> {
+            if (income89.isSelected()) {
+                filterGraph(income89.getText());
+            } else {
+                filterUnselected(income89.getText());
+            }
+        });
+        income100more.setOnAction(r -> {
+            if (income100more.isSelected()) {
+                filterGraph(income100more.getText());
+            } else {
+                filterUnselected(income100more.getText());
+            }
+        });
+        female.setOnAction(r -> {
+            if (female.isSelected()) {
+                filterGraph(female.getText());
+            } else {
+                filterUnselected(female.getText());
+            }
+        });
+        male.setOnAction(r -> {
+            if (male.isSelected()) {
+                filterGraph(male.getText());
+            } else {
+                filterUnselected(male.getText());
+            }
+        });
+        other.setOnAction(r -> {
+            if (other.isSelected()) {
+                filterGraph(other.getText());
+            } else {
+                filterUnselected(other.getText());
+            }
+        });
+        shopping.setOnAction(r -> {
+            if (shopping.isSelected()) {
+                filterGraph(shopping.getText());
+            } else {
+                filterUnselected(shopping.getText());
+            }
+        });
+        social.setOnAction(r -> {
+            if (social.isSelected()) {
+                filterGraph(social.getText());
+            } else {
+                filterUnselected(social.getText());
+            }
+        });
+        food.setOnAction(r -> {
+            if (food.isSelected()) {
+                filterGraph(food.getText());
+            } else {
+                filterUnselected(food.getText());
+            }
+        });
+        healthcare.setOnAction(r -> {
+            if (healthcare.isSelected()) {
+                filterGraph(healthcare.getText());
+            } else {
+                filterUnselected(healthcare.getText());
+            }
+        });
+        sport.setOnAction(r -> {
+            if (sport.isSelected()) {
+                filterGraph(sport.getText());
+            } else {
+                filterUnselected(sport.getText());
+            }
+        });
+        entertainment.setOnAction(r -> {
+            if (entertainment.isSelected()) {
+                filterGraph(entertainment.getText());
+            } else {
+                filterUnselected(entertainment.getText());
+            }
+        });
+        searchDate.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                e -> {
+                    applyDateFilter();
+                });
+        startMonth.getItems().add(new CheckMenuItem("January"));
+        endMonth.getItems().add(new CheckMenuItem("January"));
+        startMonth.getItems().add(new CheckMenuItem("February"));
+        endMonth.getItems().add(new CheckMenuItem("February"));
+        startMonth.getItems().add(new CheckMenuItem("March"));
+        endMonth.getItems().add(new CheckMenuItem("March"));
+        startMonth.getItems().add(new CheckMenuItem("April"));
+        endMonth.getItems().add(new CheckMenuItem("April"));
+        startMonth.getItems().add(new CheckMenuItem("May"));
+        endMonth.getItems().add(new CheckMenuItem("May"));
+        startMonth.getItems().add(new CheckMenuItem("June"));
+        endMonth.getItems().add(new CheckMenuItem("June"));
+        startMonth.getItems().add(new CheckMenuItem("July"));
+        endMonth.getItems().add(new CheckMenuItem("July"));
+        startMonth.getItems().add(new CheckMenuItem("August"));
+        endMonth.getItems().add(new CheckMenuItem("August"));
+        startMonth.getItems().add(new CheckMenuItem("September"));
+        endMonth.getItems().add(new CheckMenuItem("September"));
+        startMonth.getItems().add(new CheckMenuItem("October"));
+        endMonth.getItems().add(new CheckMenuItem("October"));
+        startMonth.getItems().add(new CheckMenuItem("November"));
+        endMonth.getItems().add(new CheckMenuItem("November"));
+        startMonth.getItems().add(new CheckMenuItem("December"));
+        endMonth.getItems().add(new CheckMenuItem("December"));
+        for (MenuItem month : startMonth.getItems()) {
+            month.setOnAction(r -> {
+                for (MenuItem startMonth : startMonth.getItems()) {
+                    ((CheckMenuItem) startMonth).setSelected(false);
+                }
+                ((CheckMenuItem) month).setSelected(true);
+            });
+        }
+        for (MenuItem month : endMonth.getItems()) {
+            month.setOnAction(r -> {
+                for (MenuItem endMonth : endMonth.getItems()) {
+                    ((CheckMenuItem) endMonth).setSelected(false);
+                }
+                ((CheckMenuItem) month).setSelected(true);
+            });
+        }
+
         campaignsTable.setPrefSize(265, 150);
         campaignsTable.setPlaceholder(new Label("No campaignsLoaded loaded!"));
         campaignsLoaded.add(new Campaign(campaignName.getText()));
@@ -440,7 +686,7 @@ public class ExampleController implements ScreenInterface {
                 campaignsTable.getItems().add(campaign);
                 //Adding a new Data Model to ScreensController
                 try {
-                    myController.addDataModel(campaign.getName(), new CampaignModel(campaign.getName(),currentClick, currentImpressions, currentServer));
+                    myController.addDataModel(campaign.getName(), new CampaignModel(campaign.getName(), currentClick, currentImpressions, currentServer));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -483,6 +729,19 @@ public class ExampleController implements ScreenInterface {
                 campaignName.getItems().add(checkMenuItem);
             }
         }
+    }
+
+    @FXML
+    private void applyDateFilter() {
+        System.out.println("Date selected");
+    }
+
+    private void filterGraph(String filter) {
+        System.out.println("Filter selected: " + filter);
+    }
+
+    private void filterUnselected(String filter) {
+        System.out.println("Filter unselected: " + filter);
     }
 
     /*

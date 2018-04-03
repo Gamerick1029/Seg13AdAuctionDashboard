@@ -9,9 +9,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="752.0" prefWidth="1339.0" style="-fx-background-color: #595454;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Frontend.sample.ExampleController">
+<AnchorPane prefHeight="706.0" prefWidth="1365.0" style="-fx-background-color: #595454;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Frontend.sample.ExampleController">
    <children>
-      <LineChart fx:id="lineChart" layoutX="288.0" layoutY="237.0" prefHeight="452.0" prefWidth="859.0" style="-fx-background-color: #807B7B;" title="Line Chart" verticalGridLinesVisible="false" GridPane.columnIndex="1" GridPane.rowIndex="2">
+      <LineChart fx:id="lineChart" layoutX="288.0" layoutY="237.0" prefHeight="430.0" prefWidth="859.0" style="-fx-background-color: #807B7B;" title="Line Chart" verticalGridLinesVisible="false" GridPane.columnIndex="1" GridPane.rowIndex="2">
         <xAxis>
           <CategoryAxis label="Campaign Something" side="BOTTOM" tickLabelFill="WHITE" fx:id="x" />
         </xAxis>
@@ -19,14 +19,9 @@
           <NumberAxis fx:id="y" label="Campaign Something" side="LEFT" tickLabelFill="WHITE" />
         </yAxis>
       </LineChart>
-      <Pane layoutX="1155.0" prefHeight="758.0" prefWidth="210.0" style="-fx-background-color: #333030;">
+      <Pane layoutX="1155.0" prefHeight="706.0" prefWidth="210.0" style="-fx-background-color: #333030;">
          <children>
-            <Text fill="#f2f2f2" layoutX="19.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Filter Metrics" wrappingWidth="139.4697265625">
-               <font>
-                  <Font name="System Bold" size="21.0" />
-               </font>
-            </Text>
-            <Text fill="#f2f2f2" layoutX="96.0" layoutY="139.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="Audience ◀">
+            <Text fill="#f2f2f2" layoutX="95.0" layoutY="36.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="Audience ◀">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -34,23 +29,23 @@
                   <Font name="System Bold" size="20.0" />
                </font>
             </Text>
-            <CheckBox layoutX="14.0" layoutY="545.0" mnemonicParsing="false" text="Entertainment" textFill="WHITE" />
-            <Text fill="#cdc2c2" layoutX="157.0" layoutY="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Age">
+            <CheckBox fx:id="entertainment" layoutX="13.0" layoutY="442.0" mnemonicParsing="false" text="Entertainment" textFill="WHITE" />
+            <Text fill="#cdc2c2" layoutX="156.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Age">
                <font>
                   <Font size="18.0" />
                </font>
             </Text>
-            <Text fill="#cdc2c2" layoutX="137.0" layoutY="294.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Income">
+            <Text fill="#cdc2c2" layoutX="136.0" layoutY="191.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Income">
                <font>
                   <Font size="18.0" />
                </font>
             </Text>
-            <Text fill="#cdc2c2" layoutX="138.0" layoutY="463.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gender">
+            <Text fill="#cdc2c2" layoutX="137.0" layoutY="360.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gender">
                <font>
                   <Font size="18.0" />
                </font>
             </Text>
-            <Text fill="#f2f2f2" layoutX="134.0" layoutY="638.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="Date ◀">
+            <Text fill="#f2f2f2" layoutX="133.0" layoutY="535.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="Date ◀">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -58,7 +53,7 @@
                   <Font name="System Bold" size="20.0" />
                </font>
             </Text>
-            <Text fill="#f2f2f2" layoutX="103.0" layoutY="530.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="Context ◀">
+            <Text fill="#f2f2f2" layoutX="102.0" layoutY="427.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="Context ◀">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -66,35 +61,55 @@
                   <Font name="System Bold" size="20.0" />
                </font>
             </Text>
-            <CheckBox layoutX="119.0" layoutY="223.0" mnemonicParsing="false" text="50 - 69" textFill="WHITE" />
-            <CheckBox layoutX="119.0" layoutY="201.0" mnemonicParsing="false" text="19 - 29" textFill="WHITE" />
-            <CheckBox layoutX="119.0" layoutY="246.0" mnemonicParsing="false" text="&gt; 90" textFill="WHITE" />
-            <CheckBox layoutX="14.0" layoutY="246.0" mnemonicParsing="false" text="70 - 89" textFill="WHITE" />
-            <CheckBox layoutX="14.0" layoutY="223.0" mnemonicParsing="false" text="30 - 49" textFill="WHITE" />
-            <CheckBox layoutX="14.0" layoutY="201.0" mnemonicParsing="false" text="&lt; 18" textFill="WHITE" />
-            <CheckBox layoutX="14.0" layoutY="331.0" mnemonicParsing="false" text="19 000 - 29 000" textFill="WHITE" />
-            <CheckBox layoutX="14.0" layoutY="308.0" mnemonicParsing="false" text="&lt; 19 000" textFill="WHITE" />
-            <CheckBox layoutX="14.0" layoutY="356.0" mnemonicParsing="false" text="29 000 - 59 000" textFill="WHITE" />
-            <CheckBox layoutX="14.0" layoutY="402.0" mnemonicParsing="false" text="89 000 - 100 000" textFill="WHITE" />
-            <CheckBox layoutX="14.0" layoutY="379.0" mnemonicParsing="false" text="59 000 - 89 000" textFill="WHITE" />
-            <CheckBox layoutX="14.0" layoutY="425.0" mnemonicParsing="false" text="&gt; 100 000" textFill="WHITE" />
-            <CheckBox layoutX="69.0" layoutY="479.0" mnemonicParsing="false" text="Female" textFill="WHITE" />
-            <CheckBox layoutX="14.0" layoutY="479.0" mnemonicParsing="false" text="Male " textFill="WHITE" />
-            <CheckBox layoutX="139.0" layoutY="479.0" mnemonicParsing="false" text="Other" textFill="WHITE" />
-            <CheckBox layoutX="14.0" layoutY="568.0" mnemonicParsing="false" text="Shopping" textFill="WHITE" />
-            <CheckBox layoutX="14.0" layoutY="592.0" mnemonicParsing="false" text="Social Media" textFill="WHITE" />
-            <CheckBox layoutX="116.0" layoutY="592.0" mnemonicParsing="false" text="Food" textFill="WHITE" />
-            <CheckBox layoutX="116.0" layoutY="568.0" mnemonicParsing="false" text="Healthcare" textFill="WHITE" />
-            <CheckBox layoutX="116.0" layoutY="545.0" mnemonicParsing="false" text="Sports" textFill="WHITE" />
-            <CheckBox layoutX="13.0" layoutY="646.0" mnemonicParsing="false" text="Food" textFill="WHITE" />
-            <CheckBox layoutX="13.0" layoutY="670.0" mnemonicParsing="false" text="Food" textFill="WHITE" />
-            <CheckBox layoutX="13.0" layoutY="693.0" mnemonicParsing="false" text="Food" textFill="WHITE" />
-            <CheckBox layoutX="13.0" layoutY="716.0" mnemonicParsing="false" text="Food" textFill="WHITE" />
+            <CheckBox fx:id="age90" layoutX="117.0" layoutY="141.0" mnemonicParsing="false"  text="90 or above" textFill="WHITE" />
+            <CheckBox fx:id="age50to69" layoutX="118.0" layoutY="98.0" mnemonicParsing="false" text="50 - 69" textFill="WHITE" />
+            <CheckBox fx:id="age70to89" layoutX="118.0" layoutY="120.0" mnemonicParsing="false" text="70 - 89" textFill="WHITE" />
+            <CheckBox fx:id="age30to49" layoutX="13.0" layoutY="143.0" mnemonicParsing="false"  text="30 - 49" textFill="WHITE" />
+            <CheckBox fx:id="age19to29" layoutX="13.0" layoutY="120.0" mnemonicParsing="false" text="19 - 29" textFill="WHITE" />
+            <CheckBox fx:id="age18" layoutX="13.0" layoutY="98.0" mnemonicParsing="false"  text="18 or below" textFill="WHITE" />
+            <CheckBox fx:id="income29" layoutX="13.0" layoutY="228.0" mnemonicParsing="false" text="19 000 - 29 000" textFill="WHITE" />
+            <CheckBox fx:id="income19" layoutX="13.0" layoutY="205.0" mnemonicParsing="false" text="19 000 or below" textFill="WHITE" />
+            <CheckBox fx:id="income59" layoutX="13.0" layoutY="253.0" mnemonicParsing="false" text="29 000 - 59 000" textFill="WHITE" />
+            <CheckBox fx:id="income100" layoutX="13.0" layoutY="299.0" mnemonicParsing="false" text="89 000 - 100 000" textFill="WHITE" />
+            <CheckBox fx:id="income89" layoutX="13.0" layoutY="276.0" mnemonicParsing="false" text="59 000 - 89 000" textFill="WHITE" />
+            <CheckBox fx:id="income100more" layoutX="13.0" layoutY="322.0" mnemonicParsing="false"  text="&gt; 100 000" textFill="WHITE" />
+            <CheckBox fx:id="female" layoutX="68.0" layoutY="376.0" mnemonicParsing="false"  text="Female" textFill="WHITE" />
+            <CheckBox fx:id="male" layoutX="13.0" layoutY="376.0" mnemonicParsing="false" text="Male " textFill="WHITE" />
+            <CheckBox fx:id="other" layoutX="138.0" layoutY="376.0" mnemonicParsing="false"  text="Other" textFill="WHITE" />
+            <CheckBox fx:id="shopping" layoutX="13.0" layoutY="465.0" mnemonicParsing="false"  text="Shopping" textFill="WHITE" />
+            <CheckBox fx:id="social" layoutX="13.0" layoutY="489.0" mnemonicParsing="false" text="Social Media" textFill="WHITE" />
+            <CheckBox fx:id="food" layoutX="115.0" layoutY="489.0" mnemonicParsing="false"  text="Food" textFill="WHITE" />
+            <CheckBox fx:id="healthcare" layoutX="115.0" layoutY="465.0" mnemonicParsing="false" text="Healthcare" textFill="WHITE" />
+            <CheckBox fx:id="sport" layoutX="115.0" layoutY="442.0" mnemonicParsing="false" text="Sport" textFill="WHITE" />
+            <Text fx:id="startDate" fill="#fcfcfc" layoutX="11.0" layoutY="552.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Text>
+            <Text fx:id="startDate1" fill="#fcfcfc" layoutX="15.0" layoutY="604.0" strokeType="OUTSIDE" strokeWidth="0.0" text="End">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Text>
+            <MenuButton fx:id="startMonth" layoutX="67.0" layoutY="559.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="68.0" text="Month" />
+            <TextField fx:id="startDay" layoutX="11.0" layoutY="607.0" prefHeight="26.0" prefWidth="48.0" promptText="Day" />
+            <TextField fx:id="endDay" layoutX="10.0" layoutY="559.0" prefHeight="26.0" prefWidth="48.0" promptText="Day" />
+            <MenuButton fx:id="endMonth" layoutX="67.0" layoutY="608.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="68.0" text="Month" />
+            <Text fx:id="searchDate" fill="#fcfafa" layoutX="100.0" layoutY="670.0" onMouseClicked="#applyDateFilter" strokeType="OUTSIDE" strokeWidth="0.0" text="Filter by Date" underline="true">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Text>
+            <TextField fx:id="startYear" layoutX="140.0" layoutY="607.0" prefHeight="26.0" prefWidth="55.0" promptText="Year" />
+            <TextField fx:id="endYear" layoutX="139.0" layoutY="559.0" prefHeight="26.0" prefWidth="55.0" promptText="Year" />
          </children>
       </Pane>
-      <Pane prefHeight="758.0" prefWidth="277.0" style="-fx-background-color: #333030;">
+      <Pane prefHeight="706.0" prefWidth="277.0" style="-fx-background-color: #333030;">
          <children>
-            <Text fx:id="conversions" fill="#f2f2f2" layoutX="10.0" layoutY="442.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Conversions">
+            <Text fx:id="conversions" fill="#f2f2f2" layoutX="11.0" layoutY="421.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Conversions">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -102,7 +117,7 @@
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </Text>
-            <Text fx:id="aquisition" fill="#f2f2f2" layoutX="9.0" layoutY="619.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Aquisition" wrappingWidth="184.423828125">
+            <Text fx:id="aquisition" fill="#f2f2f2" layoutX="11.0" layoutY="592.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Aquisition" wrappingWidth="184.423828125">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -110,7 +125,7 @@
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </Text>
-            <Text fx:id="costPerClick" fill="#f2f2f2" layoutX="9.0" layoutY="668.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Cost per Click" wrappingWidth="166.0166015625">
+            <Text fx:id="costPerClick" fill="#f2f2f2" layoutX="12.0" layoutY="653.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Cost per Click" wrappingWidth="166.0166015625">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -118,7 +133,7 @@
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </Text>
-            <Text fx:id="totalCost" fill="#f2f2f2" layoutX="10.0" layoutY="496.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Total Cost">
+            <Text fx:id="totalCost" fill="#f2f2f2" layoutX="14.0" layoutY="476.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Total Cost">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -126,7 +141,7 @@
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </Text>
-            <Text fx:id="bounces" fill="#f2f2f2" layoutX="10.0" layoutY="392.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Bounces">
+            <Text fx:id="bounces" fill="#f2f2f2" layoutX="10.0" layoutY="363.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Bounces">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -134,7 +149,7 @@
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </Text>
-            <Text fx:id="clicks" fill="#f2f2f2" layoutX="10.0" layoutY="342.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Clicks">
+            <Text fx:id="clicks" fill="#f2f2f2" layoutX="12.0" layoutY="306.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Clicks">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -142,7 +157,7 @@
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </Text>
-            <Text fx:id="clickRate" fill="#f2f2f2" layoutX="11.0" layoutY="560.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Click Rate">
+            <Text fx:id="clickRate" fill="#f2f2f2" layoutX="15.0" layoutY="533.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Click Rate">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -150,7 +165,7 @@
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </Text>
-            <Text fx:id="impressions" fill="#f2f2f2" layoutX="10.0" layoutY="292.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Impressions">
+            <Text fx:id="impressions" fill="#f2f2f2" layoutX="11.0" layoutY="248.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Impressions">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -158,58 +173,58 @@
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </Text>
-            <Text fill="#f2f2f2" layoutX="55.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Campaign Metrics" wrappingWidth="166.0166015625">
+            <Text fill="#f2f2f2" layoutX="55.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Campaign Metrics" wrappingWidth="166.0166015625">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Text>
-            <TextField fx:id="impressionsF" editable="false" layoutX="140.0" layoutY="265.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
+            <TextField fx:id="impressionsF" editable="false" layoutX="140.0" layoutY="221.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
                <font>
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </TextField>
-            <TextField fx:id="conversionsF" editable="false" layoutX="140.0" layoutY="415.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
+            <TextField fx:id="conversionsF" editable="false" layoutX="141.0" layoutY="394.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
                <font>
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </TextField>
-            <TextField fx:id="totalCostF" editable="false" layoutX="140.0" layoutY="470.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
+            <TextField fx:id="totalCostF" editable="false" layoutX="141.0" layoutY="449.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
                <font>
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </TextField>
-            <TextField fx:id="clickRateF" editable="false" layoutX="140.0" layoutY="534.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
+            <TextField fx:id="clickRateF" editable="false" layoutX="140.0" layoutY="506.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
                <font>
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </TextField>
-            <TextField fx:id="aquisitionF" editable="false" layoutX="140.0" layoutY="593.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
+            <TextField fx:id="aquisitionF" editable="false" layoutX="140.0" layoutY="565.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
                <font>
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </TextField>
-            <TextField fx:id="costPerClickF" editable="false" layoutX="140.0" layoutY="642.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
+            <TextField fx:id="costPerClickF" editable="false" layoutX="141.0" layoutY="626.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
                <font>
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </TextField>
-            <TextField fx:id="bouncesF" editable="false" layoutX="140.0" layoutY="365.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
+            <TextField fx:id="bouncesF" editable="false" layoutX="140.0" layoutY="336.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
                <font>
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </TextField>
-            <TextField fx:id="clicksF" editable="false" layoutX="140.0" layoutY="315.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
+            <TextField fx:id="clicksF" editable="false" layoutX="140.0" layoutY="279.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
                <font>
                   <Font name="Ubuntu" size="18.0" />
                </font>
             </TextField>
             <Text layoutX="17.0" layoutY="187.0" strokeType="OUTSIDE" strokeWidth="0.0" />
-            <Text fill="#f2f2f2" layoutX="17.0" layoutY="196.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Campaign:" wrappingWidth="166.0166015625">
+            <Text fill="#f2f2f2" layoutX="9.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Selected Campaign" wrappingWidth="166.0166015625">
                <font>
-                  <Font name="System Bold" size="18.0" />
+                  <Font size="18.0" />
                </font>
             </Text>
-            <MenuButton fx:id="campaignName" layoutX="116.0" layoutY="169.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="152.0" style="-fx-background-color: #807B7B;" text="Campaign" textFill="WHITE">
+            <MenuButton fx:id="campaignName" layoutX="11.0" layoutY="132.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="254.0" style="-fx-background-color: #807B7B;" text="Campaign" textFill="WHITE">
                <font>
                   <Font size="19.0" />
                </font>
