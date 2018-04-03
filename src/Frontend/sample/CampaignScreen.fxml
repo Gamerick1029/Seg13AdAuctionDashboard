@@ -293,5 +293,6 @@
           <NumberAxis label="Campaign Something" side="LEFT" tickLabelFill="#f8f6f6" />
         </yAxis>
       </AreaChart>
+      <ProgressIndicator fx:id="progressIndicator" layoutX="574.0" layoutY="274.0" prefHeight="178.0" prefWidth="261.0" progress="0.0" visible="false" />
    </children>
 </AnchorPane>

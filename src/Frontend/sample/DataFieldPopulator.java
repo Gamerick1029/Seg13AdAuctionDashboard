@@ -32,9 +32,9 @@ public class DataFieldPopulator {
         this.costConversion = costConversion;
     }
 
-    public void populateFields(){
-        menuButton.setText(/*dataModel.getCampaignName()*/ "Campaign Name");
-        menuItem.setText(/*dataModel.getCampaignName()*/ "Campaign Name");
+    public void populateFields() {
+        menuButton.setText(dataModel.getName());
+        menuItem.setText(dataModel.getName());
         impressions.setText(String.valueOf(dataModel.getImpressionsNumber()));
         clicks.setText(String.valueOf(dataModel.getClicksNumber()));
         bounces.setText(String.valueOf(dataModel.getBouncesNumber()));
@@ -45,7 +45,7 @@ public class DataFieldPopulator {
         costConversion.setText(String.valueOf(dataModel.getCPC()));
     }
 
-    public void setDataModel(DataModel dataModel) {
+    public void setCurrentDataModel(DataModel dataModel) {
         this.dataModel = dataModel;
     }
 

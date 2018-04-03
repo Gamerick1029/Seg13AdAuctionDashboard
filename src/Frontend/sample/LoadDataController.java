@@ -58,7 +58,9 @@ public class LoadDataController implements ScreenInterface {
             DataModel dataModel = null;
             try {
                 dataModel = new CampaignModel(currentName, clicks, impressions, server);
-                myController.setDataModel(dataModel);
+                myController.setCurrentModel(dataModel);
+                myController.setDataModelMap(new HashMap<>());
+                myController.addDataModel(currentName, dataModel);
                 myController.getDataFieldPopulator().populateFields();
                 myController.getCampaignDataPopulator().populateGraph();
                 myController.setScreen(Main.campaignScreenID);
