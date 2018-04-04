@@ -5,7 +5,7 @@ import java.util.Date;
 public class Filter
 {
     /*
-    No type safety issues with booleans, so these can be publicly accessable
+    No type safety issues with booleans, so these can be publicly accessible
      */
     public boolean genderMale;
     public boolean genderFemale;
