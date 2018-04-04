@@ -132,7 +132,6 @@ public class CampaignModel implements DataModel {
         return groupI(step, getImpressionsByInterval(MINDATE, MAXDATE, step));
     }
 
-    @Override
     public int getOverallImpressionsByInterval(Date startInterval, Date endInterval)
     {   Map<Date,Integer> tempImpressInterv = getImpressionsByInterval(startInterval,endInterval);
         int overallImpressions = 0;
@@ -183,7 +182,6 @@ public class CampaignModel implements DataModel {
         return resolveI(groupMap(step, getClicksByInterval(MINDATE, MAXDATE, step)));
     }
 
-    @Override
     public int getOverallClicksByInterval(Date startInterval, Date endInterval)
     {
         Map<Date,Integer> tempClicksInterv = getClicksByInterval(startInterval,endInterval);
@@ -227,7 +225,7 @@ public class CampaignModel implements DataModel {
         return groupI(step, getUniquesByInterval(MINDATE, MAXDATE, step));
     }
 
-    @Override
+
     public int getOverallUniquesByInterval(Date startInterval, Date endInterval)
     {
         Map<Date,Integer> tempUniquesInterv = getUniquesByInterval(startInterval,endInterval);
@@ -289,7 +287,7 @@ public class CampaignModel implements DataModel {
         return groupI(step, getBouncesByInterval(MINDATE, MAXDATE, step));
     }
 
-    @Override
+
     public int getOverallBouncesByInterval(Date startInterval, Date endInterval)
     {
         Map<Date,Integer> tempBouncesInterv = getBouncesByInterval(startInterval,endInterval);
@@ -355,7 +353,7 @@ public class CampaignModel implements DataModel {
         return groupI(step, getConversionsByInterval(MINDATE, MAXDATE, step));
     }
 
-    @Override
+
     public int getOverallConversionsByInterval(Date startInterval, Date endInterval)
     {
         Map<Date,Integer> tempConversionsInterv = getConversionsByInterval(startInterval,endInterval);
@@ -415,7 +413,7 @@ public class CampaignModel implements DataModel {
     /*
 DEAD FUNCTION
  */
-    @Override
+
     public float getOverallCostByInterval(Date startInterval, Date endInterval)
     {
         Map<Date,Float> tempClickCostInterv = getCostByInterval(startInterval,endInterval);
@@ -472,7 +470,7 @@ DEAD FUNCTION
         return groupF(step, getCTRByInterval(MINDATE, MAXDATE, step));
     }
 
-    @Override
+
     public float getOverallCTRByInterval(Date startInterval, Date endInterval)
     {
         return ((float) getOverallClicksByInterval(startInterval,endInterval) / (float) getOverallImpressionsByInterval(startInterval,endInterval));
@@ -523,7 +521,7 @@ DEAD FUNCTION
         return groupF(step, getCPAByInterval(MINDATE, MAXDATE, step));
     }
 
-    @Override
+
     public float getOverallCPAByInterval(Date startInterval, Date endInterval)
     {
         return ((float) getOverallCostByInterval(startInterval,endInterval) / (float) getOverallConversionsByInterval(startInterval,endInterval));
@@ -570,7 +568,7 @@ DEAD FUNCTION
         return groupF(step, getCPCByInterval(MINDATE, MAXDATE, step));
     }
 
-    @Override
+
     public float getOverallCPCByInterval(Date startInterval, Date endInterval)
     {
         return ((float) getOverallCostByInterval(startInterval,endInterval) / (float) getOverallClicksByInterval(startInterval,endInterval));
@@ -619,7 +617,7 @@ DEAD FUNCTION
         return groupF(step, getCPMByInterval(MINDATE, MAXDATE, step));
     }
 
-    @Override
+
     public float getOverallCPMByInterval(Date startInterval, Date endInterval)
     {
         return ( (float) (getOverallCostByInterval(startInterval,endInterval) / (float) getOverallImpressionsByInterval(startInterval,endInterval)) * 1000);
@@ -676,7 +674,7 @@ DEAD FUNCTION
         return groupF(step, getBounceRateByInterval(MINDATE, MAXDATE, step));
     }
 
-    @Override
+
     public float getOverallBounceRateByInterval(Date startInterval, Date endInterval)
     {
 
