@@ -3,10 +3,16 @@ package Frontend.sample;
 import Backend.Model.Interfaces.DataModel;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.MenuButton;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+
+import java.util.List;
 
 public class DataFieldPopulator {
 
+    private Campaign currentCampaign;
+    private TableView campaigns;
+    private List<Campaign> campaignsLoaded;
     private MenuButton menuButton;
     private CheckMenuItem menuItem;
     private TextField impressions;
@@ -19,7 +25,10 @@ public class DataFieldPopulator {
     private TextField costConversion;
     private DataModel dataModel;
 
-    public DataFieldPopulator(MenuButton menuButton, CheckMenuItem menuItem, TextField impressions, TextField clicks, TextField bounces, TextField conversions, TextField cost, TextField clickRate, TextField costAquisition, TextField costConversion) {
+    public DataFieldPopulator(Campaign currentCampaign, List<Campaign> campaignsLoaded, TableView campaigns, MenuButton menuButton, CheckMenuItem menuItem, TextField impressions, TextField clicks, TextField bounces, TextField conversions, TextField cost, TextField clickRate, TextField costAquisition, TextField costConversion) {
+        this.currentCampaign = currentCampaign;
+        this.campaignsLoaded = campaignsLoaded;
+        this.campaigns = campaigns;
         this.menuButton = menuButton;
         this.menuItem = menuItem;
         this.impressions = impressions;
@@ -33,6 +42,9 @@ public class DataFieldPopulator {
     }
 
     public void populateFields() {
+        currentCampaign.setName(dataModel.getName());
+        campaignsLoaded.add(currentCampaign);
+        campaigns.getItems().add(currentCampaign);
         menuButton.setText(dataModel.getName());
         menuItem.setText(dataModel.getName());
         impressions.setText(String.valueOf(dataModel.getImpressionsNumber()));
