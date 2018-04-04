@@ -740,29 +740,17 @@ public class ExampleController implements ScreenInterface {
 
     private void groupByDay() {
         currentStep = DAY_STEP;
-        for (Campaign campaign : campaignsLoaded) {
-            if (campaign.getDisplayed().isSelected()) {
-                populateMetric(this.currentMetricDisplayed, currentStep);
-            }
-        }
+        populateMetric(this.currentMetricDisplayed, currentStep);
     }
 
     private void groupByWeek() {
         currentStep = WEEK_STEP;
-        for (Campaign campaign : campaignsLoaded) {
-            if (campaign.getDisplayed().isSelected()) {
-                populateMetric(this.currentMetricDisplayed, currentStep);
-            }
-        }
+        populateMetric(this.currentMetricDisplayed, currentStep);
     }
 
     private void groupByMonth() {
         currentStep = MONTH_STEP;
-        for (Campaign campaign : campaignsLoaded) {
-            if (campaign.getDisplayed().isSelected()) {
-                populateMetric(this.currentMetricDisplayed, currentStep);
-            }
-        }
+        populateMetric(this.currentMetricDisplayed, currentStep);
     }
 
     private void changeToLineChart() {
