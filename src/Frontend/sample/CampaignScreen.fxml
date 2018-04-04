@@ -61,24 +61,24 @@
                   <Font name="System Bold" size="20.0" />
                </font>
             </Text>
-            <CheckBox fx:id="age90" layoutX="117.0" layoutY="141.0" mnemonicParsing="false"  text="90 or above" textFill="WHITE" />
+            <CheckBox fx:id="age90" layoutX="117.0" layoutY="141.0" mnemonicParsing="false" text="90 or above" textFill="WHITE" />
             <CheckBox fx:id="age50to69" layoutX="118.0" layoutY="98.0" mnemonicParsing="false" text="50 - 69" textFill="WHITE" />
             <CheckBox fx:id="age70to89" layoutX="118.0" layoutY="120.0" mnemonicParsing="false" text="70 - 89" textFill="WHITE" />
-            <CheckBox fx:id="age30to49" layoutX="13.0" layoutY="143.0" mnemonicParsing="false"  text="30 - 49" textFill="WHITE" />
+            <CheckBox fx:id="age30to49" layoutX="13.0" layoutY="143.0" mnemonicParsing="false" text="30 - 49" textFill="WHITE" />
             <CheckBox fx:id="age19to29" layoutX="13.0" layoutY="120.0" mnemonicParsing="false" text="19 - 29" textFill="WHITE" />
-            <CheckBox fx:id="age18" layoutX="13.0" layoutY="98.0" mnemonicParsing="false"  text="18 or below" textFill="WHITE" />
+            <CheckBox fx:id="age18" layoutX="13.0" layoutY="98.0" mnemonicParsing="false" text="18 or below" textFill="WHITE" />
             <CheckBox fx:id="income29" layoutX="13.0" layoutY="228.0" mnemonicParsing="false" text="19 000 - 29 000" textFill="WHITE" />
             <CheckBox fx:id="income19" layoutX="13.0" layoutY="205.0" mnemonicParsing="false" text="19 000 or below" textFill="WHITE" />
             <CheckBox fx:id="income59" layoutX="13.0" layoutY="253.0" mnemonicParsing="false" text="29 000 - 59 000" textFill="WHITE" />
             <CheckBox fx:id="income100" layoutX="13.0" layoutY="299.0" mnemonicParsing="false" text="89 000 - 100 000" textFill="WHITE" />
             <CheckBox fx:id="income89" layoutX="13.0" layoutY="276.0" mnemonicParsing="false" text="59 000 - 89 000" textFill="WHITE" />
-            <CheckBox fx:id="income100more" layoutX="13.0" layoutY="322.0" mnemonicParsing="false"  text="&gt; 100 000" textFill="WHITE" />
-            <CheckBox fx:id="female" layoutX="68.0" layoutY="376.0" mnemonicParsing="false"  text="Female" textFill="WHITE" />
+            <CheckBox fx:id="income100more" layoutX="13.0" layoutY="322.0" mnemonicParsing="false" text="&gt; 100 000" textFill="WHITE" />
+            <CheckBox fx:id="female" layoutX="68.0" layoutY="376.0" mnemonicParsing="false" text="Female" textFill="WHITE" />
             <CheckBox fx:id="male" layoutX="13.0" layoutY="376.0" mnemonicParsing="false" text="Male " textFill="WHITE" />
-            <CheckBox fx:id="other" layoutX="138.0" layoutY="376.0" mnemonicParsing="false"  text="Other" textFill="WHITE" />
-            <CheckBox fx:id="shopping" layoutX="13.0" layoutY="465.0" mnemonicParsing="false"  text="Shopping" textFill="WHITE" />
+            <CheckBox fx:id="other" layoutX="138.0" layoutY="376.0" mnemonicParsing="false" text="Other" textFill="WHITE" />
+            <CheckBox fx:id="shopping" layoutX="13.0" layoutY="465.0" mnemonicParsing="false" text="Shopping" textFill="WHITE" />
             <CheckBox fx:id="social" layoutX="13.0" layoutY="489.0" mnemonicParsing="false" text="Social Media" textFill="WHITE" />
-            <CheckBox fx:id="food" layoutX="115.0" layoutY="489.0" mnemonicParsing="false"  text="Food" textFill="WHITE" />
+            <CheckBox fx:id="food" layoutX="115.0" layoutY="489.0" mnemonicParsing="false" text="Food" textFill="WHITE" />
             <CheckBox fx:id="healthcare" layoutX="115.0" layoutY="465.0" mnemonicParsing="false" text="Healthcare" textFill="WHITE" />
             <CheckBox fx:id="sport" layoutX="115.0" layoutY="442.0" mnemonicParsing="false" text="Sport" textFill="WHITE" />
             <Text fx:id="startDate" fill="#fcfcfc" layoutX="11.0" layoutY="552.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start">
@@ -86,7 +86,7 @@
                   <Font size="17.0" />
                </font>
             </Text>
-            <Text fx:id="startDate1" fill="#fcfcfc" layoutX="15.0" layoutY="604.0" strokeType="OUTSIDE" strokeWidth="0.0" text="End">
+            <Text fx:id="startDate1" fill="#fcfcfc" layoutX="10.0" layoutY="603.0" strokeType="OUTSIDE" strokeWidth="0.0" text="End">
                <font>
                   <Font size="17.0" />
                </font>
