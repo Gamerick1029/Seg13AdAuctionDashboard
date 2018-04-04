@@ -166,10 +166,10 @@ public class ExampleController implements ScreenInterface {
 
     private Campaign currentCampaign = new Campaign("");
     private String currentMetricDisplayed = "Impressions";
-    private Integer currentStep = 1000 * 60 * 60 * 24;
-    private static final long DAY_STEP = 1000 * 60 * 60 * 24;
-    private static final long WEEK_STEP = 1000 * 60 * 60 * 24 * 7;
-    private static final long MONTH_STEP = 1000 * 60 * 60 * 24 * 30;
+    private long currentStep = 1000 * 60 * 60 * 24;
+    private final long DAY_STEP = 1000 * 60 * 60 * 24;
+    private final long WEEK_STEP = 1000 * 60 * 60 * 24 * 7;
+    private final long MONTH_STEP = 1000 * 60 * 60 * 24 * 30;
     private List<Campaign> campaignsLoaded = new ArrayList<>();
 
     @Override
@@ -739,8 +739,7 @@ public class ExampleController implements ScreenInterface {
     }
 
     private void groupByDay() {
-        currentStep = 1000 * 60 * 60 * 24;
-        long step = DAY_STEP;
+        currentStep = DAY_STEP;
         for (Campaign campaign : campaignsLoaded) {
             if (campaign.getDisplayed().isSelected()) {
                 populateMetric(this.currentMetricDisplayed, currentStep);
@@ -749,8 +748,7 @@ public class ExampleController implements ScreenInterface {
     }
 
     private void groupByWeek() {
-        currentStep = 1000 * 60 * 60 * 54;
-        long step = WEEK_STEP;
+        currentStep = WEEK_STEP;
         for (Campaign campaign : campaignsLoaded) {
             if (campaign.getDisplayed().isSelected()) {
                 populateMetric(this.currentMetricDisplayed, currentStep);
@@ -759,9 +757,7 @@ public class ExampleController implements ScreenInterface {
     }
 
     private void groupByMonth() {
-        currentStep = 1000 * 60 * 50 * 12;
-        //currently assuming 30 days per month
-        long step = MONTH_STEP;
+        currentStep = MONTH_STEP;
         for (Campaign campaign : campaignsLoaded) {
             if (campaign.getDisplayed().isSelected()) {
                 populateMetric(this.currentMetricDisplayed, currentStep);
@@ -899,7 +895,7 @@ public class ExampleController implements ScreenInterface {
         }
     }
 
-    public void populateMetric(String metric, Integer step) {
+    public void populateMetric(String metric, long step) {
         lineChart.getData().clear();
         barChart.getData().clear();
         areaChart.getData().clear();
