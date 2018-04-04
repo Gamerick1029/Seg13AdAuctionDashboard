@@ -31,6 +31,10 @@ import java.util.Map;
  */
 public class ExampleController implements ScreenInterface {
 
+    private static final long DAY_STEP = 1000 * 60 * 60 * 24;
+    private static final long WEEK_STEP = 1000 * 60 * 60 * 24 * 7;
+    private static final long MONTH_STEP = 1000 * 60 * 60 * 24 * 30;
+
     private ScreensController myController;
     private DBHelper dbHelper;
     private File currentImpressions;
@@ -737,6 +741,7 @@ public class ExampleController implements ScreenInterface {
 
     private void groupByDay() {
         currentStep = 1000 * 60 * 60 * 24;
+        long step = DAY_STEP;
         for (Campaign campaign : campaignsLoaded) {
             if (campaign.getDisplayed().isSelected()) {
                 populateMetric(this.currentMetricDisplayed, currentStep);
@@ -746,6 +751,7 @@ public class ExampleController implements ScreenInterface {
 
     private void groupByWeek() {
         currentStep = 1000 * 60 * 60 * 54;
+        long step = WEEK_STEP;
         for (Campaign campaign : campaignsLoaded) {
             if (campaign.getDisplayed().isSelected()) {
                 populateMetric(this.currentMetricDisplayed, currentStep);
@@ -755,6 +761,8 @@ public class ExampleController implements ScreenInterface {
 
     private void groupByMonth() {
         currentStep = 1000 * 60 * 50 * 12;
+        //currently assuming 30 days per month
+        long step = MONTH_STEP;
         for (Campaign campaign : campaignsLoaded) {
             if (campaign.getDisplayed().isSelected()) {
                 populateMetric(this.currentMetricDisplayed, currentStep);
@@ -853,6 +861,84 @@ public class ExampleController implements ScreenInterface {
                 populateMetric(metric, currentStep);
                 break;
         }
+    private void showImpressions(String campaign) {
+        setStyleToMetric("Impressions");
+        currentMetricDisplayed = "Impressions";
+        long step;
+        if (byDay.isSelected()) step = DAY_STEP;
+        else if (byWeek.isSelected()) step = WEEK_STEP;
+        else step = MONTH_STEP;
+        populateMetric("Impressions", campaign, step);
+    }
+
+    private void showClicks(String campaign) {
+        setStyleToMetric("Clicks");
+        currentMetricDisplayed = "Clicks";
+        long step;
+        if (byDay.isSelected()) step = DAY_STEP;
+        else if (byWeek.isSelected()) step = WEEK_STEP;
+        else step = MONTH_STEP;
+        populateMetric("Clicks", campaign, step);
+    }
+
+    private void showBounces(String campaign) {
+        setStyleToMetric("Bounces");
+        currentMetricDisplayed = "Bounces";
+        long step;
+        if (byDay.isSelected()) step = DAY_STEP;
+        else if (byWeek.isSelected()) step = WEEK_STEP;
+        else step = MONTH_STEP;
+        populateMetric("Bounces", campaign, step);
+    }
+
+    private void showConversion(String campaign) {
+        setStyleToMetric("Conversions");
+        currentMetricDisplayed = "Conversions";
+        long step;
+        if (byDay.isSelected()) step = DAY_STEP;
+        else if (byWeek.isSelected()) step = WEEK_STEP;
+        else step = MONTH_STEP;
+        populateMetric("Conversions", campaign, step);
+    }
+
+    private void showTotalCost(String campaign) {
+        setStyleToMetric("TotalCost");
+        currentMetricDisplayed = "TotalCost";
+        long step;
+        if (byDay.isSelected()) step = DAY_STEP;
+        else if (byWeek.isSelected()) step = WEEK_STEP;
+        else step = MONTH_STEP;
+        populateMetric("TotalCost", campaign, step);
+    }
+
+    private void showClickRate(String campaign) {
+        setStyleToMetric("ClickRate");
+        currentMetricDisplayed = "ClickRate";
+        long step;
+        if (byDay.isSelected()) step = DAY_STEP;
+        else if (byWeek.isSelected()) step = WEEK_STEP;
+        else step = MONTH_STEP;
+        populateMetric("ClickRate", campaign, step);
+    }
+
+    private void showAquisition(String campaign) {
+        setStyleToMetric("Aquisition");
+        currentMetricDisplayed = "Aquisition";
+        long step;
+        if (byDay.isSelected()) step = DAY_STEP;
+        else if (byWeek.isSelected()) step = WEEK_STEP;
+        else step = MONTH_STEP;
+        populateMetric("Aquisition", campaign, step);
+    }
+
+    private void showCostPerClick(String campaign) {
+        setStyleToMetric("CostPerClick");
+        currentMetricDisplayed = "CostPerClick";
+        long step;
+        if (byDay.isSelected()) step = DAY_STEP;
+        else if (byWeek.isSelected()) step = WEEK_STEP;
+        else step = MONTH_STEP;
+        populateMetric("CostPerClick", campaign, step);
     }
 
     private void setStyleToMetric(String metric) {
@@ -893,6 +979,8 @@ public class ExampleController implements ScreenInterface {
     }
 
     public void populateMetric(String metric, Integer step) {
+    private void populateMetric(String metric, String campaign, long step) {
+        DataModel dm = myController.getDataModel(campaign);
         lineChart.getData().clear();
         barChart.getData().clear();
         areaChart.getData().clear();
