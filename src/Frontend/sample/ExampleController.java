@@ -449,7 +449,7 @@ public class ExampleController implements ScreenInterface {
             });
         }
 
-        campaignsTable.setPrefSize(265, 150);
+        campaignsTable.setPrefSize(260, 225);
         campaignsTable.setPlaceholder(new Label("No campaigns loaded!"));
 
         campaignOne.setOnAction(t -> {

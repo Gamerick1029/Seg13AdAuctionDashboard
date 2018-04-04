@@ -9,7 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="706.0" prefWidth="1365.0" style="-fx-background-color: #595454;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Frontend.sample.ExampleController">
+<AnchorPane prefHeight="718.0" prefWidth="1365.0" style="-fx-background-color: #595454;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Frontend.sample.ExampleController">
    <children>
       <LineChart fx:id="lineChart" layoutX="288.0" layoutY="237.0" prefHeight="430.0" prefWidth="859.0" style="-fx-background-color: #807B7B;" title="Line Chart" verticalGridLinesVisible="false" GridPane.columnIndex="1" GridPane.rowIndex="2">
         <xAxis>
@@ -234,15 +234,7 @@
             </MenuButton>
          </children>
       </Pane>
-      <Text fill="WHITE" layoutX="280.0" layoutY="44.0" onMouseClicked="#addNewCampaign" strokeType="OUTSIDE" strokeWidth="0.0" text="Add New Campaign">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Text>
-      <Text fill="#cdcccc" layoutX="449.0" layoutY="50.0" onMouseClicked="#addNewCampaign" strokeType="OUTSIDE" strokeWidth="0.0" text="+" wrappingWidth="37.43359375">
+      <Text fill="#cdcccc" layoutX="277.0" layoutY="36.0" onMouseClicked="#addNewCampaign" strokeType="OUTSIDE" strokeWidth="0.0" text="+" wrappingWidth="37.43359375">
          <font>
             <Font name="System Bold" size="40.0" />
          </font>
@@ -250,7 +242,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Text>
-      <MenuButton fx:id="graphType" layoutX="886.0" layoutY="183.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="261.0" style="-fx-background-color: #C6C6C6;" text="Line Chart">
+      <MenuButton fx:id="graphType" layoutX="701.0" layoutY="187.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="178.0" style="-fx-background-color: #C6C6C6;" text="Line Chart">
          <font>
             <Font size="19.0" />
          </font>
@@ -290,7 +282,7 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </RadioButton>
-      <TableView fx:id="campaignsTable" layoutX="886.0" layoutY="12.0" prefHeight="156.0" prefWidth="261.0" />
+      <TableView fx:id="campaignsTable" layoutX="886.0" layoutY="8.0" prefHeight="222.0" prefWidth="261.0" />
       <BarChart fx:id="barChart" layoutX="289.0" layoutY="237.0" prefHeight="452.0" prefWidth="859.0" style="-fx-background-color: #807B7B;" title="Bar Chart" visible="false">
         <xAxis>
           <CategoryAxis label="Campaign Something" side="BOTTOM" />
@@ -309,5 +301,6 @@
         </yAxis>
       </AreaChart>
       <ProgressIndicator fx:id="progressIndicator" layoutX="574.0" layoutY="274.0" prefHeight="178.0" prefWidth="261.0" progress="0.0" visible="false" />
+      <Button fx:id="newCampaign" layoutX="309.0" layoutY="8.0" mnemonicParsing="false" onMouseClicked="#addNewCampaign" prefHeight="33.0" prefWidth="103.0" style="-fx-background-color: #C6C6C6;" text="New Campaign" />
    </children>
 </AnchorPane>
