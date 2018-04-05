@@ -19,6 +19,9 @@ import javafx.stage.StageStyle;
 
 import javax.swing.*;
 import java.io.File;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -692,8 +695,75 @@ public class MainController implements ScreenInterface {
             content.add(ll, 0, 2);
             alert.getDialogPane().setContent(content);
             alert.showAndWait();
+        } else if (!isDateValid(startDay.getText() + "-" + convertMonth(startMonth.getText()) + "-" + startYear.getText())) {
+            alert.setHeaderText("Invalid start date!");
+            label = new Label("The date " + startDay.getText() + "-" + convertMonth(startMonth.getText()) + "-" + startYear.getText() + " is not valid.");
+            content.add(label, 0, 0);
+            alert.getDialogPane().setContent(content);
+            alert.showAndWait();
+        } else if (!isDateValid(endDay.getText() + "-" + endMonth.getText() + "-" + endYear.getText())) {
+            alert.setHeaderText("Invalid end date!");
+            label = new Label("The date " + endDay.getText() + "-" + endMonth.getText() + "-" + endYear.getText() + " is not valid.");
+            content.add(label, 0, 0);
+            alert.getDialogPane().setContent(content);
+            alert.showAndWait();
         } else {
-            System.out.println("Finally...");
+            System.out.println("Filtering...");
+        }
+    }
+
+    private String convertMonth(String month) {
+        String m = null;
+        switch (month) {
+            case "January":
+                m = "01";
+                return m;
+            case "February":
+                m = "02";
+                return m;
+            case "March":
+                m = "03";
+                return m;
+            case "April":
+                m = "04";
+                return m;
+            case "May":
+                m = "05";
+                return m;
+            case "June":
+                m = "06";
+                return m;
+            case "July":
+                m = "07";
+                return m;
+            case "August":
+                m = "08";
+                return m;
+            case "September":
+                m = "09";
+                return m;
+            case "October":
+                m = "10";
+                return m;
+            case "November":
+                m = "11";
+                return m;
+            case "December":
+                m = "12";
+                return m;
+        }
+        return null;
+    }
+
+    private boolean isDateValid(String date) {
+        String DATE_FORMAT = "dd-MM-yyyy";
+        try {
+            DateFormat df = new SimpleDateFormat(DATE_FORMAT);
+            df.setLenient(false);
+            df.parse(date);
+            return true;
+        } catch (ParseException e) {
+            return false;
         }
     }
 
