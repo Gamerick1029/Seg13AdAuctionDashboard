@@ -9,7 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="718.0" prefWidth="1365.0" style="-fx-background-color: #595454;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Frontend.sample.ExampleController">
+<AnchorPane prefHeight="718.0" prefWidth="1365.0" style="-fx-background-color: #595454;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Frontend.sample.MainController">
    <children>
       <LineChart fx:id="lineChart" layoutX="288.0" layoutY="237.0" prefHeight="430.0" prefWidth="859.0" style="-fx-background-color: #807B7B;" title="Line Chart" verticalGridLinesVisible="false" GridPane.columnIndex="1" GridPane.rowIndex="2">
         <xAxis>
@@ -251,6 +251,7 @@
             <CheckMenuItem fx:id="barType" mnemonicParsing="false" text="Bar Chart" />
             <CheckMenuItem fx:id="pieType" mnemonicParsing="false" text="Pie Chart" />
             <CheckMenuItem fx:id="areaType" mnemonicParsing="false" text="Area Chart" />
+            <CheckMenuItem fx:id="histogramType" mnemonicParsing="false" text="Click Cost Histogram" />
          </items>
       </MenuButton>
       <Text fill="WHITE" layoutX="288.0" layoutY="226.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Timescale:">
