@@ -438,6 +438,7 @@ public class ExampleController implements ScreenInterface {
                     ((CheckMenuItem) startMonth).setSelected(false);
                 }
                 ((CheckMenuItem) month).setSelected(true);
+                startMonth.setText(month.getText());
             });
         }
         for (MenuItem month : endMonth.getItems()) {
@@ -446,6 +447,7 @@ public class ExampleController implements ScreenInterface {
                     ((CheckMenuItem) endMonth).setSelected(false);
                 }
                 ((CheckMenuItem) month).setSelected(true);
+                endMonth.setText(month.getText());
             });
         }
 
@@ -489,6 +491,7 @@ public class ExampleController implements ScreenInterface {
     private void addNewCampaign(MouseEvent event) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.initStyle(StageStyle.UTILITY);
+        alert.setHeaderText("In order to load a campaign please input a name and 3 files below.");
         alert.setTitle("Load New Campaign");
         alert.setContentText("Input Campaign Details:");
 
@@ -710,9 +713,64 @@ public class ExampleController implements ScreenInterface {
         }
     }
 
-    @FXML
     private void applyDateFilter() {
-        System.out.println("Date selected");
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.initStyle(StageStyle.UTILITY);
+        alert.setTitle("Warning");
+        GridPane content = new GridPane();
+        content.setPrefSize(300, 50);
+        Label label;
+        if (startDay.getText().equals("") || startMonth.getText().equals("Month") || startYear.getText().equals("")) {
+            alert.setHeaderText("Invalid start date!");
+            label = new Label("Please select a full start date.");
+            content.add(label,0, 0);
+            alert.getDialogPane().setContent(content);
+            alert.showAndWait();
+        } else if (endDay.getText().equals("") || endMonth.getText().equals("Month") || endYear.getText().equals("")) {
+            alert.setHeaderText("Invalid end date!");
+            label = new Label("Please select a full end date.");
+            content.add(label,0, 0);
+            alert.getDialogPane().setContent(content);
+            alert.showAndWait();
+        } else if (!startDay.getText().matches("[0-9]+") || !startYear.getText().matches("[0-9]+")) {
+            alert.setHeaderText("Invalid start date!");
+            label = new Label("Please input a valid start date.");
+            Label l = new Label("Fields can only contain digits.");
+            content.add(label,0, 0);
+            content.add(l, 0, 1);
+            alert.getDialogPane().setContent(content);
+            alert.showAndWait();
+        } else if (!endDay.getText().matches("[0-9]+") || !endYear.getText().matches("[0-9]+")) {
+            alert.setHeaderText("Invalid end date!");
+            label = new Label("Please input a valid end date.");
+            Label l = new Label("Fields can only contain digits.");
+            content.add(label,0, 0);
+            content.add(l, 0, 1);
+            alert.getDialogPane().setContent(content);
+            alert.showAndWait();
+        } else if (startDay.getText().length() != 2 || startYear.getText().length() != 4){
+            alert.setHeaderText("Invalid start date!");
+            label = new Label("Please input a valid start date.");
+            Label l = new Label("Number of required digits for day: 2.");
+            Label ll = new Label("Number of required digits for year: 4.");
+            content.add(label,0, 0);
+            content.add(l, 0, 1);
+            content.add(ll, 0, 2);
+            alert.getDialogPane().setContent(content);
+            alert.showAndWait();
+        } else if (endDay.getText().length() != 2 || endYear.getText().length() != 4) {
+            alert.setHeaderText("Invalid end date!");
+            label = new Label("Please input a valid end date.");
+            Label l = new Label("Number of required digits for day: 2.");
+            Label ll = new Label("Number of required digits for year: 4.");
+            content.add(label,0, 0);
+            content.add(l, 0, 1);
+            content.add(ll, 0, 2);
+            alert.getDialogPane().setContent(content);
+            alert.showAndWait();
+        } else {
+            System.out.println("Finally...");
+        }
     }
 
     private void filterGraph(String filter) {

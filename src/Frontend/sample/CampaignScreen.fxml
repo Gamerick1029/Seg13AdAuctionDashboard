@@ -92,10 +92,10 @@
                </font>
             </Text>
             <MenuButton fx:id="startMonth" layoutX="67.0" layoutY="559.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="68.0" text="Month" />
-            <TextField fx:id="startDay" layoutX="11.0" layoutY="607.0" prefHeight="26.0" prefWidth="48.0" promptText="Day" />
-            <TextField fx:id="endDay" layoutX="10.0" layoutY="559.0" prefHeight="26.0" prefWidth="48.0" promptText="Day" />
+            <TextField fx:id="endDay" layoutX="11.0" layoutY="607.0" prefHeight="26.0" prefWidth="48.0" promptText="Day" />
+            <TextField fx:id="startDay" layoutX="10.0" layoutY="559.0" prefHeight="26.0" prefWidth="48.0" promptText="Day" />
             <MenuButton fx:id="endMonth" layoutX="67.0" layoutY="608.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="68.0" text="Month" />
-            <Text fx:id="searchDate" fill="#fcfafa" layoutX="100.0" layoutY="670.0" onMouseClicked="#applyDateFilter" strokeType="OUTSIDE" strokeWidth="0.0" text="Filter by Date" underline="true">
+            <Text fx:id="searchDate" fill="#fcfafa" layoutX="100.0" layoutY="670.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Filter by Date" underline="true">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
@@ -103,8 +103,8 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Text>
-            <TextField fx:id="startYear" layoutX="140.0" layoutY="607.0" prefHeight="26.0" prefWidth="55.0" promptText="Year" />
-            <TextField fx:id="endYear" layoutX="139.0" layoutY="559.0" prefHeight="26.0" prefWidth="55.0" promptText="Year" />
+            <TextField fx:id="endYear" layoutX="140.0" layoutY="607.0" prefHeight="26.0" prefWidth="55.0" promptText="Year" />
+            <TextField fx:id="startYear" layoutX="139.0" layoutY="559.0" prefHeight="26.0" prefWidth="55.0" promptText="Year" />
          </children>
       </Pane>
       <Pane prefHeight="706.0" prefWidth="277.0" style="-fx-background-color: #333030;">
