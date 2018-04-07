@@ -15,18 +15,18 @@ public interface DataModelDB {
     /*
             Returns the number of all Impressions of a Campaign
          */
-abstract int getImpressionsNumber(String campaignName) throws SQLException;
+    int getImpressionsNumber(String campaignName) throws SQLException;
 
     /*
     DEAD FUNCTION
 */
-    abstract Map<Date, Integer> getImpressionsByInterval(String campaignName, Date startInterval, Date endInterval) throws SQLException;
+    Map<Date, Integer> getImpressionsByInterval(String campaignName, Date startInterval, Date endInterval) throws SQLException;
 
-    abstract Map<Date, Integer> getImpressionsByInterval(String campaignName, Date startInterval, Date endInterval, long step) throws SQLException;
+    Map<Date, Integer> getImpressionsByInterval(String campaignName, Date startInterval, Date endInterval, long step) throws SQLException;
 
-    abstract Map<Date, Integer> getFullImpressions(String campaignName, long step) throws SQLException;
+    Map<Date, Integer> getFullImpressions(String campaignName, long step) throws SQLException;
 
-    abstract int getOverallImpressionsByInterval(String campaignName, Date startInterval, Date endInterval) throws SQLException;
+    int getOverallImpressionsByInterval(String campaignName, Date startInterval, Date endInterval) throws SQLException;
 
     /*
         Returns the number of all Clicks of a Campaign
@@ -211,9 +211,9 @@ abstract int getImpressionsNumber(String campaignName) throws SQLException;
 
     Map<Date, Set<String>> getUsersByInterval(String campaignName, Date startInterval, Date endInterval, long step) throws SQLException;
 
-    abstract Map<Date, Set<String>> getFullUsers(String campaignName, long step) throws SQLException;
+    Map<Date, Set<String>> getFullUsers(String campaignName, long step) throws SQLException;
 
-    abstract Set<String> getOverallUsersByInterval(String campaignName, Date startInterval, Date endInterval) throws SQLException;
+    Set<String> getOverallUsersByInterval(String campaignName, Date startInterval, Date endInterval) throws SQLException;
 
     /*
         A helper method to group a map by specified step values

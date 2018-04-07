@@ -36,18 +36,17 @@ public class TestMain {
 //
 //        new Thread(runnable).start();
 
-        DataModelDB campaignModelDB = new CampaignModelDB();
+        DataModelDBTestClass dbTest = new DataModelDBTestClass();
+
 
         DBHelper dbh = new DBHelper(args[0], args[1]);
         Connection connection = dbh.getDefaultConnection();
-//        TestMain testMain = new TestMain();
-//        testMain.databaseTesting(connection);
 
         File JUnitClicks = new File("TestRuns/Backend/Model/TestSamples/click_log.csv");
         File JUnitImpressions = new File("TestRuns/Backend/Model/TestSamples/impression_log.csv");
         File JUnitServerLogs = new File("TestRuns/Backend/Model/TestSamples/server_log.csv");
 
-        ReadCSVsToDB.makeCampaign(connection, "JUnit", JUnitClicks, JUnitImpressions, JUnitServerLogs);
+//        ReadCSVsToDB.makeCampaign(connection, "JUnit", JUnitClicks, JUnitImpressions, JUnitServerLogs);
 
         System.out.println(dbh.getCampaigns());
         System.out.println("Success!");
