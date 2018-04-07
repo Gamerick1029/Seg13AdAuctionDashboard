@@ -15,17 +15,17 @@ public interface DataModel {
     /*
         Returns an ArrayList of all the Click Logs
      */
-    List<ClickLog> getClickData();
+//    List<ClickLog> getClickData();
 
     /*
         Returns an ArrayList of all the Impression Logs
     */
-    List<ImpressionLog> getImpressionData();
+//    List<ImpressionLog> getImpressionData();
 
     /*
         Returns an ArrayList of all the Server Logs
      */
-    List<ServerLog> getServerData();
+//    List<ServerLog> getServerData();
 
 
     /**
