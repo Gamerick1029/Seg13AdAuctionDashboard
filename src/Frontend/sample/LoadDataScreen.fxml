@@ -1,78 +1,127 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="758.0" style="-fx-background-color: #595454;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Frontend.sample.LoadDataController">
-   <children>
-      <Text fill="WHITE" layoutX="201.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Import campaign" textAlignment="CENTER" wrappingWidth="356.13671875">
-         <font>
-            <Font name="Ubuntu" size="36.0" />
-         </font>
-      </Text>
-      <TextField fx:id="impressionsLogField" editable="false" layoutX="117.0" layoutY="247.0" onMouseClicked="#loadImpressionsLogField" prefHeight="38.0" prefWidth="404.0" promptText="Load Impressions Log...">
-         <font>
-            <Font name="Ubuntu" size="14.0" />
-         </font></TextField>
-      <Button layoutX="546.0" layoutY="247.0" mnemonicParsing="false" onAction="#loadImpressionsLogButton" prefHeight="38.0" prefWidth="95.0" text="Browse">
-         <font>
-            <Font name="Ubuntu" size="14.0" />
-         </font></Button>
-      <TextField fx:id="serverLogField" editable="false" layoutX="117.0" layoutY="422.0" onMouseClicked="#loadServerLogField" prefHeight="38.0" prefWidth="404.0" promptText="Load Server Log...">
-         <font>
-            <Font name="Ubuntu" size="14.0" />
-         </font></TextField>
-      <TextField fx:id="clickLogField" editable="false" layoutX="117.0" layoutY="333.0" onMouseClicked="#loadClickLogField" prefHeight="38.0" prefWidth="404.0" promptText="Load Click Log...">
-         <font>
-            <Font name="Ubuntu" size="14.0" />
-         </font></TextField>
-      <Button layoutX="546.0" layoutY="333.0" mnemonicParsing="false" onAction="#loadClickLogButton" prefHeight="38.0" prefWidth="95.0" text="Browse">
-         <font>
-            <Font name="Ubuntu" size="14.0" />
-         </font></Button>
-      <Button layoutX="546.0" layoutY="422.0" mnemonicParsing="false" onAction="#loadServerLogButton" prefHeight="38.0" prefWidth="95.0" text="Browse">
-         <font>
-            <Font name="Ubuntu" size="14.0" />
-         </font></Button>
-      <Button layoutX="196.0" layoutY="514.0" mnemonicParsing="false" onAction="#resetFields" prefHeight="47.0" prefWidth="143.0" style="-fx-background-color: #C6C6C6;" text="Reset">
-         <font>
-            <Font name="Ubuntu" size="19.0" />
-         </font></Button>
-      <Button layoutX="420.0" layoutY="514.0" mnemonicParsing="false" onAction="#goToViewDataScreen" prefHeight="47.0" prefWidth="143.0" style="-fx-background-color: #C6C6C6;" text="OK">
-         <font>
-            <Font name="Ubuntu" size="19.0" />
-         </font></Button>
-      <Text fill="WHITE" layoutX="117.0" layoutY="241.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Impressions Log">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Text>
-      <Text fill="WHITE" layoutX="117.0" layoutY="326.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Click Log">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Text>
-      <Text fill="WHITE" layoutX="117.0" layoutY="416.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Server Log">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Text>
-      <TextField fx:id="campaignName" layoutX="117.0" layoutY="159.0" prefHeight="38.0" prefWidth="404.0" promptText="Input Campaign Name...">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </TextField>
-      <Text fill="WHITE" layoutX="117.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Campaign Name">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Text>
+<HBox alignment="TOP_CENTER" style="-fx-background-color: #595454;" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Frontend.sample.LoadDataController">
+    <padding>
+        <Insets bottom="10" left="25" right="25" top="25" />
+    </padding>
+    <children>
+      <VBox alignment="CENTER" spacing="40">
+         <children>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Import campaign" textAlignment="CENTER" wrappingWidth="356.13671875">
+               <font>
+                  <Font name="Ubuntu" size="36.0" />
+               </font>
+            </Text>
+            <VBox alignment="CENTER_LEFT" spacing="10">
+               <children>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Campaign Name">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="campaignName" prefHeight="38.0" prefWidth="374.0" promptText="Input Campaign Name...">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </VBox>
+            <VBox alignment="CENTER_LEFT" spacing="10">
+               <children>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Impressions Log">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+                  <HBox alignment="CENTER" spacing="25">
+                     <children>
+                        <TextField fx:id="impressionsLogField" editable="false" onMouseClicked="#loadImpressionsLogField" prefHeight="38.0" prefWidth="404.0" promptText="Load Impressions Log...">
+                           <font>
+                              <Font name="Ubuntu" size="14.0" />
+                           </font>
+                        </TextField>
+                        <Button mnemonicParsing="false" onAction="#loadImpressionsLogButton" prefHeight="38.0" prefWidth="95.0" text="Browse">
+                           <font>
+                              <Font name="Ubuntu" size="14.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox alignment="CENTER_LEFT" spacing="10">
+               <children>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Click Log">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+                  <HBox alignment="CENTER" spacing="25">
+                     <children>
+                        <TextField fx:id="clickLogField" editable="false" onMouseClicked="#loadClickLogField" prefHeight="38.0" prefWidth="404.0" promptText="Load Click Log...">
+                           <font>
+                              <Font name="Ubuntu" size="14.0" />
+                           </font>
+                        </TextField>
+                        <Button mnemonicParsing="false" onAction="#loadClickLogButton" prefHeight="38.0" prefWidth="95.0" text="Browse">
+                           <font>
+                              <Font name="Ubuntu" size="14.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox alignment="CENTER_LEFT" spacing="10">
+               <children>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Server Log">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+                  <HBox alignment="CENTER" spacing="25">
+                     <children>
+                        <TextField fx:id="serverLogField" editable="false" onMouseClicked="#loadServerLogField" prefHeight="38.0" prefWidth="404.0" promptText="Load Server Log...">
+                           <font>
+                              <Font name="Ubuntu" size="14.0" />
+                           </font>
+                        </TextField>
+                        <Button mnemonicParsing="false" onAction="#loadServerLogButton" prefHeight="38.0" prefWidth="95.0" text="Browse">
+                           <font>
+                              <Font name="Ubuntu" size="14.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <HBox alignment="CENTER" spacing="50">
+                <padding>
+                    <Insets bottom="10" left="25" right="25" top="25" />
+                </padding>
+               <children>
+
+                  <Button mnemonicParsing="false" onAction="#goToViewDataScreen" prefHeight="47.0" prefWidth="143.0" style="-fx-background-color: #C6C6C6;" text="OK">
+                     <font>
+                        <Font name="Ubuntu" size="19.0" />
+                     </font>
+                  </Button>
+                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#resetFields" prefHeight="47.0" prefWidth="143.0" style="-fx-background-color: #C6C6C6;" text="Reset">
+                     <font>
+                        <Font name="Ubuntu" size="19.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
    </children>
-</AnchorPane>
+</HBox>
