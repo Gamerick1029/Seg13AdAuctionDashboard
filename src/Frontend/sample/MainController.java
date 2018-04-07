@@ -19,6 +19,9 @@ import javafx.stage.StageStyle;
 
 import javax.swing.*;
 import java.io.File;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -29,7 +32,7 @@ import java.util.Map;
  * This class is the controller for the Campaign Screen
  * and implements all the functionality for the FXML file.
  */
-public class ExampleController implements ScreenInterface {
+public class MainController implements ScreenInterface {
 
     private ScreensController myController;
     private DBHelper dbHelper;
@@ -97,6 +100,8 @@ public class ExampleController implements ScreenInterface {
     @FXML
     private CheckMenuItem areaType;
     @FXML
+    private CheckMenuItem histogramType;
+    @FXML
     private RadioButton byDay;
     @FXML
     private RadioButton byWeek;
@@ -162,6 +167,7 @@ public class ExampleController implements ScreenInterface {
     private XYChart.Series campaignMetricLC;
     private XYChart.Series campaignMetricBC;
     private XYChart.Series campaignMetricAC;
+    private XYChart.Series histogramSeries;
     private ObservableList<PieChart.Data> campaignMetricPC;
 
     private Campaign currentCampaign = new Campaign("");
@@ -181,7 +187,7 @@ public class ExampleController implements ScreenInterface {
         y.animatedProperty().setValue(false);
         currentCampaign.getDisplayed().addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
-                    showMetric(currentCampaign.getName(), currentMetricDisplayed);
+                    showMetric(currentMetricDisplayed);
                 });
         currentCampaign.getRemove().addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
@@ -192,35 +198,35 @@ public class ExampleController implements ScreenInterface {
                 });
         impressions.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
-                    showMetric(myController.getDataModel(campaignName.getText()).getName(), "Impressions");
+                    showMetric("Impressions");
                 });
         clicks.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
-                    showMetric(myController.getDataModel(campaignName.getText()).getName(), "Clicks");
+                    showMetric("Clicks");
                 });
         bounces.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
-                    showMetric(myController.getDataModel(campaignName.getText()).getName(), "Bounces");
+                    showMetric("Bounces");
                 });
         conversions.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
-                    showMetric(myController.getDataModel(campaignName.getText()).getName(), "Conversions");
+                    showMetric("Conversions");
                 });
         totalCost.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
-                    showMetric(myController.getDataModel(campaignName.getText()).getName(), "TotalCost");
+                    showMetric("TotalCost");
                 });
         clickRate.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
-                    showMetric(myController.getDataModel(campaignName.getText()).getName(), "ClickRate");
+                    showMetric("ClickRate");
                 });
         aquisition.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
-                    showMetric(myController.getDataModel(campaignName.getText()).getName(), "Aquisition");
+                    showMetric("Aquisition");
                 });
         costPerClick.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
-                    showMetric(myController.getDataModel(campaignName.getText()).getName(), "CostPerClick");
+                    showMetric("CostPerClick");
                 });
         lineType.setOnAction(t -> {
             changeToLineChart();
@@ -233,6 +239,9 @@ public class ExampleController implements ScreenInterface {
         });
         pieType.setOnAction(t -> {
             changeToPieChart();
+        });
+        histogramType.setOnAction(t -> {
+            changeToHistogram();
         });
         byDay.setOnAction(r -> {
             byDay.setSelected(true);
@@ -260,149 +269,67 @@ public class ExampleController implements ScreenInterface {
         });
 
         age90.setOnAction(r -> {
-            if (age90.isSelected()) {
-                filterGraph(age90.getText());
-            } else {
-                filterUnselected(age90.getText());
-            }
+            filterGraph(age90.getText());
         });
         age50to69.setOnAction(r -> {
-            if (age50to69.isSelected()) {
-                filterGraph(age50to69.getText());
-            }
+            filterGraph(age50to69.getText());
         });
         age70to89.setOnAction(r -> {
-            if (age70to89.isSelected()) {
-                filterGraph(age70to89.getText());
-            } else {
-                filterUnselected(age70to89.getText());
-            }
+            filterGraph(age70to89.getText());
         });
         age30to49.setOnAction(r -> {
-            if (age30to49.isSelected()) {
-                filterGraph(age30to49.getText());
-            } else {
-                filterUnselected(age30to49.getText());
-            }
+            filterGraph(age30to49.getText());
         });
         age19to29.setOnAction(r -> {
-            if (age19to29.isSelected()) {
-                filterGraph(age19to29.getText());
-            } else {
-                filterUnselected(age19to29.getText());
-            }
+            filterGraph(age19to29.getText());
         });
         age18.setOnAction(r -> {
-            if (age18.isSelected()) {
-                filterGraph(age18.getText());
-            } else {
-                filterUnselected(age18.getText());
-            }
+            filterGraph(age18.getText());
         });
         income29.setOnAction(r -> {
-            if (income29.isSelected()) {
-                filterGraph(income29.getText());
-            } else {
-                filterUnselected(income29.getText());
-            }
+            filterGraph(income29.getText());
         });
         income19.setOnAction(r -> {
-            if (income19.isSelected()) {
-                filterGraph(income19.getText());
-            } else {
-                filterUnselected(income19.getText());
-            }
+            filterGraph(income19.getText());
         });
         income59.setOnAction(r -> {
-            if (income59.isSelected()) {
-                filterGraph(income59.getText());
-            } else {
-                filterUnselected(income59.getText());
-            }
+            filterGraph(income59.getText());
         });
         income100.setOnAction(r -> {
-            if (income100.isSelected()) {
-                filterGraph(income100.getText());
-            } else {
-                filterUnselected(income100.getText());
-            }
+            filterGraph(income100.getText());
         });
         income89.setOnAction(r -> {
-            if (income89.isSelected()) {
-                filterGraph(income89.getText());
-            } else {
-                filterUnselected(income89.getText());
-            }
+            filterGraph(income89.getText());
         });
         income100more.setOnAction(r -> {
-            if (income100more.isSelected()) {
-                filterGraph(income100more.getText());
-            } else {
-                filterUnselected(income100more.getText());
-            }
+            filterGraph(income100more.getText());
         });
         female.setOnAction(r -> {
-            if (female.isSelected()) {
-                filterGraph(female.getText());
-            } else {
-                filterUnselected(female.getText());
-            }
+            filterGraph(female.getText());
         });
         male.setOnAction(r -> {
-            if (male.isSelected()) {
-                filterGraph(male.getText());
-            } else {
-                filterUnselected(male.getText());
-            }
+            filterGraph(male.getText());
         });
         other.setOnAction(r -> {
-            if (other.isSelected()) {
-                filterGraph(other.getText());
-            } else {
-                filterUnselected(other.getText());
-            }
+            filterGraph(other.getText());
         });
         shopping.setOnAction(r -> {
-            if (shopping.isSelected()) {
-                filterGraph(shopping.getText());
-            } else {
-                filterUnselected(shopping.getText());
-            }
+            filterGraph(shopping.getText());
         });
         social.setOnAction(r -> {
-            if (social.isSelected()) {
-                filterGraph(social.getText());
-            } else {
-                filterUnselected(social.getText());
-            }
+            filterGraph(social.getText());
         });
         food.setOnAction(r -> {
-            if (food.isSelected()) {
-                filterGraph(food.getText());
-            } else {
-                filterUnselected(food.getText());
-            }
+            filterGraph(food.getText());
         });
         healthcare.setOnAction(r -> {
-            if (healthcare.isSelected()) {
-                filterGraph(healthcare.getText());
-            } else {
-                filterUnselected(healthcare.getText());
-            }
+            filterGraph(healthcare.getText());
         });
         sport.setOnAction(r -> {
-            if (sport.isSelected()) {
-                filterGraph(sport.getText());
-            } else {
-                filterUnselected(sport.getText());
-            }
+            filterGraph(sport.getText());
         });
         entertainment.setOnAction(r -> {
-            if (entertainment.isSelected()) {
-                filterGraph(entertainment.getText());
-            } else {
-                filterUnselected(entertainment.getText());
-            }
+            filterGraph(entertainment.getText());
         });
         searchDate.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
@@ -673,7 +600,7 @@ public class ExampleController implements ScreenInterface {
                 // add EventHandlers for the Displayed CheckBox button and the Remove button
                 campaign.getDisplayed().addEventHandler(MouseEvent.MOUSE_CLICKED,
                         e -> {
-                            showMetric(campaign.getName(), currentMetricDisplayed);
+                            showMetric(currentMetricDisplayed);
                         });
                 campaign.getRemove().addEventHandler(MouseEvent.MOUSE_CLICKED,
                         e -> {
@@ -723,20 +650,20 @@ public class ExampleController implements ScreenInterface {
         if (startDay.getText().equals("") || startMonth.getText().equals("Month") || startYear.getText().equals("")) {
             alert.setHeaderText("Invalid start date!");
             label = new Label("Please select a full start date.");
-            content.add(label,0, 0);
+            content.add(label, 0, 0);
             alert.getDialogPane().setContent(content);
             alert.showAndWait();
         } else if (endDay.getText().equals("") || endMonth.getText().equals("Month") || endYear.getText().equals("")) {
             alert.setHeaderText("Invalid end date!");
             label = new Label("Please select a full end date.");
-            content.add(label,0, 0);
+            content.add(label, 0, 0);
             alert.getDialogPane().setContent(content);
             alert.showAndWait();
         } else if (!startDay.getText().matches("[0-9]+") || !startYear.getText().matches("[0-9]+")) {
             alert.setHeaderText("Invalid start date!");
             label = new Label("Please input a valid start date.");
             Label l = new Label("Fields can only contain digits.");
-            content.add(label,0, 0);
+            content.add(label, 0, 0);
             content.add(l, 0, 1);
             alert.getDialogPane().setContent(content);
             alert.showAndWait();
@@ -744,16 +671,16 @@ public class ExampleController implements ScreenInterface {
             alert.setHeaderText("Invalid end date!");
             label = new Label("Please input a valid end date.");
             Label l = new Label("Fields can only contain digits.");
-            content.add(label,0, 0);
+            content.add(label, 0, 0);
             content.add(l, 0, 1);
             alert.getDialogPane().setContent(content);
             alert.showAndWait();
-        } else if (startDay.getText().length() != 2 || startYear.getText().length() != 4){
+        } else if (startDay.getText().length() != 2 || startYear.getText().length() != 4) {
             alert.setHeaderText("Invalid start date!");
             label = new Label("Please input a valid start date.");
             Label l = new Label("Number of required digits for day: 2.");
             Label ll = new Label("Number of required digits for year: 4.");
-            content.add(label,0, 0);
+            content.add(label, 0, 0);
             content.add(l, 0, 1);
             content.add(ll, 0, 2);
             alert.getDialogPane().setContent(content);
@@ -763,22 +690,85 @@ public class ExampleController implements ScreenInterface {
             label = new Label("Please input a valid end date.");
             Label l = new Label("Number of required digits for day: 2.");
             Label ll = new Label("Number of required digits for year: 4.");
-            content.add(label,0, 0);
+            content.add(label, 0, 0);
             content.add(l, 0, 1);
             content.add(ll, 0, 2);
             alert.getDialogPane().setContent(content);
             alert.showAndWait();
+        } else if (!isDateValid(startDay.getText() + "-" + convertMonth(startMonth.getText()) + "-" + startYear.getText())) {
+            alert.setHeaderText("Invalid start date!");
+            label = new Label("The date " + startDay.getText() + "-" + convertMonth(startMonth.getText()) + "-" + startYear.getText() + " is not valid.");
+            content.add(label, 0, 0);
+            alert.getDialogPane().setContent(content);
+            alert.showAndWait();
+        } else if (!isDateValid(endDay.getText() + "-" + endMonth.getText() + "-" + endYear.getText())) {
+            alert.setHeaderText("Invalid end date!");
+            label = new Label("The date " + endDay.getText() + "-" + endMonth.getText() + "-" + endYear.getText() + " is not valid.");
+            content.add(label, 0, 0);
+            alert.getDialogPane().setContent(content);
+            alert.showAndWait();
         } else {
-            System.out.println("Finally...");
+            System.out.println("Filtering...");
+        }
+    }
+
+    private String convertMonth(String month) {
+        String m = null;
+        switch (month) {
+            case "January":
+                m = "01";
+                return m;
+            case "February":
+                m = "02";
+                return m;
+            case "March":
+                m = "03";
+                return m;
+            case "April":
+                m = "04";
+                return m;
+            case "May":
+                m = "05";
+                return m;
+            case "June":
+                m = "06";
+                return m;
+            case "July":
+                m = "07";
+                return m;
+            case "August":
+                m = "08";
+                return m;
+            case "September":
+                m = "09";
+                return m;
+            case "October":
+                m = "10";
+                return m;
+            case "November":
+                m = "11";
+                return m;
+            case "December":
+                m = "12";
+                return m;
+        }
+        return null;
+    }
+
+    private boolean isDateValid(String date) {
+        String DATE_FORMAT = "dd-MM-yyyy";
+        try {
+            DateFormat df = new SimpleDateFormat(DATE_FORMAT);
+            df.setLenient(false);
+            df.parse(date);
+            return true;
+        } catch (ParseException e) {
+            return false;
         }
     }
 
     private void filterGraph(String filter) {
         System.out.println("Filter selected: " + filter);
-    }
-
-    private void filterUnselected(String filter) {
-        System.out.println("Filter unselected: " + filter);
     }
 
     /*
@@ -822,6 +812,7 @@ public class ExampleController implements ScreenInterface {
         barType.setSelected(false);
         areaType.setSelected(false);
         pieType.setSelected(false);
+        histogramType.setSelected(false);
     }
 
     private void changeToBarChart() {
@@ -830,22 +821,26 @@ public class ExampleController implements ScreenInterface {
         pieChart.setVisible(false);
         areaChart.setVisible(false);
         barChart.setVisible(true);
+        barChart.setTitle("Bar Chart");
         lineType.setSelected(false);
         barType.setSelected(true);
         areaType.setSelected(false);
         pieType.setSelected(false);
+        histogramType.setSelected(false);
+        populateMetric(currentMetricDisplayed, currentStep);
     }
 
     private void changeToAreaChart() {
         graphType.setText("Area Chart");
         lineChart.setVisible(false);
         pieChart.setVisible(false);
-        barChart.setVisible(false);
         areaChart.setVisible(true);
+        barChart.setVisible(false);
         lineType.setSelected(false);
         barType.setSelected(false);
         areaType.setSelected(true);
         pieType.setSelected(false);
+        histogramType.setSelected(false);
     }
 
     private void changeToPieChart() {
@@ -858,9 +853,38 @@ public class ExampleController implements ScreenInterface {
         barType.setSelected(false);
         areaType.setSelected(false);
         pieType.setSelected(true);
+        histogramType.setSelected(false);
     }
 
-    private void showMetric(String campaign, String metric) {
+    private void changeToHistogram() {
+        graphType.setText("Histogram");
+        lineChart.setVisible(false);
+        pieChart.setVisible(false);
+        areaChart.setVisible(false);
+        barChart.setVisible(true);
+        lineType.setSelected(false);
+        barType.setSelected(false);
+        areaType.setSelected(false);
+        pieType.setSelected(false);
+        histogramType.setSelected(true);
+        barChart.getData().clear();
+        barChart.setTitle("Click Cost Histogram");
+        for (Campaign campaign : this.campaignsLoaded) {
+            if (campaign.getDisplayed().isSelected()) {
+                DataModel dataModel = myController.getDataModel(campaign.getName());
+                histogramSeries = new XYChart.Series();
+                for (Map.Entry<Date, Float> entry : dataModel.getFullCost(currentStep).entrySet()) {
+                    Date key = entry.getKey();
+                    Float value = entry.getValue();
+                    histogramSeries.getData().add(new XYChart.Data(String.valueOf(key), value));
+                }
+                barChart.getData().add(histogramSeries);
+                histogramSeries.setName(dataModel.getName() + "Click Cost Histogram");
+            }
+        }
+    }
+
+    private void showMetric(String metric) {
         switch (metric) {
             case "Impressions":
                 setStyleToMetric("Impressions");

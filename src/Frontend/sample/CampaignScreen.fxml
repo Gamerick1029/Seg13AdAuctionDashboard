@@ -9,7 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="706.0" prefWidth="1365.0" style="-fx-background-color: #595454;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Frontend.sample.ExampleController">
+<AnchorPane prefHeight="718.0" prefWidth="1365.0" style="-fx-background-color: #595454;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Frontend.sample.MainController">
    <children>
       <LineChart fx:id="lineChart" layoutX="288.0" layoutY="237.0" prefHeight="430.0" prefWidth="859.0" style="-fx-background-color: #807B7B;" title="Line Chart" verticalGridLinesVisible="false" GridPane.columnIndex="1" GridPane.rowIndex="2">
         <xAxis>
@@ -61,24 +61,24 @@
                   <Font name="System Bold" size="20.0" />
                </font>
             </Text>
-            <CheckBox fx:id="age90" layoutX="117.0" layoutY="141.0" mnemonicParsing="false"  text="90 or above" textFill="WHITE" />
+            <CheckBox fx:id="age90" layoutX="117.0" layoutY="141.0" mnemonicParsing="false" text="90 or above" textFill="WHITE" />
             <CheckBox fx:id="age50to69" layoutX="118.0" layoutY="98.0" mnemonicParsing="false" text="50 - 69" textFill="WHITE" />
             <CheckBox fx:id="age70to89" layoutX="118.0" layoutY="120.0" mnemonicParsing="false" text="70 - 89" textFill="WHITE" />
-            <CheckBox fx:id="age30to49" layoutX="13.0" layoutY="143.0" mnemonicParsing="false"  text="30 - 49" textFill="WHITE" />
+            <CheckBox fx:id="age30to49" layoutX="13.0" layoutY="143.0" mnemonicParsing="false" text="30 - 49" textFill="WHITE" />
             <CheckBox fx:id="age19to29" layoutX="13.0" layoutY="120.0" mnemonicParsing="false" text="19 - 29" textFill="WHITE" />
-            <CheckBox fx:id="age18" layoutX="13.0" layoutY="98.0" mnemonicParsing="false"  text="18 or below" textFill="WHITE" />
+            <CheckBox fx:id="age18" layoutX="13.0" layoutY="98.0" mnemonicParsing="false" text="18 or below" textFill="WHITE" />
             <CheckBox fx:id="income29" layoutX="13.0" layoutY="228.0" mnemonicParsing="false" text="19 000 - 29 000" textFill="WHITE" />
             <CheckBox fx:id="income19" layoutX="13.0" layoutY="205.0" mnemonicParsing="false" text="19 000 or below" textFill="WHITE" />
             <CheckBox fx:id="income59" layoutX="13.0" layoutY="253.0" mnemonicParsing="false" text="29 000 - 59 000" textFill="WHITE" />
             <CheckBox fx:id="income100" layoutX="13.0" layoutY="299.0" mnemonicParsing="false" text="89 000 - 100 000" textFill="WHITE" />
             <CheckBox fx:id="income89" layoutX="13.0" layoutY="276.0" mnemonicParsing="false" text="59 000 - 89 000" textFill="WHITE" />
-            <CheckBox fx:id="income100more" layoutX="13.0" layoutY="322.0" mnemonicParsing="false"  text="&gt; 100 000" textFill="WHITE" />
-            <CheckBox fx:id="female" layoutX="68.0" layoutY="376.0" mnemonicParsing="false"  text="Female" textFill="WHITE" />
+            <CheckBox fx:id="income100more" layoutX="13.0" layoutY="322.0" mnemonicParsing="false" text="&gt; 100 000" textFill="WHITE" />
+            <CheckBox fx:id="female" layoutX="68.0" layoutY="376.0" mnemonicParsing="false" text="Female" textFill="WHITE" />
             <CheckBox fx:id="male" layoutX="13.0" layoutY="376.0" mnemonicParsing="false" text="Male " textFill="WHITE" />
-            <CheckBox fx:id="other" layoutX="138.0" layoutY="376.0" mnemonicParsing="false"  text="Other" textFill="WHITE" />
-            <CheckBox fx:id="shopping" layoutX="13.0" layoutY="465.0" mnemonicParsing="false"  text="Shopping" textFill="WHITE" />
+            <CheckBox fx:id="other" layoutX="138.0" layoutY="376.0" mnemonicParsing="false" text="Other" textFill="WHITE" />
+            <CheckBox fx:id="shopping" layoutX="13.0" layoutY="465.0" mnemonicParsing="false" text="Shopping" textFill="WHITE" />
             <CheckBox fx:id="social" layoutX="13.0" layoutY="489.0" mnemonicParsing="false" text="Social Media" textFill="WHITE" />
-            <CheckBox fx:id="food" layoutX="115.0" layoutY="489.0" mnemonicParsing="false"  text="Food" textFill="WHITE" />
+            <CheckBox fx:id="food" layoutX="115.0" layoutY="489.0" mnemonicParsing="false" text="Food" textFill="WHITE" />
             <CheckBox fx:id="healthcare" layoutX="115.0" layoutY="465.0" mnemonicParsing="false" text="Healthcare" textFill="WHITE" />
             <CheckBox fx:id="sport" layoutX="115.0" layoutY="442.0" mnemonicParsing="false" text="Sport" textFill="WHITE" />
             <Text fx:id="startDate" fill="#fcfcfc" layoutX="11.0" layoutY="552.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start">
@@ -86,16 +86,16 @@
                   <Font size="17.0" />
                </font>
             </Text>
-            <Text fx:id="startDate1" fill="#fcfcfc" layoutX="15.0" layoutY="604.0" strokeType="OUTSIDE" strokeWidth="0.0" text="End">
+            <Text fx:id="startDate1" fill="#fcfcfc" layoutX="10.0" layoutY="603.0" strokeType="OUTSIDE" strokeWidth="0.0" text="End">
                <font>
                   <Font size="17.0" />
                </font>
             </Text>
             <MenuButton fx:id="startMonth" layoutX="67.0" layoutY="559.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="68.0" text="Month" />
-            <TextField fx:id="startDay" layoutX="11.0" layoutY="607.0" prefHeight="26.0" prefWidth="48.0" promptText="Day" />
-            <TextField fx:id="endDay" layoutX="10.0" layoutY="559.0" prefHeight="26.0" prefWidth="48.0" promptText="Day" />
+            <TextField fx:id="endDay" layoutX="11.0" layoutY="607.0" prefHeight="26.0" prefWidth="48.0" promptText="Day" />
+            <TextField fx:id="startDay" layoutX="10.0" layoutY="559.0" prefHeight="26.0" prefWidth="48.0" promptText="Day" />
             <MenuButton fx:id="endMonth" layoutX="67.0" layoutY="608.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="68.0" text="Month" />
-            <Text fx:id="searchDate" fill="#fcfafa" layoutX="100.0" layoutY="670.0" onMouseClicked="#applyDateFilter" strokeType="OUTSIDE" strokeWidth="0.0" text="Filter by Date" underline="true">
+            <Text fx:id="searchDate" fill="#fcfafa" layoutX="100.0" layoutY="670.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Filter by Date" underline="true">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
@@ -103,8 +103,8 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Text>
-            <TextField fx:id="startYear" layoutX="140.0" layoutY="607.0" prefHeight="26.0" prefWidth="55.0" promptText="Year" />
-            <TextField fx:id="endYear" layoutX="139.0" layoutY="559.0" prefHeight="26.0" prefWidth="55.0" promptText="Year" />
+            <TextField fx:id="endYear" layoutX="140.0" layoutY="607.0" prefHeight="26.0" prefWidth="55.0" promptText="Year" />
+            <TextField fx:id="startYear" layoutX="139.0" layoutY="559.0" prefHeight="26.0" prefWidth="55.0" promptText="Year" />
          </children>
       </Pane>
       <Pane prefHeight="706.0" prefWidth="277.0" style="-fx-background-color: #333030;">
@@ -234,15 +234,7 @@
             </MenuButton>
          </children>
       </Pane>
-      <Text fill="WHITE" layoutX="280.0" layoutY="44.0" onMouseClicked="#addNewCampaign" strokeType="OUTSIDE" strokeWidth="0.0" text="Add New Campaign">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Text>
-      <Text fill="#cdcccc" layoutX="449.0" layoutY="50.0" onMouseClicked="#addNewCampaign" strokeType="OUTSIDE" strokeWidth="0.0" text="+" wrappingWidth="37.43359375">
+      <Text fill="#cdcccc" layoutX="277.0" layoutY="36.0" onMouseClicked="#addNewCampaign" strokeType="OUTSIDE" strokeWidth="0.0" text="+" wrappingWidth="37.43359375">
          <font>
             <Font name="System Bold" size="40.0" />
          </font>
@@ -250,7 +242,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Text>
-      <MenuButton fx:id="graphType" layoutX="886.0" layoutY="183.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="261.0" style="-fx-background-color: #C6C6C6;" text="Line Chart">
+      <MenuButton fx:id="graphType" layoutX="701.0" layoutY="187.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="178.0" style="-fx-background-color: #C6C6C6;" text="Line Chart">
          <font>
             <Font size="19.0" />
          </font>
@@ -259,6 +251,7 @@
             <CheckMenuItem fx:id="barType" mnemonicParsing="false" text="Bar Chart" />
             <CheckMenuItem fx:id="pieType" mnemonicParsing="false" text="Pie Chart" />
             <CheckMenuItem fx:id="areaType" mnemonicParsing="false" text="Area Chart" />
+            <CheckMenuItem fx:id="histogramType" mnemonicParsing="false" text="Click Cost Histogram" />
          </items>
       </MenuButton>
       <Text fill="WHITE" layoutX="288.0" layoutY="226.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Timescale:">
@@ -290,7 +283,7 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </RadioButton>
-      <TableView fx:id="campaignsTable" layoutX="886.0" layoutY="12.0" prefHeight="156.0" prefWidth="261.0" />
+      <TableView fx:id="campaignsTable" layoutX="886.0" layoutY="8.0" prefHeight="222.0" prefWidth="261.0" />
       <BarChart fx:id="barChart" layoutX="289.0" layoutY="237.0" prefHeight="452.0" prefWidth="859.0" style="-fx-background-color: #807B7B;" title="Bar Chart" visible="false">
         <xAxis>
           <CategoryAxis label="Campaign Something" side="BOTTOM" />
@@ -309,5 +302,6 @@
         </yAxis>
       </AreaChart>
       <ProgressIndicator fx:id="progressIndicator" layoutX="574.0" layoutY="274.0" prefHeight="178.0" prefWidth="261.0" progress="0.0" visible="false" />
+      <Button fx:id="newCampaign" layoutX="309.0" layoutY="8.0" mnemonicParsing="false" onMouseClicked="#addNewCampaign" prefHeight="33.0" prefWidth="103.0" style="-fx-background-color: #C6C6C6;" text="New Campaign" />
    </children>
 </AnchorPane>

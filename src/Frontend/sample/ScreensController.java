@@ -73,6 +73,7 @@ public class ScreensController extends StackPane {
             }
             if (name == "campaignScreen") {
                 stage.setMaximized(true);
+                //TODO: PROPERLY RESIZE APPLICATION!!!
                 //stage.getScene().getWindow().setLocation(screenSize.width/2-stage.getScene().getWindow().getSize().width/2, dim.height/2-this.getSize().height/2);
             }
 
