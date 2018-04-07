@@ -1,6 +1,8 @@
 package Frontend.sample;
 
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -25,11 +27,22 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
 
         ScreensController mainContainer = new ScreensController(primaryStage);
-        
         mainContainer.loadScreen(Main.welcomeScreenID, Main.welcomeScreen);
+
+        //mainContainer.getScreen(welcomeScreenID).getProperties().addListener();
         mainContainer.loadScreen(Main.loadDataScreenID, Main.loadDataScreen);
         mainContainer.loadScreen(Main.viewDataScreenID, Main.viewDataScreen);
         mainContainer.loadScreen(Main.campaignScreenID, Main.campaignScreen);
+        mainContainer.sceneProperty().addListener(new ChangeListener<Scene>() {
+            @Override
+            public void changed(ObservableValue<? extends Scene> observable,
+                                Scene oldValue, Scene newValue) {
+                mainContainer.prefWidthProperty().bind(newValue.widthProperty());
+                mainContainer.prefHeightProperty().bind(newValue.heightProperty());
+            }
+        });
+
+
 
         mainContainer.setScreen(Main.welcomeScreenID);
         Group root = new Group();
@@ -37,6 +50,8 @@ public class Main extends Application {
         Scene scene = new Scene(root);
         scene.getStylesheets().add("Frontend/sample/StyleSheet.css");
         primaryStage.setScene(scene);
+        //primaryStage.minWidthProperty().bind(scene.widthProperty());
+        //primaryStage.minHeightProperty().bind(scene.heightProperty());
         primaryStage.setTitle("Ad Auction Dashboard");
         primaryStage.show();
     }
