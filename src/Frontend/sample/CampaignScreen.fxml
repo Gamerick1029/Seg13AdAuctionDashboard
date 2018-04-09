@@ -159,8 +159,8 @@
                             <NumberAxis fx:id="y" label="Campaign Something" side="LEFT" tickLabelFill="WHITE" />
                           </yAxis>
                         </LineChart>
-                        <PieChart fx:id="pieChart" layoutX="10.0" layoutY="50.0" prefHeight="400.0" prefWidth="807.0" style="-fx-background-color: #807B7B;" title="Pie Chart" visible="false" />
-                        <BarChart fx:id="barChart" layoutX="10.0" layoutY="50.0" prefHeight="400.0" prefWidth="807.0" style="-fx-background-color: #807B7B;" title="Bar Chart" visible="false">
+                        <PieChart fx:id="pieChart" layoutX="10.0" layoutY="50.0" prefHeight="400.0" prefWidth="807.0" style="-fx-background-color: #807B7B;" title="Pie Chart" visible="false" AnchorPane.bottomAnchor="71.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0" />
+                        <BarChart fx:id="barChart" layoutX="10.0" layoutY="50.0" prefHeight="400.0" prefWidth="807.0" style="-fx-background-color: #807B7B;" title="Bar Chart" visible="false" AnchorPane.bottomAnchor="71.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
                           <xAxis>
                             <CategoryAxis label="Campaign Something" side="BOTTOM" />
                           </xAxis>
@@ -168,7 +168,7 @@
                             <NumberAxis label="Campaign Something" side="LEFT" />
                           </yAxis>
                         </BarChart>
-                        <AreaChart fx:id="areaChart" layoutX="10.0" layoutY="50.0" prefHeight="400.0" prefWidth="807.0" style="-fx-background-color: #807B7B;" title="Area Chart" visible="false">
+                        <AreaChart fx:id="areaChart" layoutX="10.0" layoutY="50.0" prefHeight="400.0" prefWidth="807.0" style="-fx-background-color: #807B7B;" title="Area Chart" visible="false" AnchorPane.bottomAnchor="71.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
                           <xAxis>
                             <CategoryAxis label="Campaign Something" side="BOTTOM" tickLabelFill="#fcfafa" />
                           </xAxis>
