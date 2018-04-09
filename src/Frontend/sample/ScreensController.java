@@ -30,8 +30,11 @@ public class ScreensController extends StackPane {
     public DataModel currentModel;
     private HashMap<String, DataModel> dataModelMap;
 
+
     public ScreensController(Stage stage) {
+
         super();
+
         this.stage = stage;
         stage.setResizable(true);
     }
