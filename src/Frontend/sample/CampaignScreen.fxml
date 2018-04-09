@@ -33,7 +33,7 @@
    <content>
       <BorderPane prefHeight="726.0">
          <center>
-            <AnchorPane style="-fx-background-color: #595454;" BorderPane.alignment="BOTTOM_CENTER">
+            <AnchorPane minHeight="726.0" minWidth="835.0" style="-fx-background-color: #595454;" BorderPane.alignment="BOTTOM_CENTER">
                <children>
                   <BorderPane layoutX="4.0" layoutY="2.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="2.0">
                       <top>
