@@ -640,6 +640,7 @@ public class MainController implements ScreenInterface {
         }
     }
 
+    @FXML
     private void applyDateFilter() {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.initStyle(StageStyle.UTILITY);
