@@ -69,7 +69,7 @@ public class CampaignModel implements DataModel {
     /*
          Return the List of ClickLogs of a Campaign
      */
-    @Override
+   // @Override
     public List<ClickLog> getClickData() {
         return clickData;
     }
@@ -77,7 +77,7 @@ public class CampaignModel implements DataModel {
     /*
          Return the List of ImpressionLogs of a Campaign
     */
-    @Override
+    //@Override
     public List<ImpressionLog> getImpressionData() {
         return impressionData;
     }
@@ -85,7 +85,7 @@ public class CampaignModel implements DataModel {
     /*
          Return the List of ServerLogs of a Campaign
     */
-    @Override
+   // @Override
     public List<ServerLog> getServerData() {
         return serverData;
     }
