@@ -2,7 +2,6 @@ package Backend.Model;
 
 import Backend.DBHelper;
 import Backend.Model.Interfaces.DataModelDB;
-import Backend.Model.Interfaces.Filter;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -21,7 +20,7 @@ public class CampaignModelDB implements DataModelDB {
 
         dbHelper = new DBHelper("seg", "seg13");
 
-        connection = dbHelper.getDefaultConnection();
+        connection = dbHelper.getConnection();
 
 
     }
