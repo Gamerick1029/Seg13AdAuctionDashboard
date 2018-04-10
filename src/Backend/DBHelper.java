@@ -6,6 +6,7 @@ import java.io.*;
 import java.nio.charset.Charset;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Properties;
 
 public class DBHelper {
 
@@ -14,11 +15,18 @@ public class DBHelper {
     public static final String defaultPort = "3306";
 
     public static final String defaultConnectionUrl = "jdbc:mariadb://" + defaultHost + ":" + defaultPort + "/" + dbName;
+    // TODO: Security risk here, need to implement some form of token exchange with the remote host so we don't have to
+    // store the current login in plain text form to enable recreating a dropped connection
+    private String currentUrl;
+    private String currentUsername;
+    private String currentPass;
 
     public static final String userTableSuffix = "_users";
     public static final String impressionTableSuffix = "_impressions";
     public static final String clickTableSuffix = "_clicks";
     public static final String serverLogTableSuffix = "_serverLogs";
+
+    private static final String configFileLocation = "configs/connection.cfg";
 
     private Connection connection;
 
@@ -29,16 +37,20 @@ public class DBHelper {
      * @throws SQLException
      */
     public DBHelper(String user, String pass) throws SQLException {
-        connection = DriverManager.getConnection(defaultConnectionUrl, user, pass);
+        this(defaultConnectionUrl, user, pass);
     }
 
     /**
-     * Used when a connection already exists. Allows accessing the helper functions without needing to create a new
-     * connection
-     * @param connection
+     *
+     * @param url
+     * @param user
+     * @param pass
      */
-    public DBHelper(Connection connection){
-        this.connection = connection;
+    public DBHelper(String url, String user, String pass) throws SQLException {
+        currentUrl = url;
+        currentUsername = user;
+        currentPass = pass;
+        connection = DriverManager.getConnection(url, user, pass);
     }
 
     /**
@@ -46,7 +58,7 @@ public class DBHelper {
      * @return The connection to the database
      * @throws SQLException If a connection cannot be made
      */
-    public Connection getDefaultConnection() throws SQLException {
+    public Connection getConnection() throws SQLException {
         return connection;
     }
 
@@ -70,21 +82,31 @@ public class DBHelper {
      * @return True if the operation completed successfully, false otherwise
      */
     public boolean deleteCampaign(String campaignName) {
+        boolean success = false;
         try {
-            executeScriptWithVariable(new File("sqlScripts/sqlDeleteCampaign.sql"), campaignName);
+            success = executeScriptWithVariable(new File("sqlScripts/sqlDeleteCampaign.sql"), "\\[VAR]", campaignName);
         } catch (IOException e) {
             e.printStackTrace();
-            return false;
         }
-        return true;
+        return success;
     }
 
-    public void executeScriptWithVariable(File scripts, String var) throws IOException {
-        String fileContents = FileHelpers.readFileToString(scripts, Charset.defaultCharset());
-        fileContents = fileContents.replaceAll("\\[VAR]", var);
-        File temp = File.createTempFile("sqlRegexed", ".sql");
-        temp.deleteOnExit();
+    /**
+     * Replaces a regex pattern in a sql script file then executes the modified script file on the current database
+     * The original file is left untouched by this operation
+     * @param scripts The script file to modify
+     * @param regex The pattern to replace
+     * @param var The replacement string
+     * @return True if the script was executed successfully, False otherwise
+     * @throws IOException Thrown if an issue arises with accessing the initial script file
+     */
+    public boolean executeScriptWithVariable(File scripts, String regex, String var) throws IOException {
+        //TODO: Remove the exception from the method signature
+        boolean success = true;
 
+        String fileContents = FileHelpers.readFileToString(scripts, Charset.defaultCharset());
+        fileContents = fileContents.replaceAll(regex, var);
+        File temp = File.createTempFile("sqlRegexed", ".sql");
 
         FileOutputStream fis = new FileOutputStream(temp);
         fis.write(fileContents.getBytes());
@@ -94,11 +116,21 @@ public class DBHelper {
         try {
             sr.runScript(new BufferedReader(new FileReader(temp)));
         } catch (IOException e) {
-            throw new IOException("Could not access sql Scripts File at " + scripts.getPath());
-        } catch (SQLException e) {
+            System.err.println("Unable to access temporary file " + temp.getAbsolutePath());
             e.printStackTrace();
+            success = false;
+        } catch (SQLException e) {
+            System.err.println("Unable to run sql file " + scripts.getAbsolutePath() + " against the Database");
+            e.printStackTrace();
+            success = false;
+        } finally {
+            temp.delete(); //Removes the temporary file when we're done with it
         }
+        return success;
     }
 
+    public void reestablishConnection(){
+
+    }
 
 }

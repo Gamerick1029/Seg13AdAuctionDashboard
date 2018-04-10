@@ -1,10 +1,7 @@
 import Backend.FileIO.readCSVs;
-import Backend.FileIO.ReadCSVsToDB;
 import Backend.DBHelper;
-import Backend.Model.CampaignModelDB;
 import Backend.Model.ClickData;
 import Backend.Model.ImpressionData;
-import Backend.Model.Interfaces.DataModelDB;
 import Backend.Model.ServerData;
 
 import java.io.File;
@@ -23,33 +20,29 @@ public class TestMain {
 
     public static void main(String[] args) throws IOException, ParseException, SQLException {
 
-//        Runnable runnable = () -> {
-//            while(true){
-//                System.out.println(ReadCSVsToDB.impressionProgress);
-//                try {
-//                    Thread.sleep(100);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        };
-//
-//        new Thread(runnable).start();
-
-        DataModelDBTestClass dbTest = new DataModelDBTestClass();
-
 
         DBHelper dbh = new DBHelper(args[0], args[1]);
-        Connection connection = dbh.getDefaultConnection();
+        System.out.println("Connection acquired");
+        Connection connection = dbh.getConnection();
+        Scanner scanner = new Scanner(System.in);
+        TestMain tm = new TestMain();
+        for (;;){
+            scanner.nextLine();
+            try {
+                tm.prettyPrintResult(connection.createStatement().executeQuery("SELECT * FROM campaignNames"));
+            }catch (SQLException e){
+                System.out.println(e.getMessage());
+            }
+        }
 
-        File JUnitClicks = new File("TestRuns/Backend/Model/TestSamples/click_log.csv");
-        File JUnitImpressions = new File("TestRuns/Backend/Model/TestSamples/impression_log.csv");
-        File JUnitServerLogs = new File("TestRuns/Backend/Model/TestSamples/server_log.csv");
+//        File JUnitClicks = new File("TestRuns/Backend/Model/TestSamples/click_log.csv");
+//        File JUnitImpressions = new File("TestRuns/Backend/Model/TestSamples/impression_log.csv");
+//        File JUnitServerLogs = new File("TestRuns/Backend/Model/TestSamples/server_log.csv");
 
 //        ReadCSVsToDB.makeCampaign(connection, "JUnit", JUnitClicks, JUnitImpressions, JUnitServerLogs);
 
-        System.out.println(dbh.getCampaigns());
-        System.out.println("Success!");
+//        System.out.println(dbh.getCampaigns());
+//        System.out.println("Success!");
     }
 
     public void databaseTesting(Connection connection) throws SQLException {
