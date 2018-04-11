@@ -36,15 +36,15 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Frontend.sample.MainController">
    <center>
-      <AnchorPane style="-fx-background-color: #595454;" BorderPane.alignment="BOTTOM_CENTER">
+      <AnchorPane BorderPane.alignment="BOTTOM_CENTER" style="-fx-background-color: #0000ff;">
          <children>
             <BorderPane layoutX="4.0" layoutY="2.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="2.0">
                 <top>
-                    <VBox alignment="TOP_RIGHT" minWidth="300.0" prefHeight="163.0" spacing="10.0">
+                    <VBox alignment="TOP_LEFT" minWidth="300.0" prefHeight="163.0" spacing="10.0">
                         <children>
                             <HBox alignment="TOP_RIGHT" maxWidth="527.0" prefHeight="51.0" prefWidth="527.0" spacing="25.0">
                                 <children>
-                                    <Text fill="WHITE" onMouseClicked="#addNewCampaign" stroke="#b58a8a" strokeType="OUTSIDE" strokeWidth="0.0" text="Add New Campaign" textAlignment="CENTER">
+                                    <Text onMouseClicked="#addNewCampaign" text="Add New Campaign" textAlignment="CENTER">
                                         <font>
                                             <Font name="System Bold" size="18.0" />
                                         </font>
@@ -55,10 +55,8 @@
                                             <Insets left="20.0" top="20.0" />
                                         </HBox.margin>
                                     </Text>
-                                    <Text fill="#cdcccc" onMouseClicked="#addNewCampaign" strokeType="OUTSIDE" strokeWidth="0.0" text="+" textAlignment="CENTER" wrappingWidth="18.0">
-                                        <font>
-                                            <Font name="System Bold" size="18.0" />
-                                        </font>
+                                    <Text onMouseClicked="#addNewCampaign" text="+" textAlignment="CENTER" wrappingWidth="18.0">
+                                       
                                         <cursor>
                                             <Cursor fx:constant="HAND" />
                                         </cursor>
@@ -103,10 +101,8 @@
                            <children>
                               <HBox alignment="CENTER_LEFT" prefHeight="42.0" prefWidth="552.0">
                                  <children>
-                                    <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Timescale:" wrappingWidth="175.83203125">
-                                       <font>
-                                          <Font name="System Bold" size="26.0" />
-                                       </font>
+                                    <Text text="Timescale:" wrappingWidth="175.83203125">
+                                       
                                        <HBox.margin>
                                           <Insets left="10.0" />
                                        </HBox.margin>
@@ -115,32 +111,25 @@
                                        <cursor>
                                           <Cursor fx:constant="HAND" />
                                        </cursor>
-                                       <font>
-                                          <Font name="System Bold" size="15.0" />
-                                       </font>
+                                      
                                     </RadioButton>
                                     <RadioButton fx:id="byWeek" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="20.0" prefWidth="123.0" text="By Week" textFill="WHITE">
                                        <cursor>
                                           <Cursor fx:constant="HAND" />
                                        </cursor>
-                                       <font>
-                                          <Font name="System Bold" size="15.0" />
-                                       </font>
+                                      
                                     </RadioButton>
                                     <RadioButton fx:id="byMonth" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="20.0" prefWidth="127.0" text="By Month" textFill="WHITE">
                                        <cursor>
                                           <Cursor fx:constant="HAND" />
                                        </cursor>
-                                       <font>
-                                          <Font name="System Bold" size="15.0" />
-                                       </font>
+                                      
                                     </RadioButton>
                                  </children>
                               </HBox>
-                              <MenuButton fx:id="graphType" mnemonicParsing="false" prefHeight="42.0" prefWidth="234.0" style="-fx-background-color: #C6C6C6;" text="Line Chart">
-                                 <font>
-                                    <Font size="19.0" />
-                                 </font>
+                              
+                              <MenuButton fx:id="graphType" mnemonicParsing="false" prefHeight="42.0" prefWidth="234.0" text="Line Chart">
+                                 
                                  <items>
                                     <CheckMenuItem fx:id="lineType" mnemonicParsing="false" selected="true" text="Line Chart" />
                                     <CheckMenuItem fx:id="barType" mnemonicParsing="false" text="Bar Chart" />
@@ -151,7 +140,7 @@
                               </MenuButton>
                            </children>
                         </HBox>
-                        <LineChart fx:id="lineChart" layoutX="10.0" layoutY="50.0" prefHeight="400.0" prefWidth="807.0" style="-fx-background-color: #807B7B;" title="Line Chart" verticalGridLinesVisible="false" AnchorPane.bottomAnchor="71.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
+                        <LineChart fx:id="lineChart" layoutX="10.0" layoutY="50.0" prefHeight="400.0" prefWidth="807.0" title="Line Chart" verticalGridLinesVisible="false" AnchorPane.bottomAnchor="71.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
                           <xAxis>
                             <CategoryAxis label="Campaign Something" side="BOTTOM" tickLabelFill="WHITE" fx:id="x" />
                           </xAxis>
@@ -159,8 +148,8 @@
                             <NumberAxis fx:id="y" label="Campaign Something" side="LEFT" tickLabelFill="WHITE" />
                           </yAxis>
                         </LineChart>
-                        <PieChart fx:id="pieChart" layoutX="10.0" layoutY="50.0" prefHeight="400.0" prefWidth="807.0" style="-fx-background-color: #807B7B;" title="Pie Chart" visible="false" AnchorPane.bottomAnchor="71.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0" />
-                        <BarChart fx:id="barChart" layoutX="10.0" layoutY="50.0" prefHeight="400.0" prefWidth="807.0" style="-fx-background-color: #807B7B;" title="Bar Chart" visible="false" AnchorPane.bottomAnchor="71.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
+                        <PieChart fx:id="pieChart" layoutX="10.0" layoutY="50.0" prefHeight="400.0" prefWidth="807.0" title="Pie Chart" visible="false" AnchorPane.bottomAnchor="71.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0" />
+                        <BarChart fx:id="barChart" layoutX="10.0" layoutY="50.0" prefHeight="400.0" prefWidth="807.0" title="Bar Chart" visible="false" AnchorPane.bottomAnchor="71.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
                           <xAxis>
                             <CategoryAxis label="Campaign Something" side="BOTTOM" />
                           </xAxis>
