@@ -187,14 +187,15 @@ public class MainController implements ScreenInterface {
         y.animatedProperty().setValue(false);
         currentCampaign.getDisplayed().addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
+                    x.animatedProperty().setValue(false);
+                    y.animatedProperty().setValue(false);
                     showMetric(currentMetricDisplayed);
                 });
         currentCampaign.getRemove().addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
-                    campaignsLoaded.remove(currentCampaign);
-                    campaignsTable.getItems().remove(currentCampaign);
-                    myController.removeDataModel(currentCampaign.getName());
-                    populateMetric(currentMetricDisplayed, currentStep);
+                    x.animatedProperty().setValue(false);
+                    y.animatedProperty().setValue(false);
+                    removeCampaign();
                 });
         impressions.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
@@ -600,14 +601,15 @@ public class MainController implements ScreenInterface {
                 // add EventHandlers for the Displayed CheckBox button and the Remove button
                 campaign.getDisplayed().addEventHandler(MouseEvent.MOUSE_CLICKED,
                         e -> {
+                            x.animatedProperty().setValue(false);
+                            y.animatedProperty().setValue(false);
                             showMetric(currentMetricDisplayed);
                         });
                 campaign.getRemove().addEventHandler(MouseEvent.MOUSE_CLICKED,
                         e -> {
-                            campaignsLoaded.remove(campaign);
-                            campaignsTable.getItems().remove(campaign);
-                            myController.removeDataModel(campaign.getName());
-                            populateMetric(currentMetricDisplayed, currentStep);
+                            x.animatedProperty().setValue(false);
+                            y.animatedProperty().setValue(false);
+                            removeCampaign();
                         });
                 //Adding the new campaign to the Campaigns table
                 campaignsLoaded.add(campaign);
@@ -636,8 +638,46 @@ public class MainController implements ScreenInterface {
                 });
                 //Adding the new CheckMenuItem to the MenuButton for the current campaignsLoaded
                 campaignName.getItems().add(checkMenuItem);
+                setMetrics(campaignNameF.getText());
             }
         }
+    }
+
+    private void removeCampaign() {
+        campaignsLoaded.remove(currentCampaign);
+        campaignsTable.getItems().remove(currentCampaign);
+        myController.removeDataModel(currentCampaign.getName());
+        campaignName.getItems().clear();
+        x.animatedProperty().setValue(false);
+        y.animatedProperty().setValue(false);
+        if (campaignsLoaded.size() == 0) {
+            campaignName.setText("-");
+            impressionsF.setText("-");
+            clicksF.setText("-");
+            bouncesF.setText("-");
+            conversionsF.setText("-");
+            totalCostF.setText("-");
+            clickRateF.setText("-");
+            aquisitionF.setText("-");
+            costPerClickF.setText("-");
+        } else {
+            campaignName.setText(campaignsLoaded.get(0).getName());
+            setMetrics(campaignsLoaded.get(0).getName());
+            for (Campaign c : campaignsLoaded) {
+                CheckMenuItem checkMenuItem = new CheckMenuItem(c.getName());
+                checkMenuItem.setOnAction(t -> {
+                    for (MenuItem menuItem : campaignName.getItems()) {
+                        if (menuItem instanceof CheckMenuItem) {
+                            ((CheckMenuItem) menuItem).setSelected(false);
+                        }
+                    }
+                    checkMenuItem.setSelected(true);
+                    setMetrics(checkMenuItem.getText());
+                });
+                campaignName.getItems().add(checkMenuItem);
+            }
+        }
+        populateMetric(currentMetricDisplayed, currentStep);
     }
 
     @FXML
@@ -789,21 +829,29 @@ public class MainController implements ScreenInterface {
     }
 
     private void groupByDay() {
+        x.animatedProperty().setValue(false);
+        y.animatedProperty().setValue(false);
         currentStep = DAY_STEP;
         populateMetric(this.currentMetricDisplayed, currentStep);
     }
 
     private void groupByWeek() {
+        x.animatedProperty().setValue(false);
+        y.animatedProperty().setValue(false);
         currentStep = WEEK_STEP;
         populateMetric(this.currentMetricDisplayed, currentStep);
     }
 
     private void groupByMonth() {
+        x.animatedProperty().setValue(false);
+        y.animatedProperty().setValue(false);
         currentStep = MONTH_STEP;
         populateMetric(this.currentMetricDisplayed, currentStep);
     }
 
     private void changeToLineChart() {
+        x.animatedProperty().setValue(false);
+        y.animatedProperty().setValue(false);
         graphType.setText("Line Chart");
         lineChart.setVisible(true);
         pieChart.setVisible(false);
@@ -817,6 +865,8 @@ public class MainController implements ScreenInterface {
     }
 
     private void changeToBarChart() {
+        x.animatedProperty().setValue(false);
+        y.animatedProperty().setValue(false);
         graphType.setText("Bar Chart");
         lineChart.setVisible(false);
         pieChart.setVisible(false);
@@ -832,6 +882,8 @@ public class MainController implements ScreenInterface {
     }
 
     private void changeToAreaChart() {
+        x.animatedProperty().setValue(false);
+        y.animatedProperty().setValue(false);
         graphType.setText("Area Chart");
         lineChart.setVisible(false);
         pieChart.setVisible(false);
@@ -845,6 +897,8 @@ public class MainController implements ScreenInterface {
     }
 
     private void changeToPieChart() {
+        x.animatedProperty().setValue(false);
+        y.animatedProperty().setValue(false);
         graphType.setText("Pie Chart");
         lineChart.setVisible(false);
         pieChart.setVisible(true);
@@ -858,6 +912,8 @@ public class MainController implements ScreenInterface {
     }
 
     private void changeToHistogram() {
+        x.animatedProperty().setValue(false);
+        y.animatedProperty().setValue(false);
         graphType.setText("Histogram");
         lineChart.setVisible(false);
         pieChart.setVisible(false);
@@ -972,6 +1028,9 @@ public class MainController implements ScreenInterface {
         barChart.getData().clear();
         areaChart.getData().clear();
         pieChart.getData().clear();
+
+        x.animatedProperty().setValue(false);
+        y.animatedProperty().setValue(false);
 
         for (Campaign campaign : this.campaignsLoaded) {
             if (campaign.getDisplayed().isSelected()) {

@@ -40,6 +40,8 @@ public class CampaignDataPopulator {
     }
 
     public void populateGraph() {
+        x.setAnimated(false);
+        y.setAnimated(false);
         XYChart.Series campaignImpressionsLC = new XYChart.Series();
         XYChart.Series campaignImpressionsBC = new XYChart.Series();
         XYChart.Series campaignImpressionsAC = new XYChart.Series();

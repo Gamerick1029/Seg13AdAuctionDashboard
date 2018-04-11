@@ -42,6 +42,7 @@ public class DataFieldPopulator {
     }
 
     public void populateFields() {
+
         currentCampaign.setName(dataModel.getName());
         campaignsLoaded.add(currentCampaign);
         campaigns.getItems().add(currentCampaign);
