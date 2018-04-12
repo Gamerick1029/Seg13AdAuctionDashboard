@@ -2,6 +2,7 @@
 
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
@@ -9,131 +10,135 @@
 <?import javafx.scene.text.Text?>
 
 
-<Pane xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Frontend.sample.ViewDataController">
-   <children>
-      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="758.0" style="-fx-background-color: #595454;">
+<ScrollPane fitToHeight="true" fitToWidth="true" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Frontend.sample.ViewDataController">
+   <content>
+      <Pane>
          <children>
-            <Text fill="#f2f2f2" layoutX="153.0" layoutY="134.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▸ Impressions">
-               <font>
-                  <Font name="Ubuntu" size="18.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Text>
-            <Text fill="#f2f2f2" layoutX="153.0" layoutY="384.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▸ Click-Through Rate">
-               <font>
-                  <Font name="Ubuntu" size="18.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Text>
-            <Text fill="#f2f2f2" layoutX="153.0" layoutY="184.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▸ Clicks">
-               <font>
-                  <Font name="Ubuntu" size="18.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Text>
-            <Text fill="#f2f2f2" layoutX="153.0" layoutY="234.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▸ Bounces">
-               <font>
-                  <Font name="Ubuntu" size="18.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Text>
-            <Button layoutX="388.0" layoutY="522.0" mnemonicParsing="false" onAction="#goToCampaignScreen" prefHeight="48.0" prefWidth="163.0" style="-fx-background-color: #C6C6C6;" text="View Details">
-               <font>
-                  <Font name="Ubuntu" size="18.0" />
-               </font>
-            </Button>
-            <Text fill="#f2f2f2" layoutX="153.0" layoutY="334.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▸ Total Cost">
-               <font>
-                  <Font name="Ubuntu" size="18.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Text>
-            <Text fill="#f2f2f2" layoutX="153.0" layoutY="484.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▸ Average Cost per Click">
-               <font>
-                  <Font name="Ubuntu" size="18.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Text>
-            <Button layoutX="189.0" layoutY="522.0" mnemonicParsing="false" onAction="#goToLoadDataScreen" prefHeight="48.0" prefWidth="163.0" style="-fx-background-color: #C6C6C6;" text="Back">
-               <font>
-                  <Font name="Ubuntu" size="18.0" />
-               </font>
-            </Button>
-            <Text fill="#f2f2f2" layoutX="153.0" layoutY="434.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▸ Average Cost per Aquisition">
-               <font>
-                  <Font name="Ubuntu" size="18.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Text>
-            <Text fill="#f2f2f2" layoutX="153.0" layoutY="284.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▸ Conversions">
-               <font>
-                  <Font name="Ubuntu" size="18.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Text>
-            <TextField fx:id="clicks" editable="false" layoutX="447.0" layoutY="160.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #333030; -fx-text-fill: #ffffff;">
-               <font>
-                  <Font name="Ubuntu" size="18.0" />
-               </font>
-            </TextField>
-            <TextField fx:id="bounces" editable="false" layoutX="447.0" layoutY="210.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #333030; -fx-text-fill: #ffffff;">
-               <font>
-                  <Font name="Ubuntu" size="18.0" />
-               </font>
-            </TextField>
-            <TextField fx:id="conversions" editable="false" layoutX="447.0" layoutY="260.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #333030; -fx-text-fill: #ffffff;">
-               <font>
-                  <Font name="Ubuntu" size="18.0" />
-               </font>
-            </TextField>
-            <TextField fx:id="cost" editable="false" layoutX="447.0" layoutY="310.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #333030; -fx-text-fill: #ffffff;">
-               <font>
-                  <Font name="Ubuntu" size="18.0" />
-               </font>
-            </TextField>
-            <TextField fx:id="clickRate" editable="false" layoutX="447.0" layoutY="360.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #333030; -fx-text-fill: #ffffff;">
-               <font>
-                  <Font name="Ubuntu" size="18.0" />
-               </font>
-            </TextField>
-            <TextField fx:id="costAquisition" editable="false" layoutX="447.0" layoutY="410.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #333030; -fx-text-fill: #ffffff;">
-               <font>
-                  <Font name="Ubuntu" size="18.0" />
-               </font>
-            </TextField>
-            <TextField fx:id="costConversion" editable="false" layoutX="447.0" layoutY="460.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #333030; -fx-text-fill: #ffffff;">
-               <font>
-                  <Font name="Ubuntu" size="18.0" />
-               </font>
-            </TextField>
-            <TextField fx:id="impressions" editable="false" layoutX="447.0" layoutY="110.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #333030; -fx-text-fill: #ffffff;">
-               <font>
-                  <Font name="Ubuntu" size="18.0" />
-               </font>
-            </TextField>
-            <Text fill="WHITE" layoutX="173.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Campaign information" textAlignment="CENTER" wrappingWidth="382.13671875">
-               <font>
-                  <Font name="Ubuntu" size="36.0" />
-               </font>
-            </Text>
-      
-                     </children>
-      </AnchorPane>
-   </children>
-</Pane>
+            <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="758.0" style="-fx-background-color: #595454;">
+               <children>
+                  <Text fill="#f2f2f2" layoutX="153.0" layoutY="134.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▸ Impressions">
+                     <font>
+                        <Font name="Ubuntu" size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Text>
+                  <Text fill="#f2f2f2" layoutX="153.0" layoutY="384.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▸ Click-Through Rate">
+                     <font>
+                        <Font name="Ubuntu" size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Text>
+                  <Text fill="#f2f2f2" layoutX="153.0" layoutY="184.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▸ Clicks">
+                     <font>
+                        <Font name="Ubuntu" size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Text>
+                  <Text fill="#f2f2f2" layoutX="153.0" layoutY="234.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▸ Bounces">
+                     <font>
+                        <Font name="Ubuntu" size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Text>
+                  <Button layoutX="388.0" layoutY="522.0" mnemonicParsing="false" onAction="#goToCampaignScreen" prefHeight="48.0" prefWidth="163.0" style="-fx-background-color: #C6C6C6;" text="View Details">
+                     <font>
+                        <Font name="Ubuntu" size="18.0" />
+                     </font>
+                  </Button>
+                  <Text fill="#f2f2f2" layoutX="153.0" layoutY="334.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▸ Total Cost">
+                     <font>
+                        <Font name="Ubuntu" size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Text>
+                  <Text fill="#f2f2f2" layoutX="153.0" layoutY="484.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▸ Average Cost per Click">
+                     <font>
+                        <Font name="Ubuntu" size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Text>
+                  <Button layoutX="189.0" layoutY="522.0" mnemonicParsing="false" onAction="#goToLoadDataScreen" prefHeight="48.0" prefWidth="163.0" style="-fx-background-color: #C6C6C6;" text="Back">
+                     <font>
+                        <Font name="Ubuntu" size="18.0" />
+                     </font>
+                  </Button>
+                  <Text fill="#f2f2f2" layoutX="153.0" layoutY="434.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▸ Average Cost per Aquisition">
+                     <font>
+                        <Font name="Ubuntu" size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Text>
+                  <Text fill="#f2f2f2" layoutX="153.0" layoutY="284.0" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▸ Conversions">
+                     <font>
+                        <Font name="Ubuntu" size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Text>
+                  <TextField fx:id="clicks" editable="false" layoutX="447.0" layoutY="160.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #333030; -fx-text-fill: #ffffff;">
+                     <font>
+                        <Font name="Ubuntu" size="18.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="bounces" editable="false" layoutX="447.0" layoutY="210.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #333030; -fx-text-fill: #ffffff;">
+                     <font>
+                        <Font name="Ubuntu" size="18.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="conversions" editable="false" layoutX="447.0" layoutY="260.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #333030; -fx-text-fill: #ffffff;">
+                     <font>
+                        <Font name="Ubuntu" size="18.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="cost" editable="false" layoutX="447.0" layoutY="310.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #333030; -fx-text-fill: #ffffff;">
+                     <font>
+                        <Font name="Ubuntu" size="18.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="clickRate" editable="false" layoutX="447.0" layoutY="360.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #333030; -fx-text-fill: #ffffff;">
+                     <font>
+                        <Font name="Ubuntu" size="18.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="costAquisition" editable="false" layoutX="447.0" layoutY="410.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #333030; -fx-text-fill: #ffffff;">
+                     <font>
+                        <Font name="Ubuntu" size="18.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="costConversion" editable="false" layoutX="447.0" layoutY="460.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #333030; -fx-text-fill: #ffffff;">
+                     <font>
+                        <Font name="Ubuntu" size="18.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="impressions" editable="false" layoutX="447.0" layoutY="110.0" prefHeight="39.0" prefWidth="128.0" style="-fx-background-color: #333030; -fx-text-fill: #ffffff;">
+                     <font>
+                        <Font name="Ubuntu" size="18.0" />
+                     </font>
+                  </TextField>
+                  <Text fill="WHITE" layoutX="173.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Campaign information" textAlignment="CENTER" wrappingWidth="382.13671875">
+                     <font>
+                        <Font name="Ubuntu" size="36.0" />
+                     </font>
+                  </Text>
+            
+                           </children>
+            </AnchorPane>
+         </children>
+      </Pane>
+   </content>
+</ScrollPane>

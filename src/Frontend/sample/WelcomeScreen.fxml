@@ -3,106 +3,109 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 
-<?import javafx.scene.layout.FlowPane?>
-<BorderPane fx:id="borderPane" prefHeight="513.0" prefWidth="758.0" style="-fx-background-color: #595454;" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Frontend.sample.WelcomeController">
-     <padding>
-      <Insets bottom="10" left="25" right="25" top="25" />
-   </padding>
-     <right>
-<StackPane fx:id="WelcomeController" layoutX="362.0" layoutY="37.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="326.0" prefWidth="370.0" style="-fx-background-color: #333030;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-
-                                                                <children>
-            <VBox alignment="TOP_CENTER" spacing="10">
-                <padding>
-                    <Insets bottom="10" left="25" right="25" top="25" />
-                </padding>
-
-               <children>
-         <Text fill="#dddcdc" strokeType="OUTSIDE" strokeWidth="0.0" text="Get started" wrappingWidth="186.986328125">
-            <font>
-               <Font name="Ubuntu" size="36.0" />
-            </font>
-         </Text>
-         <Text fill="#ebebeb" strokeType="OUTSIDE" strokeWidth="0.0" text="⚫ Easily import your campaign data with just a few clicks" wrappingWidth="320.71875">
-            <font>
-               <Font name="Ubuntu" size="19.0" />
-            </font>
-         </Text>
-         <Text fill="#ebebeb" strokeType="OUTSIDE" strokeWidth="0.0" text="⚫ View campaign details, filter data and see charts and trends over it" wrappingWidth="320.7187473028898">
-            <font>
-               <Font name="Ubuntu" size="19.0" />
-            </font>
-         </Text>
-   
-                                                                        <Text fill="#ebebeb" strokeType="OUTSIDE" strokeWidth="0.0" text="⚫ Load and compare multiple campaigns at once" wrappingWidth="312.71874994412065">
-            <font>
-               <Font name="Ubuntu" size="19.0" />
-            </font>
-         </Text>
-               </children>
-            </VBox>
-   </children>
-
-                                                             </StackPane>
-  </right>
-
-                                                                 <left>
-         <FlowPane alignment="TOP_CENTER" hgap="10" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" vgap="10">
-         <padding>
+<ScrollPane fitToHeight="true" fitToWidth="true" minHeight="500.0" minWidth="860.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Frontend.sample.WelcomeController">
+   <content>
+      <BorderPane fx:id="borderPane" prefHeight="513.0" prefWidth="763.0" style="-fx-background-color: #595454;">
+           <padding>
             <Insets bottom="10" left="25" right="25" top="25" />
          </padding>
-             <Text fill="#dddcdc" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to" wrappingWidth="203.986328125" GridPane.columnIndex="0" GridPane.columnSpan="1" GridPane.rowIndex="0">
-                 <font>
+           <right>
+      <StackPane fx:id="WelcomeController" layoutX="362.0" layoutY="37.0" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="326.0" prefWidth="370.0" style="-fx-background-color: #333030;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      
+                                                                            <children>
+                  <VBox alignment="TOP_CENTER" spacing="10">
+                      <padding>
+                          <Insets bottom="10" left="25" right="25" top="25" />
+                      </padding>
+      
+                           <children>
+               <Text fill="#dddcdc" strokeType="OUTSIDE" strokeWidth="0.0" text="Get started" wrappingWidth="186.986328125">
+                  <font>
                      <Font name="Ubuntu" size="36.0" />
-                 </font>
-             </Text>
-              <Text fill="#dddcdc" strokeType="OUTSIDE" strokeWidth="0.0" text="Ad Auction Dashboard" wrappingWidth="298.00000374019146" GridPane.columnIndex="0" GridPane.columnSpan="1" GridPane.rowIndex="1">
-                   <font>
-                      <Font name="Ubuntu Bold" size="57.0" />
-                   </font>
+                  </font>
                </Text>
-         </FlowPane>
-     </left>
-     <bottom>
-         <BorderPane prefHeight="3.0" prefWidth="298.0" xmlns:fx="http://javafx.com/fxml">
-         <padding>
-            <Insets bottom="10" left="25" right="25" top="25" />
-         </padding>
-             <left>
-<Button onAction="#goToLoadDataScreen" prefWidth="299.0" style="-fx-background-color: #C6C6C6;" text="Load new campaign" GridPane.columnIndex="0" GridPane.columnSpan="3" GridPane.rowIndex="0">
-   <font>
-      <Font name="Ubuntu" size="19.0" />
-   </font>
-</Button>
-             </left>
-             <right>
-<Button prefWidth="298.00000374019146" style="-fx-background-color: #C6C6C6;" text="View last campaign" GridPane.columnIndex="2" GridPane.rowIndex="0">
-   <font>
-      <Font name="Ubuntu" size="19.0" />
-   </font>
-</Button>
-             </right>
-<bottom>
-  <HBox alignment="BOTTOM_CENTER">
-      <padding>
-                  <Insets bottom="2.5" left="25" right="0" top="15" />
+               <Text fill="#ebebeb" strokeType="OUTSIDE" strokeWidth="0.0" text="⚫ Easily import your campaign data with just a few clicks" wrappingWidth="320.71875">
+                  <font>
+                     <Font name="Ubuntu" size="19.0" />
+                  </font>
+               </Text>
+               <Text fill="#ebebeb" strokeType="OUTSIDE" strokeWidth="0.0" text="⚫ View campaign details, filter data and see charts and trends over it" wrappingWidth="320.7187473028898">
+                  <font>
+                     <Font name="Ubuntu" size="19.0" />
+                  </font>
+               </Text>
+         
+                                                                              <Text fill="#ebebeb" strokeType="OUTSIDE" strokeWidth="0.0" text="⚫ Load and compare multiple campaigns at once" wrappingWidth="312.71874994412065">
+                  <font>
+                     <Font name="Ubuntu" size="19.0" />
+                  </font>
+               </Text>
+                     </children>
+                  </VBox>
+         </children>
+      
+                                                                         </StackPane>
+        </right>
+      
+                                                                             <left>
+               <FlowPane alignment="TOP_CENTER" hgap="10" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" vgap="10">
+               <padding>
+                  <Insets bottom="10" left="25" right="25" top="25" />
                </padding>
-<Hyperlink minWidth="100" onAction="#goToStubView" text="Load Debug Stub View" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-  </HBox>
-</bottom>
-         </BorderPane>
-     </bottom>
-
-                                                             </BorderPane>
+                   <Text fill="#dddcdc" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to" wrappingWidth="203.986328125" GridPane.columnIndex="0" GridPane.columnSpan="1" GridPane.rowIndex="0">
+                       <font>
+                           <Font name="Ubuntu" size="36.0" />
+                       </font>
+                   </Text>
+                    <Text fill="#dddcdc" strokeType="OUTSIDE" strokeWidth="0.0" text="Ad Auction Dashboard" wrappingWidth="298.00000374019146" GridPane.columnIndex="0" GridPane.columnSpan="1" GridPane.rowIndex="1">
+                         <font>
+                            <Font name="Ubuntu Bold" size="57.0" />
+                         </font>
+                     </Text>
+               </FlowPane>
+           </left>
+           <bottom>
+               <BorderPane prefHeight="3.0" prefWidth="298.0" xmlns:fx="http://javafx.com/fxml">
+               <padding>
+                  <Insets bottom="10" left="25" right="25" top="25" />
+               </padding>
+                   <left>
+      <Button onAction="#goToLoadDataScreen" prefWidth="299.0" style="-fx-background-color: #C6C6C6;" text="Load new campaign" GridPane.columnIndex="0" GridPane.columnSpan="3" GridPane.rowIndex="0">
+         <font>
+            <Font name="Ubuntu" size="19.0" />
+         </font>
+      </Button>
+                   </left>
+                   <right>
+      <Button prefWidth="298.00000374019146" style="-fx-background-color: #C6C6C6;" text="View last campaign" GridPane.columnIndex="2" GridPane.rowIndex="0">
+         <font>
+            <Font name="Ubuntu" size="19.0" />
+         </font>
+      </Button>
+                   </right>
+      <bottom>
+        <HBox alignment="BOTTOM_CENTER">
+            <padding>
+                        <Insets bottom="2.5" left="25" right="0" top="15" />
+                     </padding>
+      <Hyperlink minWidth="100" onAction="#goToStubView" text="Load Debug Stub View" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+        </HBox>
+      </bottom>
+               </BorderPane>
+           </bottom>
+      
+                                                                         </BorderPane>
+   </content>
+</ScrollPane>
