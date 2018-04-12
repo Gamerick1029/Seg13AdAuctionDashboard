@@ -1,3 +1,4 @@
+import Backend.FileIO.ReadCSVsToDB;
 import Backend.FileIO.readCSVs;
 import Backend.DBHelper;
 import Backend.Model.ClickData;
@@ -20,26 +21,26 @@ public class TestMain {
 
     public static void main(String[] args) throws IOException, ParseException, SQLException {
 
+        DBHelper.initConnection(args[0], args[1]);
+        DBHelper dbh = new DBHelper();
+//        System.out.println("Connection acquired");
+//        Connection connection = dbh.getConnection();
+//        Scanner scanner = new Scanner(System.in);
+//        TestMain tm = new TestMain();
+//        for (;;){
+//            scanner.nextLine();
+//            try {
+//                tm.prettyPrintResult(connection.createStatement().executeQuery("SELECT * FROM campaignNames"));
+//            }catch (SQLException e){
+//                System.out.println(e.getMessage());
+//            }
+//        }
 
-        DBHelper dbh = new DBHelper(args[0], args[1]);
-        System.out.println("Connection acquired");
-        Connection connection = dbh.getConnection();
-        Scanner scanner = new Scanner(System.in);
-        TestMain tm = new TestMain();
-        for (;;){
-            scanner.nextLine();
-            try {
-                tm.prettyPrintResult(connection.createStatement().executeQuery("SELECT * FROM campaignNames"));
-            }catch (SQLException e){
-                System.out.println(e.getMessage());
-            }
-        }
+        File JUnitClicks = new File("TestRuns/Backend/Model/TestSamples/click_log.csv");
+        File JUnitImpressions = new File("TestRuns/Backend/Model/TestSamples/impression_log.csv");
+        File JUnitServerLogs = new File("TestRuns/Backend/Model/TestSamples/server_log.csv");
 
-//        File JUnitClicks = new File("TestRuns/Backend/Model/TestSamples/click_log.csv");
-//        File JUnitImpressions = new File("TestRuns/Backend/Model/TestSamples/impression_log.csv");
-//        File JUnitServerLogs = new File("TestRuns/Backend/Model/TestSamples/server_log.csv");
-
-//        ReadCSVsToDB.makeCampaign(connection, "JUnit", JUnitClicks, JUnitImpressions, JUnitServerLogs);
+        ReadCSVsToDB.makeCampaign(dbh, "JUnit", JUnitClicks, JUnitImpressions, JUnitServerLogs);
 
 //        System.out.println(dbh.getCampaigns());
 //        System.out.println("Success!");

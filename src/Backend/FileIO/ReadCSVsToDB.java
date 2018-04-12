@@ -61,13 +61,7 @@ public class ReadCSVsToDB {
 
         try {
             loadImpressionLog();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
 
@@ -84,7 +78,7 @@ public class ReadCSVsToDB {
         }
     }
 
-    private static void loadImpressionLog() throws SQLException, ParseException, IOException {
+    private static void loadImpressionLog() throws SQLException, IOException {
         int lineNum = FileHelpers.countLines(impressionLog);
 
         Statement stmt = DBH.getConnection().createStatement();
@@ -102,6 +96,8 @@ public class ReadCSVsToDB {
         File impressions = File.createTempFile("impressions", ".csv");
         users.deleteOnExit();
         impressions.deleteOnExit();
+
+        System.out.println();
 
         BufferedWriter fwUsers = new BufferedWriter(new FileWriter(users));
         BufferedWriter fwImpressions = new BufferedWriter(new FileWriter(impressions));
@@ -123,9 +119,12 @@ public class ReadCSVsToDB {
 
         }
 
-        stmt.execute("LOAD DATA LOCAL INFILE '" + users.getAbsolutePath() + "' INTO TABLE " + userTableName
+        fwUsers.flush();
+        fwImpressions.flush();
+
+        stmt.execute("LOAD DATA LOCAL INFILE '" + users.getPath() + "' INTO TABLE " + userTableName
                         + " FIELDS TERMINATED BY ',';");
-        stmt.execute("LOAD DATA LOCAL INFILE '" + impressions.getAbsolutePath() + "' INTO TABLE " + impressionTableName
+        stmt.execute("LOAD DATA LOCAL INFILE '" + impressions.getPath() + "' INTO TABLE " + impressionTableName
                 + " FIELDS TERMINATED BY ',';");
     }
 
