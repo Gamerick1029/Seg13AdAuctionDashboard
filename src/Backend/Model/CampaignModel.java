@@ -5,7 +5,6 @@ import Backend.Model.Interfaces.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.*;
 
@@ -92,11 +91,11 @@ public class CampaignModel implements DataModel {
         Returns the number of all Impressions of a Campaign
      */
     @Override
-    public int getImpressionsNumber() throws SQLException {
+    public int getImpressionsNumber()     {
         return impressionData.size();
     }
 
-    public Map<Date, Integer> getImpressionsByInterval(Date startInterval, Date endInterval) throws SQLException
+    public Map<Date, Integer> getImpressionsByInterval(Date startInterval, Date endInterval)
     {
         System.out.println("Starting to gather Impressions");
         Map<Date,Integer> tempImpressInterv = new HashMap<>();
@@ -118,19 +117,19 @@ public class CampaignModel implements DataModel {
     }
 
 
-    public Map<Date, Integer> getImpressionsByInterval(Date startInterval, Date endInterval, long step) throws SQLException
+    public Map<Date, Integer> getImpressionsByInterval(Date startInterval, Date endInterval, long step)
     {
         return groupI(step, getImpressionsByInterval(startInterval, endInterval));
     }
 
     @Override
-    public Map<Date, Integer> getFullImpressions(long step)throws SQLException
+    public Map<Date, Integer> getFullImpressions(long step)
     {
         System.out.println("Getting Impressions");
         return groupI(step, getImpressionsByInterval(MINDATE, MAXDATE, step));
     }
 
-    public int getOverallImpressionsByInterval(Date startInterval, Date endInterval) throws SQLException
+    public int getOverallImpressionsByInterval(Date startInterval, Date endInterval)
     {   Map<Date,Integer> tempImpressInterv = getImpressionsByInterval(startInterval,endInterval);
         int overallImpressions = 0;
         for(Date dt: tempImpressInterv.keySet()){
@@ -427,7 +426,7 @@ DEAD FUNCTION
         Returns the average number of clicks per impression.
      */
     @Override
-    public float getCTR()throws SQLException {
+    public float getCTR()    {
         return (float) getClicksNumber() / (float) getImpressionsNumber();
     }
 
@@ -435,7 +434,7 @@ DEAD FUNCTION
     DEAD FUNCTION
      */
 
-    public Map<Date, Float> getCTRByInterval(Date startInterval, Date endInterval) throws SQLException
+    public Map<Date, Float> getCTRByInterval(Date startInterval, Date endInterval)
     {
         Map<Date, Float> ctrByInterval = new HashMap<>();
         Map<Date, Integer> getClicksNumber = getClicksByInterval(startInterval,endInterval);
@@ -457,19 +456,19 @@ DEAD FUNCTION
     }
 
 
-    public Map<Date, Float> getCTRByInterval(Date startInterval, Date endInterval, long step)throws SQLException
+    public Map<Date, Float> getCTRByInterval(Date startInterval, Date endInterval, long step)
     {
         return groupF(step, getCTRByInterval(startInterval, endInterval));
     }
 
     @Override
-    public Map<Date, Float> getFullCTR(long step)throws SQLException
+    public Map<Date, Float> getFullCTR(long step)
     {
         return groupF(step, getCTRByInterval(MINDATE, MAXDATE, step));
     }
 
 
-    public float getOverallCTRByInterval(Date startInterval, Date endInterval)throws SQLException
+    public float getOverallCTRByInterval(Date startInterval, Date endInterval)
     {
         return ((float) getOverallClicksByInterval(startInterval,endInterval) / (float) getOverallImpressionsByInterval(startInterval,endInterval));
     }
@@ -579,7 +578,7 @@ DEAD FUNCTION
          to calculate the total cost of an ad campaign.
      */
     @Override
-    public float getCPM()throws SQLException {
+    public float getCPM()    {
         return (float) (getTotalCost() / (float) getImpressionsNumber()) * 1000;
     }
 
@@ -587,7 +586,7 @@ DEAD FUNCTION
     DEAD FUNCTION
      */
 
-    public Map<Date, Float> getCPMByInterval(Date startInterval, Date endInterval)throws SQLException
+    public Map<Date, Float> getCPMByInterval(Date startInterval, Date endInterval)
     {
         Map<Date, Float> cpmByInterval = new HashMap<>();
         Map<Date, Float> getTotalCosts = getCostByInterval(startInterval,endInterval);
@@ -604,19 +603,19 @@ DEAD FUNCTION
     }
 
 
-    public Map<Date, Float> getCPMByInterval(Date startInterval, Date endInterval, long step)throws SQLException
+    public Map<Date, Float> getCPMByInterval(Date startInterval, Date endInterval, long step)
     {
         return groupF(step, getCPMByInterval(startInterval, endInterval));
     }
 
     @Override
-    public Map<Date, Float> getFullCPM(long step)throws SQLException
+    public Map<Date, Float> getFullCPM(long step)
     {
         return groupF(step, getCPMByInterval(MINDATE, MAXDATE, step));
     }
 
 
-    public float getOverallCPMByInterval(Date startInterval, Date endInterval)throws SQLException
+    public float getOverallCPMByInterval(Date startInterval, Date endInterval)
     {
         return ( (float) (getOverallCostByInterval(startInterval,endInterval) / (float) getOverallImpressionsByInterval(startInterval,endInterval)) * 1000);
     }
@@ -625,7 +624,7 @@ DEAD FUNCTION
         The average number of bounces per click.
      */
     @Override
-    public float getBounceRate()throws SQLException {
+    public float getBounceRate()    {
         if(getClicksNumber() > 0)
             return (float) (getBouncesNumber() / (float) getClicksNumber());
         else{
@@ -637,7 +636,7 @@ DEAD FUNCTION
     DEAD FUNCTION
      */
 
-    public Map<Date, Float> getBounceRateByInterval(Date startInterval, Date endInterval)throws SQLException
+    public Map<Date, Float> getBounceRateByInterval(Date startInterval, Date endInterval)
     {
         Map<Date, Float> bounceRateByInterval = new HashMap<>();
         Map<Date, Integer> getBouncesNumber = getBouncesByInterval(startInterval,endInterval);
@@ -661,13 +660,13 @@ DEAD FUNCTION
     }
 
 
-    public Map<Date, Float> getBounceRateByInterval(Date startInterval, Date endInterval, long step)throws SQLException
+    public Map<Date, Float> getBounceRateByInterval(Date startInterval, Date endInterval, long step)
     {
         return groupF(step, getBounceRateByInterval(startInterval, endInterval));
     }
 
     @Override
-    public Map<Date, Float> getFullBounceRate(long step)throws SQLException
+    public Map<Date, Float> getFullBounceRate(long step)
     {
         return groupF(step, getBounceRateByInterval(MINDATE, MAXDATE, step));
     }
@@ -727,7 +726,7 @@ DEAD FUNCTION
     }
 
     @Override
-    public Map<Date, Set<String>> getFullUsers(long step)throws SQLException
+    public Map<Date, Set<String>> getFullUsers(long step)
     {
         return getUsersByInterval(MINDATE, MAXDATE, step);
     }
