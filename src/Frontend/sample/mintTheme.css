@@ -1,48 +1,48 @@
 #centerPane {
-	-fx-background-color: #3f3f3f;
+	-fx-background-color: #c1ffd9;
 }
 
 #addNewCampaign {
-	-fx-fill: WHITE;
+	-fx-fill: #d3ffe4;
 }
 
 #leftPane {
-	-fx-background-color: #333030;
+	-fx-background-color: #91d6ac;
 }
 
 #rightPane {
-	-fx-background-color: #333030;
+	-fx-background-color: #91d6ac;
 }
 
 
 #text {
-	-fx-fill: WHITE;
-	-fx-text-fill: WHITE;
+	-fx-fill: #5b5b5b;
+	-fx-text-fill: #5b5b5b;
 }
 
 #h1 {
 	-fx-font-size: 22;
-	-fx-fill: WHITE;
+	-fx-fill: #5b5b5b;
 }
 
 #h2 {
 	-fx-font-size: 16;
-	-fx-fill: WHITE;
+	-fx-fill: #5b5b5b;
 }
 
 #plus {
 	-fx-font-size: 22;
-	-fx-fill: WHITE;
+	-fx-fill: #5b5b5b;
 	-fx-font-weight: bold;
 }
 
 #checkBox {
-	-fx-text-fill: WHITE;
+	-fx-text-fill: #5b5b5b;
 }
 
 #dataText {
 	-fx-font-size: 16;
-	-fx-fill: WHITE;
+	-fx-fill: #5b5b5b;
 }
 
 #dataText:hover {
@@ -50,13 +50,14 @@
 }
 
 #dataField {
-	-fx-text-fill: WHITE;
-	-fx-background-color: #5b5b5b;
-	-fx-font-size: 16;	
+	-fx-text-fill: GREY;
+	-fx-background-color: WHITE;
+	-fx-font-size: 16;
+	-fx-font-weight: bold;	
 }
 
 #filterByDate {
-	-fx-fill: WHITE;
+	-fx-fill: #5b5b5b;
 	-fx-font-size: 18;
 	-fx-underline: true;
 }

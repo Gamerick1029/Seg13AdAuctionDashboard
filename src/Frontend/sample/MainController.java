@@ -470,9 +470,9 @@ public class MainController implements ScreenInterface {
             });
         }
 
-        //campaignsTable.setPrefSize(260, 225);
+        campaignsTable.setPrefSize(250, 225);
         campaignsTable.setPlaceholder(new Label("No campaigns loaded!"));
-        campaignsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        //campaignsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         campaignOne.setOnAction(t -> {
             for (MenuItem menuItem : campaignName.getItems()) {
@@ -486,21 +486,21 @@ public class MainController implements ScreenInterface {
 
         TableColumn<Campaign, String> nameColumn =
                 new TableColumn<>("Campaign");
-        nameColumn.setPrefWidth(150);
+        nameColumn.setPrefWidth(145);
         nameColumn.setCellValueFactory(
                 (TableColumn.CellDataFeatures<Campaign, String> param) ->
                         new ReadOnlyStringWrapper(param.getValue().getName())
         );
         TableColumn<Campaign, String> displayColumn =
                 new TableColumn<>("Show");
-        displayColumn.setPrefWidth(50);
+        displayColumn.setMaxWidth(50);
         displayColumn.setCellValueFactory(
                 new PropertyValueFactory<>("displayed")
         );
 
         TableColumn<Campaign, String> removeColumn =
                 new TableColumn<>("Remove");
-        removeColumn.setPrefWidth(50);
+        removeColumn.setMaxWidth(50);
         removeColumn.setCellValueFactory(
                 new PropertyValueFactory<>("remove")
         );
