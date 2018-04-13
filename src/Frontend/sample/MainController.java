@@ -19,6 +19,7 @@ import javafx.stage.StageStyle;
 
 import javax.swing.*;
 import java.io.File;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -185,6 +186,10 @@ public class MainController implements ScreenInterface {
         myController.setCampaignDataPopulator(new CampaignDataPopulator(x, y, lineChart, barChart, pieChart, areaChart));
         x.animatedProperty().setValue(false);
         y.animatedProperty().setValue(false);
+        lineChart.animatedProperty().setValue(false);
+        barChart.animatedProperty().setValue(false);
+        pieChart.animatedProperty().setValue(false);
+        areaChart.animatedProperty().setValue(false);
         currentCampaign.getDisplayed().addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
                     x.animatedProperty().setValue(false);
@@ -413,6 +418,7 @@ public class MainController implements ScreenInterface {
                 new PropertyValueFactory<>("remove")
         );
         campaignsTable.getColumns().setAll(nameColumn, displayColumn, removeColumn);
+
     }
 
     @FXML
@@ -818,14 +824,25 @@ public class MainController implements ScreenInterface {
     private void setMetrics(String name) {
         campaignName.setText(name);
         DataModel dm = myController.getDataModel(name);
-        impressionsF.setText(String.valueOf(dm.getImpressionsNumber()));
-        clicksF.setText(String.valueOf(dm.getClicksNumber()));
-        bouncesF.setText(String.valueOf(dm.getBouncesNumber()));
-        conversionsF.setText(String.valueOf(dm.getConversionsNumber()));
-        totalCostF.setText(String.valueOf(dm.getTotalCost()));
-        clickRateF.setText(String.valueOf(dm.getCTR()));
-        aquisitionF.setText(String.valueOf(dm.getCPA()));
-        costPerClickF.setText(String.valueOf(dm.getCPC()));
+        try
+        {
+            impressionsF.setText(String.valueOf(dm.getImpressionsNumber()));
+            clicksF.setText(String.valueOf(dm.getClicksNumber()));
+            bouncesF.setText(String.valueOf(dm.getBouncesNumber()));
+            conversionsF.setText(String.valueOf(dm.getConversionsNumber()));
+            totalCostF.setText(String.valueOf(dm.getTotalCost()));
+            clickRateF.setText(String.valueOf(dm.getCTR()));
+            aquisitionF.setText(String.valueOf(dm.getCPA()));
+            costPerClickF.setText(String.valueOf(dm.getCPC()));
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+            /*
+            TODO:
+            Report error on screen using popup
+             */
+        }
     }
 
     private void groupByDay() {
@@ -930,13 +947,24 @@ public class MainController implements ScreenInterface {
             if (campaign.getDisplayed().isSelected()) {
                 DataModel dataModel = myController.getDataModel(campaign.getName());
                 histogramSeries = new XYChart.Series();
-                for (Map.Entry<Date, Float> entry : dataModel.getFullCost(currentStep).entrySet()) {
-                    Date key = entry.getKey();
-                    Float value = entry.getValue();
-                    histogramSeries.getData().add(new XYChart.Data(String.valueOf(key), value));
+                try
+                {
+                    for (Map.Entry<Date, Float> entry : dataModel.getFullCost(currentStep).entrySet()) {
+                        Date key = entry.getKey();
+                        Float value = entry.getValue();
+                        histogramSeries.getData().add(new XYChart.Data(String.valueOf(key), value));
+                    }
+                    barChart.getData().add(histogramSeries);
+                    histogramSeries.setName(dataModel.getName() + "Click Cost Histogram");
+                } catch (SQLException e)
+                {
+                    e.printStackTrace();
+                    /*
+                    TODO:
+                    Report error to screen
+                     */
                 }
-                barChart.getData().add(histogramSeries);
-                histogramSeries.setName(dataModel.getName() + "Click Cost Histogram");
+
             }
         }
     }
@@ -1045,68 +1073,106 @@ public class MainController implements ScreenInterface {
                 campaignMetricBC.setName(dataModel.getName() + " " + metric);
                 campaignMetricAC.setName(dataModel.getName() + " " + metric);
 
-                switch (metric) {
-                    case "Impressions":
-                        for (Map.Entry<Date, Integer> entry : dataModel.getFullImpressions(step).entrySet()) {
-                            Date key = entry.getKey();
-                            Integer value = entry.getValue();
-                            addData(key, value);
-                        }
-                        break;
-                    case "Clicks":
-                        for (Map.Entry<Date, Integer> entry : dataModel.getFullClicks(step).entrySet()) {
-                            Date key = entry.getKey();
-                            Integer value = entry.getValue();
-                            addData(key, value);
-                        }
-                        break;
-                    case "Bounces":
-                        for (Map.Entry<Date, Integer> entry : dataModel.getFullBounces(step).entrySet()) {
-                            Date key = entry.getKey();
-                            Integer value = entry.getValue();
-                            addData(key, value);
-                        }
-                        break;
-                    case "Conversions":
-                        for (Map.Entry<Date, Integer> entry : dataModel.getFullConversions(step).entrySet()) {
-                            Date key = entry.getKey();
-                            Integer value = entry.getValue();
-                            addData(key, value);
-                        }
-                        break;
-                    case "TotalCost":
-                        for (Map.Entry<Date, Float> entry : dataModel.getFullCost(step).entrySet()) {
-                            Date key = entry.getKey();
-                            Float value = entry.getValue();
-                            addData(key, Math.round(value));
-                        }
-                        break;
-                    case "ClickRate":
-                        for (Map.Entry<Date, Float> entry : dataModel.getFullCTR(step).entrySet()) {
-                            Date key = entry.getKey();
-                            Float value = entry.getValue();
-                            addData(key, Math.round(value));
-                        }
-                    case "Aquisition":
-                        for (Map.Entry<Date, Float> entry : dataModel.getFullCPA(step).entrySet()) {
-                            Date key = entry.getKey();
-                            Float value = entry.getValue();
-                            addData(key, Math.round(value));
-                        }
-                        break;
-                    case "CostPerClick":
-                        for (Map.Entry<Date, Float> entry : dataModel.getFullCPC(step).entrySet()) {
-                            Date key = entry.getKey();
-                            Float value = entry.getValue();
-                            addData(key, Math.round(value));
-                        }
-                        break;
+                boolean isFloat = false;
+
+                try
+                {
+                    switch (metric)
+                    {
+                        case "Impressions":
+                            for (Map.Entry<Date, Integer> entry : dataModel.getFullImpressions(step).entrySet())
+                            {
+                                Date key = entry.getKey();
+                                Integer value = entry.getValue();
+                                addData(key, value);
+                            }
+                            break;
+                        case "Clicks":
+                            for (Map.Entry<Date, Integer> entry : dataModel.getFullClicks(step).entrySet())
+                            {
+                                Date key = entry.getKey();
+                                Integer value = entry.getValue();
+                                addData(key, value);
+                            }
+                            break;
+                        case "Bounces":
+                            for (Map.Entry<Date, Integer> entry : dataModel.getFullBounces(step).entrySet())
+                            {
+                                Date key = entry.getKey();
+                                Integer value = entry.getValue();
+                                addData(key, value);
+                            }
+                            break;
+                        case "Conversions":
+                            for (Map.Entry<Date, Integer> entry : dataModel.getFullConversions(step).entrySet())
+                            {
+                                Date key = entry.getKey();
+                                Integer value = entry.getValue();
+                                addData(key, value);
+                            }
+                            break;
+                        case "TotalCost":
+                            for (Map.Entry<Date, Float> entry : dataModel.getFullCost(step).entrySet())
+                            {
+                                Date key = entry.getKey();
+                                Float value = entry.getValue();
+                                addData(key, Math.round(value));
+                            }
+                            break;
+                        case "ClickRate":
+                            for (Map.Entry<Date, Float> entry : dataModel.getFullCTR(step).entrySet())
+                            {
+                                Date key = entry.getKey();
+                                Float value = entry.getValue();
+                                addData(key, Math.round(value));
+                            }
+                        case "Aquisition":
+                            for (Map.Entry<Date, Float> entry : dataModel.getFullCPA(step).entrySet())
+                            {
+                                Date key = entry.getKey();
+                                Float value = entry.getValue();
+                                addData(key, Math.round(value));
+                            }
+                            break;
+                        case "CostPerClick":
+                            for (Map.Entry<Date, Float> entry : dataModel.getFullCPC(step).entrySet())
+                            {
+                                Date key = entry.getKey();
+                                Float value = entry.getValue();
+                                addData(key, Math.round(value));
+                            }
+                            break;
+                    }
+                }
+                catch(SQLException e)
+                {
+                    e.printStackTrace();
+                    /*
+                    TODO
+                    Report error to screen
+                     */
                 }
                 lineChart.getData().add(campaignMetricLC);
                 barChart.getData().add(campaignMetricBC);
                 areaChart.getData().add(campaignMetricAC);
                 pieChart.setData(campaignMetricPC);
             }
+        }
+    }
+
+    private void addFullData_I(Map<Date, Integer> inputs)
+    {
+        for(Map.Entry<Date, Integer> e : inputs.entrySet())
+        {
+            addData(e.getKey(), e.getValue());
+        }
+    }
+
+    private void addFullData_F(Map<Date, Float> inputs)
+    {
+        for(Map.Entry<Date, Float> e : inputs.entrySet())
+        {
+            addData(e.getKey(), Math.round(e.getValue()));
         }
     }
 
