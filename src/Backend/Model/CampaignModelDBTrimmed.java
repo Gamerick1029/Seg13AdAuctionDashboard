@@ -186,7 +186,6 @@ public class CampaignModelDBTrimmed implements DataModelDBTrimmed {
                 impressionsQuery += " OR Context = 'Travel' ";
             }
         }
-
         return impressionsQuery;
     }
 
