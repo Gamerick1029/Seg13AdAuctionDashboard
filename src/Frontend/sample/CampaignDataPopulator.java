@@ -9,6 +9,7 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 
+import java.sql.SQLException;
 import java.util.*;
 
 /**
@@ -40,34 +41,48 @@ public class CampaignDataPopulator {
     }
 
     public void populateGraph() {
-        XYChart.Series campaignImpressionsLC = new XYChart.Series();
-        XYChart.Series campaignImpressionsBC = new XYChart.Series();
-        XYChart.Series campaignImpressionsAC = new XYChart.Series();
-        XYChart.Series campaignHistogram = new XYChart.Series();
-        ObservableList<PieChart.Data> campaignImpressionsPC = FXCollections.observableArrayList();
+        x.setAnimated(false);
+        y.setAnimated(false);
+        try
+        {
+            XYChart.Series campaignImpressionsLC = new XYChart.Series();
+            XYChart.Series campaignImpressionsBC = new XYChart.Series();
+            XYChart.Series campaignImpressionsAC = new XYChart.Series();
+            XYChart.Series campaignHistogram = new XYChart.Series();
+            ObservableList<PieChart.Data> campaignImpressionsPC = FXCollections.observableArrayList();
 
-        campaignImpressionsLC.setName(dataModel.getName() + " Impressions");
-        campaignImpressionsBC.setName(dataModel.getName() + " Impressions");
-        campaignImpressionsAC.setName(dataModel.getName() + " Impressions");
-        campaignHistogram.setName(dataModel.getName() + "Click Cost Histogram");
-        //Step by Day
-        ObservableList<XYChart.Data> fullData = sortMap(dataModel.getFullImpressions(1000 * 60 * 60 * 24));
-        campaignImpressionsLC.setData(fullData);
-        campaignImpressionsAC.setData(fullData);
-        campaignImpressionsBC.setData(fullData);
-        campaignHistogram.setData(fullData);
+            campaignImpressionsLC.setName(dataModel.getName() + " Impressions");
+            campaignImpressionsBC.setName(dataModel.getName() + " Impressions");
+            campaignImpressionsAC.setName(dataModel.getName() + " Impressions");
+            campaignHistogram.setName(dataModel.getName() + "Click Cost Histogram");
+            //Step by Day
+            ObservableList<XYChart.Data> fullData = sortMap(dataModel.getFullImpressions(1000 * 60 * 60 * 24));
+            campaignImpressionsLC.setData(fullData);
+            campaignImpressionsAC.setData(fullData);
+            campaignImpressionsBC.setData(fullData);
+            campaignHistogram.setData(fullData);
 
-        for (Map.Entry<Date, Integer> entry : dataModel.getFullImpressions(1000 * 60 * 60 * 24).entrySet()) {
-            Date key = entry.getKey();
-            Integer value = entry.getValue();
-            campaignImpressionsPC.add(new PieChart.Data(String.valueOf(key), value));
+            for (Map.Entry<Date, Integer> entry : dataModel.getFullImpressions(1000 * 60 * 60 * 24).entrySet())
+            {
+                Date key = entry.getKey();
+                Integer value = entry.getValue();
+                campaignImpressionsPC.add(new PieChart.Data(String.valueOf(key), value));
+            }
+            lineChart.getData().add(campaignImpressionsLC);
+            barChart.setBarGap(3);
+            barChart.setCategoryGap(20);
+            barChart.getData().add(campaignImpressionsBC);
+            areaChart.getData().add(campaignImpressionsAC);
+            pieChart.setData(campaignImpressionsPC);
         }
-        lineChart.getData().add(campaignImpressionsLC);
-        barChart.setBarGap(3);
-        barChart.setCategoryGap(20);
-        barChart.getData().add(campaignImpressionsBC);
-        areaChart.getData().add(campaignImpressionsAC);
-        pieChart.setData(campaignImpressionsPC);
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+            /*
+            TODO
+            resolve error onscreen
+             */
+        }
     }
 
     private static <T> ObservableList<XYChart.Data> sortMap(Map<Date, T> in) {

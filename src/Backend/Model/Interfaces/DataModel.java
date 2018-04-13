@@ -1,5 +1,6 @@
 package Backend.Model.Interfaces;
 
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -38,7 +39,7 @@ public interface DataModel {
      *
      * @return the total number of impressions in the campaign
      */
-    int getImpressionsNumber();
+    int getImpressionsNumber() throws SQLException;
 
     /**
      * Gets all the impression data, grouped within a
@@ -46,7 +47,7 @@ public interface DataModel {
      * @param step the millisecond interval by which to group
      * @return A grouped map of Impression quantity and date
      */
-    Map<Date, Integer> getFullImpressions(long step);
+    Map<Date, Integer> getFullImpressions(long step) throws SQLException;
 
     //int getOverallImpressionsByInterval(Date startInterval, Date endInterval);
 
@@ -54,14 +55,14 @@ public interface DataModel {
      * Get the total number of clicks in the campaign
      * @return Number of clicks
      */
-    int getClicksNumber();
+    int getClicksNumber() throws SQLException;
 
     /**
      * get the number of clicks grouped by an interval
      * @param step the millisecond interval by which to group
      * @return A map of number of clicks within a date interval
      */
-    Map<Date, Integer> getFullClicks(long step);
+    Map<Date, Integer> getFullClicks(long step) throws SQLException;
 
     //int getOverallClicksByInterval(Date startInterval, Date endInterval);
 
@@ -69,14 +70,14 @@ public interface DataModel {
      * get the total number of uniques within the campaign
      * @return total uniques
      */
-    int getUniquesNumber();
+    int getUniquesNumber() throws SQLException;
 
     /**
      * The number of uniques grouped by a specified interval
      * @param step the millisecond interval by which to group
      * @return a map of uniques by date interval
      */
-    Map<Date, Integer> getFullUniques(long step);
+    Map<Date, Integer> getFullUniques(long step) throws SQLException;
 
 //    int getOverallUniquesByInterval(Date startInterval, Date endInterval);
 
@@ -84,7 +85,7 @@ public interface DataModel {
      * get the total number of bounces across the campaign
      * @return total bounces
      */
-    int getBouncesNumber();
+    int getBouncesNumber() throws SQLException;
 
 //    Map<Date, Integer> getBouncesByInterval(Date startInterval, Date endInterval);
 //    Map<Date, Integer> getBouncesByInterval(Date startInterval, Date endInterval, long step);
@@ -94,7 +95,7 @@ public interface DataModel {
      * @param step the millisecond interval by which to group
      * @return a map of the number of bounces in each time interval
      */
-    Map<Date, Integer> getFullBounces(long step);
+    Map<Date, Integer> getFullBounces(long step) throws SQLException;
 
 //    int getOverallBouncesByInterval(Date startInterval, Date endInterval);
 
@@ -102,7 +103,7 @@ public interface DataModel {
      * get the total number of conversions across the campaign
      * @return number of conversions
      */
-    int getConversionsNumber();
+    int getConversionsNumber() throws SQLException;
 
 //    Map<Date, Integer> getConversionsByInterval(Date startInterval, Date endInterval);
 //    Map<Date, Integer> getConversionsByInterval(Date startInterval, Date endInterval, long step);
@@ -112,7 +113,7 @@ public interface DataModel {
      * @param step the millisecond interval by which to group
      * @return a mapping of conversion quantity and time interval
      */
-    Map<Date, Integer> getFullConversions(long step);
+    Map<Date, Integer> getFullConversions(long step) throws SQLException;
 
 //    int getOverallConversionsByInterval(Date startInterval, Date endInterval);
 
@@ -120,7 +121,7 @@ public interface DataModel {
      * get the total cost of the campaign
      * @return campaign total cost
      */
-    float getTotalCost();
+    float getTotalCost() throws SQLException;
 
 //    Map<Date, Float> getCostByInterval(Date startInterval, Date endInterval);
 //    Map<Date, Float> getCostByInterval(Date startInterval, Date endInterval, long step);
@@ -130,22 +131,13 @@ public interface DataModel {
      * @param step the millisecond interval by which to group
      * @return cost of the campaign within each time step
      */
-    Map<Date, Float> getFullCost(long step);
-
-    /*
-DEAD FUNCTION
- */
-//    float getOverallCostByInterval(Date startInterval, Date endInterval);
-
-    /*
-            The average number of clicks per impression.
-        */
+    Map<Date, Float> getFullCost(long step) throws SQLException;
 
     /**
      * get the Click Through Rate of the campaign
      * @return click through rate
      */
-    float getCTR();
+    float getCTR() throws SQLException;
 
 //    Map<Date, Float> getCTRByInterval(Date startInterval, Date endInterval);
 //    Map<Date, Float> getCTRByInterval(Date startInterval, Date endInterval, long step);
@@ -156,7 +148,7 @@ DEAD FUNCTION
      * @param step the millisecond interval by which to group
      * @return a mapping of the click through rate with its date interval
      */
-    Map<Date, Float> getFullCTR(long step);
+    Map<Date, Float> getFullCTR(long step) throws SQLException;
 
 //    float getOverallCTRByInterval(Date startInterval, Date endInterval);
 
@@ -168,7 +160,7 @@ DEAD FUNCTION
      * The Cost-Per-Acquisition of the whole campaign
      * @return cost-per-acquisition
      */
-    float getCPA();
+    float getCPA() throws SQLException;
 
 //    Map<Date, Float> getCPAByInterval(Date startInterval, Date endInterval);
 //    Map<Date, Float> getCPAByInterval(Date startInterval, Date endInterval, long step);
@@ -178,44 +170,27 @@ DEAD FUNCTION
      * @param step the millisecond interval by which to group
      * @return map of date interval with corresponding cost-per-acquisition
      */
-    Map<Date, Float> getFullCPA(long step);
+    Map<Date, Float> getFullCPA(long step) throws SQLException;
 
-//    float getOverallCPAByInterval(Date startInterval, Date endInterval);
-
-    /*
-            The average amount of money spent on an advertising campaign for each
-                click.
-        */
 
     /**
      * get the average cost-per-click of the whole campaign
      * @return average cost-per-click
      */
-    float getCPC();
-
-//    Map<Date, Float> getCPCByInterval(Date startInterval, Date endInterval);
-//    Map<Date, Float> getCPCByInterval(Date startInterval, Date endInterval, long step);
+    float getCPC() throws SQLException;
 
     /**
      * get the cost-per-click of time intervals within the campaign
      * @param step the millisecond interval by which to group
      * @return map of date interval with corresponding cost-per-click
      */
-    Map<Date, Float> getFullCPC(long step);
-
-//    float getOverallCPCByInterval(Date startInterval, Date endInterval);
-
-    /*
-            The average amount of money spent on an advertising
-                campaign for every one thousand impressions.
-        */
-
+    Map<Date, Float> getFullCPC(long step) throws SQLException;
 
     /**
      * get cost-per-thousand-impressions fot the whole campaign
      * @return cost-per-thousand-impressions
      */
-    float getCPM();
+    float getCPM() throws SQLException;
 
 //    Map<Date, Float> getCPMByInterval(Date startInterval, Date endInterval);
 //    Map<Date, Float> getCPMByInterval(Date startInterval, Date endInterval, long step);
@@ -225,7 +200,7 @@ DEAD FUNCTION
      * @param step millisecond interval by which to group
      * @return map of cost-per-thousand-impressions with date interval
      */
-    Map<Date, Float> getFullCPM(long step);
+    Map<Date, Float> getFullCPM(long step) throws SQLException;
 
 //    float getOverallCPMByInterval(Date startInterval, Date endInterval);
 
@@ -237,7 +212,7 @@ DEAD FUNCTION
      * returns the average number of bounces per click
      * @return average bounces per click
      */
-    float getBounceRate();
+    float getBounceRate() throws SQLException;
 
 //    Map<Date, Float> getBounceRateByInterval(Date startInterval, Date endInterval);
 //    Map<Date, Float> getBounceRateByInterval(Date startInterval, Date endInterval, long step);
@@ -248,7 +223,7 @@ DEAD FUNCTION
      * @param step millisecond time interval by which to group
      * @return map of bounce rates within associated time intervals
      */
-    Map<Date, Float> getFullBounceRate(long step);
+    Map<Date, Float> getFullBounceRate(long step) throws SQLException;
 
 //    float getOverallBounceRateByInterval(Date startInterval, Date endInterval);
 
@@ -261,7 +236,7 @@ DEAD FUNCTION
      * @param step the millisecond interval by which to group
      * @return map of user sets within associated time intervals
      */
-    Map<Date, Set<String>> getFullUsers(long step);
+    Map<Date, Set<String>> getFullUsers(long step) throws SQLException;
 
 //    Set<String> getOverallUsersRateByInterval(Date startInterval, Date endInterval);
 

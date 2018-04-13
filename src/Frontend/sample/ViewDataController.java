@@ -34,7 +34,7 @@ public class ViewDataController implements ScreenInterface {
     @Override
     public void setScreenParent(ScreensController parent) {
         this.myController = parent;
-        //myController.setDataFieldPopulator(new DataFieldPopulator(impressions, clicks, bounces, conversions, cost, clickRate, costAquisition, costConversion));
+//        myController.setDataFieldPopulator(new DataFieldPopulator(impressions, clicks, bounces, conversions, cost, clickRate, costAquisition, costConversion));
     }
 
     @FXML

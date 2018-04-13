@@ -45,8 +45,6 @@ public class Main extends Application {
         });
         
 
-
-
         mainContainer.setScreen(Main.welcomeScreenID);
         Group root = new Group();
         root.getChildren().addAll(mainContainer);
@@ -59,7 +57,6 @@ public class Main extends Application {
         primaryStage.setTitle("Ad Auction Dashboard");
         primaryStage.show();
     }
-
 
     public static void main(String[] args) {
         launch(args);

@@ -26,7 +26,9 @@ public class CampaignModelDBTrimmed implements DataModelDBTrimmed {
 
         //this.campaignName = campaignName ;
 
-        dbHelper = new DBHelper("seg", "seg13");
+        DBHelper.initConnection("seg", "seg13");
+
+        dbHelper = new DBHelper();
         connection = dbHelper.getConnection();
 
 
@@ -46,6 +48,7 @@ public class CampaignModelDBTrimmed implements DataModelDBTrimmed {
 
     @Override
     public Map<Date, Integer> getImpressionsData() throws SQLException {
+
         return null;
     }
 
@@ -129,102 +132,248 @@ public class CampaignModelDBTrimmed implements DataModelDBTrimmed {
         return null;
     }
 
-    private String dateFilter(){
+    /* As I have seen in the table we cannot use a general query. So I have divided the query
+     in 3 in order to do filtering on the User Table, Impression table and the dateQuery which can be used
+     in all 3.
+      Below are methods that fill the variable mentioned.
+    */
 
+    // Date filter
+    private String dateFilter(){
+        dateQuery = " Date >= " + filterDB.getStartDate() + " AND " + " Date <= " + filterDB.getEndDate() ;
         return dateQuery;
     }
 
+
+    // Immpressiosn filter -- Context
     private String impressionFilter(){
-
-        return impressionsQuery;
-    }
-
-    private String userFilter(){
-
         impressionsQuery = null;
-
-        if(filterDB.genderOther){
-            impressionsQuery += " Gender='Other' ";
-        }
-        if(filterDB.genderMale && false){
-            impressionsQuery += " Gender='Male' ";
-        }
-        if(filterDB.genderFemale){
-            impressionsQuery += " Gender='Female' ";
-        }
-        if(filterDB.age25to34){
-            impressionsQuery += " Age > 24 AND Age < 35 ";
-        }
-        if(filterDB.age35to44){
-            impressionsQuery += " Age > 34 AND Age < 45 ";
-        }
-        if(filterDB.age45to54){
-            impressionsQuery += " Age > 44 AND Age < 55 ";
-        }
-        if(filterDB.ageAbove54){
-            impressionsQuery += " Age > 54 ";
-        }
-        if(filterDB.ageBelow20){
-            impressionsQuery += " Age < 20 ";
-        }
-        if(filterDB.incomeHigh){
-            impressionsQuery += " Gender='High' ";
-        }
-        if(filterDB.incomeMedium){
-            impressionsQuery += " Gender='Medium' ";
-        }
-        if(filterDB.incomeLow){
-            impressionsQuery += " Gender='Low' ";
-        }
-
-
-        return impressionsQuery;
-    }
-
-    private String filterToQuery(){
-
-        String query = "";
-
-
-        if(filterDB.contextBlog){
-
-        }if(filterDB.contextHobbies){
-
-        }
-        if(filterDB.contextBlog){
-
-        }
-        if(filterDB.contextMedia){
-
-        }
         if(filterDB.contextNews){
+            impressionsQuery = " Context = 'News' ";
         }
         if(filterDB.contextShopping){
+            if(impressionsQuery == null){
+                impressionsQuery = " Context = 'Shopping' ";
+            }else{
+                impressionsQuery += " OR Context = 'Shopping' ";
+            }
         }
-        if(filterDB.incomeLow){
-
+        if(filterDB.contextMedia){
+            if(impressionsQuery == null){
+                impressionsQuery = " Context = 'Media' ";
+            }else{
+                impressionsQuery += " OR Context = 'Media' ";
+            }
         }
-        if(filterDB.incomeMedium){
-
+        if(filterDB.contextBlog){
+            if(impressionsQuery == null){
+                impressionsQuery = " Context = 'Blog' ";
+            }else{
+                impressionsQuery += " OR Context = 'Blog' ";
+            }
         }
-        if(filterDB.incomeHigh){
-
-        }
-        if(filterDB.genderOther){
-
+        if(filterDB.contextHobbies){
+            if(impressionsQuery == null){
+                impressionsQuery = " Context = 'Hobbies' ";
+            }else{
+                impressionsQuery += " OR Context = 'Hobbies' ";
+            }
         }
         if(filterDB.contextTravel){
-
+            if(impressionsQuery == null){
+                impressionsQuery = " Context = 'Travel' ";
+            }else{
+                impressionsQuery += " OR Context = 'Travel' ";
+            }
         }
-        if(filterDB.genderOther){
-
-        }
-
-
-
-        return query;
-
+        return impressionsQuery;
     }
+
+    // This method is used within this class for DB filering.
+    // It is used only for user Table.
+    // Contains: Age Income and gender query.
+    private String userFilter(){
+
+        userQuery = null;
+
+        String genderQuery = null;
+        String ageQuery = null;
+        String incomeQuery = null;
+
+        /* This is just a weirder denser version
+        if(filterDB.genderOther && filterDB.genderMale && filterDB.genderFemale){
+            genderQuery += " Gender='Other' OR Gender='Male' OR Gender='Female' ";
+        }else if(filterDB.genderOther && filterDB.genderMale && filterDB.genderFemale == false){
+            genderQuery += " Gender='Other' OR Gender='Male' ";
+        }else if(filterDB.genderOther && filterDB.genderMale == false && filterDB.genderFemale == false){
+            genderQuery += " Gender='Other' ";
+        } else if(filterDB.genderOther && filterDB.genderMale ==false && filterDB.genderFemale){
+            genderQuery += " Gender='Other' OR Gender='Female' ";
+        }else if(filterDB.genderOther == false && filterDB.genderMale ==false && filterDB.genderFemale == false){
+            genderQuery += "";
+        }else if(filterDB.genderOther == false && filterDB.genderMale ==false && filterDB.genderFemale){
+            genderQuery += " Gender='Female' ";
+        }else if(filterDB.genderOther == false && filterDB.genderMale ==true && filterDB.genderFemale == false){
+            genderQuery += " Gender='Male' ";
+        }else if(filterDB.genderOther ==false && filterDB.genderMale && filterDB.genderFemale){
+            genderQuery += " Gender='Male' OR Gender='Female' ";
+        }
+        */
+
+        if(filterDB.genderOther){
+            if(genderQuery == null){
+                genderQuery = " Gender='Other' ";
+            }else{
+                genderQuery += " OR Gender='Other' ";
+            }
+        }
+        if(filterDB.genderMale){
+            if(genderQuery == null){
+                genderQuery = " Gender='Male' ";
+            }else{
+                genderQuery += " OR Gender='Male' ";
+            }
+        }
+        if(filterDB.genderFemale){
+            if(genderQuery == null){
+                genderQuery = " Gender='Female' ";
+            }else{
+                genderQuery += " OR Gender='Female' ";
+            }
+        }
+
+
+
+        if(filterDB.ageBelow20 && filterDB.age25to34 && filterDB.age35to44 && filterDB.age45to54 && filterDB.ageAbove54 ){
+            ageQuery += "";
+        }
+        else if(filterDB.ageBelow20 && filterDB.age25to34 && filterDB.age35to44 && filterDB.age45to54 && filterDB.ageAbove54 == false ){
+            ageQuery += " Age < 55 ";
+        }
+        else if(filterDB.ageBelow20 && filterDB.age25to34 && filterDB.age35to44 && filterDB.age45to54 == false && filterDB.ageAbove54){
+            ageQuery += " Age < 45 OR Age > 54 ";
+        }
+        else if(filterDB.ageBelow20 && filterDB.age25to34 && filterDB.age35to44 && filterDB.age45to54 == false  && filterDB.ageAbove54 == false){
+            ageQuery += " Age < 45 ";
+        }
+        else if(filterDB.ageBelow20 && filterDB.age25to34 && filterDB.age35to44 == false && filterDB.age45to54 && filterDB.ageAbove54 ){
+            ageQuery += " Age < 35 OR Age > 44 ";
+        }
+        else if(filterDB.ageBelow20 && filterDB.age25to34 && filterDB.age35to44 == false && filterDB.age45to54 && filterDB.ageAbove54 == false ){
+            ageQuery += "  (Age < 35 OR Age > 44) AND Age < 55 ";
+        }
+        else if(filterDB.ageBelow20 && filterDB.age25to34 && filterDB.age35to44 == false && filterDB.age45to54 == false && filterDB.ageAbove54 ){
+            ageQuery += "  Age < 35 OR Age > 54 ";
+        }
+        else if(filterDB.ageBelow20 && filterDB.age25to34 && filterDB.age35to44 == false && filterDB.age45to54 == false && filterDB.ageAbove54 == false ){
+            ageQuery += "  Age < 35 ";
+        } else if(filterDB.ageBelow20 && filterDB.age25to34 == false && filterDB.age35to44 && filterDB.age45to54 && filterDB.ageAbove54 ){
+            ageQuery += " Age < 25 OR Age > 24";
+        } else if(filterDB.ageBelow20 && filterDB.age25to34 == false && filterDB.age35to44 && filterDB.age45to54 && filterDB.ageAbove54 == false){
+            ageQuery += "( Age < 25 OR Age > 24 ) AND Age < 55 ";
+        }   else if(filterDB.ageBelow20 && filterDB.age25to34 == false && filterDB.age35to44 && filterDB.age45to54 == false && filterDB.ageAbove54 ){
+            ageQuery += " ( ( Age < 25 OR Age > 34 ) AND Age < 45 ) OR Age > 54 ";
+        }    else if(filterDB.ageBelow20 && filterDB.age25to34 == false && filterDB.age35to44 && filterDB.age45to54 == false && filterDB.ageAbove54 == false ){
+            ageQuery += " ( ( Age < 25 OR Age > 34 ) AND Age < 45 ) ";
+        }   else if(filterDB.ageBelow20 && filterDB.age25to34 == false && filterDB.age35to44 == false && filterDB.age45to54 && filterDB.ageAbove54 ){
+            ageQuery += " ( Age < 25  OR Age > 44 ) ";
+        }   else if(filterDB.ageBelow20 && filterDB.age25to34 == false && filterDB.age35to44 == false && filterDB.age45to54 && filterDB.ageAbove54 == false){
+            ageQuery += " ( Age < 25  OR (Age > 44 AND < 55)) ";
+        }   else if(filterDB.ageBelow20 && filterDB.age25to34 == false && filterDB.age35to44 == false && filterDB.age45to54 == false && filterDB.ageAbove54 ){
+            ageQuery += " ( Age < 25  OR Age > 54) ";
+        }   else if(filterDB.ageBelow20 && filterDB.age25to34 == false && filterDB.age35to44 == false && filterDB.age45to54 == false && filterDB.ageAbove54 == false){
+            ageQuery += " ( Age < 25  OR (Age > 44 AND < 55)) ";
+        }
+
+
+        // Complementary of first part
+        else if(!(filterDB.ageBelow20 || filterDB.age25to34 || filterDB.age35to44 || filterDB.age45to54 || filterDB.ageAbove54) ){
+            ageQuery += " Age = -1";
+        }
+        else if(!(filterDB.ageBelow20 || filterDB.age25to34 || filterDB.age35to44 || filterDB.age45to54 || filterDB.ageAbove54 == false) ){
+            ageQuery += " Age > 54 ";
+        }
+        else if(!(filterDB.ageBelow20 || filterDB.age25to34 || filterDB.age35to44 || filterDB.age45to54 == false || filterDB.ageAbove54)){
+            ageQuery += " Age > 44 AND Age < 55 ";
+        }
+        else if(!(filterDB.ageBelow20 || filterDB.age25to34 || filterDB.age35to44 || filterDB.age45to54 == false  || filterDB.ageAbove54 == false)){
+            ageQuery += " Age > 44 ";
+        }
+        else if(!(filterDB.ageBelow20 || filterDB.age25to34 || filterDB.age35to44 == false || filterDB.age45to54 || filterDB.ageAbove54)){
+            ageQuery += " Age > 34 AND Age < 45 ";
+        }
+        else if(!(filterDB.ageBelow20 || filterDB.age25to34 || filterDB.age35to44 == false || filterDB.age45to54 || filterDB.ageAbove54 == false )){
+            ageQuery += "  (Age > 34 AND Age < 45) OR Age > 54 ";
+        }
+        else if(!(filterDB.ageBelow20 || filterDB.age25to34 || filterDB.age35to44 == false || filterDB.age45to54 == false || filterDB.ageAbove54) ){
+            ageQuery += "  Age > 34 AND Age < 55 ";
+        }
+        else if(!(filterDB.ageBelow20 || filterDB.age25to34 || filterDB.age35to44 == false || filterDB.age45to54 == false || filterDB.ageAbove54 == false) ){
+            ageQuery += "  Age > 34 ";
+        } else if(!(filterDB.ageBelow20 || filterDB.age25to34 == false || filterDB.age35to44 || filterDB.age45to54 || filterDB.ageAbove54 )){
+            ageQuery += " Age > 24 AND Age < 34";
+        } else if(!(filterDB.ageBelow20 || filterDB.age25to34 == false || filterDB.age35to44 || filterDB.age45to54 && filterDB.ageAbove54 == false)){
+            ageQuery += " ( Age > 24 AND Age < 35 ) OR Age > 54 ";
+        }   else if(!(filterDB.ageBelow20 || filterDB.age25to34 == false || filterDB.age35to44 || filterDB.age45to54 == false || filterDB.ageAbove54) ){
+            ageQuery += " ( ( Age > 24 AND Age < 35 ) OR ( Age > 44 AND Age < 55 ) ";
+        }    else if(!(filterDB.ageBelow20 || filterDB.age25to34 == false || filterDB.age35to44 || filterDB.age45to54 == false || filterDB.ageAbove54 == false )){
+            ageQuery += " ( ( Age > 24 AND Age < 35 ) OR Age > 44 ) ";
+        }   else if(!(filterDB.ageBelow20 || filterDB.age25to34 == false || filterDB.age35to44 == false || filterDB.age45to54 || filterDB.ageAbove54) ){
+            ageQuery += " ( Age > 24 AND Age < 45 ) ";
+        }   else if(!(filterDB.ageBelow20 || filterDB.age25to34 == false || filterDB.age35to44 == false || filterDB.age45to54 || filterDB.ageAbove54 == false)){
+            ageQuery += " ( (Age > 24 AND < 45) OR Age > 54 ) ";
+        }   else if(!(filterDB.ageBelow20 || filterDB.age25to34 == false || filterDB.age35to44 == false || filterDB.age45to54 == false || filterDB.ageAbove54 )){
+            ageQuery += " ( Age > 24  AND Age < 55) ";
+        }   else if(!(filterDB.ageBelow20 || filterDB.age25to34 == false || filterDB.age35to44 == false || filterDB.age45to54 == false || filterDB.ageAbove54 == false)){
+            ageQuery += " ( Age > 24 ) ";
+        }
+
+
+        if(filterDB.incomeLow && filterDB.incomeMedium && filterDB.incomeHigh){
+            incomeQuery += " Income='Low' OR Income='Medium' OR Income='High' ";
+        }else if(filterDB.incomeLow  && filterDB.incomeMedium && filterDB.incomeHigh == false){
+            incomeQuery += " Income='Low' OR Income='Medium' ";
+        }else if(filterDB.incomeLow  && filterDB.incomeMedium == false && filterDB.incomeHigh == false){
+            incomeQuery += " Income='Low' ";
+        } else if(filterDB.incomeLow  && filterDB.incomeMedium ==false && filterDB.incomeHigh){
+            incomeQuery += " Income='Low' OR Income='High' ";
+        }else if(filterDB.incomeLow  == false && filterDB.incomeMedium ==false && filterDB.incomeHigh == false){
+            incomeQuery += "";
+        }else if(filterDB.incomeLow  == false && filterDB.incomeMedium ==false && filterDB.incomeHigh){
+            incomeQuery += " Income='High' ";
+        }else if(filterDB.incomeLow  == false && filterDB.incomeMedium ==true && filterDB.incomeHigh == false){
+            incomeQuery += " Income='Medium' ";
+        }else if(filterDB.incomeLow  ==false && filterDB.incomeMedium && filterDB.incomeHigh){
+            incomeQuery += " Income='Medium' OR Income='High' ";
+        }
+
+
+        if(genderQuery != null && ageQuery != null && incomeQuery != null) {
+            userQuery = genderQuery + " AND " + ageQuery + " AND " + incomeQuery;
+        } else if (genderQuery != null && ageQuery != null && incomeQuery == null){
+            userQuery = genderQuery + " AND " + ageQuery ;
+        }
+        else if (genderQuery != null && ageQuery == null && incomeQuery == null){
+            userQuery = genderQuery ;
+        }
+        else if (genderQuery != null && ageQuery == null && incomeQuery != null){
+            userQuery = genderQuery + " AND " + incomeQuery; ;
+        }else if (!(genderQuery != null || ageQuery != null || incomeQuery != null)) {
+            userQuery = "";
+        } else if (!(genderQuery != null || ageQuery != null || incomeQuery == null)){
+            userQuery = incomeQuery ;
+        }
+        else if (!(genderQuery != null || ageQuery == null || incomeQuery == null)){
+            userQuery =  ageQuery + " AND " + incomeQuery ;
+        }
+        else if (!(genderQuery != null || ageQuery == null || incomeQuery != null)){
+            userQuery = ageQuery ;
+        }
+
+
+        return userQuery;
+    }
+
 
     @Override
     public Filter getFilter() {
@@ -235,6 +384,12 @@ public class CampaignModelDBTrimmed implements DataModelDBTrimmed {
     public void setFilter(Filter filter) {
 
         filterDB = filter;
+
+        impressionFilter();
+        userFilter();
+        dateFilter();
+
+
 
     }
 }
