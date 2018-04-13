@@ -33,116 +33,70 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
+<?import java.net.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Frontend.sample.MainController">
+<BorderPane fx:id="bigPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Frontend.sample.MainController" >
    <center>
-      <AnchorPane BorderPane.alignment="BOTTOM_CENTER" style="-fx-background-color: #0000ff;">
+      <AnchorPane fx:id="centerPane" BorderPane.alignment="BOTTOM_CENTER">
          <children>
             <BorderPane layoutX="4.0" layoutY="2.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="2.0">
                 <top>
-                    <VBox alignment="TOP_LEFT" minWidth="300.0" prefHeight="163.0" spacing="10.0">
-                        <children>
-                            <HBox alignment="TOP_RIGHT" maxWidth="527.0" prefHeight="51.0" prefWidth="527.0" spacing="25.0">
-                                <children>
-                                    <Text onMouseClicked="#addNewCampaign" text="Add New Campaign" textAlignment="CENTER">
-                                        <font>
-                                            <Font name="System Bold" size="18.0" />
-                                        </font>
-                                        <cursor>
-                                            <Cursor fx:constant="HAND" />
-                                        </cursor>
-                                        <HBox.margin>
-                                            <Insets left="20.0" top="20.0" />
-                                        </HBox.margin>
-                                    </Text>
-                                    <Text onMouseClicked="#addNewCampaign" text="+" textAlignment="CENTER" wrappingWidth="18.0">
-                                       
-                                        <cursor>
-                                            <Cursor fx:constant="HAND" />
-                                        </cursor>
-                                        <HBox.margin>
-                                            <Insets top="20.0" />
-                                        </HBox.margin>
-                                    </Text>
-                                </children>
-                                <opaqueInsets>
-                                    <Insets />
-                                </opaqueInsets>
-                           <padding>
-                              <Insets bottom="10.0" />
-                           </padding>
-                            </HBox>
-                            <StackPane alignment="BOTTOM_LEFT" maxWidth="300.0" minWidth="300.0" prefWidth="300.0">
-                                <children>
-                                    <TableView fx:id="campaignsTable" maxWidth="300.0" prefHeight="143.0" prefWidth="280.0" />
-                                </children>
-                                <padding>
-                                    <Insets left="20.0" />
-                                </padding>
-                            </StackPane>
-                        </children>
-                        <opaqueInsets>
-                            <Insets />
-                        </opaqueInsets>
-                     <BorderPane.margin>
-                        <Insets bottom="20.0" />
-                     </BorderPane.margin>
-                     <padding>
-                        <Insets right="10.0" />
-                     </padding>
-                    </VBox>
 
                 </top>
                <center>
 
                   <AnchorPane>
                      <children>
-                        <HBox alignment="BOTTOM_LEFT" spacing="25.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                        <HBox alignment="TOP_CENTER">
                            <children>
                               <HBox alignment="CENTER_LEFT" prefHeight="42.0" prefWidth="552.0">
                                  <children>
-                                    <Text text="Timescale:" wrappingWidth="175.83203125">
-                                       
-                                       <HBox.margin>
-                                          <Insets left="10.0" />
-                                       </HBox.margin>
-                                    </Text>
-                                    <RadioButton fx:id="byDay" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="20.0" prefWidth="106.0" selected="true" text="By Day" textFill="WHITE">
+                                    <RadioButton id="text" fx:id="byDay" contentDisplay="CENTER" mnemonicParsing="false" selected="true" text="by day">
                                        <cursor>
                                           <Cursor fx:constant="HAND" />
                                        </cursor>
-                                      
+                                       <padding>
+                     						<Insets right="30.0" />
+                     					</padding>
+
                                     </RadioButton>
-                                    <RadioButton fx:id="byWeek" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="20.0" prefWidth="123.0" text="By Week" textFill="WHITE">
+                                    <RadioButton id="text" fx:id="byWeek" contentDisplay="CENTER" mnemonicParsing="false" text="by week">
                                        <cursor>
                                           <Cursor fx:constant="HAND" />
                                        </cursor>
-                                      
+                                       <padding>
+                     						<Insets right="30.0" />
+                     					</padding>
                                     </RadioButton>
-                                    <RadioButton fx:id="byMonth" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="20.0" prefWidth="127.0" text="By Month" textFill="WHITE">
+                                    <RadioButton id="text" fx:id="byMonth" contentDisplay="CENTER" mnemonicParsing="false" text="by month">
                                        <cursor>
                                           <Cursor fx:constant="HAND" />
                                        </cursor>
-                                      
+                                       <padding>
+                     						<Insets right="30.0" />
+                     					</padding>
                                     </RadioButton>
                                  </children>
                               </HBox>
-                              
-                              <MenuButton fx:id="graphType" mnemonicParsing="false" prefHeight="42.0" prefWidth="234.0" text="Line Chart">
-                                 
+
+                              <MenuButton id="menuButton" fx:id="graphType" mnemonicParsing="false" prefHeight="42.0" prefWidth="234.0" text="Line Chart">
+
                                  <items>
-                                    <CheckMenuItem fx:id="lineType" mnemonicParsing="false" selected="true" text="Line Chart" />
-                                    <CheckMenuItem fx:id="barType" mnemonicParsing="false" text="Bar Chart" />
-                                    <CheckMenuItem fx:id="pieType" mnemonicParsing="false" text="Pie Chart" />
-                                    <CheckMenuItem fx:id="areaType" mnemonicParsing="false" text="Area Chart" />
-                                    <CheckMenuItem fx:id="histogramType" mnemonicParsing="false" text="Click Cost Histogram" />
+                                    <CheckMenuItem id="checkMenuItem" fx:id="lineType" mnemonicParsing="false" selected="true" text="Line Chart" />
+                                    <CheckMenuItem id="checkMenuItem" fx:id="barType" mnemonicParsing="false" text="Bar Chart" />
+                                    <CheckMenuItem id="checkMenuItem" fx:id="pieType" mnemonicParsing="false" text="Pie Chart" />
+                                    <CheckMenuItem id="checkMenuItem" fx:id="areaType" mnemonicParsing="false" text="Area Chart" />
+                                    <CheckMenuItem id="checkMenuItem" fx:id="histogramType" mnemonicParsing="false" text="Click Cost Histogram" />
                                  </items>
                               </MenuButton>
                            </children>
+                           <padding>
+                     			<Insets left="60.0" />
+                     		</padding>
                         </HBox>
-                        <LineChart fx:id="lineChart" layoutX="10.0" layoutY="50.0" prefHeight="400.0" prefWidth="807.0" title="Line Chart" verticalGridLinesVisible="false" AnchorPane.bottomAnchor="71.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
+                        <LineChart fx:id="lineChart" layoutX="10.0" layoutY="50.0" prefHeight="400.0" prefWidth="807.0" verticalGridLinesVisible="false" AnchorPane.bottomAnchor="71.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
                           <xAxis>
-                            <CategoryAxis label="Campaign Something" side="BOTTOM" tickLabelFill="WHITE" fx:id="x" />
+                            <CategoryAxis label="Time" side="BOTTOM" tickLabelFill="WHITE" fx:id="x" />
                           </xAxis>
                           <yAxis>
                             <NumberAxis fx:id="y" label="Campaign Something" side="LEFT" tickLabelFill="WHITE" />
@@ -151,302 +105,320 @@
                         <PieChart fx:id="pieChart" layoutX="10.0" layoutY="50.0" prefHeight="400.0" prefWidth="807.0" title="Pie Chart" visible="false" AnchorPane.bottomAnchor="71.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0" />
                         <BarChart fx:id="barChart" layoutX="10.0" layoutY="50.0" prefHeight="400.0" prefWidth="807.0" title="Bar Chart" visible="false" AnchorPane.bottomAnchor="71.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
                           <xAxis>
-                            <CategoryAxis label="Campaign Something" side="BOTTOM" />
+                            <CategoryAxis id="text" label="Time" side="BOTTOM" />
                           </xAxis>
                           <yAxis>
-                            <NumberAxis label="Campaign Something" side="LEFT" />
+                            <NumberAxis id="text" label="Campaign Something" side="LEFT" />
                           </yAxis>
                         </BarChart>
                         <AreaChart fx:id="areaChart" layoutX="10.0" layoutY="50.0" prefHeight="400.0" prefWidth="807.0" style="-fx-background-color: #807B7B;" title="Area Chart" visible="false" AnchorPane.bottomAnchor="71.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
                           <xAxis>
-                            <CategoryAxis label="Campaign Something" side="BOTTOM" tickLabelFill="#fcfafa" />
+                            <CategoryAxis id="text" label="Time" side="BOTTOM" tickLabelFill="#fcfafa" />
                           </xAxis>
                           <yAxis>
-                            <NumberAxis label="Campaign Something" side="LEFT" tickLabelFill="#f8f6f6" />
+                            <NumberAxis id="text" label="Campaign Something" side="LEFT" tickLabelFill="#f8f6f6" />
                           </yAxis>
                         </AreaChart>
                      </children>
+
                   </AnchorPane>
                </center>
             </BorderPane>
             <ProgressIndicator fx:id="progressIndicator" layoutX="574.0" layoutY="274.0" prefHeight="178.0" prefWidth="261.0" progress="0.0" visible="false" />
          </children>
+         <padding>
+         	<Insets top="30.0" />
+         </padding>
       </AnchorPane>
    </center>
     <left>
-        <Pane prefHeight="706.0" prefWidth="325.0" style="-fx-background-color: #333030;">
+        <Pane prefHeight="706.0" prefWidth="350.0" id="leftPane">
+			<VBox prefWidth="350.0">
             <children>
-                <VBox alignment="CENTER_LEFT" prefHeight="663.0" prefWidth="299.0" spacing="20">
-                    <children>
-                  <VBox prefHeight="28.0" prefWidth="225.0">
-                     <children>
-                              <Text fill="#f2f2f2" strokeType="OUTSIDE" strokeWidth="0.0" text="Campaign Metrics">
-                                  <font>
-                                      <Font name="System Bold" size="24.0" />
-                                  </font>
-                           <VBox.margin>
-                              <Insets bottom="20.0" left="30.0" right="30.0" top="20.0" />
-                           </VBox.margin>
-                              </Text>
-                     </children>
-                  </VBox>
-                        <VBox spacing="10">
-                            <children>
-                                <VBox>
-                                    <children>
-                                        <Text fill="#f2f2f2" strokeType="OUTSIDE" strokeWidth="0.0" text="Selected Campaign" wrappingWidth="189.0">
-                                            <font>
-                                                <Font size="18.0" />
-                                            </font>
-                                 <VBox.margin>
-                                    <Insets left="15.0" right="30.0" />
-                                 </VBox.margin>
-                                        </Text>
-                                    </children>
-                                </VBox>
-                                <MenuButton fx:id="campaignName" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="42.0" prefWidth="255.0" style="-fx-background-color: #807B7B;" text="Campaign" textAlignment="CENTER" textFill="WHITE">
-                                    <font>
-                                        <Font size="19.0" />
-                                    </font>
-                                    <items>
-                                        <CheckMenuItem fx:id="campaignOne" mnemonicParsing="false" selected="true" />
-                                    </items>
-                           <VBox.margin>
-                              <Insets bottom="20.0" left="15.0" right="30.0" top="10.0" />
-                           </VBox.margin>
-                                </MenuButton>
-                            </children>
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                        </VBox>
-                        <HBox alignment="CENTER">
-                            <children>
-                                <VBox alignment="CENTER">
-                                    <children>
-                                        <Text fx:id="impressions" fill="#f2f2f2" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Impressions" wrappingWidth="150.0">
-                                            <cursor>
-                                                <Cursor fx:constant="HAND" />
-                                            </cursor>
-                                            <font>
-                                                <Font name="Ubuntu" size="18.0" />
-                                            </font>
-                                        </Text>
-                                    </children>
-                                </VBox>
-                                <TextField fx:id="impressionsF" editable="false" prefHeight="39.0" prefWidth="160.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
-                                    <font>
-                                        <Font name="Ubuntu" size="18.0" />
-                                    </font>
-                                </TextField>
-                            </children>
-                     <VBox.margin>
-                        <Insets left="15.0" />
-                     </VBox.margin>
-                        </HBox>
-                        <HBox alignment="CENTER">
-                            <children>
-                                <VBox alignment="CENTER">
-                                    <children>
-                                        <Text fx:id="clicks" fill="#f2f2f2" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Clicks" wrappingWidth="150.0">
-                                            <cursor>
-                                                <Cursor fx:constant="HAND" />
-                                            </cursor>
-                                            <font>
-                                                <Font name="Ubuntu" size="18.0" />
-                                            </font>
-                                        </Text>
-                                    </children>
-                                </VBox>
-                                <TextField fx:id="clicksF" editable="false" prefHeight="39.0" prefWidth="159.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
-                                    <font>
-                                        <Font name="Ubuntu" size="18.0" />
-                                    </font>
-                                </TextField>
-                            </children>
-                     <VBox.margin>
-                        <Insets left="15.0" />
-                     </VBox.margin>
-                        </HBox>
-                        <HBox alignment="CENTER">
-                            <children>
-                                <VBox alignment="CENTER" prefHeight="39.0" prefWidth="91.0">
-                                    <children>
-                                        <Text fx:id="bounces" fill="#f2f2f2" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Bounces" wrappingWidth="150.0">
-                                            <cursor>
-                                                <Cursor fx:constant="HAND" />
-                                            </cursor>
-                                            <font>
-                                                <Font name="Ubuntu" size="18.0" />
-                                            </font>
-                                        </Text>
-                                    </children>
-                                </VBox>
-                                <TextField fx:id="bouncesF" editable="false" prefHeight="39.0" prefWidth="160.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
-                                    <font>
-                                        <Font name="Ubuntu" size="18.0" />
-                                    </font>
-                                </TextField>
-                            </children>
-                     <VBox.margin>
-                        <Insets left="15.0" />
-                     </VBox.margin>
-                        </HBox>
-                        <HBox alignment="CENTER">
-                            <children>
-                                <VBox alignment="CENTER" prefHeight="39.0" prefWidth="114.0">
-                                    <children>
-                                        <Text fx:id="conversions" fill="#f2f2f2" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Conversions" wrappingWidth="150.0">
-                                            <cursor>
-                                                <Cursor fx:constant="HAND" />
-                                            </cursor>
-                                            <font>
-                                                <Font name="Ubuntu" size="18.0" />
-                                            </font>
-                                        </Text>
-                                    </children>
-                                </VBox>
-                                <TextField fx:id="conversionsF" editable="false" prefHeight="39.0" prefWidth="160.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
-                                    <font>
-                                        <Font name="Ubuntu" size="18.0" />
-                                    </font>
-                                </TextField>
-                            </children>
-                     <VBox.margin>
-                        <Insets left="15.0" />
-                     </VBox.margin>
-                        </HBox>
-                        <HBox alignment="CENTER">
-                            <children>
-                                <VBox alignment="CENTER">
-                                    <children>
-                                        <Text fx:id="totalCost" fill="#f2f2f2" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Total Cost" wrappingWidth="150.0">
-                                            <cursor>
-                                                <Cursor fx:constant="HAND" />
-                                            </cursor>
-                                            <font>
-                                                <Font name="Ubuntu" size="18.0" />
-                                            </font>
-                                        </Text>
-                                    </children>
-                                </VBox>
-                                <TextField fx:id="totalCostF" editable="false" prefHeight="39.0" prefWidth="160.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
-                                    <font>
-                                        <Font name="Ubuntu" size="18.0" />
-                                    </font>
-                                </TextField>
-                            </children>
-                     <VBox.margin>
-                        <Insets left="15.0" />
-                     </VBox.margin>
-                        </HBox>
-                        <HBox alignment="CENTER">
-                            <children>
-                                <VBox alignment="CENTER">
-                                    <children>
-                                        <Text fx:id="clickRate" fill="#f2f2f2" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Click Rate" wrappingWidth="150.0">
-                                            <cursor>
-                                                <Cursor fx:constant="HAND" />
-                                            </cursor>
-                                            <font>
-                                                <Font name="Ubuntu" size="18.0" />
-                                            </font>
-                                        </Text>
-                                    </children>
-                                </VBox>
-                                <TextField fx:id="clickRateF" editable="false" prefHeight="39.0" prefWidth="160.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
-                                    <font>
-                                        <Font name="Ubuntu" size="18.0" />
-                                    </font>
-                                </TextField>
-                            </children>
-                     <VBox.margin>
-                        <Insets left="15.0" />
-                     </VBox.margin>
-                        </HBox>
-                        <HBox alignment="CENTER">
-                            <children>
-                                <VBox alignment="CENTER">
-                                    <children>
-                              <VBox alignment="CENTER">
-                                 <children>
-                                              <Text fx:id="aquisition" fill="#f2f2f2" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Aquisition" wrappingWidth="150.0">
-                                                  <cursor>
-                                                      <Cursor fx:constant="HAND" />
-                                                  </cursor>
-                                                  <font>
-                                                      <Font name="Ubuntu" size="18.0" />
-                                                  </font>
-                                              </Text>
-                                 </children>
-                              </VBox>
-                                    </children>
-                                </VBox>
-                                <TextField fx:id="aquisitionF" editable="false" prefHeight="39.0" prefWidth="160.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
-                                    <font>
-                                        <Font name="Ubuntu" size="18.0" />
-                                    </font>
-                                </TextField>
-                            </children>
-                     <VBox.margin>
-                        <Insets left="15.0" />
-                     </VBox.margin>
-                        </HBox>
-                        <HBox alignment="CENTER" prefHeight="39.0" prefWidth="311.0">
-                            <children>
-                                <VBox alignment="CENTER" prefHeight="67.0" prefWidth="130.0">
-                                    <children>
-                              <VBox>
-                                 <children>
-                                              <Text fx:id="costPerClick" fill="#f2f2f2" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="▶ Cost per  Click" wrappingWidth="150.0">
-                                                  <cursor>
-                                                      <Cursor fx:constant="HAND" />
-                                                  </cursor>
-                                                  <font>
-                                                      <Font name="Ubuntu" size="18.0" />
-                                                  </font>
-                                              </Text>
-                                 </children>
-                              </VBox>
-                                    </children>
-                                </VBox>
-                                <TextField fx:id="costPerClickF" editable="false" prefHeight="39.0" prefWidth="160.0" style="-fx-background-color: #807B7B; -fx-text-fill: #ffffff;">
-                                    <font>
-                                        <Font name="Ubuntu" size="18.0" />
-                                    </font>
-                                </TextField>
-                            </children>
-                     <VBox.margin>
-                        <Insets left="15.0" />
-                     </VBox.margin>
-                        </HBox>
-                    </children>
-                </VBox>
-            </children>
+	            <VBox alignment="TOP_LEFT" minWidth="300.0" prefHeight="163.0" spacing="10.0">
+	                        <children>
+
+	                            <HBox alignment="TOP_LEFT" maxWidth="527.0" prefHeight="51.0" prefWidth="527.0" spacing="25.0">
+	                                <children>
+	                                    <Text id="h1" fx:id="addNewCampaign" onMouseClicked="#addNewCampaign" text="Loaded campaigns" textAlignment="CENTER">
+
+	                                        <cursor>
+	                                            <Cursor fx:constant="HAND" />
+	                                        </cursor>
+	                                        <HBox.margin>
+	                                            <Insets left="20.0" top="20.0" />
+	                                        </HBox.margin>
+	                                    </Text>
+	                                    <Text id="plus" onMouseClicked="#addNewCampaign" text="+" textAlignment="CENTER" wrappingWidth="18.0">
+
+	                                        <cursor>
+	                                            <Cursor fx:constant="HAND" />
+	                                        </cursor>
+	                                        <HBox.margin>
+	                                            <Insets top="20.0" />
+	                                        </HBox.margin>
+	                                    </Text>
+	                                </children>
+	                                <opaqueInsets>
+	                                    <Insets />
+	                                </opaqueInsets>
+	                           <padding>
+	                              <Insets bottom="10.0" />
+	                           </padding>
+	                            </HBox>
+	                            <HBox alignment="TOP_LEFT" maxWidth="300.0" minWidth="300.0" prefWidth="300.0">
+	                                <children>
+	                                    <TableView fx:id="campaignsTable" maxWidth="300.0" prefHeight="200.0" prefWidth="280.0" />
+	                                </children>
+	                                <padding>
+	                                    <Insets left="20.0" />
+	                                </padding>
+	                            </HBox>
+	                        </children>
+	                        <opaqueInsets>
+	                            <Insets />
+	                        </opaqueInsets>
+	                     <BorderPane.margin>
+	                        <Insets bottom="20.0" />
+	                     </BorderPane.margin>
+	                     <padding>
+	                        <Insets right="10.0" />
+	                     </padding>
+	                    </VBox>
+
+
+	                <VBox alignment="CENTER_LEFT" prefHeight="663.0" prefWidth="299.0" spacing="20">
+	                    <children>
+	                  <VBox prefHeight="28.0" prefWidth="225.0" alignment="CENTER_LEFT">
+	                     <children>
+	                              <Text id="h1" text="Campaign Metrics">
+
+	                           <VBox.margin>
+	                              <Insets top="30.0" left="20.0"/>
+	                           </VBox.margin>
+	                              </Text>
+	                     </children>
+	                  </VBox>
+	                        <HBox alignment="CENTER_LEFT">
+	                            <children>
+	                                <VBox alignment="CENTER">
+	                                    <children>
+	                                        <Text id="text" text="View metrics for:">
+
+	                                 <VBox.margin>
+	                                    <Insets left="30.0" right="35.0"/>
+	                                 </VBox.margin>
+	                                        </Text>
+	                                    </children>
+	                                </VBox>
+	                                <MenuButton id="menuButton" fx:id="campaignName" contentDisplay="CENTER" mnemonicParsing="false" text="Campaign" textAlignment="CENTER"  prefHeight="39.0" prefWidth="160.0">
+	                                    <items>
+	                                        <CheckMenuItem id="checkMenuItem" fx:id="campaignOne" mnemonicParsing="false" selected="true" />
+	                                    </items>
+	                           <VBox.margin>
+	                              <Insets />
+	                           </VBox.margin>
+	                                </MenuButton>
+	                            </children>
+	                     <HBox.margin>
+	                        <Insets right="10.0"/>
+	                     </HBox.margin>
+                     </HBox>
+	                        <HBox alignment="CENTER">
+	                            <children>
+	                                <VBox alignment="CENTER">
+	                                    <children>
+	                                        <Text id="dataText" fx:id="impressions" text="▶ Impressions" wrappingWidth="150.0">
+	                                            <cursor>
+	                                                <Cursor fx:constant="HAND" />
+	                                            </cursor>
+
+	                                        </Text>
+	                                    </children>
+	                                </VBox>
+	                                <TextField id="dataField" fx:id="impressionsF" editable="false" prefHeight="39.0" prefWidth="160.0">
+
+	                                </TextField>
+	                            </children>
+	                     <VBox.margin>
+	                        <Insets left="15.0" />
+	                     </VBox.margin>
+	                        </HBox>
+	                        <HBox alignment="CENTER">
+	                            <children>
+	                                <VBox alignment="CENTER">
+	                                    <children>
+	                                        <Text id="dataText" fx:id="clicks" text="▶ Clicks" wrappingWidth="150.0">
+	                                            <cursor>
+	                                                <Cursor fx:constant="HAND" />
+	                                            </cursor>
+
+	                                        </Text>
+	                                    </children>
+	                                </VBox>
+	                                <TextField id="dataField" fx:id="clicksF" editable="false" prefHeight="39.0" prefWidth="159.0">
+
+	                                </TextField>
+	                            </children>
+	                     <VBox.margin>
+	                        <Insets left="15.0" />
+	                     </VBox.margin>
+	                        </HBox>
+	                        <HBox alignment="CENTER">
+	                            <children>
+	                                <VBox alignment="CENTER" prefHeight="39.0" prefWidth="91.0">
+	                                    <children>
+	                                        <Text id="dataText" fx:id="bounces" text="▶ Bounces" wrappingWidth="150.0">
+	                                            <cursor>
+	                                                <Cursor fx:constant="HAND" />
+	                                            </cursor>
+
+	                                        </Text>
+	                                    </children>
+	                                </VBox>
+	                                <TextField id="dataField" fx:id="bouncesF" editable="false" prefHeight="39.0" prefWidth="160.0">
+
+	                                </TextField>
+	                            </children>
+	                     <VBox.margin>
+	                        <Insets left="15.0" />
+	                     </VBox.margin>
+	                        </HBox>
+	                        <HBox alignment="CENTER">
+	                            <children>
+	                                <VBox alignment="CENTER" prefHeight="39.0" prefWidth="114.0">
+	                                    <children>
+	                                        <Text id="dataText" fx:id="conversions" text="▶ Conversions" wrappingWidth="150.0">
+	                                            <cursor>
+	                                                <Cursor fx:constant="HAND" />
+	                                            </cursor>
+
+	                                        </Text>
+	                                    </children>
+	                                </VBox>
+	                                <TextField id="dataField" fx:id="conversionsF" editable="false" prefHeight="39.0" prefWidth="160.0">
+
+	                                </TextField>
+	                            </children>
+	                     <VBox.margin>
+	                        <Insets left="15.0" />
+	                     </VBox.margin>
+	                        </HBox>
+	                        <HBox alignment="CENTER">
+	                            <children>
+	                                <VBox alignment="CENTER">
+	                                    <children>
+	                                        <Text id="dataText" fx:id="totalCost" text="▶ Total Cost" wrappingWidth="150.0">
+	                                            <cursor>
+	                                                <Cursor fx:constant="HAND" />
+	                                            </cursor>
+
+	                                        </Text>
+	                                    </children>
+	                                </VBox>
+	                                <TextField id="dataField" fx:id="totalCostF" editable="false" prefHeight="39.0" prefWidth="160.0">
+
+	                                </TextField>
+	                            </children>
+	                     <VBox.margin>
+	                        <Insets left="15.0" />
+	                     </VBox.margin>
+	                        </HBox>
+	                        <HBox alignment="CENTER">
+	                            <children>
+	                                <VBox alignment="CENTER">
+	                                    <children>
+	                                        <Text id="dataText" fx:id="clickRate" text="▶ Click Rate" wrappingWidth="150.0">
+	                                            <cursor>
+	                                                <Cursor fx:constant="HAND" />
+	                                            </cursor>
+
+	                                        </Text>
+	                                    </children>
+	                                </VBox>
+	                                <TextField id="dataField" fx:id="clickRateF" editable="false" prefHeight="39.0" prefWidth="160.0">
+
+	                                </TextField>
+	                            </children>
+	                     <VBox.margin>
+	                        <Insets left="15.0" />
+	                     </VBox.margin>
+	                        </HBox>
+	                        <HBox alignment="CENTER">
+	                            <children>
+	                                <VBox alignment="CENTER">
+	                                    <children>
+	                              <VBox alignment="CENTER">
+	                                 <children>
+	                                              <Text id="dataText" fx:id="aquisition" text="▶ Acquisition" wrappingWidth="150.0">
+	                                                  <cursor>
+	                                                      <Cursor fx:constant="HAND" />
+	                                                  </cursor>
+
+	                                              </Text>
+	                                 </children>
+	                              </VBox>
+	                                    </children>
+	                                </VBox>
+	                                <TextField id="dataField" fx:id="aquisitionF" editable="false" prefHeight="39.0" prefWidth="160.0">
+
+	                                </TextField>
+	                            </children>
+	                     <VBox.margin>
+	                        <Insets left="15.0" />
+	                     </VBox.margin>
+	                        </HBox>
+	                        <HBox alignment="CENTER" prefHeight="39.0" prefWidth="311.0">
+	                            <children>
+	                                <VBox alignment="CENTER" prefHeight="67.0" prefWidth="130.0">
+	                                    <children>
+	                              <VBox>
+	                                 <children>
+	                                              <Text id="dataText" fx:id="costPerClick" text="▶ Cost per Click" wrappingWidth="150.0">
+	                                                  <cursor>
+	                                                      <Cursor fx:constant="HAND" />
+	                                                  </cursor>
+
+	                                              </Text>
+	                                 </children>
+	                              </VBox>
+	                                    </children>
+	                                </VBox>
+	                                <TextField id="dataField" fx:id="costPerClickF" editable="false" prefHeight="39.0" prefWidth="160.0">
+
+	                                </TextField>
+	                            </children>
+	                     <VBox.margin>
+	                        <Insets left="15.0" />
+	                     </VBox.margin>
+	                        </HBox>
+	                    </children>
+	                </VBox>
+                </children>
+                <VBox.margin>
+                   <Insets left="30.0" />
+                </VBox.margin>
+            </VBox>
         </Pane>
     </left>
     <right>
-        <Pane layoutX="1155.0" prefHeight="706.0" prefWidth="300" style="-fx-background-color: #333030;">
+        <Pane layoutX="1155.0" prefHeight="706.0" prefWidth="300" fx:id="rightPane">
             <children>
             <VBox layoutX="10.0" layoutY="-1.564453125">
                <children>
-                      <Text fill="#f2f2f2" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="Audience ◀" wrappingWidth="173.455078125">
+                      <Text id="h1" text="Audience" wrappingWidth="173.455078125">
                           <cursor>
                               <Cursor fx:constant="HAND" />
                           </cursor>
-                          <font>
-                              <Font name="System Bold" size="20.0" />
-                          </font>
+
                      <VBox.margin>
-                        <Insets bottom="20.0" top="20.0" />
+                        <Insets top="20.0" />
                      </VBox.margin>
                       </Text>
-                      <Text fill="#cdc2c2" strokeType="OUTSIDE" strokeWidth="0.0" text="Age">
-                          <font>
-                              <Font size="18.0" />
-                          </font>
+                      <Text  id="h2" text="Age">
+
                      <VBox.margin>
-                        <Insets bottom="4.0" />
+                        <Insets bottom="10.0" top="30.0" />
                      </VBox.margin>
                       </Text>
                   <GridPane hgap="5.0" vgap="5.0">
@@ -460,20 +432,18 @@
                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                            <CheckBox fx:id="age18" mnemonicParsing="false" text="18 or below" textFill="WHITE" />
-                            <CheckBox fx:id="age19to29" mnemonicParsing="false" text="19 - 29" textFill="WHITE" GridPane.columnIndex="1" />
-                            <CheckBox fx:id="age30to49" mnemonicParsing="false" text="30 - 49" textFill="WHITE" GridPane.rowIndex="1" />
-                            <CheckBox fx:id="age50to69" mnemonicParsing="false" prefHeight="18.0" prefWidth="88.0" text="50 - 69" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                            <CheckBox fx:id="age70to89" mnemonicParsing="false" text="70 - 89" textFill="WHITE" GridPane.rowIndex="2" />
-                            <CheckBox fx:id="age90" mnemonicParsing="false" text=" 90 or above" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                            <CheckBox id="checkBox" fx:id="age18" mnemonicParsing="false" text="18 or below" />
+                            <CheckBox id="checkBox" fx:id="age19to29" mnemonicParsing="false" text="19 - 29" GridPane.columnIndex="1" />
+                            <CheckBox id="checkBox" fx:id="age30to49" mnemonicParsing="false" text="30 - 49" GridPane.rowIndex="1" />
+                            <CheckBox id="checkBox" fx:id="age50to69" mnemonicParsing="false" prefHeight="18.0" prefWidth="88.0" text="50 - 69" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                            <CheckBox id="checkBox" fx:id="age70to89" mnemonicParsing="false" text="70 - 89" GridPane.rowIndex="2" />
+                            <CheckBox id="checkBox" fx:id="age90" mnemonicParsing="false" text=" 90 or above" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>
-                      <Text fill="#cdc2c2" strokeType="OUTSIDE" strokeWidth="0.0" text="Income">
-                          <font>
-                              <Font size="18.0" />
-                          </font>
+                      <Text id="h2" text="Income">
+
                      <VBox.margin>
-                        <Insets bottom="4.0" top="10.0" />
+                        <Insets bottom="10.0" top="30.0" />
                      </VBox.margin>
                       </Text>
                   <GridPane hgap="5.0" vgap="5.0">
@@ -489,20 +459,18 @@
                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                            <CheckBox fx:id="income19" mnemonicParsing="false" text="19 000 or below" textFill="WHITE" />
-                            <CheckBox fx:id="income29" mnemonicParsing="false" text="19 000 - 29 000" textFill="WHITE" GridPane.rowIndex="1" />
-                            <CheckBox fx:id="income59" mnemonicParsing="false" text="29 000 - 59 000" textFill="WHITE" GridPane.rowIndex="2" />
-                            <CheckBox fx:id="income89" mnemonicParsing="false" text="59 000 - 89 000" textFill="WHITE" GridPane.rowIndex="3" />
-                            <CheckBox fx:id="income100" mnemonicParsing="false" text="89 000 - 100 000" textFill="WHITE" GridPane.rowIndex="4" />
-                            <CheckBox fx:id="income100more" mnemonicParsing="false" text="&gt; 100 000" textFill="WHITE" GridPane.rowIndex="5" />
+                            <CheckBox id="checkBox" fx:id="income19" mnemonicParsing="false" text="19 000 or below" />
+                            <CheckBox id="checkBox" fx:id="income29" mnemonicParsing="false" text="19 000 - 29 000" GridPane.rowIndex="1" />
+                            <CheckBox id="checkBox" fx:id="income59" mnemonicParsing="false" text="29 000 - 59 000" GridPane.rowIndex="2" />
+                            <CheckBox id="checkBox" fx:id="income89" mnemonicParsing="false" text="59 000 - 89 000" GridPane.rowIndex="3" />
+                            <CheckBox id="checkBox" fx:id="income100" mnemonicParsing="false" text="89 000 - 100 000" GridPane.rowIndex="4" />
+                            <CheckBox id="checkBox" fx:id="income100more" mnemonicParsing="false" text="&gt; 100 000" GridPane.rowIndex="5" />
                      </children>
                   </GridPane>
-                      <Text fill="#cdc2c2" strokeType="OUTSIDE" strokeWidth="0.0" text="Gender">
-                          <font>
-                              <Font size="18.0" />
-                          </font>
+                      <Text id="h2" text="Gender">
+
                      <VBox.margin>
-                        <Insets bottom="4.0" top="10.0" />
+                        <Insets bottom="10.0" top="30.0" />
                      </VBox.margin>
                       </Text>
                   <GridPane hgap="5.0" vgap="5.0">
@@ -515,23 +483,21 @@
                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                            <CheckBox fx:id="female" mnemonicParsing="false" text="Female" textFill="WHITE" />
-                            <CheckBox fx:id="male" mnemonicParsing="false" text="Male " textFill="WHITE" GridPane.columnIndex="1" />
-                            <CheckBox fx:id="other" mnemonicParsing="false" text="Other" textFill="WHITE" GridPane.rowIndex="1" />
+                            <CheckBox id="checkBox" fx:id="female" mnemonicParsing="false" text="Female" />
+                            <CheckBox id="checkBox" fx:id="male" mnemonicParsing="false" text="Male " GridPane.columnIndex="1" />
+                            <CheckBox id="checkBox" fx:id="other" mnemonicParsing="false" text="Other" GridPane.rowIndex="1" />
                      </children>
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>
                   </GridPane>
-                      <Text fill="#f2f2f2" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="Context ◀" textAlignment="RIGHT">
+                      <Text id="h2" text="Context" textAlignment="RIGHT">
                           <cursor>
                               <Cursor fx:constant="HAND" />
                           </cursor>
-                          <font>
-                              <Font name="System Bold" size="20.0" />
-                          </font>
+
                      <VBox.margin>
-                        <Insets bottom="4.0" top="15.0" />
+                        <Insets bottom="10.0" top="30.0" />
                      </VBox.margin>
                       </Text>
                   <GridPane hgap="5.0" vgap="5.0">
@@ -545,63 +511,55 @@
                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                            <CheckBox fx:id="entertainment" mnemonicParsing="false" text="Entertainment" textFill="WHITE">
+                            <CheckBox id="checkBox" fx:id="entertainment" mnemonicParsing="false" text="Entertainment">
                            <padding>
                               <Insets bottom="2.0" />
                            </padding>
                         </CheckBox>
-                            <CheckBox fx:id="sport" mnemonicParsing="false" text="Sport" textFill="WHITE" GridPane.columnIndex="1" />
-                            <CheckBox fx:id="shopping" mnemonicParsing="false" text="Shopping" textFill="WHITE" GridPane.rowIndex="1" />
-                            <CheckBox fx:id="healthcare" mnemonicParsing="false" text="Healthcare" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                            <CheckBox fx:id="social" mnemonicParsing="false" text="Social Media" textFill="WHITE" GridPane.rowIndex="2" />
-                            <CheckBox fx:id="food" mnemonicParsing="false" text="Food" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                            <CheckBox id="checkBox" fx:id="sport" mnemonicParsing="false" text="Sport" GridPane.columnIndex="1" />
+                            <CheckBox id="checkBox" fx:id="shopping" mnemonicParsing="false" text="Shopping" GridPane.rowIndex="1" />
+                            <CheckBox id="checkBox" fx:id="healthcare" mnemonicParsing="false" text="Healthcare" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                            <CheckBox id="checkBox" fx:id="social" mnemonicParsing="false" text="Social Media" GridPane.rowIndex="2" />
+                            <CheckBox id="checkBox" fx:id="food" mnemonicParsing="false" text="Food" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>
-                      <Text fill="#f2f2f2" stroke="#1e1e1e" strokeType="OUTSIDE" strokeWidth="0.0" text="Date ◀">
+                      <Text id="h1" text="Date">
                           <cursor>
                               <Cursor fx:constant="HAND" />
                           </cursor>
-                          <font>
-                              <Font name="System Bold" size="20.0" />
-                          </font>
+
                      <VBox.margin>
-                        <Insets bottom="20.0" top="15.0" />
+                        <Insets top="20.0" />
                      </VBox.margin>
                       </Text>
-                      <Text fx:id="startDate" fill="#fcfcfc" strokeType="OUTSIDE" strokeWidth="0.0" text="Start">
-                          <font>
-                              <Font size="17.0" />
-                          </font>
+                      <Text id="h2" fx:id="startDate" text="Start">
+
                      <VBox.margin>
-                        <Insets />
+                        <Insets bottom="10.0" top="30.0" />
                      </VBox.margin>
                       </Text>
                   <HBox spacing="5.0">
                      <children>
-                            <MenuButton fx:id="startMonth" maxWidth="80.0" minWidth="80.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="80.0" text="Month" />
+                            <MenuButton id="menuButton" fx:id="startMonth" maxWidth="80.0" minWidth="80.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="80.0" text="Month" />
                             <TextField fx:id="endDay" maxWidth="80.0" minWidth="80.0" prefHeight="25.0" prefWidth="80.0" promptText="Day" />
                             <TextField fx:id="endYear" maxHeight="25.0" maxWidth="80.0" prefHeight="25.0" prefWidth="80.0" promptText="Year" />
                      </children>
                   </HBox>
-                      <Text fx:id="startDate1" fill="#fcfcfc" strokeType="OUTSIDE" strokeWidth="0.0" text="End">
-                          <font>
-                              <Font size="17.0" />
-                          </font>
+                      <Text id="h2" fx:id="startDate1" text="End">
+
                      <VBox.margin>
-                        <Insets top="10.0" />
+                        <Insets bottom="10.0" top="30.0" />
                      </VBox.margin>
                       </Text>
                   <HBox spacing="5.0">
                      <children>
-                            <MenuButton fx:id="endMonth" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Month" />
+                            <MenuButton id="menuButton" fx:id="endMonth" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Month" />
                             <TextField fx:id="startDay" maxWidth="18000.0" minWidth="80.0" prefHeight="25.0" prefWidth="48.0" promptText="Day" />
                             <TextField fx:id="startYear" maxWidth="80.0" minWidth="80.0" prefHeight="25.0" prefWidth="80.0" promptText="Year" />
                      </children>
                   </HBox>
-                      <Text fx:id="searchDate" fill="#fcfafa" onMouseClicked="#applyDateFilter" strokeType="OUTSIDE" strokeWidth="0.0" text="Filter by Date" underline="true">
-                          <font>
-                              <Font name="System Bold" size="15.0" />
-                          </font>
+                      <Text id="filterByDate" fx:id="searchDate" onMouseClicked="#applyDateFilter" text="Filter by Date">
+
                           <cursor>
                               <Cursor fx:constant="HAND" />
                           </cursor>
@@ -615,4 +573,7 @@
         </Pane>
 
     </right>
+    <stylesheets>
+    	<URL value="@darkTheme.css" />
+	</stylesheets>
 </BorderPane>

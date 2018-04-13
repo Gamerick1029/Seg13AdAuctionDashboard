@@ -378,8 +378,9 @@ public class MainController implements ScreenInterface {
             });
         }
 
-        campaignsTable.setPrefSize(260, 225);
+        //campaignsTable.setPrefSize(260, 225);
         campaignsTable.setPlaceholder(new Label("No campaigns loaded!"));
+        campaignsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         campaignOne.setOnAction(t -> {
             for (MenuItem menuItem : campaignName.getItems()) {
@@ -399,14 +400,14 @@ public class MainController implements ScreenInterface {
                         new ReadOnlyStringWrapper(param.getValue().getName())
         );
         TableColumn<Campaign, String> displayColumn =
-                new TableColumn<>("Display");
+                new TableColumn<>("Show");
         displayColumn.setPrefWidth(50);
         displayColumn.setCellValueFactory(
                 new PropertyValueFactory<>("displayed")
         );
 
         TableColumn<Campaign, String> removeColumn =
-                new TableColumn<>("Display");
+                new TableColumn<>("Remove");
         removeColumn.setPrefWidth(50);
         removeColumn.setCellValueFactory(
                 new PropertyValueFactory<>("remove")
@@ -941,28 +942,28 @@ public class MainController implements ScreenInterface {
         costPerClick.setStyle(null);
         switch (metric) {
             case "Impressions":
-                impressions.setStyle("-fx-fill: #948e8e; -fx-font-size: 20;");
+                impressions.setStyle("-fx-font-weight: bold;");
                 break;
             case "Clicks":
-                clicks.setStyle("-fx-fill: #948e8e; -fx-font-size: 20;");
+                clicks.setStyle("-fx-font-weight: bold;");
                 break;
             case "Bounces":
-                bounces.setStyle("-fx-fill: #948e8e; -fx-font-size: 20;");
+                bounces.setStyle("-fx-font-weight: bold;");
                 break;
             case "Conversions":
-                conversions.setStyle("-fx-fill: #948e8e; -fx-font-size: 20;");
+                conversions.setStyle("-fx-font-weight: bold;");
                 break;
             case "TotalCost":
-                totalCost.setStyle("-fx-fill: #948e8e; -fx-font-size: 20;");
+                totalCost.setStyle("-fx-font-weight: bold;");
                 break;
             case "ClickRate":
-                clickRate.setStyle("-fx-fill: #948e8e; -fx-font-size: 20;");
+                clickRate.setStyle("-fx-font-weight: bold;");
                 break;
             case "Aquisition":
-                aquisition.setStyle("-fx-fill: #948e8e; -fx-font-size: 20;");
+                aquisition.setStyle("-fx-font-weight: bold;");
                 break;
             case "CostPerClick":
-                costPerClick.setStyle("-fx-fill: #948e8e; -fx-font-size: 20;");
+                costPerClick.setStyle("-fx-font-weight: bold;");
                 break;
         }
     }

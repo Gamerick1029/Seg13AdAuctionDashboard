@@ -33,6 +33,8 @@ public class Main extends Application {
         mainContainer.loadScreen(Main.loadDataScreenID, Main.loadDataScreen);
         mainContainer.loadScreen(Main.viewDataScreenID, Main.viewDataScreen);
         mainContainer.loadScreen(Main.campaignScreenID, Main.campaignScreen);
+       
+        
         mainContainer.sceneProperty().addListener(new ChangeListener<Scene>() {
             @Override
             public void changed(ObservableValue<? extends Scene> observable,
@@ -41,6 +43,7 @@ public class Main extends Application {
                 mainContainer.prefHeightProperty().bind(newValue.heightProperty());
             }
         });
+        
 
 
 
@@ -48,7 +51,8 @@ public class Main extends Application {
         Group root = new Group();
         root.getChildren().addAll(mainContainer);
         Scene scene = new Scene(root);
-        scene.getStylesheets().add("Frontend/sample/StyleSheet.css");
+        //scene.getStylesheets().add("Frontend/sample/StyleSheet.css");
+        //scene.getStylesheets().add("Frontend/sample/darkTheme.css");
         primaryStage.setScene(scene);
         //primaryStage.minWidthProperty().bind(scene.widthProperty());
         //primaryStage.minHeightProperty().bind(scene.heightProperty());
