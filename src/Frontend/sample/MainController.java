@@ -1096,8 +1096,10 @@ public class MainController implements ScreenInterface {
                             break;
                         case "ClickRate":
                             setData_F(sortMap(dataModel.getFullCTR(step)));
+                            break;
                         case "Aquisition":
                             setData_F(sortMap(dataModel.getFullCPA(step)));
+                            break;
                         case "CostPerClick":
                             setData_F(sortMap(dataModel.getFullCPC(step)));
                             break;
