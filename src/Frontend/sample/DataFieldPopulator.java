@@ -6,6 +6,7 @@ import javafx.scene.control.MenuButton;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class DataFieldPopulator {
@@ -48,14 +49,25 @@ public class DataFieldPopulator {
         campaigns.getItems().add(currentCampaign);
         menuButton.setText(dataModel.getName());
         menuItem.setText(dataModel.getName());
-        impressions.setText(String.valueOf(dataModel.getImpressionsNumber()));
-        clicks.setText(String.valueOf(dataModel.getClicksNumber()));
-        bounces.setText(String.valueOf(dataModel.getBouncesNumber()));
-        conversions.setText(String.valueOf(dataModel.getConversionsNumber()));
-        cost.setText(String.valueOf(dataModel.getTotalCost()));
-        clickRate.setText(String.valueOf(dataModel.getCTR()));
-        costAquisition.setText(String.valueOf(dataModel.getCPA()));
-        costConversion.setText(String.valueOf(dataModel.getCPC()));
+        try
+        {
+            impressions.setText(String.valueOf(dataModel.getImpressionsNumber()));
+            clicks.setText(String.valueOf(dataModel.getClicksNumber()));
+            bounces.setText(String.valueOf(dataModel.getBouncesNumber()));
+            conversions.setText(String.valueOf(dataModel.getConversionsNumber()));
+            cost.setText(String.valueOf(dataModel.getTotalCost()));
+            clickRate.setText(String.valueOf(dataModel.getCTR()));
+            costAquisition.setText(String.valueOf(dataModel.getCPA()));
+            costConversion.setText(String.valueOf(dataModel.getCPC()));
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+            /*
+            TODO
+            resolve error onscreen
+             */
+        }
     }
 
     public void setCurrentDataModel(DataModel dataModel) {
