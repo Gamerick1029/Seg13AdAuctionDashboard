@@ -6,6 +6,7 @@ import Backend.Model.Interfaces.DataModel;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.chart.*;
@@ -1073,27 +1074,16 @@ public class MainController implements ScreenInterface {
                 campaignMetricBC.setName(dataModel.getName() + " " + metric);
                 campaignMetricAC.setName(dataModel.getName() + " " + metric);
 
-                boolean isFloat = false;
 
                 try
                 {
                     switch (metric)
                     {
                         case "Impressions":
-                            for (Map.Entry<Date, Integer> entry : dataModel.getFullImpressions(step).entrySet())
-                            {
-                                Date key = entry.getKey();
-                                Integer value = entry.getValue();
-                                addData(key, value);
-                            }
+                            setData_I(sortMap(dataModel.getFullImpressions(step)));
                             break;
                         case "Clicks":
-                            for (Map.Entry<Date, Integer> entry : dataModel.getFullClicks(step).entrySet())
-                            {
-                                Date key = entry.getKey();
-                                Integer value = entry.getValue();
-                                addData(key, value);
-                            }
+                            setData_I(sortMap(dataModel.getFullClicks(step)));
                             break;
                         case "Bounces":
                             for (Map.Entry<Date, Integer> entry : dataModel.getFullBounces(step).entrySet())
@@ -1160,19 +1150,30 @@ public class MainController implements ScreenInterface {
         }
     }
 
-    private void addFullData_I(Map<Date, Integer> inputs)
+    private void setData_I(List<Map.Entry<Date, Integer>> sortedList)
     {
-        for(Map.Entry<Date, Integer> e : inputs.entrySet())
+        for(Map.Entry<Date, Integer> e : sortedList)
         {
-            addData(e.getKey(), e.getValue());
+//            campaignMetricLC.setData(sortedList);
+//            campaignMetricAC.setData(sortedList);
+//            campaignMetricBC.setData(sortedList);
+
+            campaignMetricLC.getData().add(new XYChart.Data(String.valueOf(e.getKey()), e.getValue()));
+            campaignMetricAC.getData().add(new XYChart.Data(String.valueOf(e.getKey()), e.getValue()));
+            campaignMetricBC.getData().add(new XYChart.Data(String.valueOf(e.getKey()), e.getValue()));
+
+            campaignMetricPC.add(new PieChart.Data(e.getKey().toString(), e.getValue()));
         }
     }
 
-    private void addFullData_F(Map<Date, Float> inputs)
+    private void setData_F(ObservableList<XYChart.Data> sortedList)
     {
-        for(Map.Entry<Date, Float> e : inputs.entrySet())
+        campaignMetricLC.setData(sortedList);
+        campaignMetricAC.setData(sortedList);
+        campaignMetricBC.setData(sortedList);
+        for(XYChart.Data d : sortedList)
         {
-            addData(e.getKey(), Math.round(e.getValue()));
+            campaignMetricPC.add(new PieChart.Data(String.valueOf(d.getXValue()), (Float)d.getYValue()));
         }
     }
 
@@ -1183,4 +1184,19 @@ public class MainController implements ScreenInterface {
         campaignMetricPC.add(new PieChart.Data(String.valueOf(key), value));
     }
 
+    private static <T> List<Map.Entry<Date, T>> sortMap(Map<Date, T> in) {
+        List<Date> unsortedDates = new ArrayList<>();
+        for (Date d : in.keySet()) {
+            unsortedDates.add(d);
+        }
+        SortedList<Date> sortedDates = new SortedList<Date>(FXCollections.observableList(unsortedDates)).sorted();
+        //Need to sort the data here
+        List<Map.Entry<Date, T>> output = new ArrayList<>();
+        for (Date d : sortedDates) {
+            output.add(Map.entry(d, in.get(d)));
+        }
+
+//        ObservableList<XYChart.Data> myout = FXCollections.observableList(output);
+        return output;
+    }
 }
