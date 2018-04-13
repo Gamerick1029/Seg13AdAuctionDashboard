@@ -1086,51 +1086,20 @@ public class MainController implements ScreenInterface {
                             setData_I(sortMap(dataModel.getFullClicks(step)));
                             break;
                         case "Bounces":
-                            for (Map.Entry<Date, Integer> entry : dataModel.getFullBounces(step).entrySet())
-                            {
-                                Date key = entry.getKey();
-                                Integer value = entry.getValue();
-                                addData(key, value);
-                            }
+                            setData_I(sortMap(dataModel.getFullBounces(step)));
                             break;
                         case "Conversions":
-                            for (Map.Entry<Date, Integer> entry : dataModel.getFullConversions(step).entrySet())
-                            {
-                                Date key = entry.getKey();
-                                Integer value = entry.getValue();
-                                addData(key, value);
-                            }
+                            setData_I(sortMap(dataModel.getFullConversions(step)));
                             break;
                         case "TotalCost":
-                            for (Map.Entry<Date, Float> entry : dataModel.getFullCost(step).entrySet())
-                            {
-                                Date key = entry.getKey();
-                                Float value = entry.getValue();
-                                addData(key, Math.round(value));
-                            }
+                            setData_F(sortMap(dataModel.getFullCost(step)));
                             break;
                         case "ClickRate":
-                            for (Map.Entry<Date, Float> entry : dataModel.getFullCTR(step).entrySet())
-                            {
-                                Date key = entry.getKey();
-                                Float value = entry.getValue();
-                                addData(key, Math.round(value));
-                            }
+                            setData_F(sortMap(dataModel.getFullCTR(step)));
                         case "Aquisition":
-                            for (Map.Entry<Date, Float> entry : dataModel.getFullCPA(step).entrySet())
-                            {
-                                Date key = entry.getKey();
-                                Float value = entry.getValue();
-                                addData(key, Math.round(value));
-                            }
-                            break;
+                            setData_F(sortMap(dataModel.getFullCPA(step)));
                         case "CostPerClick":
-                            for (Map.Entry<Date, Float> entry : dataModel.getFullCPC(step).entrySet())
-                            {
-                                Date key = entry.getKey();
-                                Float value = entry.getValue();
-                                addData(key, Math.round(value));
-                            }
+                            setData_F(sortMap(dataModel.getFullCPC(step)));
                             break;
                     }
                 }
@@ -1154,10 +1123,6 @@ public class MainController implements ScreenInterface {
     {
         for(Map.Entry<Date, Integer> e : sortedList)
         {
-//            campaignMetricLC.setData(sortedList);
-//            campaignMetricAC.setData(sortedList);
-//            campaignMetricBC.setData(sortedList);
-
             campaignMetricLC.getData().add(new XYChart.Data(String.valueOf(e.getKey()), e.getValue()));
             campaignMetricAC.getData().add(new XYChart.Data(String.valueOf(e.getKey()), e.getValue()));
             campaignMetricBC.getData().add(new XYChart.Data(String.valueOf(e.getKey()), e.getValue()));
@@ -1166,14 +1131,15 @@ public class MainController implements ScreenInterface {
         }
     }
 
-    private void setData_F(ObservableList<XYChart.Data> sortedList)
+    private void setData_F(List<Map.Entry<Date, Float>> sortedList)
     {
-        campaignMetricLC.setData(sortedList);
-        campaignMetricAC.setData(sortedList);
-        campaignMetricBC.setData(sortedList);
-        for(XYChart.Data d : sortedList)
+        for(Map.Entry<Date, Float> e : sortedList)
         {
-            campaignMetricPC.add(new PieChart.Data(String.valueOf(d.getXValue()), (Float)d.getYValue()));
+            campaignMetricLC.getData().add(new XYChart.Data(String.valueOf(e.getKey()), e.getValue()));
+            campaignMetricAC.getData().add(new XYChart.Data(String.valueOf(e.getKey()), e.getValue()));
+            campaignMetricBC.getData().add(new XYChart.Data(String.valueOf(e.getKey()), e.getValue()));
+
+            campaignMetricPC.add(new PieChart.Data(e.getKey().toString(), e.getValue()));
         }
     }
 
@@ -1190,7 +1156,6 @@ public class MainController implements ScreenInterface {
             unsortedDates.add(d);
         }
         SortedList<Date> sortedDates = new SortedList<Date>(FXCollections.observableList(unsortedDates)).sorted();
-        //Need to sort the data here
         List<Map.Entry<Date, T>> output = new ArrayList<>();
         for (Date d : sortedDates) {
             output.add(Map.entry(d, in.get(d)));
