@@ -27,7 +27,6 @@ public class Main extends Application {
     public static String campaignScreen = "CampaignScreen.fxml";
     public static String campaignScreenID = "campaignScreen";
     public static Scene scene;
-    public HashMap<String, String> themes = new HashMap<>();
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -50,17 +49,12 @@ public class Main extends Application {
             }
         });
 
-        themes.put("GraphSheet","Frontend/sample/StyleSheet.css");
-        themes.put("Dark","Frontend/sample/darkTheme.css");
-        themes.put("Light","Frontend/sample/lightTheme.css");
-        themes.put("Mint","Frontend/sample/mintTheme.css");
-
         mainContainer.setScreen(Main.welcomeScreenID);
         Group root = new Group();
         root.getChildren().addAll(mainContainer);
         scene = new Scene(root);
-        scene.getStylesheets().addAll(themes.values());
-        //scene.getStylesheets().add("Frontend/sample/darkTheme.css");
+        scene.getStylesheets().add("Frontend/sample/StyleSheet.css");
+        scene.getStylesheets().add("Frontend/sample/darkTheme.css");
         primaryStage.setScene(scene);
         //primaryStage.minWidthProperty().bind(scene.widthProperty());
         //primaryStage.minHeightProperty().bind(scene.heightProperty());

@@ -108,6 +108,8 @@ public class MainController implements ScreenInterface {
     @FXML
     private CheckMenuItem histogramType;
     @FXML
+    private MenuButton themes;
+    @FXML
     private CheckMenuItem mintTheme;
     @FXML
     private CheckMenuItem lightTheme;
@@ -443,27 +445,33 @@ public class MainController implements ScreenInterface {
                 endMonth.setText(month.getText());
             });
         }
-
+        darkTheme.setSelected(true);
         mintTheme.setOnAction(event -> {
             mintTheme.setSelected(true);
             lightTheme.setSelected(false);
             darkTheme.setSelected(false);
-            scene.getStylesheets().clear();
-            scene.getStylesheets().add("Frontend/sample/mintTheme.css");
+            Main.scene.getStylesheets().clear();
+            Main.scene.getStylesheets().add("Frontend/sample/StyleSheet.css");
+            Main.scene.getStylesheets().add("Frontend/sample/mintTheme.css");
+            themes.setText("Mint Theme");
         });
         lightTheme.setOnAction(event -> {
             mintTheme.setSelected(false);
             lightTheme.setSelected(true);
             darkTheme.setSelected(false);
-            scene.getStylesheets().clear();
-            scene.getStylesheets().add("Frontend/sample/lightTheme.css");
+            Main.scene.getStylesheets().clear();
+            Main.scene.getStylesheets().add("Frontend/sample/StyleSheet.css");
+            Main.scene.getStylesheets().add("Frontend/sample/lightTheme.css");
+            themes.setText("Light Theme");
         });
         darkTheme.setOnAction(event -> {
             mintTheme.setSelected(false);
             lightTheme.setSelected(false);
             darkTheme.setSelected(true);
-            scene.getStylesheets().clear();
-            scene.getStylesheets().add("Frontend/sample/darkTheme.css");
+            Main.scene.getStylesheets().clear();
+            Main.scene.getStylesheets().add("Frontend/sample/StyleSheet.css");
+            Main.scene.getStylesheets().add("Frontend/sample/darkTheme.css");
+            themes.setText("Dark Theme");
         });
         campaignsTable.setPrefSize(250, 225);
         campaignsTable.setPlaceholder(new Label("No campaigns loaded!"));
