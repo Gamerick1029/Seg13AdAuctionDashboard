@@ -123,19 +123,19 @@
                             
                             
                            <Text id="h1" layoutX="724.0" layoutY="30.0" text="Settings" />
-                            <MenuButton id="menuButton" fx:id="theme" alignment="BOTTOM_RIGHT" layoutX="724.0" layoutY="46.0" mnemonicParsing="false" prefHeight="25.0" text="Theme">
-                           <items>
-                              <CheckMenuItem fx:id="mintTheme" mnemonicParsing="false" text="Mint Theme" />
-                              <CheckMenuItem fx:id="lightTheme" mnemonicParsing="false" text="Light Theme" />
-                              <CheckMenuItem fx:id="darkTheme" mnemonicParsing="false" text="Dark Theme" />
-                           </items>
-                            </MenuButton>
                      </children>
 
                   </AnchorPane>
                </center>
             </BorderPane>
             <ProgressIndicator fx:id="progressIndicator" layoutX="574.0" layoutY="274.0" prefHeight="178.0" prefWidth="261.0" progress="0.0" visible="false" />
+                <MenuButton id="menuButton" fx:id="theme" alignment="BOTTOM_RIGHT" layoutX="721.0" mnemonicParsing="false" prefHeight="25.0" text="Theme">
+               <items>
+                  <CheckMenuItem fx:id="mintTheme" mnemonicParsing="false" text="Mint Theme" />
+                  <CheckMenuItem fx:id="lightTheme" mnemonicParsing="false" text="Light Theme" />
+                  <CheckMenuItem fx:id="darkTheme" mnemonicParsing="false" text="Dark Theme" />
+               </items>
+                </MenuButton>
          </children>
          <padding>
          	<Insets top="30.0" />

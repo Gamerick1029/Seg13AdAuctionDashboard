@@ -8,8 +8,11 @@ import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.chart.*;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -105,53 +108,51 @@ public class MainController implements ScreenInterface {
     @FXML
     private CheckMenuItem histogramType;
     @FXML
+    private CheckMenuItem mintTheme;
+    @FXML
+    private CheckMenuItem lightTheme;
+    @FXML
+    private CheckMenuItem darkTheme;
+    @FXML
     private RadioButton byDay;
     @FXML
     private RadioButton byWeek;
     @FXML
     private RadioButton byMonth;
     @FXML
-    private CheckBox age90;
+    private CheckBox genderMale;
     @FXML
-    private CheckBox age50to69;
+    private CheckBox genderFemale;
     @FXML
-    private CheckBox age70to89;
+    private CheckBox genderOther;
     @FXML
-    private CheckBox age30to49;
+    private CheckBox ageBelow20;
     @FXML
-    private CheckBox age19to29;
+    private CheckBox age25to34;
     @FXML
-    private CheckBox age18;
+    private CheckBox age35to44;
     @FXML
-    private CheckBox income29;
+    private CheckBox age45to54;
     @FXML
-    private CheckBox income19;
+    private CheckBox ageAbove54;
     @FXML
-    private CheckBox income59;
+    private CheckBox incomeLow;
     @FXML
-    private CheckBox income100;
+    private CheckBox incomeMedium;
     @FXML
-    private CheckBox income89;
+    private CheckBox incomeHigh;
     @FXML
-    private CheckBox income100more;
+    private CheckBox contextNews;
     @FXML
-    private CheckBox female;
+    private CheckBox contextShopping;
     @FXML
-    private CheckBox male;
+    private CheckBox contextMedia;
     @FXML
-    private CheckBox other;
+    private CheckBox contextBlog;
     @FXML
-    private CheckBox shopping;
+    private CheckBox contextHobbies;
     @FXML
-    private CheckBox social;
-    @FXML
-    private CheckBox food;
-    @FXML
-    private CheckBox healthcare;
-    @FXML
-    private CheckBox sport;
-    @FXML
-    private CheckBox entertainment;
+    private CheckBox contextTravel;
     @FXML
     private TextField startDay;
     @FXML
@@ -172,6 +173,7 @@ public class MainController implements ScreenInterface {
     private XYChart.Series campaignMetricAC;
     private XYChart.Series histogramSeries;
     private ObservableList<PieChart.Data> campaignMetricPC;
+    private Scene scene;
 
     private Campaign currentCampaign = new Campaign("");
     private String currentMetricDisplayed = "Impressions";
@@ -188,6 +190,7 @@ public class MainController implements ScreenInterface {
         myController.setCampaignDataPopulator(new CampaignDataPopulator(x, y, lineChart, barChart, pieChart, areaChart));
         x.animatedProperty().setValue(false);
         y.animatedProperty().setValue(false);
+        impressions.setStyle("-fx-font-weight: bold;");
         lineChart.animatedProperty().setValue(false);
         barChart.animatedProperty().setValue(false);
         pieChart.animatedProperty().setValue(false);
@@ -275,152 +278,123 @@ public class MainController implements ScreenInterface {
                 groupByMonth();
             }
         });
-
-        age90.setOnAction(r -> {
-            if (age90.isSelected()) {
-                filterGraph(age90.getText(), true);
+        genderMale.setOnAction(r -> {
+            if (genderMale.isSelected()) {
+                filterGraph(genderMale.getText(), true);
             } else {
-                filterGraph(age90.getText(), false);
+                filterGraph(genderMale.getText(), false);
             }
         });
-        age50to69.setOnAction(r -> {
-            if (age50to69.isSelected()) {
-                filterGraph(age50to69.getText(), true);
+        genderFemale.setOnAction(r -> {
+            if (genderFemale.isSelected()) {
+                filterGraph(genderFemale.getText(), true);
             } else {
-                filterGraph(age50to69.getText(), false);
+                filterGraph(genderFemale.getText(), false);
             }
         });
-        age70to89.setOnAction(r -> {
-            if (age70to89.isSelected()) {
-                filterGraph(age70to89.getText(), true);
+        genderOther.setOnAction(r -> {
+            if (genderOther.isSelected()) {
+                filterGraph(genderOther.getText(), true);
             } else {
-                filterGraph(age70to89.getText(), false);
+                filterGraph(genderOther.getText(), false);
             }
         });
-        age30to49.setOnAction(r -> {
-            if (age30to49.isSelected()) {
-                filterGraph(age30to49.getText(), true);
+        ageBelow20.setOnAction(r -> {
+            if (ageBelow20.isSelected()) {
+                filterGraph(ageBelow20.getText(), true);
             } else {
-                filterGraph(age30to49.getText(), false);
+                filterGraph(ageBelow20.getText(), false);
             }
         });
-        age19to29.setOnAction(r -> {
-            if (age19to29.isSelected()) {
-                filterGraph(age19to29.getText(), true);
+        age25to34.setOnAction(r -> {
+            if (age25to34.isSelected()) {
+                filterGraph(age25to34.getText(), true);
             } else {
-                filterGraph(age19to29.getText(), false);
+                filterGraph(age25to34.getText(), false);
             }
         });
-        age18.setOnAction(r -> {
-            if (age18.isSelected()) {
-                filterGraph(age18.getText(), true);
+        age35to44.setOnAction(r -> {
+            if (age35to44.isSelected()) {
+                filterGraph(age35to44.getText(), true);
             } else {
-                filterGraph(age18.getText(), false);
+                filterGraph(age35to44.getText(), false);
             }
         });
-        income29.setOnAction(r -> {
-            if (income29.isSelected()) {
-                filterGraph(income29.getText(), true);
+        age45to54.setOnAction(r -> {
+            if (age45to54.isSelected()) {
+                filterGraph(age45to54.getText(), true);
             } else {
-                filterGraph(income29.getText(), false);
+                filterGraph(age45to54.getText(), false);
             }
         });
-        income19.setOnAction(r -> {
-            if (income19.isSelected()) {
-                filterGraph(income19.getText(), true);
+        ageAbove54.setOnAction(r -> {
+            if (ageAbove54.isSelected()) {
+                filterGraph(ageAbove54.getText(), true);
             } else {
-                filterGraph(income19.getText(), false);
+                filterGraph(ageAbove54.getText(), false);
             }
         });
-        income59.setOnAction(r -> {
-            if (income59.isSelected()) {
-                filterGraph(income59.getText(), true);
+        incomeLow.setOnAction(r -> {
+            if (incomeLow.isSelected()) {
+                filterGraph(incomeLow.getText(), true);
             } else {
-                filterGraph(income59.getText(), false);
+                filterGraph(incomeLow.getText(), false);
             }
         });
-        income100.setOnAction(r -> {
-            if (income100.isSelected()) {
-                filterGraph(income100.getText(), true);
+        incomeMedium.setOnAction(r -> {
+            if (incomeMedium.isSelected()) {
+                filterGraph(incomeMedium.getText(), true);
             } else {
-                filterGraph(income100.getText(), false);
+                filterGraph(incomeMedium.getText(), false);
             }
         });
-        income89.setOnAction(r -> {
-            if (income89.isSelected()) {
-                filterGraph(income89.getText(), true);
+        incomeHigh.setOnAction(r -> {
+            if (incomeHigh.isSelected()) {
+                filterGraph(incomeHigh.getText(), true);
             } else {
-                filterGraph(income89.getText(), false);
+                filterGraph(incomeHigh.getText(), false);
             }
         });
-        income100more.setOnAction(r -> {
-            if (income100.isSelected()) {
-                filterGraph(income100.getText(), true);
+        contextNews.setOnAction(r -> {
+            if (contextNews.isSelected()) {
+                filterGraph(contextNews.getText(), true);
             } else {
-                filterGraph(income100.getText(), false);
+                filterGraph(contextNews.getText(), false);
             }
         });
-        female.setOnAction(r -> {
-            if (female.isSelected()) {
-                filterGraph(female.getText(), true);
+        contextShopping.setOnAction(r -> {
+            if (contextShopping.isSelected()) {
+                filterGraph(contextShopping.getText(), true);
             } else {
-                filterGraph(female.getText(), false);
+                filterGraph(contextShopping.getText(), false);
             }
         });
-        male.setOnAction(r -> {
-            if (age90.isSelected()) {
-                filterGraph(age90.getText(), true);
+        contextMedia.setOnAction(r -> {
+            if (contextMedia.isSelected()) {
+                filterGraph(contextMedia.getText(), true);
             } else {
-                filterGraph(age90.getText(), false);
+                filterGraph(contextMedia.getText(), false);
             }
         });
-        other.setOnAction(r -> {
-            if (other.isSelected()) {
-                filterGraph(other.getText(), true);
+        contextBlog.setOnAction(r -> {
+            if (contextBlog.isSelected()) {
+                filterGraph(contextBlog.getText(), true);
             } else {
-                filterGraph(other.getText(), false);
+                filterGraph(contextBlog.getText(), false);
             }
         });
-        shopping.setOnAction(r -> {
-            if (shopping.isSelected()) {
-                filterGraph(shopping.getText(), true);
+        contextHobbies.setOnAction(r -> {
+            if (contextHobbies.isSelected()) {
+                filterGraph(contextHobbies.getText(), true);
             } else {
-                filterGraph(shopping.getText(), false);
+                filterGraph(contextHobbies.getText(), false);
             }
         });
-        social.setOnAction(r -> {
-            if (social.isSelected()) {
-                filterGraph(social.getText(), true);
+        contextTravel.setOnAction(r -> {
+            if (contextTravel.isSelected()) {
+                filterGraph(contextTravel.getText(), true);
             } else {
-                filterGraph(social.getText(), false);
-            }
-        });
-        food.setOnAction(r -> {
-            if (food.isSelected()) {
-                filterGraph(food.getText(), true);
-            } else {
-                filterGraph(food.getText(), false);
-            }
-        });
-        healthcare.setOnAction(r -> {
-            if (healthcare.isSelected()) {
-                filterGraph(healthcare.getText(), true);
-            } else {
-                filterGraph(healthcare.getText(), false);
-            }
-        });
-        sport.setOnAction(r -> {
-            if (sport.isSelected()) {
-                filterGraph(sport.getText(), true);
-            } else {
-                filterGraph(sport.getText(), false);
-            }
-        });
-        entertainment.setOnAction(r -> {
-            if (entertainment.isSelected()) {
-                filterGraph(entertainment.getText(), true);
-            } else {
-                filterGraph(entertainment.getText(), false);
+                filterGraph(contextTravel.getText(), false);
             }
         });
         searchDate.addEventHandler(MouseEvent.MOUSE_CLICKED,
@@ -470,6 +444,27 @@ public class MainController implements ScreenInterface {
             });
         }
 
+        mintTheme.setOnAction(event -> {
+            mintTheme.setSelected(true);
+            lightTheme.setSelected(false);
+            darkTheme.setSelected(false);
+            scene.getStylesheets().clear();
+            scene.getStylesheets().add("Frontend/sample/mintTheme.css");
+        });
+        lightTheme.setOnAction(event -> {
+            mintTheme.setSelected(false);
+            lightTheme.setSelected(true);
+            darkTheme.setSelected(false);
+            scene.getStylesheets().clear();
+            scene.getStylesheets().add("Frontend/sample/lightTheme.css");
+        });
+        darkTheme.setOnAction(event -> {
+            mintTheme.setSelected(false);
+            lightTheme.setSelected(false);
+            darkTheme.setSelected(true);
+            scene.getStylesheets().clear();
+            scene.getStylesheets().add("Frontend/sample/darkTheme.css");
+        });
         campaignsTable.setPrefSize(250, 225);
         campaignsTable.setPlaceholder(new Label("No campaigns loaded!"));
         //campaignsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -1140,8 +1135,7 @@ public class MainController implements ScreenInterface {
     private void setMetrics(String name) {
         campaignName.setText(name);
         DataModel dm = myController.getDataModel(name);
-        try
-        {
+        try {
             impressionsF.setText(String.valueOf(dm.getImpressionsNumber()));
             clicksF.setText(String.valueOf(dm.getClicksNumber()));
             bouncesF.setText(String.valueOf(dm.getBouncesNumber()));
@@ -1150,9 +1144,7 @@ public class MainController implements ScreenInterface {
             clickRateF.setText(String.valueOf(dm.getCTR()));
             aquisitionF.setText(String.valueOf(dm.getCPA()));
             costPerClickF.setText(String.valueOf(dm.getCPC()));
-        }
-        catch(SQLException e)
-        {
+        } catch (SQLException e) {
             e.printStackTrace();
             /*
             TODO:
@@ -1261,8 +1253,7 @@ public class MainController implements ScreenInterface {
             if (campaign.getDisplayed().isSelected()) {
                 DataModel dataModel = myController.getDataModel(campaign.getName());
                 histogramSeries = new XYChart.Series();
-                try
-                {
+                try {
                     for (Map.Entry<Date, Float> entry : dataModel.getFullCost(currentStep).entrySet()) {
                         Date key = entry.getKey();
                         Float value = entry.getValue();
@@ -1270,8 +1261,7 @@ public class MainController implements ScreenInterface {
                     }
                     barChart.getData().add(histogramSeries);
                     histogramSeries.setName(dataModel.getName() + "Click Cost Histogram");
-                } catch (SQLException e)
-                {
+                } catch (SQLException e) {
                     e.printStackTrace();
                     /*
                     TODO:
@@ -1340,29 +1330,56 @@ public class MainController implements ScreenInterface {
         switch (metric) {
             case "Impressions":
                 impressions.setStyle("-fx-font-weight: bold;");
+                setMetricText();
+                impressions.setText("▶ " + impressions.getText());
                 break;
             case "Clicks":
                 clicks.setStyle("-fx-font-weight: bold;");
+                setMetricText();
+                clicks.setText("▶ " + clicks.getText());
                 break;
             case "Bounces":
                 bounces.setStyle("-fx-font-weight: bold;");
+                setMetricText();
+                bounces.setText("▶ " + bounces.getText());
                 break;
             case "Conversions":
                 conversions.setStyle("-fx-font-weight: bold;");
+                setMetricText();
+                conversions.setText("▶ " + conversions.getText());
                 break;
             case "TotalCost":
                 totalCost.setStyle("-fx-font-weight: bold;");
+                setMetricText();
+                totalCost.setText("▶ " + totalCost.getText());
                 break;
             case "ClickRate":
                 clickRate.setStyle("-fx-font-weight: bold;");
+                setMetricText();
+                clickRate.setText("▶ " + clickRate.getText());
                 break;
             case "Aquisition":
                 aquisition.setStyle("-fx-font-weight: bold;");
+                setMetricText();
+                aquisition.setText("▶ " + aquisition.getText());
                 break;
             case "CostPerClick":
                 costPerClick.setStyle("-fx-font-weight: bold;");
+                setMetricText();
+                costPerClick.setText("▶ " + costPerClick.getText());
                 break;
         }
+    }
+
+    private void setMetricText() {
+        impressions.setText("Impressions");
+        clicks.setText("Clicks");
+        bounces.setText("Bounces");
+        conversions.setText("Conversions");
+        totalCost.setText("Total Cost");
+        clickRate.setText("Click Rate");
+        aquisition.setText("Acquisition");
+        costPerClick.setText("Cost per Click");
     }
 
     public void populateMetric(String metric, long step) {
@@ -1388,10 +1405,8 @@ public class MainController implements ScreenInterface {
                 campaignMetricAC.setName(dataModel.getName() + " " + metric);
 
 
-                try
-                {
-                    switch (metric)
-                    {
+                try {
+                    switch (metric) {
                         case "Impressions":
                             setData_I(sortMap(dataModel.getFullImpressions(step)));
                             break;
@@ -1417,9 +1432,7 @@ public class MainController implements ScreenInterface {
                             setData_F(sortMap(dataModel.getFullCPC(step)));
                             break;
                     }
-                }
-                catch(SQLException e)
-                {
+                } catch (SQLException e) {
                     e.printStackTrace();
                     /*
                     TODO
@@ -1434,10 +1447,8 @@ public class MainController implements ScreenInterface {
         }
     }
 
-    private void setData_I(List<Map.Entry<Date, Integer>> sortedList)
-    {
-        for(Map.Entry<Date, Integer> e : sortedList)
-        {
+    private void setData_I(List<Map.Entry<Date, Integer>> sortedList) {
+        for (Map.Entry<Date, Integer> e : sortedList) {
             campaignMetricLC.getData().add(new XYChart.Data(String.valueOf(e.getKey()), e.getValue()));
             campaignMetricAC.getData().add(new XYChart.Data(String.valueOf(e.getKey()), e.getValue()));
             campaignMetricBC.getData().add(new XYChart.Data(String.valueOf(e.getKey()), e.getValue()));
@@ -1446,10 +1457,8 @@ public class MainController implements ScreenInterface {
         }
     }
 
-    private void setData_F(List<Map.Entry<Date, Float>> sortedList)
-    {
-        for(Map.Entry<Date, Float> e : sortedList)
-        {
+    private void setData_F(List<Map.Entry<Date, Float>> sortedList) {
+        for (Map.Entry<Date, Float> e : sortedList) {
             campaignMetricLC.getData().add(new XYChart.Data(String.valueOf(e.getKey()), e.getValue()));
             campaignMetricAC.getData().add(new XYChart.Data(String.valueOf(e.getKey()), e.getValue()));
             campaignMetricBC.getData().add(new XYChart.Data(String.valueOf(e.getKey()), e.getValue()));

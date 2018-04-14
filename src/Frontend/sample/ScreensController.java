@@ -64,7 +64,6 @@ public class ScreensController extends StackPane {
     public boolean setScreen(final String name) {
         if (screens.get(name) != null) {   //if the screen is loaded
             final DoubleProperty opacity = opacityProperty();
-            Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
             if (name == "viewDataScreen") {
                 stage.setHeight(650);
@@ -76,24 +75,19 @@ public class ScreensController extends StackPane {
             }
             if (name == "campaignScreen") {
                 stage.setMaximized(true);
-                //TODO: PROPERLY RESIZE APPLICATION!!!
-                //stage.getScene().getWindow().setLocation(screenSize.width/2-stage.getScene().getWindow().getSize().width/2, dim.height/2-this.getSize().height/2);
             }
 
             if (!getChildren().isEmpty()) {
                 Timeline fade = new Timeline(
                         new KeyFrame(Duration.ZERO, new KeyValue(opacity, 1.0)),
-                        new KeyFrame(new Duration(200), new EventHandler<ActionEvent>() {
-                            @Override
-                            public void handle(ActionEvent t) {
-                                getChildren().remove(0);
-                                getChildren().add(0, screens.get(name));
+                        new KeyFrame(new Duration(200), t -> {
+                            getChildren().remove(0);
+                            getChildren().add(0, screens.get(name));
 
-                                Timeline fadeIn = new Timeline(
-                                        new KeyFrame(Duration.ZERO, new KeyValue(opacity, 0.0)),
-                                        new KeyFrame(new Duration(200), new KeyValue(opacity, 1.0)));
-                                fadeIn.play();
-                            }
+                            Timeline fadeIn = new Timeline(
+                                    new KeyFrame(Duration.ZERO, new KeyValue(opacity, 0.0)),
+                                    new KeyFrame(new Duration(200), new KeyValue(opacity, 1.0)));
+                            fadeIn.play();
                         }, new KeyValue(opacity, 0.0)));
                 fade.play();
 

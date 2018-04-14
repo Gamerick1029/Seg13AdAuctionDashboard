@@ -7,6 +7,10 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 /**
  * Created by Yoana on 25/02/2018.
  * This class is used to run the application and
@@ -22,6 +26,8 @@ public class Main extends Application {
     public static String viewDataScreen = "ViewDataScreen.fxml";
     public static String campaignScreen = "CampaignScreen.fxml";
     public static String campaignScreenID = "campaignScreen";
+    public static Scene scene;
+    public HashMap<String, String> themes = new HashMap<>();
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -43,13 +49,17 @@ public class Main extends Application {
                 mainContainer.prefHeightProperty().bind(newValue.heightProperty());
             }
         });
-        
+
+        themes.put("GraphSheet","Frontend/sample/StyleSheet.css");
+        themes.put("Dark","Frontend/sample/darkTheme.css");
+        themes.put("Light","Frontend/sample/lightTheme.css");
+        themes.put("Mint","Frontend/sample/mintTheme.css");
 
         mainContainer.setScreen(Main.welcomeScreenID);
         Group root = new Group();
         root.getChildren().addAll(mainContainer);
-        Scene scene = new Scene(root);
-        //scene.getStylesheets().add("Frontend/sample/StyleSheet.css");
+        scene = new Scene(root);
+        scene.getStylesheets().addAll(themes.values());
         //scene.getStylesheets().add("Frontend/sample/darkTheme.css");
         primaryStage.setScene(scene);
         //primaryStage.minWidthProperty().bind(scene.widthProperty());

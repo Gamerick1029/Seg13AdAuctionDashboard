@@ -1,75 +1,75 @@
 .chart {	
--    -fx-padding: 10px;	
--}	
--	
--.chart-content {	
--    -fx-padding: 30px;	
--}	
--	
--.chart-title {	
--    -fx-text-fill: #fbfffd;	
--    -fx-font-size: 1.6em;	
--}	
--	
--.chart-legend {	
--    -fx-background-color: #948e8e;	
--    -fx-padding: 20px;	
--}	
--	
--.chart-legend-item-symbol {	
--    -fx-background-radius: 0;	
--}	
--	
--.chart-legend-item {	
--    -fx-text-fill: #fbfffd;	
--}	
--	
--.chart-series-line {	
--    -fx-stroke-width: 2px;	
--    -fx-effect: null;	
--}	
--	
--.axis {	
--    -fx-font-size: 1.4em;	
--    -fx-tick-label-fill: #fbfffd;	
--    -fx-tick-length: 20;	
--    -fx-minor-tick-length: 10;	
--}	
--	
--.axis-label {	
--    -fx-text-fill: #fbfffd;	
--}	
--	
--.axis-tick-mark {	
--    -fx-stroke: #ffffff;	
--    -fx-stroke-width: 3;	
--}	
--	
--.axis-minor-tick-mark {	
--    -fx-stroke: #fbfffd;	
--}	
--	
--	
--.default-color0.chart-series-line {	
--    -fx-stroke: #e9967a;	
--}	
--	
--.default-color1.chart-series-line {	
--    -fx-stroke: #f0e68c;	
--}	
--	
--.default-color2.chart-series-line {	
--    -fx-stroke: #dda0dd;	
--}	
--	
--.default-color0.chart-line-symbol {	
--    -fx-background-color: #e9967a, white;	
--}	
--	
--.default-color1.chart-line-symbol {	
--    -fx-background-color: #f0e68c, white;	
--}	
--	
--.default-color2.chart-line-symbol {	
--    -fx-background-color: #dda0dd, white;	
--} 
+    -fx-padding: 10px;
+}
+
+.chart-content {
+    -fx-padding: 30px;
+}
+
+.chart-title {
+    -fx-text-fill: #fbfffd;
+    -fx-font-size: 1.6em;
+}
+
+.chart-legend {
+    -fx-background-color: #948e8e;
+    -fx-padding: 20px;
+}
+
+.chart-legend-item-symbol {
+    -fx-background-radius: 0;
+}
+
+.chart-legend-item {
+    -fx-text-fill: #fbfffd;
+}
+
+.chart-series-line {
+    -fx-stroke-width: 2px;
+    -fx-effect: null;
+}
+
+.axis {
+    -fx-font-size: 1.4em;
+    -fx-tick-label-fill: #fbfffd;
+    -fx-tick-length: 20;
+    -fx-minor-tick-length: 10;
+}
+
+.axis-label {
+    -fx-text-fill: #fbfffd;
+}
+
+.axis-tick-mark {
+    -fx-stroke: #ffffff;
+    -fx-stroke-width: 3;
+}
+
+.axis-minor-tick-mark {
+    -fx-stroke: #fbfffd;
+}
+
+
+.default-color0.chart-series-line {
+    -fx-stroke: #e9967a;
+}
+
+.default-color1.chart-series-line {
+    -fx-stroke: #f0e68c;
+}
+
+.default-color2.chart-series-line {
+    -fx-stroke: #dda0dd;
+}
+
+.default-color0.chart-line-symbol {
+    -fx-background-color: #e9967a, white;
+}
+
+.default-color1.chart-line-symbol {
+    -fx-background-color: #f0e68c, white;
+}
+
+.default-color2.chart-line-symbol {
+    -fx-background-color: #dda0dd, white;
+}
