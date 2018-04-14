@@ -35,7 +35,7 @@
 <?import javafx.scene.text.Text?>
 <?import java.net.*?>
 
-<BorderPane fx:id="bigPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Frontend.sample.MainController" >
+<BorderPane fx:id="bigPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Frontend.sample.MainController">
    <center>
       <AnchorPane fx:id="centerPane" BorderPane.alignment="BOTTOM_CENTER">
          <children>
@@ -120,6 +120,16 @@
                             <NumberAxis id="text" label="Campaign Something" side="LEFT" />
                           </yAxis>
                         </AreaChart>
+                            
+                            
+                           <Text id="h1" layoutX="724.0" layoutY="30.0" text="Settings" />
+                            <MenuButton id="menuButton" fx:id="theme" alignment="BOTTOM_RIGHT" layoutX="724.0" layoutY="46.0" mnemonicParsing="false" prefHeight="25.0" text="Theme">
+                           <items>
+                              <CheckMenuItem fx:id="mintTheme" mnemonicParsing="false" text="Mint Theme" />
+                              <CheckMenuItem fx:id="lightTheme" mnemonicParsing="false" text="Light Theme" />
+                              <CheckMenuItem fx:id="darkTheme" mnemonicParsing="false" text="Dark Theme" />
+                           </items>
+                            </MenuButton>
                      </children>
 
                   </AnchorPane>
@@ -134,256 +144,258 @@
    </center>
     <left>
         <Pane id="leftPane">
-			<VBox>
-            <children>
-	            <VBox alignment="TOP_LEFT" prefHeight="200.0" spacing="10.0">
-	                        <children>
-
-	                            <HBox alignment="TOP_LEFT" spacing="25.0">
-	                                <children>
-	                                    <Text id="h1" fx:id="addNewCampaign" onMouseClicked="#addNewCampaign" text="Loaded campaigns" textAlignment="CENTER">
-
-	                                        <cursor>
-	                                            <Cursor fx:constant="HAND" />
-	                                        </cursor>
-	                                        <HBox.margin>
-	                                            <Insets left="20.0" top="20.0" />
-	                                        </HBox.margin>
-	                                    </Text>
-	                                    <Text id="plus" onMouseClicked="#addNewCampaign" text="+" textAlignment="CENTER" wrappingWidth="18.0">
-
-	                                        <cursor>
-	                                            <Cursor fx:constant="HAND" />
-	                                        </cursor>
-	                                        <HBox.margin>
-	                                            <Insets top="20.0" />
-	                                        </HBox.margin>
-	                                    </Text>
-	                                </children>
-	                                <opaqueInsets>
-	                                    <Insets />
-	                                </opaqueInsets>
-	                           <padding>
-	                              <Insets bottom="10.0" />
-	                           </padding>
-	                            </HBox>
-	                            <HBox alignment="TOP_LEFT">
-	                                <children>
-	                                    <TableView fx:id="campaignsTable" />
-	                                </children>
-	                                <padding>
-	                                    <Insets left="20.0" right="20.0" />
-	                                </padding>
-	                            </HBox>
-	                        </children>
-	                        <opaqueInsets>
-	                            <Insets />
-	                        </opaqueInsets>
-	                     <BorderPane.margin>
-	                        <Insets bottom="20.0" />
-	                     </BorderPane.margin>
-	                     <padding>
-	                        <Insets right="10.0" />
-	                     </padding>
-	                    </VBox>
-
-
-	                <VBox alignment="CENTER" spacing="15">
-	                    <children>
-	                  <VBox prefHeight="28.0" alignment="CENTER_LEFT">
-	                     <children>
-	                              <Text id="h1" text="Campaign Metrics">
-
-	                           <VBox.margin>
-	                              <Insets top="30.0" left="20.0"/>
-	                           </VBox.margin>
-	                              </Text>
-	                     </children>
-	                  </VBox>
-	                        <HBox alignment="CENTER">
-	                            <children>
-	                                <VBox alignment="CENTER">
-	                                    <children>
-	                                        <Text id="text" text="View metrics for:" wrappingWidth="150.0">
+           <children>
+   			<VBox>
+               <children>
+   	            <VBox alignment="TOP_LEFT" prefHeight="200.0" spacing="10.0">
+   	                        <children>
+   
+   	                            <HBox alignment="TOP_LEFT" spacing="25.0">
+   	                                <children>
+   	                                    <Text id="h1" fx:id="addNewCampaign" onMouseClicked="#addNewCampaign" text="Loaded campaigns" textAlignment="CENTER">
+   
+   	                                        <cursor>
+   	                                            <Cursor fx:constant="HAND" />
+   	                                        </cursor>
+   	                                        <HBox.margin>
+   	                                            <Insets left="20.0" top="20.0" />
+   	                                        </HBox.margin>
+   	                                    </Text>
+   	                                    <Text id="plus" onMouseClicked="#addNewCampaign" text="+" textAlignment="CENTER" wrappingWidth="18.0">
+   
+   	                                        <cursor>
+   	                                            <Cursor fx:constant="HAND" />
+   	                                        </cursor>
+   	                                        <HBox.margin>
+   	                                            <Insets top="20.0" />
+   	                                        </HBox.margin>
+   	                                    </Text>
+   	                                </children>
+   	                                <opaqueInsets>
+   	                                    <Insets />
+   	                                </opaqueInsets>
+   	                           <padding>
+   	                              <Insets bottom="10.0" />
+   	                           </padding>
+   	                            </HBox>
+   	                            <HBox alignment="TOP_LEFT">
+   	                                <children>
+   	                                    <TableView fx:id="campaignsTable" />
+   	                                </children>
+   	                                <padding>
+   	                                    <Insets left="20.0" right="20.0" />
+   	                                </padding>
+   	                            </HBox>
+   	                        </children>
+   	                        <opaqueInsets>
+   	                            <Insets />
+   	                        </opaqueInsets>
+   	                     <BorderPane.margin>
+   	                        <Insets bottom="20.0" />
+   	                     </BorderPane.margin>
+   	                     <padding>
+   	                        <Insets right="10.0" />
+   	                     </padding>
+   	                    </VBox>
+   
+   
+   	                <VBox alignment="CENTER" spacing="15">
+   	                    <children>
+   	                  <VBox alignment="CENTER_LEFT" prefHeight="28.0">
+   	                     <children>
+   	                              <Text id="h1" text="Campaign Metrics">
+   
+   	                           <VBox.margin>
+   	                              <Insets left="20.0" top="30.0" />
+   	                           </VBox.margin>
+   	                              </Text>
+   	                     </children>
+   	                  </VBox>
+   	                        <HBox alignment="CENTER">
+   	                            <children>
+   	                                <VBox alignment="CENTER">
+   	                                    <children>
+   	                                        <Text id="text" text="View metrics for:" wrappingWidth="150.0">
 	                                        </Text>
-	                                    </children>
-	                                </VBox>
-	                                <MenuButton id="menuButton" fx:id="campaignName" contentDisplay="CENTER" mnemonicParsing="false" text="Campaign" textAlignment="CENTER"  prefWidth="100.0">
-	                                    <items>
-	                                        <CheckMenuItem id="checkMenuItem" fx:id="campaignOne" mnemonicParsing="false" selected="true" />
-	                                    </items>
-	                           <VBox.margin>
-	                              <Insets />
-	                           </VBox.margin>
-	                                </MenuButton>
-	                            </children>
-	                     
-                     </HBox>
-	                        <HBox alignment="CENTER">
-	                            <children>
-	                                <VBox alignment="CENTER">
-	                                    <children>
-	                                        <Text id="dataText" fx:id="impressions" text="▶ Impressions" wrappingWidth="150.0">
-	                                            <cursor>
-	                                                <Cursor fx:constant="HAND" />
-	                                            </cursor>
-
-	                                        </Text>
-	                                    </children>
-	                                </VBox>
-	                                <TextField id="dataField" fx:id="impressionsF" editable="false" prefWidth="100.0">
-
-	                                </TextField>
-	                            </children>
-	                    
-	                        </HBox>
-	                        <HBox alignment="CENTER">
-	                            <children>
-	                                <VBox alignment="CENTER">
-	                                    <children>
-	                                        <Text id="dataText" fx:id="clicks" text="▶ Clicks" wrappingWidth="150.0">
-	                                            <cursor>
-	                                                <Cursor fx:constant="HAND" />
-	                                            </cursor>
-
-	                                        </Text>
-	                                    </children>
-	                                </VBox>
-	                                <TextField id="dataField" fx:id="clicksF" editable="false" prefWidth="100.0">
+   	                                    </children>
+   	                                </VBox>
+   	                                <MenuButton id="menuButton" fx:id="campaignName" contentDisplay="CENTER" mnemonicParsing="false" prefWidth="100.0" text="Campaign" textAlignment="CENTER">
+   	                                    <items>
+   	                                        <CheckMenuItem id="checkMenuItem" fx:id="campaignOne" mnemonicParsing="false" selected="true" />
+   	                                    </items>
+   	                           <VBox.margin>
+   	                              <Insets />
+   	                           </VBox.margin>
+   	                                </MenuButton>
+   	                            </children>
+   	                     
+                        </HBox>
+   	                        <HBox alignment="CENTER">
+   	                            <children>
+   	                                <VBox alignment="CENTER">
+   	                                    <children>
+   	                                        <Text id="dataText" fx:id="impressions" text="▶ Impressions" wrappingWidth="150.0">
+   	                                            <cursor>
+   	                                                <Cursor fx:constant="HAND" />
+   	                                            </cursor>
+   
+   	                                        </Text>
+   	                                    </children>
+   	                                </VBox>
+   	                                <TextField id="dataField" fx:id="impressionsF" editable="false" prefWidth="100.0">
 
 	                                </TextField>
-	                            </children>
-	                  
-	                        </HBox>
-	                        <HBox alignment="CENTER">
-	                            <children>
-	                                <VBox alignment="CENTER" prefWidth="91.0">
-	                                    <children>
-	                                        <Text id="dataText" fx:id="bounces" text="▶ Bounces" wrappingWidth="150.0">
-	                                            <cursor>
-	                                                <Cursor fx:constant="HAND" />
-	                                            </cursor>
-
-	                                        </Text>
-	                                    </children>
-	                                </VBox>
-	                                <TextField id="dataField" fx:id="bouncesF" editable="false" prefWidth="100.0">
-
-	                                </TextField>
-	                            </children>
-	                     
-	                        </HBox>
-	                        <HBox alignment="CENTER">
-	                            <children>
-	                                <VBox alignment="CENTER" prefWidth="114.0">
-	                                    <children>
-	                                        <Text id="dataText" fx:id="conversions" text="▶ Conversions" wrappingWidth="150.0">
-	                                            <cursor>
-	                                                <Cursor fx:constant="HAND" />
-	                                            </cursor>
-
-	                                        </Text>
-	                                    </children>
-	                                </VBox>
-	                                <TextField id="dataField" fx:id="conversionsF" editable="false" prefWidth="100.0">
+   	                            </children>
+   	                    
+   	                        </HBox>
+   	                        <HBox alignment="CENTER">
+   	                            <children>
+   	                                <VBox alignment="CENTER">
+   	                                    <children>
+   	                                        <Text id="dataText" fx:id="clicks" text="Clicks" wrappingWidth="150.0">
+   	                                            <cursor>
+   	                                                <Cursor fx:constant="HAND" />
+   	                                            </cursor>
+   
+   	                                        </Text>
+   	                                    </children>
+   	                                </VBox>
+   	                                <TextField id="dataField" fx:id="clicksF" editable="false" prefWidth="100.0">
 
 	                                </TextField>
-	                            </children>
-	                     
-	                        </HBox>
-	                        <HBox alignment="CENTER">
-	                            <children>
-	                                <VBox alignment="CENTER">
-	                                    <children>
-	                                        <Text id="dataText" fx:id="totalCost" text="▶ Total Cost" wrappingWidth="150.0">
-	                                            <cursor>
-	                                                <Cursor fx:constant="HAND" />
-	                                            </cursor>
-
-	                                        </Text>
-	                                    </children>
-	                                </VBox>
-	                                <TextField id="dataField" fx:id="totalCostF" editable="false" prefWidth="100.0">
-
-	                                </TextField>
-	                            </children>
-	                     
-	                        </HBox>
-	                        <HBox alignment="CENTER">
-	                            <children>
-	                                <VBox alignment="CENTER">
-	                                    <children>
-	                                        <Text id="dataText" fx:id="clickRate" text="▶ Click Rate" wrappingWidth="150.0">
-	                                            <cursor>
-	                                                <Cursor fx:constant="HAND" />
-	                                            </cursor>
-
-	                                        </Text>
-	                                    </children>
-	                                </VBox>
-	                                <TextField id="dataField" fx:id="clickRateF" editable="false" prefWidth="100.0">
+   	                            </children>
+   	                  
+   	                        </HBox>
+   	                        <HBox alignment="CENTER">
+   	                            <children>
+   	                                <VBox alignment="CENTER" prefWidth="91.0">
+   	                                    <children>
+   	                                        <Text id="dataText" fx:id="bounces" text="Bounces" wrappingWidth="150.0">
+   	                                            <cursor>
+   	                                                <Cursor fx:constant="HAND" />
+   	                                            </cursor>
+   
+   	                                        </Text>
+   	                                    </children>
+   	                                </VBox>
+   	                                <TextField id="dataField" fx:id="bouncesF" editable="false" prefWidth="100.0">
 
 	                                </TextField>
-	                            </children>
-	                     
-	                        </HBox>
-	                        <HBox alignment="CENTER">
-	                            <children>
-	                                <VBox alignment="CENTER">
-	                                    <children>
-	                              <VBox alignment="CENTER">
-	                                 <children>
-	                                              <Text id="dataText" fx:id="aquisition" text="▶ Acquisition" wrappingWidth="150.0">
-	                                                  <cursor>
-	                                                      <Cursor fx:constant="HAND" />
-	                                                  </cursor>
-
-	                                              </Text>
-	                                 </children>
-	                              </VBox>
-	                                    </children>
-	                                </VBox>
-	                                <TextField id="dataField" fx:id="aquisitionF" editable="false" prefWidth="100.0">
+   	                            </children>
+   	                     
+   	                        </HBox>
+   	                        <HBox alignment="CENTER">
+   	                            <children>
+   	                                <VBox alignment="CENTER" prefWidth="114.0">
+   	                                    <children>
+   	                                        <Text id="dataText" fx:id="conversions" text="Conversions" wrappingWidth="150.0">
+   	                                            <cursor>
+   	                                                <Cursor fx:constant="HAND" />
+   	                                            </cursor>
+   
+   	                                        </Text>
+   	                                    </children>
+   	                                </VBox>
+   	                                <TextField id="dataField" fx:id="conversionsF" editable="false" prefWidth="100.0">
 
 	                                </TextField>
-	                            </children>
-	                   
-	                        </HBox>
-	                        <HBox alignment="CENTER">
-	                            <children>
-	                                <VBox alignment="CENTER" prefWidth="130.0">
-	                                    <children>
-	                              <VBox>
-	                                 <children>
-	                                              <Text id="dataText" fx:id="costPerClick" text="▶ Cost per Click" wrappingWidth="150.0">
-	                                                  <cursor>
-	                                                      <Cursor fx:constant="HAND" />
-	                                                  </cursor>
-
-	                                              </Text>
-	                                 </children>
-	                              </VBox>
-	                                    </children>
-	                                </VBox>
-	                                <TextField id="dataField" fx:id="costPerClickF" editable="false" prefWidth="100.0">
+   	                            </children>
+   	                     
+   	                        </HBox>
+   	                        <HBox alignment="CENTER">
+   	                            <children>
+   	                                <VBox alignment="CENTER">
+   	                                    <children>
+   	                                        <Text id="dataText" fx:id="totalCost" text="Total Cost" wrappingWidth="150.0">
+   	                                            <cursor>
+   	                                                <Cursor fx:constant="HAND" />
+   	                                            </cursor>
+   
+   	                                        </Text>
+   	                                    </children>
+   	                                </VBox>
+   	                                <TextField id="dataField" fx:id="totalCostF" editable="false" prefWidth="100.0">
 
 	                                </TextField>
-	                            </children>
-	                     
-	                        </HBox>
-	                    </children>
-	                </VBox>
-                </children>
-                <VBox.margin>
-                   <Insets left="30.0" />
-                </VBox.margin>
-            </VBox>
+   	                            </children>
+   	                     
+   	                        </HBox>
+   	                        <HBox alignment="CENTER">
+   	                            <children>
+   	                                <VBox alignment="CENTER">
+   	                                    <children>
+   	                                        <Text id="dataText" fx:id="clickRate" text="Click Rate" wrappingWidth="150.0">
+   	                                            <cursor>
+   	                                                <Cursor fx:constant="HAND" />
+   	                                            </cursor>
+   
+   	                                        </Text>
+   	                                    </children>
+   	                                </VBox>
+   	                                <TextField id="dataField" fx:id="clickRateF" editable="false" prefWidth="100.0">
+
+	                                </TextField>
+   	                            </children>
+   	                     
+   	                        </HBox>
+   	                        <HBox alignment="CENTER">
+   	                            <children>
+   	                                <VBox alignment="CENTER">
+   	                                    <children>
+   	                              <VBox alignment="CENTER">
+   	                                 <children>
+   	                                              <Text id="dataText" fx:id="aquisition" text="Acquisition" wrappingWidth="150.0">
+   	                                                  <cursor>
+   	                                                      <Cursor fx:constant="HAND" />
+   	                                                  </cursor>
+   
+   	                                              </Text>
+   	                                 </children>
+   	                              </VBox>
+   	                                    </children>
+   	                                </VBox>
+   	                                <TextField id="dataField" fx:id="aquisitionF" editable="false" prefWidth="100.0">
+
+	                                </TextField>
+   	                            </children>
+   	                   
+   	                        </HBox>
+   	                        <HBox alignment="CENTER">
+   	                            <children>
+   	                                <VBox alignment="CENTER" prefWidth="130.0">
+   	                                    <children>
+   	                              <VBox>
+   	                                 <children>
+   	                                              <Text id="dataText" fx:id="costPerClick" text="Cost per Click" wrappingWidth="150.0">
+   	                                                  <cursor>
+   	                                                      <Cursor fx:constant="HAND" />
+   	                                                  </cursor>
+   
+   	                                              </Text>
+   	                                 </children>
+   	                              </VBox>
+   	                                    </children>
+   	                                </VBox>
+   	                                <TextField id="dataField" fx:id="costPerClickF" editable="false" prefWidth="100.0">
+
+	                                </TextField>
+   	                            </children>
+   	                     
+   	                        </HBox>
+   	                    </children>
+   	                </VBox>
+                   </children>
+                   <VBox.margin>
+                      <Insets left="30.0" />
+                   </VBox.margin>
+               </VBox>
+           </children>
         </Pane>
     </left>
     <right>
-        <Pane layoutX="1155.0" prefHeight="706.0" prefWidth="300" fx:id="rightPane">
+        <Pane fx:id="rightPane" layoutX="1155.0" prefHeight="706.0" prefWidth="300">
             <children>
-            <VBox layoutX="10.0" layoutY="-1.564453125">
+            <VBox layoutX="10.0" layoutY="-2.0" prefHeight="897.0" prefWidth="292.0">
                <children>
                       <Text id="h1" text="Audience" wrappingWidth="173.455078125">
                           <cursor>
@@ -394,7 +406,7 @@
                         <Insets top="20.0" />
                      </VBox.margin>
                       </Text>
-                      <Text  id="h2" text="Age">
+                      <Text id="h2" text="Age">
 
                      <VBox.margin>
                         <Insets bottom="10.0" top="30.0" />
@@ -411,12 +423,11 @@
                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                            <CheckBox id="checkBox" fx:id="age18" mnemonicParsing="false" text="18 or below" />
-                            <CheckBox id="checkBox" fx:id="age19to29" mnemonicParsing="false" text="19 - 29" GridPane.columnIndex="1" />
-                            <CheckBox id="checkBox" fx:id="age30to49" mnemonicParsing="false" text="30 - 49" GridPane.rowIndex="1" />
-                            <CheckBox id="checkBox" fx:id="age50to69" mnemonicParsing="false" prefHeight="18.0" prefWidth="88.0" text="50 - 69" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                            <CheckBox id="checkBox" fx:id="age70to89" mnemonicParsing="false" text="70 - 89" GridPane.rowIndex="2" />
-                            <CheckBox id="checkBox" fx:id="age90" mnemonicParsing="false" text=" 90 or above" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                            <CheckBox id="checkBox" fx:id="ageBelow20" mnemonicParsing="false" text="Below 25" />
+                            <CheckBox id="checkBox" fx:id="age45to54" mnemonicParsing="false" text="45 - 54" GridPane.columnIndex="1" />
+                            <CheckBox id="checkBox" fx:id="age25to34" mnemonicParsing="false" text="25 - 34" GridPane.rowIndex="1" />
+                            <CheckBox id="checkBox" fx:id="ageAbove54" mnemonicParsing="false" prefHeight="18.0" prefWidth="88.0" text="Above 54" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                            <CheckBox id="checkBox" fx:id="age35to44" mnemonicParsing="false" text="35 - 44" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>
                       <Text id="h2" text="Income">
@@ -433,17 +444,11 @@
                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                            <CheckBox id="checkBox" fx:id="income19" mnemonicParsing="false" text="19 000 or below" />
-                            <CheckBox id="checkBox" fx:id="income29" mnemonicParsing="false" text="19 000 - 29 000" GridPane.rowIndex="1" />
-                            <CheckBox id="checkBox" fx:id="income59" mnemonicParsing="false" text="29 000 - 59 000" GridPane.rowIndex="2" />
-                            <CheckBox id="checkBox" fx:id="income89" mnemonicParsing="false" text="59 000 - 89 000" GridPane.rowIndex="3" />
-                            <CheckBox id="checkBox" fx:id="income100" mnemonicParsing="false" text="89 000 - 100 000" GridPane.rowIndex="4" />
-                            <CheckBox id="checkBox" fx:id="income100more" mnemonicParsing="false" text="&gt; 100 000" GridPane.rowIndex="5" />
+                            <CheckBox id="checkBox" fx:id="incomeLow" mnemonicParsing="false" text="Low" />
+                            <CheckBox id="checkBox" fx:id="incomeMedium" mnemonicParsing="false" text="Medium" GridPane.rowIndex="1" />
+                            <CheckBox id="checkBox" fx:id="incomeHigh" mnemonicParsing="false" text="High" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>
                       <Text id="h2" text="Gender">
@@ -462,9 +467,9 @@
                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                            <CheckBox id="checkBox" fx:id="female" mnemonicParsing="false" text="Female" />
-                            <CheckBox id="checkBox" fx:id="male" mnemonicParsing="false" text="Male " GridPane.columnIndex="1" />
-                            <CheckBox id="checkBox" fx:id="other" mnemonicParsing="false" text="Other" GridPane.rowIndex="1" />
+                            <CheckBox id="checkBox" fx:id="genderFemale" mnemonicParsing="false" text="Female" />
+                            <CheckBox id="checkBox" fx:id="genderMale" mnemonicParsing="false" text="Male " GridPane.columnIndex="1" />
+                            <CheckBox id="checkBox" fx:id="genderOther" mnemonicParsing="false" text="Other" GridPane.rowIndex="1" />
                      </children>
                      <VBox.margin>
                         <Insets />
@@ -490,16 +495,16 @@
                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                            <CheckBox id="checkBox" fx:id="entertainment" mnemonicParsing="false" text="Entertainment">
+                            <CheckBox id="checkBox" fx:id="contextNews" mnemonicParsing="false" text="News">
                            <padding>
                               <Insets bottom="2.0" />
                            </padding>
                         </CheckBox>
-                            <CheckBox id="checkBox" fx:id="sport" mnemonicParsing="false" text="Sport" GridPane.columnIndex="1" />
-                            <CheckBox id="checkBox" fx:id="shopping" mnemonicParsing="false" text="Shopping" GridPane.rowIndex="1" />
-                            <CheckBox id="checkBox" fx:id="healthcare" mnemonicParsing="false" text="Healthcare" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                            <CheckBox id="checkBox" fx:id="social" mnemonicParsing="false" text="Social Media" GridPane.rowIndex="2" />
-                            <CheckBox id="checkBox" fx:id="food" mnemonicParsing="false" text="Food" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                            <CheckBox id="checkBox" fx:id="contextHobbies" mnemonicParsing="false" text="Hobbies" GridPane.columnIndex="1" />
+                            <CheckBox id="checkBox" fx:id="contextShopping" mnemonicParsing="false" text="Shopping" GridPane.rowIndex="1" />
+                            <CheckBox id="checkBox" fx:id="contextTravel" mnemonicParsing="false" text="Travel" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                            <CheckBox id="checkBox" fx:id="contextMedia" mnemonicParsing="false" text="Media" GridPane.rowIndex="2" />
+                            <CheckBox id="checkBox" fx:id="contextBlog" mnemonicParsing="false" text="Blog" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>
                       <Text id="h1" text="Date">
@@ -507,29 +512,17 @@
                         <Insets top="20.0" />
                      </VBox.margin>
                       </Text>
-                      <Text id="h2" fx:id="startDate" text="Start">
-
-                     <VBox.margin>
-                        <Insets bottom="10.0" top="30.0" />
-                     </VBox.margin>
-                      </Text>
                   <HBox spacing="5.0">
                      <children>
-                            <MenuButton id="menuButton" fx:id="startMonth" maxWidth="80.0" minWidth="80.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="80.0" text="Month" />
                             <TextField fx:id="endDay" maxWidth="80.0" minWidth="80.0" prefHeight="25.0" prefWidth="80.0" promptText="Day" />
+                            <MenuButton id="menuButton" fx:id="startMonth" maxWidth="80.0" minWidth="80.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="80.0" text="Month" />
                             <TextField fx:id="endYear" maxHeight="25.0" maxWidth="80.0" prefHeight="25.0" prefWidth="80.0" promptText="Year" />
                      </children>
                   </HBox>
-                      <Text id="h2" fx:id="startDate1" text="End">
-
-                     <VBox.margin>
-                        <Insets bottom="10.0" top="30.0" />
-                     </VBox.margin>
-                      </Text>
                   <HBox spacing="5.0">
                      <children>
-                            <MenuButton id="menuButton" fx:id="endMonth" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Month" />
                             <TextField fx:id="startDay" maxWidth="18000.0" minWidth="80.0" prefHeight="25.0" prefWidth="48.0" promptText="Day" />
+                            <MenuButton id="menuButton" fx:id="endMonth" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Month" />
                             <TextField fx:id="startYear" maxWidth="80.0" minWidth="80.0" prefHeight="25.0" prefWidth="80.0" promptText="Year" />
                      </children>
                   </HBox>
@@ -539,22 +532,21 @@
                               <Cursor fx:constant="HAND" />
                           </cursor>
                      <VBox.margin>
-                        <Insets top="10.0" left="130.0" />
+                        <Insets left="130.0" top="10.0" />
                      </VBox.margin>
                       </Text>
-                      
-                      
-                     <Text id="h1" text="Settings">
+                      <Text id="h2" fx:id="startDate" text="Start">
+
                      <VBox.margin>
-                        <Insets top="50.0" />
+                        <Insets bottom="10.0" top="30.0" />
                      </VBox.margin>
                       </Text>
-                      <MenuButton alignment="BOTTOM_RIGHT" id="menuButton" fx:id="theme" mnemonicParsing="false" prefHeight="25.0" text="Theme">
-                      
-                      	<VBox.margin>
-                      		<Insets top="10" />
-                      	</VBox.margin>
-                      </MenuButton>
+                      <Text id="h2" fx:id="startDate1" text="End">
+
+                     <VBox.margin>
+                        <Insets bottom="10.0" top="30.0" />
+                     </VBox.margin>
+                      </Text>
                       
                       
                </children>
