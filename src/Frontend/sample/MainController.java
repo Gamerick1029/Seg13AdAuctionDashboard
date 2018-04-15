@@ -179,6 +179,7 @@ public class MainController implements ScreenInterface {
 
     private Campaign currentCampaign = new Campaign("");
     private String currentMetricDisplayed = "Impressions";
+    private String currentChartType = "LineChart";
     private long currentStep = 1000 * 60 * 60 * 24;
     private final long DAY_STEP = 1000 * 60 * 60 * 24;
     private final long WEEK_STEP = 1000 * 60 * 60 * 24 * 7;
@@ -1153,11 +1154,7 @@ public class MainController implements ScreenInterface {
             aquisitionF.setText(String.valueOf(dm.getCPA()));
             costPerClickF.setText(String.valueOf(dm.getCPC()));
         } catch (SQLException e) {
-            e.printStackTrace();
-            /*
-            TODO:
-            Report error on screen using popup
-             */
+            reportError(e);
         }
     }
 
@@ -1183,6 +1180,7 @@ public class MainController implements ScreenInterface {
     }
 
     private void changeToLineChart() {
+        currentChartType = "LineChart";
         x.animatedProperty().setValue(false);
         y.animatedProperty().setValue(false);
         graphType.setText("Line Chart");
@@ -1198,6 +1196,7 @@ public class MainController implements ScreenInterface {
     }
 
     private void changeToBarChart() {
+        currentChartType = "BarChart";
         x.animatedProperty().setValue(false);
         y.animatedProperty().setValue(false);
         graphType.setText("Bar Chart");
@@ -1215,6 +1214,7 @@ public class MainController implements ScreenInterface {
     }
 
     private void changeToAreaChart() {
+        currentChartType = "AreaChart";
         x.animatedProperty().setValue(false);
         y.animatedProperty().setValue(false);
         graphType.setText("Area Chart");
@@ -1230,6 +1230,7 @@ public class MainController implements ScreenInterface {
     }
 
     private void changeToPieChart() {
+        currentChartType = "PieChart";
         graphType.setText("Pie Chart");
         lineChart.setVisible(false);
         pieChart.setVisible(true);
@@ -1243,6 +1244,7 @@ public class MainController implements ScreenInterface {
     }
 
     private void changeToHistogram() {
+        currentChartType = "Histogram";
         x.animatedProperty().setValue(false);
         y.animatedProperty().setValue(false);
         graphType.setText("Histogram");
@@ -1270,11 +1272,7 @@ public class MainController implements ScreenInterface {
                     barChart.getData().add(histogramSeries);
                     histogramSeries.setName(dataModel.getName() + "Click Cost Histogram");
                 } catch (SQLException e) {
-                    e.printStackTrace();
-                    /*
-                    TODO:
-                    Report error to screen
-                     */
+                    reportError(e);
                 }
 
             }
@@ -1282,47 +1280,49 @@ public class MainController implements ScreenInterface {
     }
 
     private void showMetric(String metric) {
-        switch (metric) {
-            case "Impressions":
-                setStyleToMetric("Impressions");
-                currentMetricDisplayed = "Impressions";
-                populateMetric(metric, currentStep);
-                break;
-            case "Clicks":
-                setStyleToMetric("Clicks");
-                currentMetricDisplayed = "Clicks";
-                populateMetric(metric, currentStep);
-                break;
-            case "Bounces":
-                setStyleToMetric("Bounces");
-                currentMetricDisplayed = "Bounces";
-                populateMetric(metric, currentStep);
-                break;
-            case "Conversions":
-                setStyleToMetric("Conversions");
-                currentMetricDisplayed = "Conversions";
-                populateMetric(metric, currentStep);
-                break;
-            case "TotalCost":
-                setStyleToMetric("TotalCost");
-                currentMetricDisplayed = "TotalCost";
-                populateMetric(metric, currentStep);
-                break;
-            case "ClickRate":
-                setStyleToMetric("ClickRate");
-                currentMetricDisplayed = "ClickRate";
-                populateMetric(metric, currentStep);
-                break;
-            case "Aquisition":
-                setStyleToMetric("Aquisition");
-                currentMetricDisplayed = "Aquisition";
-                populateMetric(metric, currentStep);
-                break;
-            case "CostPerClick":
-                setStyleToMetric("CostPerClick");
-                currentMetricDisplayed = "CostPerClick";
-                populateMetric(metric, currentStep);
-                break;
+        if (currentChartType != "Histogram") {
+            switch (metric) {
+                case "Impressions":
+                    setStyleToMetric("Impressions");
+                    currentMetricDisplayed = "Impressions";
+                    populateMetric(metric, currentStep);
+                    break;
+                case "Clicks":
+                    setStyleToMetric("Clicks");
+                    currentMetricDisplayed = "Clicks";
+                    populateMetric(metric, currentStep);
+                    break;
+                case "Bounces":
+                    setStyleToMetric("Bounces");
+                    currentMetricDisplayed = "Bounces";
+                    populateMetric(metric, currentStep);
+                    break;
+                case "Conversions":
+                    setStyleToMetric("Conversions");
+                    currentMetricDisplayed = "Conversions";
+                    populateMetric(metric, currentStep);
+                    break;
+                case "TotalCost":
+                    setStyleToMetric("TotalCost");
+                    currentMetricDisplayed = "TotalCost";
+                    populateMetric(metric, currentStep);
+                    break;
+                case "ClickRate":
+                    setStyleToMetric("ClickRate");
+                    currentMetricDisplayed = "ClickRate";
+                    populateMetric(metric, currentStep);
+                    break;
+                case "Aquisition":
+                    setStyleToMetric("Aquisition");
+                    currentMetricDisplayed = "Aquisition";
+                    populateMetric(metric, currentStep);
+                    break;
+                case "CostPerClick":
+                    setStyleToMetric("CostPerClick");
+                    currentMetricDisplayed = "CostPerClick";
+                    populateMetric(metric, currentStep);
+                    break;
+            }
         }
     }
 
@@ -1441,11 +1441,7 @@ public class MainController implements ScreenInterface {
                             break;
                     }
                 } catch (SQLException e) {
-                    e.printStackTrace();
-                    /*
-                    TODO
-                    Report error to screen
-                     */
+                   reportError(e);
                 }
                 lineChart.getData().add(campaignMetricLC);
                 barChart.getData().add(campaignMetricBC);
@@ -1453,6 +1449,18 @@ public class MainController implements ScreenInterface {
                 pieChart.setData(campaignMetricPC);
             }
         }
+    }
+
+    private void reportError(SQLException e) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.initStyle(StageStyle.UTILITY);
+        alert.setTitle("Warning");
+        GridPane content = new GridPane();
+        content.setPrefSize(300, 50);
+        Label label = new Label(e.getMessage());
+        content.add(label, 0, 0);
+        alert.getDialogPane().setContent(content);
+        alert.showAndWait();
     }
 
     private void setData_I(List<Map.Entry<Date, Integer>> sortedList) {
