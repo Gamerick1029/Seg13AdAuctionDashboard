@@ -3,13 +3,10 @@ package Frontend.sample;
 import Backend.DBHelper;
 import Backend.Model.CampaignModel;
 import Backend.Model.Interfaces.DataModel;
-import Backend.Model.Interfaces.Filter;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -58,7 +55,7 @@ public class MainController implements ScreenInterface {
     @FXML
     private javafx.scene.control.TextField clickRateF;
     @FXML
-    private javafx.scene.control.TextField aquisitionF;
+    private javafx.scene.control.TextField acquisitionF;
     @FXML
     private javafx.scene.control.TextField costPerClickF;
     @FXML
@@ -74,7 +71,7 @@ public class MainController implements ScreenInterface {
     @FXML
     private javafx.scene.text.Text clickRate;
     @FXML
-    private javafx.scene.text.Text aquisition;
+    private javafx.scene.text.Text acquisition;
     @FXML
     private javafx.scene.text.Text costPerClick;
     @FXML
@@ -189,10 +186,8 @@ public class MainController implements ScreenInterface {
     @Override
     public void setScreenParent(ScreensController parent) {
         this.myController = parent;
-        myController.setDataFieldPopulator(new DataFieldPopulator(currentCampaign, campaignsLoaded, campaignsTable, campaignName, campaignOne, impressionsF, clicksF, bouncesF, conversionsF, totalCostF, clickRateF, aquisitionF, costPerClickF));
+        myController.setDataFieldPopulator(new DataFieldPopulator(currentCampaign, campaignsLoaded, campaignsTable, campaignName, campaignOne, impressionsF, clicksF, bouncesF, conversionsF, totalCostF, clickRateF, acquisitionF, costPerClickF));
         myController.setCampaignDataPopulator(new CampaignDataPopulator(x, y, lineChart, barChart, pieChart, areaChart));
-        x.animatedProperty().setValue(false);
-        y.animatedProperty().setValue(false);
         impressions.setStyle("-fx-font-weight: bold;");
         lineChart.animatedProperty().setValue(false);
         barChart.animatedProperty().setValue(false);
@@ -234,7 +229,7 @@ public class MainController implements ScreenInterface {
                 e -> {
                     showMetric("ClickRate");
                 });
-        aquisition.addEventHandler(MouseEvent.MOUSE_CLICKED,
+        acquisition.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
                     showMetric("Aquisition");
                 });
@@ -755,7 +750,7 @@ public class MainController implements ScreenInterface {
             conversionsF.setText("-");
             totalCostF.setText("-");
             clickRateF.setText("-");
-            aquisitionF.setText("-");
+            acquisitionF.setText("-");
             costPerClickF.setText("-");
         } else {
             campaignName.setText(campaignsLoaded.get(0).getName());
@@ -1151,7 +1146,7 @@ public class MainController implements ScreenInterface {
             conversionsF.setText(String.valueOf(dm.getConversionsNumber()));
             totalCostF.setText(String.valueOf(dm.getTotalCost()));
             clickRateF.setText(String.valueOf(dm.getCTR()));
-            aquisitionF.setText(String.valueOf(dm.getCPA()));
+            acquisitionF.setText(String.valueOf(dm.getCPA()));
             costPerClickF.setText(String.valueOf(dm.getCPC()));
         } catch (SQLException e) {
             reportError(e);
@@ -1210,6 +1205,8 @@ public class MainController implements ScreenInterface {
         areaType.setSelected(false);
         pieType.setSelected(false);
         histogramType.setSelected(false);
+        barChart.setCategoryGap(1);
+        barChart.setBarGap(1);
         populateMetric(currentMetricDisplayed, currentStep);
     }
 
@@ -1259,6 +1256,8 @@ public class MainController implements ScreenInterface {
         histogramType.setSelected(true);
         barChart.getData().clear();
         barChart.setTitle("Click Cost Histogram");
+        barChart.setCategoryGap(0);
+        barChart.setBarGap(0);
         for (Campaign campaign : this.campaignsLoaded) {
             if (campaign.getDisplayed().isSelected()) {
                 DataModel dataModel = myController.getDataModel(campaign.getName());
@@ -1274,7 +1273,6 @@ public class MainController implements ScreenInterface {
                 } catch (SQLException e) {
                     reportError(e);
                 }
-
             }
         }
     }
@@ -1333,7 +1331,7 @@ public class MainController implements ScreenInterface {
         conversions.setStyle(null);
         totalCost.setStyle(null);
         clickRate.setStyle(null);
-        aquisition.setStyle(null);
+        acquisition.setStyle(null);
         costPerClick.setStyle(null);
         switch (metric) {
             case "Impressions":
@@ -1367,9 +1365,9 @@ public class MainController implements ScreenInterface {
                 clickRate.setText("▶ " + clickRate.getText());
                 break;
             case "Aquisition":
-                aquisition.setStyle("-fx-font-weight: bold;");
+                acquisition.setStyle("-fx-font-weight: bold;");
                 setMetricText();
-                aquisition.setText("▶ " + aquisition.getText());
+                acquisition.setText("▶ " + acquisition.getText());
                 break;
             case "CostPerClick":
                 costPerClick.setStyle("-fx-font-weight: bold;");
@@ -1386,7 +1384,7 @@ public class MainController implements ScreenInterface {
         conversions.setText("Conversions");
         totalCost.setText("Total Cost");
         clickRate.setText("Click Rate");
-        aquisition.setText("Acquisition");
+        acquisition.setText("Acquisition");
         costPerClick.setText("Cost per Click");
     }
 
@@ -1395,9 +1393,6 @@ public class MainController implements ScreenInterface {
         barChart.getData().clear();
         areaChart.getData().clear();
         pieChart.getData().clear();
-
-        x.animatedProperty().setValue(false);
-        y.animatedProperty().setValue(false);
 
         for (Campaign campaign : this.campaignsLoaded) {
             if (campaign.getDisplayed().isSelected()) {
@@ -1441,7 +1436,7 @@ public class MainController implements ScreenInterface {
                             break;
                     }
                 } catch (SQLException e) {
-                   reportError(e);
+                    reportError(e);
                 }
                 lineChart.getData().add(campaignMetricLC);
                 barChart.getData().add(campaignMetricBC);
@@ -1500,8 +1495,7 @@ public class MainController implements ScreenInterface {
         for (Date d : sortedDates) {
             output.add(Map.entry(d, in.get(d)));
         }
-
-//        ObservableList<XYChart.Data> myout = FXCollections.observableList(output);
+        //ObservableList<XYChart.Data> myout = FXCollections.observableList(output);
         return output;
     }
 }

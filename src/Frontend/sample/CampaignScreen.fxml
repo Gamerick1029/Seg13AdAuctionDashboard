@@ -342,7 +342,7 @@
    	                                    <children>
    	                              <VBox alignment="CENTER">
    	                                 <children>
-   	                                              <Text id="dataText" fx:id="aquisition" text="Acquisition" wrappingWidth="150.0">
+   	                                              <Text id="dataText" fx:id="acquisition" text="Acquisition" wrappingWidth="150.0">
    	                                                  <cursor>
    	                                                      <Cursor fx:constant="HAND" />
    	                                                  </cursor>
@@ -352,7 +352,7 @@
    	                              </VBox>
    	                                    </children>
    	                                </VBox>
-   	                                <TextField id="dataField" fx:id="aquisitionF" editable="false" prefWidth="100.0">
+   	                                <TextField id="dataField" fx:id="acquisitionF" editable="false" prefWidth="100.0">
 
 	                                </TextField>
    	                            </children>
