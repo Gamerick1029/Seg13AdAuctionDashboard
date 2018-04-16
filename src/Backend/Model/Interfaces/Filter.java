@@ -11,7 +11,7 @@ public class Filter
     public boolean genderFemale;
     public boolean genderOther;
 
-    public boolean ageBelow20;
+    public boolean ageBelow25;
     public boolean age25to34;
     public boolean age35to44;
     public boolean age45to54;
@@ -39,7 +39,7 @@ public class Filter
         age25to34 = true;
         age35to44 = true;
         age45to54 = true;
-        ageBelow20 = true;
+        ageBelow25 = true;
         ageAbove54 = true;
 
         genderFemale = true;
@@ -57,8 +57,10 @@ public class Filter
         contextHobbies = true;
         contextTravel = true;
 
-        startDate = new Date(Long.MIN_VALUE);
-        endDate = new Date(Long.MAX_VALUE);
+        //If we set these to LONG.MIN and so on then many weird and wonderful issues arise. Just be aware of the
+        //following initialisation and all will be well
+        startDate = null;
+        endDate = null;
     }
 
     public Date getStartDate()

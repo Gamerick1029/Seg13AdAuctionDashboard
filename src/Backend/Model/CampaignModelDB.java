@@ -18,7 +18,9 @@ public class CampaignModelDB implements DataModelDB {
 
         //this.campaignName = campaignName ;
 
-        dbHelper = new DBHelper("seg", "seg13");
+        DBHelper.initConnection("seg", "seg13");
+
+        dbHelper = new DBHelper();
 
         connection = dbHelper.getConnection();
 

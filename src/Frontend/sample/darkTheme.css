@@ -1,0 +1,80 @@
+#centerPane {
+	-fx-background-color: #3f3f3f;
+}
+
+#addNewCampaign {
+	-fx-fill: WHITE;
+}
+
+#leftPane {
+	-fx-background-color: #333030;
+}
+
+#rightPane {
+	-fx-background-color: #333030;
+}
+
+
+#text {
+	-fx-fill: WHITE;
+	-fx-text-fill: WHITE;
+}
+
+#h1 {
+	-fx-font-size: 22;
+	-fx-fill: WHITE;
+}
+
+#h2 {
+	-fx-font-size: 16;
+	-fx-fill: WHITE;
+}
+
+#plus {
+	-fx-font-size: 22;
+	-fx-fill: WHITE;
+	-fx-font-weight: bold;
+}
+
+#checkBox {
+	-fx-text-fill: WHITE;
+}
+
+#dataText {
+	-fx-font-size: 16;
+	-fx-fill: WHITE;
+}
+
+#dataText:hover {
+	-fx-fill: GREY;
+}
+
+#dataField {
+	-fx-text-fill: WHITE;
+	-fx-background-color: #5b5b5b;
+	-fx-font-size: 16;	
+}
+
+#filterByDate {
+	-fx-fill: WHITE;
+	-fx-font-size: 18;
+	-fx-underline: true;
+}
+
+#filterByDate:hover {
+	-fx-fill: GREY;
+}
+
+/*
+#menuButton {
+	-fx-background-color: GREY;
+}
+
+#checkMenuItem {
+	-fx-text-fill: BLACK;
+}
+
+#checkMenuItem:hover {
+	-fx-background-color: GREY;
+}
+*/

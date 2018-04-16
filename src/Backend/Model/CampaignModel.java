@@ -69,7 +69,6 @@ public class CampaignModel implements DataModel {
     /*
          Return the List of ClickLogs of a Campaign
      */
-   // @Override
     public List<ClickLog> getClickData() {
         return clickData;
     }
@@ -77,7 +76,6 @@ public class CampaignModel implements DataModel {
     /*
          Return the List of ImpressionLogs of a Campaign
     */
-    //@Override
     public List<ImpressionLog> getImpressionData() {
         return impressionData;
     }
@@ -85,7 +83,6 @@ public class CampaignModel implements DataModel {
     /*
          Return the List of ServerLogs of a Campaign
     */
-   // @Override
     public List<ServerLog> getServerData() {
         return serverData;
     }
@@ -94,7 +91,7 @@ public class CampaignModel implements DataModel {
         Returns the number of all Impressions of a Campaign
      */
     @Override
-    public int getImpressionsNumber() {
+    public int getImpressionsNumber()     {
         return impressionData.size();
     }
 
@@ -429,7 +426,7 @@ DEAD FUNCTION
         Returns the average number of clicks per impression.
      */
     @Override
-    public float getCTR() {
+    public float getCTR()    {
         return (float) getClicksNumber() / (float) getImpressionsNumber();
     }
 
@@ -581,7 +578,7 @@ DEAD FUNCTION
          to calculate the total cost of an ad campaign.
      */
     @Override
-    public float getCPM() {
+    public float getCPM()    {
         return (float) (getTotalCost() / (float) getImpressionsNumber()) * 1000;
     }
 
@@ -627,7 +624,7 @@ DEAD FUNCTION
         The average number of bounces per click.
      */
     @Override
-    public float getBounceRate() {
+    public float getBounceRate()    {
         if(getClicksNumber() > 0)
             return (float) (getBouncesNumber() / (float) getClicksNumber());
         else{

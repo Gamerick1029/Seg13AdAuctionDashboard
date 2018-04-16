@@ -8,6 +8,13 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Properties;
 
+/**
+ * A collection of useful methods to aid making and passing around a connection to a Database.
+ *
+ * This class functions mainly as a holder for the static {@code connection} field as well as a few utility functions besides.
+ * To use it, one of the static {@code initConnection} methods must first be called somewhere in the program and from then on
+ * new DBHelpers can be created and used throughout the rest of the program.
+ */
 public class DBHelper {
 
     public static final String dbName = "AdAuctionData";
@@ -17,36 +24,25 @@ public class DBHelper {
     public static final String defaultConnectionUrl = "jdbc:mariadb://" + defaultHost + ":" + defaultPort + "/" + dbName;
     // TODO: Security risk here, need to implement some form of token exchange with the remote host so we don't have to
     // store the current login in plain text form to enable recreating a dropped connection
-    private String currentUrl;
-    private String currentUsername;
-    private String currentPass;
+    private static String currentUrl;
+    private static String currentUsername;
+    private static String currentPass;
 
     public static final String userTableSuffix = "_users";
     public static final String impressionTableSuffix = "_impressions";
     public static final String clickTableSuffix = "_clicks";
     public static final String serverLogTableSuffix = "_serverLogs";
 
-    private static final String configFileLocation = "configs/connection.cfg";
-
-    private Connection connection;
+    private static Connection connection;
 
     /**
-     * Middleman for acquiring a connection to the database. Establishes a connection using default settings.
-     * @param user
-     * @param pass
+     * Used to create a Connection to the Database. If this method has not been called then all other method calls will fail
+     * @param url The Url to use
+     * @param user Username for login
+     * @param pass Password for login
      * @throws SQLException
      */
-    public DBHelper(String user, String pass) throws SQLException {
-        this(defaultConnectionUrl, user, pass);
-    }
-
-    /**
-     *
-     * @param url
-     * @param user
-     * @param pass
-     */
-    public DBHelper(String url, String user, String pass) throws SQLException {
+    public static void initConnection(String url, String user, String pass) throws SQLException {
         currentUrl = url;
         currentUsername = user;
         currentPass = pass;
@@ -54,7 +50,18 @@ public class DBHelper {
     }
 
     /**
-     * Returns a connection to the default database
+     * Used to create a Connection to the Database. If this method has not been called then all other method calls will fail
+     * This method also forces the use of a default URL.
+     * @param user
+     * @param pass
+     * @throws SQLException
+     */
+    public static void initConnection(String user, String pass) throws SQLException {
+        initConnection(defaultConnectionUrl, user, pass);
+    }
+
+    /**
+     * Returns the connection to the default database
      * @return The connection to the database
      * @throws SQLException If a connection cannot be made
      */
@@ -78,7 +85,7 @@ public class DBHelper {
 
     /**
      * Deletes a campaign from the database by name
-     * @param campaignName
+     * @param campaignName Campaign to delete
      * @return True if the operation completed successfully, false otherwise
      */
     public boolean deleteCampaign(String campaignName) {
@@ -129,8 +136,15 @@ public class DBHelper {
         return success;
     }
 
-    public void reestablishConnection(){
+    /**
+     * Used to force the DBHelper to reestablish a connection to the Database
+     * @throws NullPointerException If the connection object was never set in the first place
+     * @throws SQLException If there is an issue connecting to the DB
+     */
+    public void reestablishConnection() throws NullPointerException, SQLException {
+        if (connection == null) {throw new NullPointerException("Connection object was never been initialised");}
 
+        connection = DriverManager.getConnection(currentUrl, currentUsername, currentPass);
     }
 
 }

@@ -7,6 +7,10 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 /**
  * Created by Yoana on 25/02/2018.
  * This class is used to run the application and
@@ -22,6 +26,7 @@ public class Main extends Application {
     public static String viewDataScreen = "ViewDataScreen.fxml";
     public static String campaignScreen = "CampaignScreen.fxml";
     public static String campaignScreenID = "campaignScreen";
+    public static Scene scene;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -33,6 +38,8 @@ public class Main extends Application {
         mainContainer.loadScreen(Main.loadDataScreenID, Main.loadDataScreen);
         mainContainer.loadScreen(Main.viewDataScreenID, Main.viewDataScreen);
         mainContainer.loadScreen(Main.campaignScreenID, Main.campaignScreen);
+       
+        
         mainContainer.sceneProperty().addListener(new ChangeListener<Scene>() {
             @Override
             public void changed(ObservableValue<? extends Scene> observable,
@@ -42,20 +49,18 @@ public class Main extends Application {
             }
         });
 
-
-
         mainContainer.setScreen(Main.welcomeScreenID);
         Group root = new Group();
         root.getChildren().addAll(mainContainer);
-        Scene scene = new Scene(root);
+        scene = new Scene(root);
         scene.getStylesheets().add("Frontend/sample/StyleSheet.css");
+        scene.getStylesheets().add("Frontend/sample/darkTheme.css");
         primaryStage.setScene(scene);
         //primaryStage.minWidthProperty().bind(scene.widthProperty());
         //primaryStage.minHeightProperty().bind(scene.heightProperty());
         primaryStage.setTitle("Ad Auction Dashboard");
         primaryStage.show();
     }
-
 
     public static void main(String[] args) {
         launch(args);
