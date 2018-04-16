@@ -3,6 +3,7 @@ package Backend.Model;
 import Backend.DBHelper;
 import Backend.Model.Interfaces.DataModel;
 import Backend.Model.Interfaces.Filter;
+import Backend.Model.Interfaces.Step;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,7 +11,7 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class CampaignModelDBTrimmed implements DataModel {
+public class CampaignModelDBTrimmed implements DataModel{
 
     private String campaignName;
     private DBHelper dbHelper;
@@ -215,7 +216,7 @@ public class CampaignModelDBTrimmed implements DataModel {
     }
 
     @Override
-    public Map<Date, Integer> getFullImpressions(long step) throws SQLException {
+    public Map<Date, Integer> getFullImpressions(Step step) throws SQLException {
         String select = "Date, COUNT(Date)";
         String fromTables = impTable() + "," + userTable();
         String whereConditions = idsEqual(impTable(), userTable());
@@ -237,7 +238,7 @@ public class CampaignModelDBTrimmed implements DataModel {
     }
 
     @Override
-    public Map<Date, Integer> getFullClicks(long step) throws SQLException {
+    public Map<Date, Integer> getFullClicks(Step step) throws SQLException {
         String select = "Date, COUNT(Date)";
         String from = clickTable() + "," + impTable() + "," + userTable();
         String where = idsEqual(clickTable(), impTable(), userTable());
@@ -258,7 +259,7 @@ public class CampaignModelDBTrimmed implements DataModel {
     }
 
     @Override
-    public Map<Date, Integer> getFullUniques(long step) throws SQLException {
+    public Map<Date, Integer> getFullUniques(Step step) throws SQLException {
         String clickDate = clickTable() + ".Date";
         String select = clickDate +", COUNT(" + clickDate + ")";
         String from = clickTable() + "," + impTable() + "," + userTable();
@@ -287,7 +288,7 @@ public class CampaignModelDBTrimmed implements DataModel {
      * @throws SQLException
      */
     @Override
-    public Map<Date, Integer> getFullBounces(long step) throws SQLException {
+    public Map<Date, Integer> getFullBounces(Step step) throws SQLException {
         String select = "Date";
         String from = servTable() + "," + impTable() + "," + clickTable();
         String where = servTable() + ".PagesViewed <= 1 AND " + idsEqual(servTable(), impTable(), userTable());
@@ -308,7 +309,7 @@ public class CampaignModelDBTrimmed implements DataModel {
     }
 
     @Override
-    public Map<Date, Integer> getFullConversions(long step) throws SQLException {
+    public Map<Date, Integer> getFullConversions(Step step) throws SQLException {
         String select = servTable() + ".Date";
         String from = servTable() + "," + impTable() + "," + userTable();
         String where = servTable() + ".Conversion = 1 AND " + idsEqual(servTable(), impTable(), userTable());
@@ -329,7 +330,7 @@ public class CampaignModelDBTrimmed implements DataModel {
     }
 
     @Override
-    public Map<Date, Float> getFullCost(long step) throws SQLException {
+    public Map<Date, Float> getFullCost(Step step) throws SQLException {
         String select = clickTable() + ".Date AS Date, ClickCost";
         String from = clickTable() + "," + impTable() + "," + userTable();
         String where = idsEqual(clickTable(), impTable(), userTable());
@@ -358,7 +359,7 @@ public class CampaignModelDBTrimmed implements DataModel {
     }
 
     @Override
-    public Map<Date, Float> getFullCTR(long step) throws SQLException {
+    public Map<Date, Float> getFullCTR(Step step) throws SQLException {
         String select = "DATE_FORMAT(" + clickTable() + ".Date, \"%Y-%m-%d\") AS CDated, COUNT(*) AS clickCount";
         String from = clickTable() + "," + impTable() + "," + userTable();
         String where = idsEqual(clickTable(), impTable(), userTable());
@@ -382,7 +383,7 @@ public class CampaignModelDBTrimmed implements DataModel {
     }
 
     @Override
-    public Map<Date, Float> getFullCPA(long step) throws SQLException {
+    public Map<Date, Float> getFullCPA(Step step) throws SQLException {
         return null;
     }
 
@@ -392,7 +393,7 @@ public class CampaignModelDBTrimmed implements DataModel {
     }
 
     @Override
-    public Map<Date, Float> getFullCPC(long step) throws SQLException {
+    public Map<Date, Float> getFullCPC(Step step) throws SQLException {
         return null;
     }
 
@@ -402,7 +403,7 @@ public class CampaignModelDBTrimmed implements DataModel {
     }
 
     @Override
-    public Map<Date, Float> getFullCPM(long step) throws SQLException {
+    public Map<Date, Float> getFullCPM(Step step) throws SQLException {
         return null;
     }
 
@@ -412,12 +413,12 @@ public class CampaignModelDBTrimmed implements DataModel {
     }
 
     @Override
-    public Map<Date, Float> getFullBounceRate(long step) throws SQLException {
+    public Map<Date, Float> getFullBounceRate(Step step) throws SQLException {
         return null;
     }
 
     @Override
-    public Map<Date, Set<String>> getFullUsers(long step) throws SQLException {
+    public Map<Date, Set<String>> getFullUsers(Step step) throws SQLException {
         return null;
     }
 

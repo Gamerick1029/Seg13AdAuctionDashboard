@@ -3,6 +3,7 @@ package Frontend.sample;
 import Backend.DBHelper;
 import Backend.Model.CampaignModel;
 import Backend.Model.Interfaces.DataModel;
+import Backend.Model.Interfaces.Step;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -177,10 +178,7 @@ public class MainController implements ScreenInterface {
     private Campaign currentCampaign = new Campaign("");
     private String currentMetricDisplayed = "Impressions";
     private String currentChartType = "LineChart";
-    private long currentStep = 1000 * 60 * 60 * 24;
-    private final long DAY_STEP = 1000 * 60 * 60 * 24;
-    private final long WEEK_STEP = 1000 * 60 * 60 * 24 * 7;
-    private final long MONTH_STEP = 1000 * 60 * 60 * 24 * 30;
+    private Step currentStep = Step.DAY;
     private List<Campaign> campaignsLoaded = new ArrayList<>();
 
     @Override
@@ -1156,21 +1154,21 @@ public class MainController implements ScreenInterface {
     private void groupByDay() {
         x.animatedProperty().setValue(false);
         y.animatedProperty().setValue(false);
-        currentStep = DAY_STEP;
+        currentStep = Step.DAY;
         populateMetric(this.currentMetricDisplayed, currentStep);
     }
 
     private void groupByWeek() {
         x.animatedProperty().setValue(false);
         y.animatedProperty().setValue(false);
-        currentStep = WEEK_STEP;
+        currentStep = Step.WEEK;
         populateMetric(this.currentMetricDisplayed, currentStep);
     }
 
     private void groupByMonth() {
         x.animatedProperty().setValue(false);
         y.animatedProperty().setValue(false);
-        currentStep = MONTH_STEP;
+        currentStep = Step.MONTH;
         populateMetric(this.currentMetricDisplayed, currentStep);
     }
 
@@ -1263,11 +1261,20 @@ public class MainController implements ScreenInterface {
                 DataModel dataModel = myController.getDataModel(campaign.getName());
                 histogramSeries = new XYChart.Series();
                 try {
-                    for (Map.Entry<Date, Float> entry : dataModel.getFullCost(currentStep).entrySet()) {
-                        Date key = entry.getKey();
-                        Float value = entry.getValue();
+                    int i = 0;
+                    List<Map.Entry<Date, Float>> entries = new ArrayList<>(dataModel.getFullCost(currentStep).entrySet());
+                    for(;i<entries.size()-2;i++)
+                    {
+                        String key = entries.get(i).getKey() + " - " + entries.get(i+1).toString();
+                        Float value = entries.get(i).getValue();
                         histogramSeries.getData().add(new XYChart.Data(String.valueOf(key), value));
                     }
+                    histogramSeries.getData().add(new XYChart.Data(String.valueOf(entries.get(i).getKey().toString()) + " onwards", entries.get(i).getValue()));
+//                    for (Map.Entry<Date, Float> entry : dataModel.getFullCost(currentStep).entrySet()) {
+//                        Date key = entry.getKey();
+//                        Float value = entry.getValue();
+//                        histogramSeries.getData().add(new XYChart.Data(String.valueOf(key), value));
+//                    }
                     barChart.getData().add(histogramSeries);
                     histogramSeries.setName(dataModel.getName() + "Click Cost Histogram");
                 } catch (SQLException e) {
@@ -1276,6 +1283,13 @@ public class MainController implements ScreenInterface {
             }
         }
     }
+
+//    private static String simpleDateRep(Date d)
+//    {
+//        String[] s = d.toString().split(" ");
+//
+//        return s[3] + "-" + s
+//    }
 
     private void showMetric(String metric) {
         if (currentChartType != "Histogram") {
@@ -1388,7 +1402,7 @@ public class MainController implements ScreenInterface {
         costPerClick.setText("Cost per Click");
     }
 
-    public void populateMetric(String metric, long step) {
+    public void populateMetric(String metric, Step step) {
         lineChart.getData().clear();
         barChart.getData().clear();
         areaChart.getData().clear();

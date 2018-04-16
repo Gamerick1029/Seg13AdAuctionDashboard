@@ -6,6 +6,7 @@ import Backend.Model.Interfaces.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.text.ParseException;
+import java.time.DayOfWeek;
 import java.util.*;
 
 /**
@@ -17,6 +18,10 @@ public class CampaignModel implements DataModel {
 
     private static Date MINDATE = new Date(Long.MIN_VALUE);
     private static Date MAXDATE = new Date(Long.MAX_VALUE);
+
+    private static final long DAY_STEP = 1000*60*60*24;
+    private static final long WEEK_STEP = DAY_STEP * 7;
+    private static final long MONTH_STEP = DAY_STEP * 30;
 
     private String campaignName;
     private List<ClickLog> clickData;
@@ -90,6 +95,22 @@ public class CampaignModel implements DataModel {
     /*
         Returns the number of all Impressions of a Campaign
      */
+
+    private long convStep(Step s)
+    {
+        switch(s)
+        {
+            case DAY:
+                return DAY_STEP;
+            case WEEK:
+                return WEEK_STEP;
+            case MONTH:
+                return MONTH_STEP;
+            default:
+                return DAY_STEP;
+        }
+    }
+
     @Override
     public int getImpressionsNumber()     {
         return impressionData.size();
@@ -123,10 +144,10 @@ public class CampaignModel implements DataModel {
     }
 
     @Override
-    public Map<Date, Integer> getFullImpressions(long step)
+    public Map<Date, Integer> getFullImpressions(Step step)
     {
         System.out.println("Getting Impressions");
-        return groupI(step, getImpressionsByInterval(MINDATE, MAXDATE, step));
+        return groupI(convStep(step), getImpressionsByInterval(MINDATE, MAXDATE, convStep(step)));
     }
 
     public int getOverallImpressionsByInterval(Date startInterval, Date endInterval)
@@ -174,9 +195,9 @@ public class CampaignModel implements DataModel {
     }
 
     @Override
-    public Map<Date, Integer> getFullClicks(long step)
+    public Map<Date, Integer> getFullClicks(Step step)
     {
-        return resolveI(groupMap(step, getClicksByInterval(MINDATE, MAXDATE, step)));
+        return resolveI(groupMap(convStep(step), getClicksByInterval(MINDATE, MAXDATE, convStep(step))));
     }
 
     public int getOverallClicksByInterval(Date startInterval, Date endInterval)
@@ -217,9 +238,9 @@ public class CampaignModel implements DataModel {
     }
 
     @Override
-    public Map<Date, Integer> getFullUniques(long step)
+    public Map<Date, Integer> getFullUniques(Step step)
     {
-        return groupI(step, getUniquesByInterval(MINDATE, MAXDATE, step));
+        return groupI(convStep(step), getUniquesByInterval(MINDATE, MAXDATE, convStep(step)));
     }
 
 
@@ -279,9 +300,9 @@ public class CampaignModel implements DataModel {
     }
 
     @Override
-    public Map<Date, Integer> getFullBounces(long step)
+    public Map<Date, Integer> getFullBounces(Step step)
     {
-        return groupI(step, getBouncesByInterval(MINDATE, MAXDATE, step));
+        return groupI(convStep(step), getBouncesByInterval(MINDATE, MAXDATE, convStep(step)));
     }
 
 
@@ -345,9 +366,9 @@ public class CampaignModel implements DataModel {
     }
 
     @Override
-    public Map<Date, Integer> getFullConversions(long step)
+    public Map<Date, Integer> getFullConversions(Step step)
     {
-        return groupI(step, getConversionsByInterval(MINDATE, MAXDATE, step));
+        return groupI(convStep(step), getConversionsByInterval(MINDATE, MAXDATE, convStep(step)));
     }
 
 
@@ -401,9 +422,9 @@ public class CampaignModel implements DataModel {
     }
 
     @Override
-    public Map<Date, Float> getFullCost(long step)
+    public Map<Date, Float> getFullCost(Step step)
     {
-        return groupF(step, getCostByInterval(MINDATE, MAXDATE, step));
+        return groupF(convStep(step), getCostByInterval(MINDATE, MAXDATE, convStep(step)));
     }
 
 
@@ -462,9 +483,9 @@ DEAD FUNCTION
     }
 
     @Override
-    public Map<Date, Float> getFullCTR(long step)
+    public Map<Date, Float> getFullCTR(Step step)
     {
-        return groupF(step, getCTRByInterval(MINDATE, MAXDATE, step));
+        return groupF(convStep(step), getCTRByInterval(MINDATE, MAXDATE, convStep(step)));
     }
 
 
@@ -513,9 +534,9 @@ DEAD FUNCTION
     }
 
     @Override
-    public Map<Date, Float> getFullCPA(long step)
+    public Map<Date, Float> getFullCPA(Step step)
     {
-        return groupF(step, getCPAByInterval(MINDATE, MAXDATE, step));
+        return groupF(convStep(step), getCPAByInterval(MINDATE, MAXDATE, convStep(step)));
     }
 
 
@@ -560,9 +581,9 @@ DEAD FUNCTION
     }
 
     @Override
-    public Map<Date, Float> getFullCPC(long step)
+    public Map<Date, Float> getFullCPC(Step step)
     {
-        return groupF(step, getCPCByInterval(MINDATE, MAXDATE, step));
+        return groupF(convStep(step), getCPCByInterval(MINDATE, MAXDATE, convStep(step)));
     }
 
 
@@ -609,9 +630,9 @@ DEAD FUNCTION
     }
 
     @Override
-    public Map<Date, Float> getFullCPM(long step)
+    public Map<Date, Float> getFullCPM(Step step)
     {
-        return groupF(step, getCPMByInterval(MINDATE, MAXDATE, step));
+        return groupF(convStep(step), getCPMByInterval(MINDATE, MAXDATE, convStep(step)));
     }
 
 
@@ -666,9 +687,9 @@ DEAD FUNCTION
     }
 
     @Override
-    public Map<Date, Float> getFullBounceRate(long step)
+    public Map<Date, Float> getFullBounceRate(Step step)
     {
-        return groupF(step, getBounceRateByInterval(MINDATE, MAXDATE, step));
+        return groupF(convStep(step), getBounceRateByInterval(MINDATE, MAXDATE, convStep(step)));
     }
 
 
@@ -726,9 +747,9 @@ DEAD FUNCTION
     }
 
     @Override
-    public Map<Date, Set<String>> getFullUsers(long step)
+    public Map<Date, Set<String>> getFullUsers(Step step)
     {
-        return getUsersByInterval(MINDATE, MAXDATE, step);
+        return getUsersByInterval(MINDATE, MAXDATE, convStep(step));
     }
 
     @Override

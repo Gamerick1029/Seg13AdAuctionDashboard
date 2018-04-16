@@ -73,13 +73,13 @@ public class DataModelStub implements DataModel
     }
 
      
-    public Map<Date, Integer> getImpressionsByInterval(Date startInterval, Date endInterval, long step)
+    public Map<Date, Integer> getImpressionsByInterval(Date startInterval, Date endInterval, Step step)
     {
         return intMap;
     }
 
      
-    public Map<Date, Integer> getFullImpressions(long step)
+    public Map<Date, Integer> getFullImpressions(Step step)
     {
         return intMap;
     }
@@ -102,13 +102,13 @@ public class DataModelStub implements DataModel
     }
 
      
-    public Map<Date, Integer> getClicksByInterval(Date startInterval, Date endInterval, long step)
+    public Map<Date, Integer> getClicksByInterval(Date startInterval, Date endInterval, Step step)
     {
         return intMap;
     }
 
      
-    public Map<Date, Integer> getFullClicks(long step)
+    public Map<Date, Integer> getFullClicks(Step step)
     {
         return intMap;
     }
@@ -131,13 +131,13 @@ public class DataModelStub implements DataModel
     }
 
      
-    public Map<Date, Integer> getUniquesByInterval(Date startInterval, Date endInterval, long step)
+    public Map<Date, Integer> getUniquesByInterval(Date startInterval, Date endInterval, Step step)
     {
         return intMap;
     }
 
      
-    public Map<Date, Integer> getFullUniques(long step)
+    public Map<Date, Integer> getFullUniques(Step step)
     {
         return intMap;
     }
@@ -159,13 +159,13 @@ public class DataModelStub implements DataModel
     }
 
      
-    public Map<Date, Integer> getBouncesByInterval(Date startInterval, Date endInterval, long step)
+    public Map<Date, Integer> getBouncesByInterval(Date startInterval, Date endInterval, Step step)
     {
         return intMap;
     }
 
      
-    public Map<Date, Integer> getFullBounces(long step)
+    public Map<Date, Integer> getFullBounces(Step step)
     {
         return intMap;
     }
@@ -188,13 +188,13 @@ public class DataModelStub implements DataModel
     }
 
      
-    public Map<Date, Integer> getConversionsByInterval(Date startInterval, Date endInterval, long step)
+    public Map<Date, Integer> getConversionsByInterval(Date startInterval, Date endInterval, Step step)
     {
         return intMap;
     }
 
      
-    public Map<Date, Integer> getFullConversions(long step)
+    public Map<Date, Integer> getFullConversions(Step step)
     {
         return intMap;
     }
@@ -217,13 +217,13 @@ public class DataModelStub implements DataModel
     }
 
      
-    public Map<Date, Float> getCostByInterval(Date startInterval, Date endInterval, long step)
+    public Map<Date, Float> getCostByInterval(Date startInterval, Date endInterval, Step step)
     {
         return floatMap;
     }
 
      
-    public Map<Date, Float> getFullCost(long step)
+    public Map<Date, Float> getFullCost(Step step)
     {
         return floatMap;
     }
@@ -246,13 +246,13 @@ public class DataModelStub implements DataModel
     }
 
      
-    public Map<Date, Float> getCTRByInterval(Date startInterval, Date endInterval, long step)
+    public Map<Date, Float> getCTRByInterval(Date startInterval, Date endInterval, Step step)
     {
         return floatMap;
     }
 
      
-    public Map<Date, Float> getFullCTR(long step)
+    public Map<Date, Float> getFullCTR(Step step)
     {
         return floatMap;
     }
@@ -275,13 +275,13 @@ public class DataModelStub implements DataModel
     }
 
      
-    public Map<Date, Float> getCPAByInterval(Date startInterval, Date endInterval, long step)
+    public Map<Date, Float> getCPAByInterval(Date startInterval, Date endInterval, Step step)
     {
         return floatMap;
     }
 
      
-    public Map<Date, Float> getFullCPA(long step)
+    public Map<Date, Float> getFullCPA(Step step)
     {
         return floatMap;
     }
@@ -304,13 +304,13 @@ public class DataModelStub implements DataModel
     }
 
      
-    public Map<Date, Float> getCPCByInterval(Date startInterval, Date endInterval, long step)
+    public Map<Date, Float> getCPCByInterval(Date startInterval, Date endInterval, Step step)
     {
         return floatMap;
     }
 
      
-    public Map<Date, Float> getFullCPC(long step)
+    public Map<Date, Float> getFullCPC(Step step)
     {
         return floatMap;
     }
@@ -332,13 +332,13 @@ public class DataModelStub implements DataModel
     }
 
      
-    public Map<Date, Float> getCPMByInterval(Date startInterval, Date endInterval, long step)
+    public Map<Date, Float> getCPMByInterval(Date startInterval, Date endInterval, Step step)
     {
         return floatMap;
     }
 
      
-    public Map<Date, Float> getFullCPM(long step)
+    public Map<Date, Float> getFullCPM(Step step)
     {
         return floatMap;
     }
@@ -361,13 +361,13 @@ public class DataModelStub implements DataModel
     }
 
      
-    public Map<Date, Float> getBounceRateByInterval(Date startInterval, Date endInterval, long step)
+    public Map<Date, Float> getBounceRateByInterval(Date startInterval, Date endInterval, Step step)
     {
         return floatMap;
     }
 
      
-    public Map<Date, Float> getFullBounceRate(long step)
+    public Map<Date, Float> getFullBounceRate(Step step)
     {
         return floatMap;
     }
@@ -383,13 +383,13 @@ public class DataModelStub implements DataModel
     }
 
      
-    public Map<Date, Set<String>> getUsersByInterval(Date startInterval, Date endInterval, long step)
+    public Map<Date, Set<String>> getUsersByInterval(Date startInterval, Date endInterval, Step step)
     {
         return null;
     }
 
      
-    public Map<Date, Set<String>> getFullUsers(long step)
+    public Map<Date, Set<String>> getFullUsers(Step step)
     {
         return null;
     }

@@ -5,6 +5,7 @@ import Backend.Model.CampaignModelDBTrimmed;
 import Backend.Model.ClickData;
 import Backend.Model.ImpressionData;
 import Backend.Model.Interfaces.Filter;
+import Backend.Model.Interfaces.Step;
 import Backend.Model.ServerData;
 
 import java.io.File;
@@ -37,7 +38,7 @@ public class TestMain {
         CampaignModelDBTrimmed cmdt = new CampaignModelDBTrimmed("test");
 
 //        System.out.println(cmdt.getCTR());
-        System.out.println(cmdt.getFullCTR(1));
+        System.out.println(cmdt.getFullCTR(Step.DAY));
 
 //        File JUnitClicks = new File("TestRuns/Backend/Model/TestSamples/click_log.csv");
 //        File JUnitImpressions = new File("TestRuns/Backend/Model/TestSamples/impression_log.csv");

@@ -1,6 +1,7 @@
 package Frontend.sample;
 
 import Backend.Model.Interfaces.DataModel;
+import Backend.Model.Interfaces.Step;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
@@ -57,13 +58,13 @@ public class CampaignDataPopulator {
             campaignImpressionsAC.setName(dataModel.getName() + " Impressions");
             campaignHistogram.setName(dataModel.getName() + "Click Cost Histogram");
             //Step by Day
-            ObservableList<XYChart.Data> fullData = sortMap(dataModel.getFullImpressions(1000 * 60 * 60 * 24));
+            ObservableList<XYChart.Data> fullData = sortMap(dataModel.getFullImpressions(Step.DAY));
             campaignImpressionsLC.setData(fullData);
             campaignImpressionsAC.setData(fullData);
             campaignImpressionsBC.setData(fullData);
             campaignHistogram.setData(fullData);
 
-            for (Map.Entry<Date, Integer> entry : dataModel.getFullImpressions(1000 * 60 * 60 * 24).entrySet()) {
+            for (Map.Entry<Date, Integer> entry : dataModel.getFullImpressions(Step.DAY).entrySet()) {
                 Date key = entry.getKey();
                 Integer value = entry.getValue();
                 campaignImpressionsPC.add(new PieChart.Data(String.valueOf(key), value));
