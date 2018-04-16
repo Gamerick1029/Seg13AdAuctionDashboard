@@ -1,8 +1,10 @@
 import Backend.FileIO.ReadCSVsToDB;
 import Backend.FileIO.readCSVs;
 import Backend.DBHelper;
+import Backend.Model.CampaignModelDBTrimmed;
 import Backend.Model.ClickData;
 import Backend.Model.ImpressionData;
+import Backend.Model.Interfaces.Filter;
 import Backend.Model.ServerData;
 
 import java.io.File;
@@ -10,36 +12,35 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.*;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.Scanner;
 
 public class TestMain {
 
-    private static final String defClickLog = "TestCSVs/2_week_campaign/click_log.csv";
-    private static final String defImpressionLog = "TestCSVs/2_week_campaign/impression_log.csv";
-    private static final String defServerLog = "TestCSVs/2_week_campaign/server_log.csv";
+    private static final String defClickLog = "2_week_campaign_2\\click_log.csv";
+    private static final String defImpressionLog = "2_week_campaign_2\\impression_log.csv";
+    private static final String defServerLog = "2_week_campaign_2\\server_log.csv";
+
+    private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
 
     public static void main(String[] args) throws IOException, ParseException, SQLException {
 
+        Filter filter = new Filter();
+
+
         DBHelper.initConnection(args[0], args[1]);
         DBHelper dbh = new DBHelper();
-//        System.out.println("Connection acquired");
-//        Connection connection = dbh.getConnection();
-//        Scanner scanner = new Scanner(System.in);
-//        TestMain tm = new TestMain();
-//        for (;;){
-//            scanner.nextLine();
-//            try {
-//                tm.prettyPrintResult(connection.createStatement().executeQuery("SELECT * FROM campaignNames"));
-//            }catch (SQLException e){
-//                System.out.println(e.getMessage());
-//            }
-//        }
+
+//        CampaignModelDBTrimmed cmdt = new CampaignModelDBTrimmed("test");
+//
+//        System.out.println(cmdt.getBouncesNumber());
 
         File JUnitClicks = new File("TestRuns/Backend/Model/TestSamples/click_log.csv");
         File JUnitImpressions = new File("TestRuns/Backend/Model/TestSamples/impression_log.csv");
         File JUnitServerLogs = new File("TestRuns/Backend/Model/TestSamples/server_log.csv");
-
+//
         ReadCSVsToDB.makeCampaign(dbh, "JUnit", JUnitClicks, JUnitImpressions, JUnitServerLogs);
 
 //        System.out.println(dbh.getCampaigns());

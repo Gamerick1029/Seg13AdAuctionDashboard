@@ -965,11 +965,11 @@ public class MainController implements ScreenInterface {
             case "ageBelow20":
                 if (filter) {
                     for (DataModel dataModel : myController.getDataModelMap().values()) {
-                        dataModel.getFilter().ageBelow20 = true;
+                        dataModel.getFilter().ageBelow25 = true;
                     }
                 } else {
                     for (DataModel dataModel : myController.getDataModelMap().values()) {
-                        dataModel.getFilter().ageBelow20 = false;
+                        dataModel.getFilter().ageBelow25 = false;
                     }
                 }
                 populateMetric(currentMetricDisplayed, currentStep);

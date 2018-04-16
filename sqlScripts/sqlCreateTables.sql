@@ -36,6 +36,7 @@ EntryDate	dateTime NOT NULL,
 ID		    char(19) NOT NULL,
 ExitDate	dateTime,
 PagesViewed	int NOT NULL,
+Conversion  bool NOT NULL,
 PRIMARY KEY(EntryDate, ID),
 FOREIGN KEY(ID) REFERENCES [VAR]_clicks(ID)
 );
