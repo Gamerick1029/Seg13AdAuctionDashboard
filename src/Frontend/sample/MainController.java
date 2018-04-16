@@ -913,7 +913,7 @@ public class MainController implements ScreenInterface {
     }
 
     private boolean isDateValid(String date) {
-        String DATE_FORMAT = "dd-MM-yyyy";
+        String DATE_FORMAT = "dd/MM/yyyy";
         try {
             DateFormat df = new SimpleDateFormat(DATE_FORMAT);
             df.setLenient(false);
