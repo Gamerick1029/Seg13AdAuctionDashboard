@@ -27,21 +27,23 @@ public class TestMain {
 
     public static void main(String[] args) throws IOException, ParseException, SQLException {
 
-        Filter filter = new Filter();
+//        Filter filter = new Filter();
 
 
         DBHelper.initConnection(args[0], args[1]);
         DBHelper dbh = new DBHelper();
 
-//        CampaignModelDBTrimmed cmdt = new CampaignModelDBTrimmed("test");
-//
-//        System.out.println(cmdt.getBouncesNumber());
 
-        File JUnitClicks = new File("TestRuns/Backend/Model/TestSamples/click_log.csv");
-        File JUnitImpressions = new File("TestRuns/Backend/Model/TestSamples/impression_log.csv");
-        File JUnitServerLogs = new File("TestRuns/Backend/Model/TestSamples/server_log.csv");
+        CampaignModelDBTrimmed cmdt = new CampaignModelDBTrimmed("test");
+
+//        System.out.println(cmdt.getCTR());
+        System.out.println(cmdt.getFullCTR(1));
+
+//        File JUnitClicks = new File("TestRuns/Backend/Model/TestSamples/click_log.csv");
+//        File JUnitImpressions = new File("TestRuns/Backend/Model/TestSamples/impression_log.csv");
+//        File JUnitServerLogs = new File("TestRuns/Backend/Model/TestSamples/server_log.csv");
 //
-        ReadCSVsToDB.makeCampaign(dbh, "JUnit", JUnitClicks, JUnitImpressions, JUnitServerLogs);
+//        ReadCSVsToDB.makeCampaign(dbh, "JUnit", JUnitClicks, JUnitImpressions, JUnitServerLogs);
 
 //        System.out.println(dbh.getCampaigns());
 //        System.out.println("Success!");

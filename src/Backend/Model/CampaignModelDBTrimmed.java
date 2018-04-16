@@ -134,16 +134,15 @@ public class CampaignModelDBTrimmed implements DataModel {
     }
 
     /**
-     * Takes an empty Map and a ResultSet consisting of a single column of Dates, and maps the Dates to the number of
-     * of occurrences in the ResultSet
+     *
      * @param rs
      * @throws SQLException
      */
     private Map<Date, Integer> getDateToInt(ResultSet rs) throws SQLException {
         Map<Date, Integer> result = new HashMap<>();
         while (rs.next()){
-            Date date = rs.getDate(0);
-            int num = rs.getInt(1);
+            Date date = rs.getDate(1);
+            int num = rs.getInt(2);
             result.put(date, num);
         }
         return result;
@@ -152,8 +151,8 @@ public class CampaignModelDBTrimmed implements DataModel {
     private Map<Date, Float> getDateToFloat(ResultSet rs) throws SQLException {
         Map<Date, Float> result = new HashMap<>();
         while (rs.next()){
-            Date date = rs.getDate(0);
-            float num = rs.getFloat(1);
+            Date date = rs.getDate(1);
+            float num = rs.getFloat(2);
             result.put(date, num);
         }
         return result;
@@ -168,7 +167,7 @@ public class CampaignModelDBTrimmed implements DataModel {
         StringBuilder sb = new StringBuilder();
 
         for (int i = 0; i < tables.length - 1; i++) {
-            sb.append(tables[i] + ".ID = " + tables[i+1] + " AND ");
+            sb.append(tables[i] + ".ID = " + tables[i+1] + ".ID AND ");
         }
 
         return trimTrailingOperators(sb.toString());
@@ -182,13 +181,25 @@ public class CampaignModelDBTrimmed implements DataModel {
      * @return
      * @throws SQLException
      */
-    private ResultSet buildStatement(String select, String fromTables, String whereConditions, String otherSuffixes) throws SQLException {
+    private ResultSet buildAndExecuteStatement(String select, String fromTables, String whereConditions, String otherSuffixes) throws SQLException {
         Statement stmt = dbHelper.getConnection().createStatement();
         ResultSet rs;
-        rs = stmt.executeQuery("SELECT " + select + " FROM " + fromTables + " WHERE " + whereConditions + " AND " + conditions() + " " + otherSuffixes + ";");
+        rs = stmt.executeQuery(buildStatement(select, fromTables, whereConditions, otherSuffixes));
         return rs;
     }
 
+    private ResultSet buildAndExecuteSubStatements(String[] select, String[] fromTables, String[] whereConditions, String[] asSuffixes) throws SQLException {
+        StringBuilder sb = new StringBuilder();
+        sb.append("SELECT");
+        for (int i = 0; i < select.length ; i++) {
+            sb.append("(").append(buildStatement(select[i], fromTables[i], whereConditions[i], "")).append(")").append("AS " + asSuffixes[i]).append(",");
+        }
+        return dbHelper.getConnection().createStatement().executeQuery(sb.toString().substring(0, sb.toString().length() - 1 ));
+    }
+
+    private String buildStatement(String select, String fromTables, String whereConditions, String otherSuffixes){
+        return "SELECT " + select + " FROM " + fromTables + " WHERE " + whereConditions + " AND " + conditions() + " " + otherSuffixes; // + ";"
+    }
 
     //Public methods
 
@@ -197,7 +208,7 @@ public class CampaignModelDBTrimmed implements DataModel {
         String select = "COUNT(*)";
         String fromTables = impTable() + "," + userTable();
         String whereConditions = idsEqual(impTable(), userTable());
-        ResultSet rs = buildStatement(select, fromTables, whereConditions, "");
+        ResultSet rs = buildAndExecuteStatement(select, fromTables, whereConditions, "");
 
         rs.next();
         return rs.getInt("COUNT(*)");
@@ -209,7 +220,7 @@ public class CampaignModelDBTrimmed implements DataModel {
         String fromTables = impTable() + "," + userTable();
         String whereConditions = idsEqual(impTable(), userTable());
 
-        ResultSet rs = buildStatement(select, fromTables, whereConditions, "GROUP BY `Date` ORDER BY `Date`");
+        ResultSet rs = buildAndExecuteStatement(select, fromTables, whereConditions, "GROUP BY `Date` ORDER BY `Date`");
 
         return getDateToInt(rs);
     }
@@ -219,7 +230,7 @@ public class CampaignModelDBTrimmed implements DataModel {
         String select = "COUNT(*)";
         String from = clickTable() + "," + impTable() + "," + userTable();
         String where = idsEqual(clickTable(), impTable(), userTable());
-        ResultSet rs = buildStatement(select, from, where, "");
+        ResultSet rs = buildAndExecuteStatement(select, from, where, "");
 
         rs.next();
         return rs.getInt(select);
@@ -230,7 +241,7 @@ public class CampaignModelDBTrimmed implements DataModel {
         String select = "Date, COUNT(Date)";
         String from = clickTable() + "," + impTable() + "," + userTable();
         String where = idsEqual(clickTable(), impTable(), userTable());
-        ResultSet rs = buildStatement(select, from, where, "GROUP BY `Date` ORDER BY `Date`");
+        ResultSet rs = buildAndExecuteStatement(select, from, where, "GROUP BY `Date` ORDER BY `Date`");
 
         return getDateToInt(rs);
     }
@@ -240,7 +251,7 @@ public class CampaignModelDBTrimmed implements DataModel {
         String select = "COUNT(DISTINCT(" + clickTable() + ".ID))";
         String from = clickTable() + "," + impTable() + "," + userTable();
         String where = idsEqual(clickTable(), impTable(), userTable());
-        ResultSet rs = buildStatement(select, from, where, "");
+        ResultSet rs = buildAndExecuteStatement(select, from, where, "");
 
         rs.next();
         return rs.getInt(select);
@@ -252,7 +263,7 @@ public class CampaignModelDBTrimmed implements DataModel {
         String select = clickDate +", COUNT(" + clickDate + ")";
         String from = clickTable() + "," + impTable() + "," + userTable();
         String where = idsEqual(clickTable(), impTable(), userTable());
-        ResultSet rs = buildStatement(select, from, where, "GROUP BY `" + clickDate + "` ORDER BY `" + clickDate + "`" );
+        ResultSet rs = buildAndExecuteStatement(select, from, where, "GROUP BY `" + clickDate + "` ORDER BY `" + clickDate + "`" );
 
         return getDateToInt(rs);
     }
@@ -262,7 +273,7 @@ public class CampaignModelDBTrimmed implements DataModel {
         String select = "COUNT(" + servTable() + ".PagesViewed <= 1)";
         String from = servTable() + "," + impTable() + "," + userTable();
         String where = idsEqual(servTable(), impTable(), userTable());
-        ResultSet rs = buildStatement(select, from, where, "");
+        ResultSet rs = buildAndExecuteStatement(select, from, where, "");
 
         rs.next();
         return rs.getInt(select);
@@ -280,7 +291,7 @@ public class CampaignModelDBTrimmed implements DataModel {
         String select = "Date";
         String from = servTable() + "," + impTable() + "," + clickTable();
         String where = servTable() + ".PagesViewed <= 1 AND " + idsEqual(servTable(), impTable(), userTable());
-        ResultSet rs = buildStatement(select, from, where, "GROUP BY `Date` ORDER BY `Date`");
+        ResultSet rs = buildAndExecuteStatement(select, from, where, "GROUP BY `Date` ORDER BY `Date`");
 
         return getDateToInt(rs);
     }
@@ -290,7 +301,7 @@ public class CampaignModelDBTrimmed implements DataModel {
         String select = "COUNT(" + servTable() + ".Conversion = 1)";
         String from = servTable() + "," + impTable() + "," + userTable();
         String where = idsEqual(servTable(), impTable(), userTable());
-        ResultSet rs = buildStatement(select, from, where, "");
+        ResultSet rs = buildAndExecuteStatement(select, from, where, "");
 
         rs.next();
         return rs.getInt(select);
@@ -301,7 +312,7 @@ public class CampaignModelDBTrimmed implements DataModel {
         String select = servTable() + ".Date";
         String from = servTable() + "," + impTable() + "," + userTable();
         String where = servTable() + ".Conversion = 1 AND " + idsEqual(servTable(), impTable(), userTable());
-        ResultSet rs = buildStatement(select, from, where, "ORDER BY " + select);
+        ResultSet rs = buildAndExecuteStatement(select, from, where, "GROUP BY `" + select + "` ORDER BY `" + select + "`");
 
         return getDateToInt(rs);
     }
@@ -311,7 +322,7 @@ public class CampaignModelDBTrimmed implements DataModel {
         String select = "SUM(ClickCost)";
         String from = clickTable() + "," + impTable() + "," + userTable();
         String where = idsEqual(clickTable(), impTable(), userTable());
-        ResultSet rs = buildStatement(select, from, where, "");
+        ResultSet rs = buildAndExecuteStatement(select, from, where, "");
 
         rs.next();
         return rs.getFloat(select);
@@ -319,17 +330,50 @@ public class CampaignModelDBTrimmed implements DataModel {
 
     @Override
     public Map<Date, Float> getFullCost(long step) throws SQLException {
-        return null;
+        String select = clickTable() + ".Date AS Date, ClickCost";
+        String from = clickTable() + "," + impTable() + "," + userTable();
+        String where = idsEqual(clickTable(), impTable(), userTable());
+        ResultSet rs = buildAndExecuteStatement(select, from, where, "GROUP BY `Date` ORDER BY `Date`");
+
+        return getDateToFloat(rs);
     }
 
     @Override
     public float getCTR() throws SQLException {
-        return 0;
+        String select = "COUNT(*)";
+        String fromClicks = clickTable() + "," + impTable() + "," + userTable();
+        String fromImpr = impTable() + "," + userTable();
+        String whereClicks = idsEqual(clickTable(), impTable(), userTable());
+        String whereImpr = idsEqual(impTable(), userTable());
+        String[] selects = {select, select};
+        String[] froms = {fromClicks, fromImpr};
+        String[] wheres = {whereClicks, whereImpr};
+        String[] asSuffixes = {"Clicks", "Impressions"};
+        ResultSet rs = buildAndExecuteSubStatements(selects, froms, wheres, asSuffixes);
+
+        rs.next();
+        float clickCount = rs.getFloat("Clicks");
+        float impCount = rs.getFloat("Impressions");
+        return clickCount/impCount;
     }
 
     @Override
     public Map<Date, Float> getFullCTR(long step) throws SQLException {
-        return null;
+        String select = "DATE_FORMAT(" + clickTable() + ".Date, \"%Y-%m-%d\") AS CDated, COUNT(*) AS clickCount";
+        String from = clickTable() + "," + impTable() + "," + userTable();
+        String where = idsEqual(clickTable(), impTable(), userTable());
+        String statement = buildStatement(select, from, where, "GROUP BY `CDated` ORDER BY `CDated`");
+
+        String select2 = "DATE_FORMAT(" + impTable() + ".Date, \"%Y-%m-%d\") AS IDated, COUNT(*) AS impCount";
+        String from2 = impTable() + "," + userTable();
+        String where2 = idsEqual(impTable(), userTable());
+        String statement2 = buildStatement(select2, from2, where2, "GROUP BY `IDated` ORDER BY `IDated`");
+
+        String statementFinal = "SELECT IDated, (clickCount/impCount)  FROM (" + statement2 + ") AS impressions LEFT OUTER JOIN (" + statement + ") AS clicks ON impressions.IDated = clicks.CDated";
+
+        ResultSet rs = dbHelper.getConnection().createStatement().executeQuery(statementFinal);
+
+        return getDateToFloat(rs);
     }
 
     @Override
@@ -383,7 +427,7 @@ public class CampaignModelDBTrimmed implements DataModel {
     }
 
     @Override
-    public void setFilter(Filter f) {
-        filterDB = f;
+    public void setFilter(Filter filter) {
+        filterDB = filter;
     }
 }
