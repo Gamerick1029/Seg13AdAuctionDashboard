@@ -513,18 +513,24 @@
                         <Insets top="20.0" />
                      </VBox.margin>
                       </Text>
+                      <Text id="h2" fx:id="startDate" text="Start">
+
+                     <VBox.margin>
+                        <Insets bottom="10.0" top="30.0" />
+                     </VBox.margin>
+                      </Text>
                   <HBox spacing="5.0">
                      <children>
-                            <TextField fx:id="endDay" maxWidth="80.0" minWidth="80.0" prefHeight="25.0" prefWidth="80.0" promptText="Day" />
+                            <TextField fx:id="startDay" maxWidth="80.0" minWidth="80.0" prefHeight="25.0" prefWidth="80.0" promptText="Day" />
                             <MenuButton id="menuButton" fx:id="startMonth" maxWidth="80.0" minWidth="80.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="80.0" text="Month" />
-                            <TextField fx:id="endYear" maxHeight="25.0" maxWidth="80.0" prefHeight="25.0" prefWidth="80.0" promptText="Year" />
+                            <TextField fx:id="startYear" maxHeight="25.0" maxWidth="80.0" prefHeight="25.0" prefWidth="80.0" promptText="Year" />
                      </children>
                   </HBox>
                   <HBox spacing="5.0">
                      <children>
-                            <TextField fx:id="startDay" maxWidth="18000.0" minWidth="80.0" prefHeight="25.0" prefWidth="48.0" promptText="Day" />
+                            <TextField fx:id="endDay" maxWidth="18000.0" minWidth="80.0" prefHeight="25.0" prefWidth="48.0" promptText="Day" />
                             <MenuButton id="menuButton" fx:id="endMonth" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Month" />
-                            <TextField fx:id="startYear" maxWidth="80.0" minWidth="80.0" prefHeight="25.0" prefWidth="80.0" promptText="Year" />
+                            <TextField fx:id="endYear" maxWidth="80.0" minWidth="80.0" prefHeight="25.0" prefWidth="80.0" promptText="Year" />
                      </children>
                   </HBox>
                       <Text id="filterByDate" fx:id="searchDate" onMouseClicked="#applyDateFilter" text="Filter by Date">
@@ -536,22 +542,11 @@
                         <Insets left="130.0" top="10.0" />
                      </VBox.margin>
                       </Text>
-                      <Text id="h2" fx:id="startDate" text="Start">
-
-                     <VBox.margin>
-                        <Insets bottom="10.0" top="30.0" />
-                     </VBox.margin>
-                      </Text>
-                      <Text id="h2" fx:id="startDate1" text="End">
-
-                     <VBox.margin>
-                        <Insets bottom="10.0" top="30.0" />
-                     </VBox.margin>
-                      </Text>
                       
                       
                </children>
             </VBox>
+                <Text id="h2" fx:id="startDate1" layoutX="-6.0" layoutY="651.0" text="End" />
             </children>
         </Pane>
 
