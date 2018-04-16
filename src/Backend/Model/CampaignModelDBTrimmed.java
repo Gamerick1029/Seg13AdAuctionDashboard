@@ -141,15 +141,20 @@ public class CampaignModelDBTrimmed implements DataModel {
      */
     private Map<Date, Integer> getDateToInt(ResultSet rs) throws SQLException {
         Map<Date, Integer> result = new HashMap<>();
-        int count = 0;
         while (rs.next()){
-            count++;
-            Date date = rs.getDate("Date");
-            if (result.containsKey(date)){
-                result.put(date, result.get(date)+1);
-            } else {
-                result.put(date, count);
-            }
+            Date date = rs.getDate(0);
+            int num = rs.getInt(1);
+            result.put(date, num);
+        }
+        return result;
+    }
+
+    private Map<Date, Float> getDateToFloat(ResultSet rs) throws SQLException {
+        Map<Date, Float> result = new HashMap<>();
+        while (rs.next()){
+            Date date = rs.getDate(0);
+            float num = rs.getFloat(1);
+            result.put(date, num);
         }
         return result;
     }
@@ -200,11 +205,11 @@ public class CampaignModelDBTrimmed implements DataModel {
 
     @Override
     public Map<Date, Integer> getFullImpressions(long step) throws SQLException {
-        String select = "Date";
+        String select = "Date, COUNT(Date)";
         String fromTables = impTable() + "," + userTable();
         String whereConditions = idsEqual(impTable(), userTable());
 
-        ResultSet rs = buildStatement(select, fromTables, whereConditions, "ORDER BY " + select);
+        ResultSet rs = buildStatement(select, fromTables, whereConditions, "GROUP BY `Date` ORDER BY `Date`");
 
         return getDateToInt(rs);
     }
@@ -222,10 +227,10 @@ public class CampaignModelDBTrimmed implements DataModel {
 
     @Override
     public Map<Date, Integer> getFullClicks(long step) throws SQLException {
-        String select = "Date";
+        String select = "Date, COUNT(Date)";
         String from = clickTable() + "," + impTable() + "," + userTable();
         String where = idsEqual(clickTable(), impTable(), userTable());
-        ResultSet rs = buildStatement(select, from, where, "ORDER BY " + select);
+        ResultSet rs = buildStatement(select, from, where, "GROUP BY `Date` ORDER BY `Date`");
 
         return getDateToInt(rs);
     }
@@ -243,10 +248,11 @@ public class CampaignModelDBTrimmed implements DataModel {
 
     @Override
     public Map<Date, Integer> getFullUniques(long step) throws SQLException {
-        String select = clickTable() + ".Date";
+        String clickDate = clickTable() + ".Date";
+        String select = clickDate +", COUNT(" + clickDate + ")";
         String from = clickTable() + "," + impTable() + "," + userTable();
         String where = idsEqual(clickTable(), impTable(), userTable());
-        ResultSet rs = buildStatement(select, from, where, "ORDER BY " + select);
+        ResultSet rs = buildStatement(select, from, where, "GROUP BY `" + clickDate + "` ORDER BY `" + clickDate + "`" );
 
         return getDateToInt(rs);
     }
@@ -274,7 +280,7 @@ public class CampaignModelDBTrimmed implements DataModel {
         String select = "Date";
         String from = servTable() + "," + impTable() + "," + clickTable();
         String where = servTable() + ".PagesViewed <= 1 AND " + idsEqual(servTable(), impTable(), userTable());
-        ResultSet rs = buildStatement(select, from, where, "ORDER BY " + select);
+        ResultSet rs = buildStatement(select, from, where, "GROUP BY `Date` ORDER BY `Date`");
 
         return getDateToInt(rs);
     }

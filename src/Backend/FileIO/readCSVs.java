@@ -27,8 +27,6 @@ public class readCSVs {
 
     private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss"); //DateTime format as specified in the CSV files
 
-    public static float fileProgress = 0;
-
     public static List<ClickLog> readClicks(File file) throws FileNotFoundException, ParseException, NumberFormatException, ArrayIndexOutOfBoundsException {
         int fileLength = countLines(file);
 
