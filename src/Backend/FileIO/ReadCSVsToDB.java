@@ -5,6 +5,7 @@ import Backend.ScriptRunner;
 import com.opencsv.CSVReader;
 
 import java.io.*;
+import java.nio.charset.Charset;
 import java.sql.*;
 import java.text.ParseException;
 import java.util.Iterator;
@@ -44,7 +45,7 @@ public class ReadCSVsToDB {
         createTables();
         loadFilesToDB();
         DBH.getConnection().setAutoCommit(true);
-        System.out.println((System.nanoTime() - start)/1000000000.0);
+        System.out.println("Time to create campaign " + campaignName + ": " + ((System.nanoTime() - start)/1000000000.0) + " seconds");
     }
 
     private static void createTables() throws IOException, SQLException {
@@ -74,6 +75,8 @@ public class ReadCSVsToDB {
         try {
             loadServerLog();
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -122,23 +125,45 @@ public class ReadCSVsToDB {
         fwUsers.flush();
         fwImpressions.flush();
 
-        stmt.execute("LOAD DATA LOCAL INFILE '" + users.getPath() + "' INTO TABLE " + userTableName
+        stmt.execute("LOAD DATA LOCAL INFILE '" + users.getPath().replace("\\", "\\\\") + "' INTO TABLE " + userTableName
                         + " FIELDS TERMINATED BY ',';");
-        stmt.execute("LOAD DATA LOCAL INFILE '" + impressions.getPath() + "' INTO TABLE " + impressionTableName
+        stmt.execute("LOAD DATA LOCAL INFILE '" + impressions.getPath().replace("\\", "\\\\") + "' INTO TABLE " + impressionTableName
                 + " FIELDS TERMINATED BY ',';");
     }
 
     private static void loadClickLog() throws SQLException{
         String clickTableName = campaignName + DBHelper.clickTableSuffix;
         Statement stmt = DBH.getConnection().createStatement();
-        stmt.execute("LOAD DATA LOCAL INFILE '" + clickLog.getAbsolutePath() + "' INTO TABLE " + clickTableName
+        stmt.execute("LOAD DATA LOCAL INFILE '" + clickLog.getAbsolutePath().replace("\\", "\\\\") + "' INTO TABLE " + clickTableName
                 + " FIELDS TERMINATED BY ',';");
     }
 
-    private static void loadServerLog() throws SQLException {
+    private static void loadServerLog() throws SQLException, IOException {
         String serverTableName = campaignName + DBHelper.serverLogTableSuffix;
         Statement stmt = DBH.getConnection().createStatement();
-        stmt.execute("LOAD DATA LOCAL INFILE '" + serverLog.getAbsolutePath() + "' INTO TABLE " + serverTableName
+
+        CSVReader reader = new CSVReader(new FileReader(serverLog));
+
+        Iterator<String[]> lines = reader.iterator();
+
+        //Skips header line
+        lines.next();
+
+        File serv = File.createTempFile("serv", ".csv");
+        FileWriter fw = new FileWriter(serv);
+
+        while (lines.hasNext()){
+            String[] tokens = lines.next();
+            String entryDate = tokens[0];
+            String id = tokens[1];
+            String exitDate = tokens[2];
+            String pagesViewed = tokens[3];
+            String conversion = tokens[4].equals("Yes") ? "1" : "0";
+
+            fw.write(entryDate + "," + id + "," + exitDate + "," + pagesViewed + "," + conversion + "\n");
+        }
+
+        stmt.execute("LOAD DATA LOCAL INFILE '" + serv.getAbsolutePath().replace("\\", "\\\\") + "' INTO TABLE " + serverTableName
                 + " FIELDS TERMINATED BY ',';");
     }
 

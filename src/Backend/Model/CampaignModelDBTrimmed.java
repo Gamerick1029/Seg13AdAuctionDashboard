@@ -2,10 +2,8 @@ package Backend.Model;
 
 import Backend.DBHelper;
 import Backend.Model.Interfaces.DataModel;
-import Backend.Model.Interfaces.DataModelDBTrimmed;
 import Backend.Model.Interfaces.Filter;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -39,7 +37,7 @@ public class CampaignModelDBTrimmed implements DataModel {
      * Used to trim a trailing " OR " or " AND " from the end of a String. Mostly useful for SQL statements
      * @return The trimmed String
      */
-    private String trimTrailingOperands(String untrimmed){
+    private String trimTrailingOperators(String untrimmed){
         if (untrimmed.endsWith(" OR ")) return untrimmed.substring(0, untrimmed.length() - 4);
         if (untrimmed.endsWith(" AND ")) return untrimmed.substring(0, untrimmed.length() - 5);
         return untrimmed;
@@ -51,7 +49,7 @@ public class CampaignModelDBTrimmed implements DataModel {
         if (filterDB.getStartDate() != null) sb.append("Date > " + sdf.format(filterDB.getStartDate()) + " AND ");
         if (filterDB.getEndDate() != null)   sb.append("Date < " + sdf.format(filterDB.getEndDate()));
 
-        return trimTrailingOperands(sb.toString());
+        return trimTrailingOperators(sb.toString());
     }
 
     private String genderCondition(){
@@ -61,7 +59,7 @@ public class CampaignModelDBTrimmed implements DataModel {
         if (filterDB.genderFemale) sb.append("Gender = 'Female' OR ");
         if (filterDB.genderOther) sb.append("Gender = 'Other'");
 
-        return trimTrailingOperands(sb.toString());
+        return trimTrailingOperators(sb.toString());
     }
 
     private String ageCondition(){
@@ -73,7 +71,7 @@ public class CampaignModelDBTrimmed implements DataModel {
         if (filterDB.age45to54)   sb.append("AgeRange = '45-54' OR ");
         if (filterDB.ageAbove54)  sb.append("AgeRange = '>55'");
 
-        return trimTrailingOperands(sb.toString());
+        return trimTrailingOperators(sb.toString());
     }
 
     private String incomeCondition(){
@@ -83,7 +81,7 @@ public class CampaignModelDBTrimmed implements DataModel {
         if (filterDB.incomeMedium) sb.append("Income = 'Medium' OR ");
         if (filterDB.incomeHigh)   sb.append("Income = 'High' OR ");
 
-        return trimTrailingOperands(sb.toString());
+        return trimTrailingOperators(sb.toString());
     }
 
     private String contextCondition(){
@@ -94,7 +92,7 @@ public class CampaignModelDBTrimmed implements DataModel {
         if (filterDB.contextShopping) sb.append("Context = 'Shopping' OR ");
         if (filterDB.contextBlog) sb.append("Context = 'Social Media' OR ");
 
-        return trimTrailingOperands(sb.toString());
+        return trimTrailingOperators(sb.toString());
     }
 
     /**
@@ -116,7 +114,7 @@ public class CampaignModelDBTrimmed implements DataModel {
         if (!incomeCondition.equals(""))  sb.append("(").append(incomeCondition).append(")").append(" AND ");
         if (!contextCondition.equals("")) sb.append("(").append(contextCondition).append(")");
 
-        return trimTrailingOperands(sb.toString());
+        return trimTrailingOperators(sb.toString());
     }
 
     private String userTable(){
@@ -139,26 +137,62 @@ public class CampaignModelDBTrimmed implements DataModel {
      * Takes an empty Map and a ResultSet consisting of a single column of Dates, and maps the Dates to the number of
      * of occurrences in the ResultSet
      * @param rs
-     * @param result
      * @throws SQLException
      */
-    private void getDateToInt(ResultSet rs, Map<Date, Integer> result) throws SQLException {
+    private Map<Date, Integer> getDateToInt(ResultSet rs) throws SQLException {
+        Map<Date, Integer> result = new HashMap<>();
+        int count = 0;
         while (rs.next()){
+            count++;
             Date date = rs.getDate("Date");
             if (result.containsKey(date)){
                 result.put(date, result.get(date)+1);
             } else {
-                result.put(date, 1);
+                result.put(date, count);
             }
         }
+        return result;
     }
+
+    /**
+     * Builds a string of format {table1}.ID = {table2}.ID etc.
+     * @param tables
+     * @return
+     */
+    private String idsEqual(String... tables){
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < tables.length - 1; i++) {
+            sb.append(tables[i] + ".ID = " + tables[i+1] + " AND ");
+        }
+
+        return trimTrailingOperators(sb.toString());
+    }
+
+    /**
+     * Simple helper function for building SQL queries
+     * @param select
+     * @param fromTables
+     * @param whereConditions
+     * @return
+     * @throws SQLException
+     */
+    private ResultSet buildStatement(String select, String fromTables, String whereConditions) throws SQLException {
+        Statement stmt = dbHelper.getConnection().createStatement();
+        ResultSet rs;
+        rs = stmt.executeQuery("SELECT " + select + " FROM " + fromTables + " WHERE " + whereConditions + " AND " + conditions() + " ORDER BY " + impTable() + ".Date;");
+        return rs;
+    }
+
+
+    //Public methods
 
     @Override
     public int getImpressionsNumber() throws SQLException {
-        Statement stmt = dbHelper.getConnection().createStatement();
-        ResultSet rs;
-        rs = stmt.executeQuery("SELECT COUNT(*) FROM " + impTable() + "," + userTable()
-                + " WHERE " + impTable() + ".ID = " + userTable() + ".ID AND " + conditions() + ";");
+        String select = "COUNT(*)";
+        String fromTables = impTable() + "," + userTable();
+        String whereConditions = idsEqual(impTable(), userTable());
+        ResultSet rs = buildStatement(select, fromTables, whereConditions);
 
         rs.next();
         return rs.getInt("COUNT(*)");
@@ -166,106 +200,115 @@ public class CampaignModelDBTrimmed implements DataModel {
 
     @Override
     public Map<Date, Integer> getFullImpressions(long step) throws SQLException {
-        Statement stmt = dbHelper.getConnection().createStatement();
-        ResultSet rs;
-        rs = stmt.executeQuery("SELECT Date FROM " + impTable() + "," + userTable()
-                + " WHERE " + impTable() + ".ID = " + userTable() + ".ID AND " + conditions() + ";");
+        String select = "Date";
+        String fromTables = impTable() + "," + userTable();
+        String whereConditions = idsEqual(impTable(), userTable());
 
-        Map<Date, Integer> result = new HashMap<>();
+        ResultSet rs = buildStatement(select, fromTables, whereConditions);
 
-        getDateToInt(rs, result);
-
-        return result;
+        return getDateToInt(rs);
     }
 
     @Override
     public int getClicksNumber() throws SQLException {
-        Statement stmt = dbHelper.getConnection().createStatement();
-        ResultSet rs;
-        rs = stmt.executeQuery("SELECT COUNT(*) FROM " + clickTable() + "," + userTable()
-                + " WHERE " + clickTable() + ".ID = " + userTable() + ".ID AND " + conditions() + ";");
+        String select = "COUNT(*)";
+        String from = clickTable() + "," + impTable() + "," + userTable();
+        String where = idsEqual(clickTable(), impTable(), userTable());
+        ResultSet rs = buildStatement(select, from, where);
 
         rs.next();
-        return rs.getInt("COUNT(*)");
+        return rs.getInt(select);
     }
 
     @Override
     public Map<Date, Integer> getFullClicks(long step) throws SQLException {
-        Statement stmt = dbHelper.getConnection().createStatement();
-        ResultSet rs;
-        rs = stmt.executeQuery("SELECT Date FROM " + clickTable() + "," + userTable()
-                + " WHERE " + impTable() + ".ID = " + userTable() + ".ID AND " + conditions() + ";");
+        String select = "Date";
+        String from = clickTable() + "," + impTable() + "," + userTable();
+        String where = idsEqual(clickTable(), impTable(), userTable());
+        ResultSet rs = buildStatement(select, from, where);
 
-        Map<Date, Integer> result = new HashMap<>();
-
-        getDateToInt(rs, result);
-
-        return result;
+        return getDateToInt(rs);
     }
 
     @Override
     public int getUniquesNumber() throws SQLException {
-        Statement stmt = dbHelper.getConnection().createStatement();
-        ResultSet rs;
-        rs = stmt.executeQuery("SELECT COUNT(DISTINCT (" + clickTable() + ".ID)) FROM " + clickTable() + ", " + userTable() + ", " + impTable()
-                + " WHERE " + clickTable() + ".ID = " + userTable() + ".ID AND " + clickTable() + ".ID = " + impTable() + ".ID AND " + conditions() + ";");
+        String select = "COUNT(DISTINCT(" + clickTable() + ".ID))";
+        String from = clickTable() + "," + impTable() + "," + userTable();
+        String where = idsEqual(clickTable(), impTable(), userTable());
+        ResultSet rs = buildStatement(select, from, where);
 
         rs.next();
-        return rs.getInt("COUNT(DISTINCT (" + clickTable() + ".ID))");
+        return rs.getInt(select);
     }
 
     @Override
     public Map<Date, Integer> getFullUniques(long step) throws SQLException {
-        Statement stmt = dbHelper.getConnection().createStatement();
-        ResultSet rs;
-        rs = stmt.executeQuery("SELECT " + clickTable() + ".Date FROM " + clickTable() + ", " + userTable() + ", " + impTable()
-                + " WHERE " + clickTable() + ".ID = " + userTable() + ".ID AND " + clickTable() + ".ID = " + impTable() + ".ID AND " + conditions() + ";");
+        String select = clickTable() + ".Date";
+        String from = clickTable() + "," + impTable() + "," + userTable();
+        String where = idsEqual(clickTable(), impTable(), userTable());
+        ResultSet rs = buildStatement(select, from, where);
 
-        Map<Date, Integer> result = new HashMap<>();
-        int count = 0;
-
-        while (rs.next()){
-            Date date = rs.getDate("Date");
-            count += 1;
-            if (result.containsKey(date)) {
-                result.put(date, result.get(date) + 1);
-            } else {
-                result.put(date, count);
-            }
-        }
-
-        return result;
+        return getDateToInt(rs);
     }
 
     @Override
     public int getBouncesNumber() throws SQLException {
-        Statement stmt = dbHelper.getConnection().createStatement();
-        ResultSet rs;
-        rs = stmt.executeQuery("SELECT COUNT(" + servTable() + ".PagesViewed <= 1) FROM " + servTable() + ", " + userTable() + ", " + impTable()
-                + " WHERE " + servTable() + ".ID = " + userTable() + ".ID AND " + servTable() + ".ID = " + impTable() + ".ID AND " + conditions() + ";");
+        String select = "COUNT(" + servTable() + ".PagesViewed <= 1)";
+        String from = servTable() + "," + impTable() + "," + userTable();
+        String where = idsEqual(servTable(), impTable(), userTable());
+        ResultSet rs = buildStatement(select, from, where);
 
         rs.next();
-        return rs.getInt("COUNT(" + servTable() + ".PagesViewed <= 1)");
+        return rs.getInt(select);
     }
 
+    //TODO: Doesn't actually use the step yet
+    /**
+     * Gets a mapping of bounces to dates. Bounces defined as someone who only visits one page
+     * @param step the millisecond interval by which to group
+     * @return
+     * @throws SQLException
+     */
     @Override
     public Map<Date, Integer> getFullBounces(long step) throws SQLException {
-        return null;
+        String select = "Date";
+        String from = servTable() + "," + impTable() + "," + clickTable();
+        String where = servTable() + ".PagesViewed <= 1 AND " + idsEqual(servTable(), impTable(), userTable());
+        ResultSet rs = buildStatement(select, from, where);
+
+        return getDateToInt(rs);
     }
 
     @Override
     public int getConversionsNumber() throws SQLException {
-        return 0;
+        String select = "COUNT(" + servTable() + ".Conversion = 1)";
+        String from = servTable() + "," + impTable() + "," + userTable();
+        String where = idsEqual(servTable(), impTable(), userTable());
+        ResultSet rs = buildStatement(select, from, where);
+
+        rs.next();
+        return rs.getInt(select);
     }
 
     @Override
     public Map<Date, Integer> getFullConversions(long step) throws SQLException {
-        return null;
+        String select = servTable() + ".Date";
+        String from = servTable() + "," + impTable() + "," + userTable();
+        String where = servTable() + ".Conversion = 1 AND " + idsEqual(servTable(), impTable(), userTable());
+        ResultSet rs = buildStatement(select, from, where);
+
+        return getDateToInt(rs);
     }
 
     @Override
     public float getTotalCost() throws SQLException {
-        return 0;
+        String select = "SUM(ClickCost)";
+        String from = clickTable() + "," + impTable() + "," + userTable();
+        String where = idsEqual(clickTable(), impTable(), userTable());
+        ResultSet rs = buildStatement(select, from, where);
+
+        rs.next();
+        return rs.getFloat(select);
     }
 
     @Override

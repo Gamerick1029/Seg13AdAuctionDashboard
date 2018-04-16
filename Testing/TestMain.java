@@ -19,9 +19,9 @@ import java.util.Scanner;
 
 public class TestMain {
 
-    private static final String defClickLog = "TestCSVs/2_week_campaign/click_log.csv";
-    private static final String defImpressionLog = "TestCSVs/2_week_campaign/impression_log.csv";
-    private static final String defServerLog = "TestCSVs/2_week_campaign/server_log.csv";
+    private static final String defClickLog = "2_week_campaign_2\\click_log.csv";
+    private static final String defImpressionLog = "2_week_campaign_2\\impression_log.csv";
+    private static final String defServerLog = "2_week_campaign_2\\server_log.csv";
 
     private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
 
@@ -33,15 +33,15 @@ public class TestMain {
         DBHelper.initConnection(args[0], args[1]);
         DBHelper dbh = new DBHelper();
 
-        CampaignModelDBTrimmed cmdt = new CampaignModelDBTrimmed("test");
-
-        System.out.println(cmdt.getBouncesNumber());
-
-//        File JUnitClicks = new File("TestRuns/Backend/Model/TestSamples/click_log.csv");
-//        File JUnitImpressions = new File("TestRuns/Backend/Model/TestSamples/impression_log.csv");
-//        File JUnitServerLogs = new File("TestRuns/Backend/Model/TestSamples/server_log.csv");
+//        CampaignModelDBTrimmed cmdt = new CampaignModelDBTrimmed("test");
 //
-//        ReadCSVsToDB.makeCampaign(dbh, "JUnit", JUnitClicks, JUnitImpressions, JUnitServerLogs);
+//        System.out.println(cmdt.getBouncesNumber());
+
+        File JUnitClicks = new File("TestRuns/Backend/Model/TestSamples/click_log.csv");
+        File JUnitImpressions = new File("TestRuns/Backend/Model/TestSamples/impression_log.csv");
+        File JUnitServerLogs = new File("TestRuns/Backend/Model/TestSamples/server_log.csv");
+//
+        ReadCSVsToDB.makeCampaign(dbh, "JUnit", JUnitClicks, JUnitImpressions, JUnitServerLogs);
 
 //        System.out.println(dbh.getCampaigns());
 //        System.out.println("Success!");
