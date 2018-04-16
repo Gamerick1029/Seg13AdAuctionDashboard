@@ -65,6 +65,10 @@
 	-fx-fill: GREY;
 }
 
+#chart {
+	-fx-background-color: #514d4d;
+}
+
 /*
 #menuButton {
 	-fx-background-color: GREY;

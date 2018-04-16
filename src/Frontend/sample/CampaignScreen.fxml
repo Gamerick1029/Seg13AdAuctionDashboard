@@ -42,7 +42,7 @@
       
                         <AnchorPane>
                            <children>
-                              <HBox alignment="TOP_CENTER" AnchorPane.bottomAnchor="640.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="209.0" AnchorPane.topAnchor="0.0">
+                              <HBox alignment="TOP_CENTER">
                                  <children>
                                     <HBox alignment="CENTER_LEFT" prefHeight="42.0">
                                        <children>
@@ -75,7 +75,7 @@
                                     </HBox>
       
       				
-                                    <MenuButton id="menuButton" fx:id="graphType" mnemonicParsing="false" prefHeight="42.0" prefWidth="234.0" text="Line Chart">
+                                    <MenuButton id="menuButton" fx:id="graphType" mnemonicParsing="false" text="Line Chart">
       
                                        <items>
                                           <CheckMenuItem id="checkMenuItem" fx:id="lineType" mnemonicParsing="false" selected="true" text="Line Chart" />
@@ -84,16 +84,12 @@
                                           <CheckMenuItem id="checkMenuItem" fx:id="areaType" mnemonicParsing="false" text="Area Chart" />
                                           <CheckMenuItem id="checkMenuItem" fx:id="histogramType" mnemonicParsing="false" text="Click Cost Histogram" />
                                        </items>
-                                       <font>
-                                          <Font size="20.0" />
-                                       </font>
+
                                     </MenuButton>
                                  </children>
-                                 <padding>
-                           			<Insets left="60.0" />
-                           		</padding>
+
                               </HBox>
-                              <LineChart fx:id="lineChart" layoutX="10.0" layoutY="164.0" prefHeight="477.0" prefWidth="807.0" verticalGridLinesVisible="false" AnchorPane.bottomAnchor="41.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="164.0">
+                              <LineChart id="chart" fx:id="lineChart" prefHeight="477.0" prefWidth="807.0" verticalGridLinesVisible="false" AnchorPane.bottomAnchor="41.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
                                 <xAxis>
                                   <CategoryAxis label="Time" side="BOTTOM" fx:id="x" />
                                 </xAxis>
@@ -101,8 +97,8 @@
                                   <NumberAxis fx:id="y" label="Campaign Something" side="LEFT" />
                                 </yAxis>
                               </LineChart>
-                              <PieChart fx:id="pieChart" layoutX="10.0" layoutY="50.0" prefHeight="400.0" prefWidth="807.0" visible="false" AnchorPane.bottomAnchor="71.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0" />
-                              <BarChart fx:id="barChart" layoutX="10.0" layoutY="50.0" prefHeight="400.0" prefWidth="807.0" visible="false" AnchorPane.bottomAnchor="71.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
+                              <PieChart id="chart" fx:id="pieChart" prefHeight="400.0" prefWidth="807.0" visible="false" AnchorPane.bottomAnchor="71.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0" />
+                              <BarChart id="chart" fx:id="barChart" prefHeight="400.0" prefWidth="807.0" visible="false" AnchorPane.bottomAnchor="71.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
                                 <xAxis>
                                   <CategoryAxis id="text" label="Time" side="BOTTOM" />
                                 </xAxis>
@@ -110,7 +106,7 @@
                                   <NumberAxis id="text" label="Campaign Something" side="LEFT" />
                                 </yAxis>
                               </BarChart>
-                              <AreaChart fx:id="areaChart" layoutX="10.0" layoutY="50.0" prefHeight="400.0" prefWidth="807.0" visible="false" AnchorPane.bottomAnchor="71.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
+                              <AreaChart id="chart" fx:id="areaChart" prefHeight="400.0" prefWidth="807.0" visible="false" AnchorPane.bottomAnchor="71.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
                                 <xAxis>
                                   <CategoryAxis id="text" label="Time" side="BOTTOM" />
                                 </xAxis>
@@ -118,16 +114,6 @@
                                   <NumberAxis id="text" label="Campaign Something" side="LEFT" />
                                 </yAxis>
                               </AreaChart>
-                              <MenuButton id="menuButton" fx:id="themes" contentDisplay="CENTER" layoutX="590.0" layoutY="-1.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="223.0" text="Dark Theme" textAlignment="CENTER">
-                                 <items>
-                                    <CheckMenuItem fx:id="darkTheme" mnemonicParsing="false" text="Dark Theme" />
-                                    <CheckMenuItem fx:id="lightTheme" mnemonicParsing="false" text="Light Theme" />
-                                    <CheckMenuItem fx:id="mintTheme" mnemonicParsing="false" text="Mint Theme" />
-                                 </items>
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                              </MenuButton>
                            </children>
       
                         </AnchorPane>
@@ -399,10 +385,10 @@
                               <Insets top="20.0" />
                            </VBox.margin>
                             </Text>
-                            <Text id="h2" text="                                              Age" wrappingWidth="258.109375">
+                            <Text id="h2" text="Age" wrappingWidth="258.109375">
       
                            <VBox.margin>
-                              <Insets bottom="10.0" top="30.0" />
+                              <Insets bottom="10.0" top="10.0" />
                            </VBox.margin>
                             </Text>
                         <GridPane hgap="5.0" prefHeight="62.0" prefWidth="196.0" vgap="5.0">
@@ -423,10 +409,10 @@
                                   <CheckBox id="checkBox" fx:id="age35to44" mnemonicParsing="false" text="35 - 44" GridPane.rowIndex="2" />
                            </children>
                         </GridPane>
-                            <Text id="h2" text="                                         Income" wrappingWidth="250.2265625">
+                            <Text id="h2" text="Income" wrappingWidth="250.2265625">
       
                            <VBox.margin>
-                              <Insets bottom="10.0" top="30.0" />
+                              <Insets bottom="10.0" top="10.0" />
                            </VBox.margin>
                             </Text>
                         <GridPane hgap="5.0" vgap="5.0">
@@ -444,10 +430,10 @@
                                   <CheckBox id="checkBox" fx:id="incomeHigh" mnemonicParsing="false" text="High" GridPane.rowIndex="2" />
                            </children>
                         </GridPane>
-                            <Text id="h2" text="                                          Gender   " wrappingWidth="252.75">
+                            <Text id="h2" text="Gender" wrappingWidth="252.75">
       
                            <VBox.margin>
-                              <Insets bottom="10.0" top="30.0" />
+                              <Insets bottom="10.0" top="10.0" />
                            </VBox.margin>
                             </Text>
                         <GridPane hgap="5.0" vgap="5.0">
@@ -468,13 +454,13 @@
                               <Insets />
                            </VBox.margin>
                         </GridPane>
-                            <Text id="h2" text="                                        Context  " textAlignment="RIGHT" wrappingWidth="241.890625">
+                            <Text id="h2" text="Context" textAlignment="LEFT">
                                 <cursor>
                                     <Cursor fx:constant="HAND" />
                                 </cursor>
       
                            <VBox.margin>
-                              <Insets bottom="10.0" top="30.0" />
+                              <Insets bottom="10.0" top="10.0" />
                            </VBox.margin>
                            <font>
                               <Font size="22.0" />
@@ -503,7 +489,7 @@
                                   <CheckBox id="checkBox" fx:id="contextBlog" mnemonicParsing="false" text="Blog" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                            </children>
                         </GridPane>
-                            <Text id="h1" text="                                Date" wrappingWidth="257.5791015625">
+                            <Text id="h1" text="Date">
                            <VBox.margin>
                               <Insets top="20.0" />
                            </VBox.margin>
@@ -534,15 +520,24 @@
                             <Text id="h2" fx:id="startDate" text="Start">
       
                            <VBox.margin>
-                              <Insets bottom="10.0" top="30.0" />
+                              <Insets bottom="10.0" top="10.0" />
                            </VBox.margin>
                             </Text>
                             <Text id="h2" fx:id="startDate1" text="End">
       
                            <VBox.margin>
-                              <Insets bottom="10.0" top="30.0" />
+                              <Insets bottom="10.0" top="10.0" />
                            </VBox.margin>
                             </Text>
+                            
+                            <MenuButton id="menuButton" fx:id="themes" contentDisplay="CENTER" mnemonicParsing="false" text="Dark Theme" textAlignment="CENTER">
+                                 <items>
+                                    <CheckMenuItem fx:id="darkTheme" mnemonicParsing="false" text="Dark Theme" />
+                                    <CheckMenuItem fx:id="lightTheme" mnemonicParsing="false" text="Light Theme" />
+                                    <CheckMenuItem fx:id="mintTheme" mnemonicParsing="false" text="Mint Theme" />
+                                 </items>
+                                 
+                              </MenuButton>
                             
                             
                      </children>
