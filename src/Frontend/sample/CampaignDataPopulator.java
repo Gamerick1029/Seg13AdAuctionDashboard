@@ -52,7 +52,6 @@ public class CampaignDataPopulator {
             XYChart.Series campaignImpressionsAC = new XYChart.Series();
             XYChart.Series campaignHistogram = new XYChart.Series();
             ObservableList<PieChart.Data> campaignImpressionsPC = FXCollections.observableArrayList();
-
             campaignImpressionsLC.setName(dataModel.getName() + " Impressions");
             campaignImpressionsBC.setName(dataModel.getName() + " Impressions");
             campaignImpressionsAC.setName(dataModel.getName() + " Impressions");

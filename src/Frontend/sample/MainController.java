@@ -165,6 +165,12 @@ public class MainController implements ScreenInterface {
     private TextField startYear;
     @FXML
     private TextField endYear;
+
+    /*@FXML
+    private Button reset;
+    @FXML
+    private Button checkAll;
+    */
     @FXML
     private Text searchDate;
 
@@ -274,6 +280,64 @@ public class MainController implements ScreenInterface {
                 groupByMonth();
             }
         });
+        genderMale.setSelected(true);
+        genderFemale.setSelected(true);
+        genderOther.setSelected(true);
+        ageBelow20.setSelected(true);
+        age25to34.setSelected(true);
+        age35to44.setSelected(true);
+        age45to54.setSelected(true);
+        ageAbove54.setSelected(true);
+        incomeLow.setSelected(true);
+        incomeMedium.setSelected(true);
+        incomeHigh.setSelected(true);
+        contextNews.setSelected(true);
+        contextShopping.setSelected(true);
+        contextMedia.setSelected(true);
+        contextBlog.setSelected(true);
+        contextHobbies.setSelected(true);
+        contextTravel.setSelected(true);
+        //TODO: Add Reset and Check all Buttons on top of all Filters
+        /*reset.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                e -> {
+                    genderMale.setSelected(false);
+                    genderFemale.setSelected(false);
+                    genderOther.setSelected(false);
+                    ageBelow20.setSelected(false);
+                    age25to34.setSelected(false);
+                    age35to44.setSelected(false);
+                    age45to54.setSelected(false);
+                    ageAbove54.setSelected(false);
+                    incomeLow.setSelected(false);
+                    incomeMedium.setSelected(false);
+                    incomeHigh.setSelected(false);
+                    contextNews.setSelected(false);
+                    contextShopping.setSelected(false);
+                    contextMedia.setSelected(false);
+                    contextBlog.setSelected(false);
+                    contextHobbies.setSelected(false);
+                    contextTravel.setSelected(false);
+                });
+        checkAll.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                e -> {
+                    genderMale.setSelected(true);
+                    genderFemale.setSelected(true);
+                    genderOther.setSelected(true);
+                    ageBelow20.setSelected(true);
+                    age25to34.setSelected(true);
+                    age35to44.setSelected(true);
+                    age45to54.setSelected(true);
+                    ageAbove54.setSelected(true);
+                    incomeLow.setSelected(true);
+                    incomeMedium.setSelected(true);
+                    incomeHigh.setSelected(true);
+                    contextNews.setSelected(true);
+                    contextShopping.setSelected(true);
+                    contextMedia.setSelected(true);
+                    contextBlog.setSelected(true);
+                    contextHobbies.setSelected(true);
+                    contextTravel.setSelected(true);
+                });*/
         genderMale.setOnAction(r -> {
             if (genderMale.isSelected()) {
                 filterGraph(genderMale.getText(), true);
