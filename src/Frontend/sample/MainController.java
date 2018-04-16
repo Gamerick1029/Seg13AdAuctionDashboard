@@ -834,7 +834,7 @@ public class MainController implements ScreenInterface {
             content.add(label, 0, 0);
             alert.getDialogPane().setContent(content);
             alert.showAndWait();
-        } else if (!isDateValid(endDay.getText() + "-" + endMonth.getText() + "-" + endYear.getText())) {
+        } else if (!isDateValid(endDay.getText() + "-" + convertMonth(endMonth.getText()) + "-" + endYear.getText())) {
             alert.setHeaderText("Invalid end date!");
             label = new Label("The date " + endDay.getText() + "-" + endMonth.getText() + "-" + endYear.getText() + " is not valid.");
             content.add(label, 0, 0);
@@ -845,13 +845,13 @@ public class MainController implements ScreenInterface {
             StringBuilder sbS = new StringBuilder();
             sbS.append(startDay.getText());
             sbS.append("/");
-            sbS.append(startMonth.getText());
+            sbS.append(convertMonth(startMonth.getText()));
             sbS.append("/");
             sbS.append(startYear.getText());
             StringBuilder sbE = new StringBuilder();
             sbE.append(endDay.getText());
             sbE.append("/");
-            sbE.append(endMonth.getText());
+            sbE.append(convertMonth(endMonth.getText()));
             sbE.append("/");
             sbE.append(endYear.getText());
             for (DataModel dataModel : myController.getDataModelMap().values()) {
@@ -913,7 +913,7 @@ public class MainController implements ScreenInterface {
     }
 
     private boolean isDateValid(String date) {
-        String DATE_FORMAT = "dd/MM/yyyy";
+        String DATE_FORMAT = "dd-MM-yyyy";
         try {
             DateFormat df = new SimpleDateFormat(DATE_FORMAT);
             df.setLenient(false);
