@@ -177,10 +177,10 @@ public class CampaignModelDBTrimmed implements DataModel {
      * @return
      * @throws SQLException
      */
-    private ResultSet buildStatement(String select, String fromTables, String whereConditions) throws SQLException {
+    private ResultSet buildStatement(String select, String fromTables, String whereConditions, String otherSuffixes) throws SQLException {
         Statement stmt = dbHelper.getConnection().createStatement();
         ResultSet rs;
-        rs = stmt.executeQuery("SELECT " + select + " FROM " + fromTables + " WHERE " + whereConditions + " AND " + conditions() + " ORDER BY " + impTable() + ".Date;");
+        rs = stmt.executeQuery("SELECT " + select + " FROM " + fromTables + " WHERE " + whereConditions + " AND " + conditions() + " " + otherSuffixes + ";");
         return rs;
     }
 
@@ -192,7 +192,7 @@ public class CampaignModelDBTrimmed implements DataModel {
         String select = "COUNT(*)";
         String fromTables = impTable() + "," + userTable();
         String whereConditions = idsEqual(impTable(), userTable());
-        ResultSet rs = buildStatement(select, fromTables, whereConditions);
+        ResultSet rs = buildStatement(select, fromTables, whereConditions, "");
 
         rs.next();
         return rs.getInt("COUNT(*)");
@@ -204,7 +204,7 @@ public class CampaignModelDBTrimmed implements DataModel {
         String fromTables = impTable() + "," + userTable();
         String whereConditions = idsEqual(impTable(), userTable());
 
-        ResultSet rs = buildStatement(select, fromTables, whereConditions);
+        ResultSet rs = buildStatement(select, fromTables, whereConditions, "ORDER BY " + select);
 
         return getDateToInt(rs);
     }
@@ -214,7 +214,7 @@ public class CampaignModelDBTrimmed implements DataModel {
         String select = "COUNT(*)";
         String from = clickTable() + "," + impTable() + "," + userTable();
         String where = idsEqual(clickTable(), impTable(), userTable());
-        ResultSet rs = buildStatement(select, from, where);
+        ResultSet rs = buildStatement(select, from, where, "");
 
         rs.next();
         return rs.getInt(select);
@@ -225,7 +225,7 @@ public class CampaignModelDBTrimmed implements DataModel {
         String select = "Date";
         String from = clickTable() + "," + impTable() + "," + userTable();
         String where = idsEqual(clickTable(), impTable(), userTable());
-        ResultSet rs = buildStatement(select, from, where);
+        ResultSet rs = buildStatement(select, from, where, "ORDER BY " + select);
 
         return getDateToInt(rs);
     }
@@ -235,7 +235,7 @@ public class CampaignModelDBTrimmed implements DataModel {
         String select = "COUNT(DISTINCT(" + clickTable() + ".ID))";
         String from = clickTable() + "," + impTable() + "," + userTable();
         String where = idsEqual(clickTable(), impTable(), userTable());
-        ResultSet rs = buildStatement(select, from, where);
+        ResultSet rs = buildStatement(select, from, where, "");
 
         rs.next();
         return rs.getInt(select);
@@ -246,7 +246,7 @@ public class CampaignModelDBTrimmed implements DataModel {
         String select = clickTable() + ".Date";
         String from = clickTable() + "," + impTable() + "," + userTable();
         String where = idsEqual(clickTable(), impTable(), userTable());
-        ResultSet rs = buildStatement(select, from, where);
+        ResultSet rs = buildStatement(select, from, where, "ORDER BY " + select);
 
         return getDateToInt(rs);
     }
@@ -256,7 +256,7 @@ public class CampaignModelDBTrimmed implements DataModel {
         String select = "COUNT(" + servTable() + ".PagesViewed <= 1)";
         String from = servTable() + "," + impTable() + "," + userTable();
         String where = idsEqual(servTable(), impTable(), userTable());
-        ResultSet rs = buildStatement(select, from, where);
+        ResultSet rs = buildStatement(select, from, where, "");
 
         rs.next();
         return rs.getInt(select);
@@ -274,7 +274,7 @@ public class CampaignModelDBTrimmed implements DataModel {
         String select = "Date";
         String from = servTable() + "," + impTable() + "," + clickTable();
         String where = servTable() + ".PagesViewed <= 1 AND " + idsEqual(servTable(), impTable(), userTable());
-        ResultSet rs = buildStatement(select, from, where);
+        ResultSet rs = buildStatement(select, from, where, "ORDER BY " + select);
 
         return getDateToInt(rs);
     }
@@ -284,7 +284,7 @@ public class CampaignModelDBTrimmed implements DataModel {
         String select = "COUNT(" + servTable() + ".Conversion = 1)";
         String from = servTable() + "," + impTable() + "," + userTable();
         String where = idsEqual(servTable(), impTable(), userTable());
-        ResultSet rs = buildStatement(select, from, where);
+        ResultSet rs = buildStatement(select, from, where, "");
 
         rs.next();
         return rs.getInt(select);
@@ -295,7 +295,7 @@ public class CampaignModelDBTrimmed implements DataModel {
         String select = servTable() + ".Date";
         String from = servTable() + "," + impTable() + "," + userTable();
         String where = servTable() + ".Conversion = 1 AND " + idsEqual(servTable(), impTable(), userTable());
-        ResultSet rs = buildStatement(select, from, where);
+        ResultSet rs = buildStatement(select, from, where, "ORDER BY " + select);
 
         return getDateToInt(rs);
     }
@@ -305,7 +305,7 @@ public class CampaignModelDBTrimmed implements DataModel {
         String select = "SUM(ClickCost)";
         String from = clickTable() + "," + impTable() + "," + userTable();
         String where = idsEqual(clickTable(), impTable(), userTable());
-        ResultSet rs = buildStatement(select, from, where);
+        ResultSet rs = buildStatement(select, from, where, "");
 
         rs.next();
         return rs.getFloat(select);

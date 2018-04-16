@@ -29,7 +29,7 @@ public class Main extends Application {
     public static Scene scene;
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
 
         ScreensController mainContainer = new ScreensController(primaryStage);
         mainContainer.loadScreen(Main.welcomeScreenID, Main.welcomeScreen);
