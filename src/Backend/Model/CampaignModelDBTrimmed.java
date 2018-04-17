@@ -35,6 +35,7 @@ public class CampaignModelDBTrimmed implements DataModel{
     public CampaignModelDBTrimmed(String campaignName, File impressions, File clicks, File server) throws SQLException, IOException {
         DBHelper.initConnection("seg", "seg13");
         dbHelper = new DBHelper();
+        this.campaignName = campaignName;
         ReadCSVsToDB.makeCampaign(dbHelper, campaignName, impressions, clicks, server);
     }
 
