@@ -57,15 +57,20 @@ public class CampaignDataPopulator {
             campaignImpressionsAC.setName(dataModel.getName() + " Impressions");
             campaignHistogram.setName(dataModel.getName() + "Click Cost Histogram");
             //Step by Day
-            ObservableList<XYChart.Data> fullData = sortMap(dataModel.getFullImpressions(Step.DAY));
-            campaignImpressionsLC.setData(fullData);
-            campaignImpressionsAC.setData(fullData);
-            campaignImpressionsBC.setData(fullData);
-            campaignHistogram.setData(fullData);
+            List<Map.Entry<Date, Integer>> fullData = sortMap(dataModel.getFullImpressions(Step.DAY));
+//            campaignImpressionsLC.setData(fullData);
+//            campaignImpressionsAC.setData(fullData);
+//            campaignImpressionsBC.setData(fullData);
+//            campaignHistogram.setData(fullData);
 
-            for (Map.Entry<Date, Integer> entry : dataModel.getFullImpressions(Step.DAY).entrySet()) {
+            for (Map.Entry<Date, Integer> entry : fullData) {
                 Date key = entry.getKey();
                 Integer value = entry.getValue();
+
+                campaignImpressionsLC.getData().add(new XYChart.Data(entry.getKey().toString(), entry.getValue()));
+                campaignImpressionsAC.getData().add(new XYChart.Data(entry.getKey().toString(), entry.getValue()));
+                campaignImpressionsBC.getData().add(new XYChart.Data(entry.getKey().toString(), entry.getValue()));
+                campaignHistogram.getData().add(new XYChart.Data(entry.getKey().toString(), entry.getValue()));
                 campaignImpressionsPC.add(new PieChart.Data(String.valueOf(key), value));
             }
             lineChart.getData().add(campaignImpressionsLC);
@@ -87,7 +92,21 @@ public class CampaignDataPopulator {
         }
     }
 
-    private static <T> ObservableList<XYChart.Data> sortMap(Map<Date, T> in) {
+    private static <T> List<Map.Entry<Date, T>> sortMap(Map<Date, T> in) {
+        List<Date> unsortedDates = new ArrayList<>();
+        for (Date d : in.keySet()) {
+            unsortedDates.add(d);
+        }
+        SortedList<Date> sortedDates = new SortedList<Date>(FXCollections.observableList(unsortedDates)).sorted();
+        List<Map.Entry<Date, T>> output = new ArrayList<>();
+        for (Date d : sortedDates) {
+            output.add(Map.entry(d, in.get(d)));
+        }
+        //ObservableList<XYChart.Data> myout = FXCollections.observableList(output);
+        return output;
+    }
+
+    private static <T> ObservableList<XYChart.Data> sortMapold(Map<Date, T> in) {
         List<Date> unsortedDates = new ArrayList<>();
         for (Date d : in.keySet()) {
             unsortedDates.add(d);
