@@ -63,6 +63,7 @@ public class WelcomeController implements ScreenInterface {
             dataModel = new CampaignModelDBTrimmed(name);
             myController.setCurrentModel(dataModel);
             myController.setDataModelMap(new HashMap<>());
+            myController.addDataModel(name, dataModel);
             myController.getDataFieldPopulator().populateFields();
             myController.getCampaignDataPopulator().populateGraph();
             myController.setScreen(Main.campaignScreenID);

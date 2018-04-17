@@ -338,121 +338,121 @@ public class MainController implements ScreenInterface {
                 });
         genderMale.setOnAction(r -> {
             if (genderMale.isSelected()) {
-                filterGraph(genderMale.getText(), true);
+                filterGraph("genderMale", true);
             } else {
-                filterGraph(genderMale.getText(), false);
+                filterGraph("genderMale", false);
             }
         });
         genderFemale.setOnAction(r -> {
             if (genderFemale.isSelected()) {
-                filterGraph(genderFemale.getText(), true);
+                filterGraph("genderFemale", true);
             } else {
-                filterGraph(genderFemale.getText(), false);
+                filterGraph("genderFemale", false);
             }
         });
         genderOther.setOnAction(r -> {
             if (genderOther.isSelected()) {
-                filterGraph(genderOther.getText(), true);
+                filterGraph("genderOther", true);
             } else {
-                filterGraph(genderOther.getText(), false);
+                filterGraph("genderOther", false);
             }
         });
         ageBelow25.setOnAction(r -> {
             if (ageBelow25.isSelected()) {
-                filterGraph(ageBelow25.getText(), true);
+                filterGraph("ageBelow25", true);
             } else {
-                filterGraph(ageBelow25.getText(), false);
+                filterGraph("ageBelow25", false);
             }
         });
         age25to34.setOnAction(r -> {
             if (age25to34.isSelected()) {
-                filterGraph(age25to34.getText(), true);
+                filterGraph("age25to34", true);
             } else {
-                filterGraph(age25to34.getText(), false);
+                filterGraph("age25to34", false);
             }
         });
         age35to44.setOnAction(r -> {
             if (age35to44.isSelected()) {
-                filterGraph(age35to44.getText(), true);
+                filterGraph("age35to44", true);
             } else {
-                filterGraph(age35to44.getText(), false);
+                filterGraph("age35to44", false);
             }
         });
         age45to54.setOnAction(r -> {
             if (age45to54.isSelected()) {
-                filterGraph(age45to54.getText(), true);
+                filterGraph("age45to54", true);
             } else {
-                filterGraph(age45to54.getText(), false);
+                filterGraph("age45to54", false);
             }
         });
         ageAbove54.setOnAction(r -> {
             if (ageAbove54.isSelected()) {
-                filterGraph(ageAbove54.getText(), true);
+                filterGraph("ageAbove54", true);
             } else {
-                filterGraph(ageAbove54.getText(), false);
+                filterGraph("ageAbove54", false);
             }
         });
         incomeLow.setOnAction(r -> {
             if (incomeLow.isSelected()) {
-                filterGraph(incomeLow.getText(), true);
+                filterGraph("incomeLow", true);
             } else {
-                filterGraph(incomeLow.getText(), false);
+                filterGraph("incomeLow", false);
             }
         });
         incomeMedium.setOnAction(r -> {
             if (incomeMedium.isSelected()) {
-                filterGraph(incomeMedium.getText(), true);
+                filterGraph("incomeMedium", true);
             } else {
-                filterGraph(incomeMedium.getText(), false);
+                filterGraph("incomeMedium", false);
             }
         });
         incomeHigh.setOnAction(r -> {
             if (incomeHigh.isSelected()) {
-                filterGraph(incomeHigh.getText(), true);
+                filterGraph("incomeHigh", true);
             } else {
-                filterGraph(incomeHigh.getText(), false);
+                filterGraph("incomeHigh", false);
             }
         });
         contextNews.setOnAction(r -> {
             if (contextNews.isSelected()) {
-                filterGraph(contextNews.getText(), true);
+                filterGraph("contextNews", true);
             } else {
-                filterGraph(contextNews.getText(), false);
+                filterGraph("contextNews", false);
             }
         });
         contextShopping.setOnAction(r -> {
             if (contextShopping.isSelected()) {
-                filterGraph(contextShopping.getText(), true);
+                filterGraph("contextShopping", true);
             } else {
-                filterGraph(contextShopping.getText(), false);
+                filterGraph("contextShopping", false);
             }
         });
         contextMedia.setOnAction(r -> {
             if (contextMedia.isSelected()) {
-                filterGraph(contextMedia.getText(), true);
+                filterGraph("contextMedia", true);
             } else {
-                filterGraph(contextMedia.getText(), false);
+                filterGraph("contextMedia", false);
             }
         });
         contextBlog.setOnAction(r -> {
             if (contextBlog.isSelected()) {
-                filterGraph(contextBlog.getText(), true);
+                filterGraph("contextBlog", true);
             } else {
-                filterGraph(contextBlog.getText(), false);
+                filterGraph("contextBlog", false);
             }
         });
         contextHobbies.setOnAction(r -> {
             if (contextHobbies.isSelected()) {
-                filterGraph(contextHobbies.getText(), true);
+                filterGraph("contextHobbies", true);
             } else {
-                filterGraph(contextHobbies.getText(), false);
+                filterGraph("contextHobbies", false);
             }
         });
         contextTravel.setOnAction(r -> {
             if (contextTravel.isSelected()) {
-                filterGraph(contextTravel.getText(), true);
+                filterGraph("contextTravel", true);
             } else {
-                filterGraph(contextTravel.getText(), false);
+                filterGraph("contextTravel", false);
             }
         });
         searchDate.addEventHandler(MouseEvent.MOUSE_CLICKED,
@@ -767,7 +767,6 @@ public class MainController implements ScreenInterface {
                 //Adding a new Data Model to ScreensController
                 DataModel dataModel = null;
                 try {
-                    //TODO: REPLACE WITH CAMPAIGN MODEL DB TRIMMED
                     dataModel = new CampaignModelDBTrimmed(campaign.getName(), currentImpressions, currentClick, currentServer);
                 } catch (Exception e) {
                     e.printStackTrace();
