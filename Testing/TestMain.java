@@ -35,16 +35,44 @@ public class TestMain {
         DBHelper dbh = new DBHelper();
 
 
-        CampaignModelDBTrimmed cmdt = new CampaignModelDBTrimmed("test");
+        CampaignModelDBTrimmed cmdt = new CampaignModelDBTrimmed("JUnit");
+        Step step = Step.DAY;
+
+//        System.out.println(cmdt.getImpressionsNumber());
+//        System.out.println(cmdt.getClicksNumber());
+//        System.out.println(cmdt.getUniquesNumber());
+//        System.out.println(cmdt.getBouncesNumber());
+//        System.out.println(cmdt.getConversionsNumber());
+//        System.out.println(cmdt.getTotalCost());
+//        System.out.println(cmdt.getCTR());
+//        System.out.println(cmdt.getCPA());
+//        System.out.println(cmdt.getCPC());
+//        System.out.println(cmdt.getCPM());
+//        System.out.println(cmdt.getBounceRate());
+
+//        System.out.println(cmdt.getFullImpressions(step));
+//        System.out.println(cmdt.getFullClicks(step));
+//        System.out.println(cmdt.getFullUniques(step));
+//        System.out.println(cmdt.getFullBounces(step));
+//        System.out.println(cmdt.getFullConversions(step));
+//        System.out.println(cmdt.getFullCost(step));
+//        System.out.println(cmdt.getFullCTR(step));
+//        System.out.println(cmdt.getFullCPA(step));
+//        System.out.println(cmdt.getFullCPC(step));
+//        System.out.println(cmdt.getFullCPM(step));
+//        System.out.println(cmdt.getFullBounceRate(step));
+
+        System.out.println(cmdt.getFullUsers(step));
+
 
 //        System.out.println(cmdt.getCTR());
-        System.out.println(cmdt.getFullCTR(Step.DAY));
+//        System.out.println(cmdt.getFullCPA(Step.DAY));
 
-//        File JUnitClicks = new File("TestRuns/Backend/Model/TestSamples/click_log.csv");
-//        File JUnitImpressions = new File("TestRuns/Backend/Model/TestSamples/impression_log.csv");
-//        File JUnitServerLogs = new File("TestRuns/Backend/Model/TestSamples/server_log.csv");
+//        File JUnitClicks = new File("TestRuns/Backend/Model/TestSamples/click_logMetrics.csv");
+//        File JUnitImpressions = new File("TestRuns/Backend/Model/TestSamples/impression_logMetrics.csv");
+//        File JUnitServerLogs = new File("TestRuns/Backend/Model/TestSamples/server_logMetrics.csv");
 //
-//        ReadCSVsToDB.makeCampaign(dbh, "JUnit", JUnitClicks, JUnitImpressions, JUnitServerLogs);
+//        ReadCSVsToDB.makeCampaign(dbh, "JUnitMetrics", JUnitClicks, JUnitImpressions, JUnitServerLogs);
 
 //        System.out.println(dbh.getCampaigns());
 //        System.out.println("Success!");
