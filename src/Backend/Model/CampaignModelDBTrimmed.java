@@ -36,7 +36,7 @@ public class CampaignModelDBTrimmed implements DataModel{
         DBHelper.initConnection("seg", "seg13");
         dbHelper = new DBHelper();
         this.campaignName = campaignName;
-        ReadCSVsToDB.makeCampaign(dbHelper, campaignName, impressions, clicks, server);
+        ReadCSVsToDB.makeCampaign(dbHelper, campaignName, clicks, impressions,  server);
     }
 
 
