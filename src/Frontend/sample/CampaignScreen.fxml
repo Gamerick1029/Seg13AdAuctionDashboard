@@ -8,7 +8,6 @@
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.chart.PieChart?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.CheckMenuItem?>
 <?import javafx.scene.control.MenuButton?>
@@ -28,6 +27,8 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
+
+<?import javafx.scene.control.Button?>
 <ScrollPane fitToHeight="true" fitToWidth="true" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Frontend.sample.MainController">
    <content>
       <BorderPane fx:id="bigPane">
@@ -42,7 +43,7 @@
       
                         <AnchorPane>
                            <children>
-                              <HBox alignment="TOP_CENTER" AnchorPane.bottomAnchor="555.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="400.0" AnchorPane.topAnchor="0.0">
+                              <HBox alignment="TOP_CENTER">
                                  <children>
                                     <HBox alignment="CENTER_LEFT" prefHeight="42.0">
                                        <children>
@@ -247,6 +248,24 @@
          	                        </HBox>
          	                        <HBox alignment="CENTER">
          	                            <children>
+         	                                <VBox alignment="CENTER">
+         	                                    <children>
+         	                                        <Text id="dataText" fx:id="uniques" text="Uniques" wrappingWidth="150.0">
+         	                                            <cursor>
+         	                                                <Cursor fx:constant="HAND" />
+         	                                            </cursor>
+         
+         	                                        </Text>
+         	                                    </children>
+         	                                </VBox>
+         	                                <TextField id="dataField" fx:id="uniquesF" editable="false" prefWidth="100.0">
+
+	                                </TextField>
+         	                            </children>
+         	                  
+         	                        </HBox>
+         	                        <HBox alignment="CENTER">
+         	                            <children>
          	                                <VBox alignment="CENTER" prefWidth="91.0">
          	                                    <children>
          	                                        <Text id="dataText" fx:id="bounces" text="Bounces" wrappingWidth="150.0">
@@ -303,7 +322,7 @@
          	                            <children>
          	                                <VBox alignment="CENTER">
          	                                    <children>
-         	                                        <Text id="dataText" fx:id="clickRate" text="Click Rate" wrappingWidth="150.0">
+         	                                        <Text id="dataText" fx:id="CTR" text="CTR" wrappingWidth="150.0">
          	                                            <cursor>
          	                                                <Cursor fx:constant="HAND" />
          	                                            </cursor>
@@ -311,7 +330,7 @@
          	                                        </Text>
          	                                    </children>
          	                                </VBox>
-         	                                <TextField id="dataField" fx:id="clickRateF" editable="false" prefWidth="100.0">
+         	                                <TextField id="dataField" fx:id="CTRF" editable="false" prefWidth="100.0">
 
 	                                </TextField>
          	                            </children>
@@ -323,7 +342,7 @@
          	                                    <children>
          	                              <VBox alignment="CENTER">
          	                                 <children>
-         	                                              <Text id="dataText" fx:id="acquisition" text="Acquisition" wrappingWidth="150.0">
+         	                                              <Text id="dataText" fx:id="CPA" text="CPA" wrappingWidth="150.0">
          	                                                  <cursor>
          	                                                      <Cursor fx:constant="HAND" />
          	                                                  </cursor>
@@ -333,19 +352,19 @@
          	                              </VBox>
          	                                    </children>
          	                                </VBox>
-         	                                <TextField id="dataField" fx:id="acquisitionF" editable="false" prefWidth="100.0">
+         	                                <TextField id="dataField" fx:id="CPAF" editable="false" prefWidth="100.0">
 
 	                                </TextField>
          	                            </children>
          	                   
          	                        </HBox>
-         	                        <HBox alignment="CENTER">
+         	                          <HBox alignment="CENTER">
          	                            <children>
-         	                                <VBox alignment="CENTER" prefWidth="130.0">
+         	                                <VBox alignment="CENTER">
          	                                    <children>
-         	                              <VBox>
+         	                              <VBox alignment="CENTER">
          	                                 <children>
-         	                                              <Text id="dataText" fx:id="costPerClick" text="Cost per Click" wrappingWidth="150.0">
+         	                                              <Text id="dataText" fx:id="CPC" text="CPC" wrappingWidth="150.0">
          	                                                  <cursor>
          	                                                      <Cursor fx:constant="HAND" />
          	                                                  </cursor>
@@ -355,11 +374,57 @@
          	                              </VBox>
          	                                    </children>
          	                                </VBox>
-         	                                <TextField id="dataField" fx:id="costPerClickF" editable="false" prefWidth="100.0">
+         	                                <TextField id="dataField" fx:id="CPCF" editable="false" prefWidth="100.0">
 
 	                                </TextField>
          	                            </children>
-         	                     
+         	                   
+         	                        </HBox>
+         	                        
+         	                          <HBox alignment="CENTER">
+         	                            <children>
+         	                                <VBox alignment="CENTER">
+         	                                    <children>
+         	                              <VBox alignment="CENTER">
+         	                                 <children>
+         	                                              <Text id="dataText" fx:id="CPM" text="CPM" wrappingWidth="150.0">
+         	                                                  <cursor>
+         	                                                      <Cursor fx:constant="HAND" />
+         	                                                  </cursor>
+         
+         	                                              </Text>
+         	                                 </children>
+         	                              </VBox>
+         	                                    </children>
+         	                                </VBox>
+         	                                <TextField id="dataField" fx:id="CPMF" editable="false" prefWidth="100.0">
+
+	                                </TextField>
+         	                            </children>
+         	                   
+         	                        </HBox>
+         	                        
+         	                          <HBox alignment="CENTER">
+         	                            <children>
+         	                                <VBox alignment="CENTER">
+         	                                    <children>
+         	                              <VBox alignment="CENTER">
+         	                                 <children>
+         	                                              <Text id="dataText" fx:id="bounceRate" text="Bounce Rate" wrappingWidth="150.0">
+         	                                                  <cursor>
+         	                                                      <Cursor fx:constant="HAND" />
+         	                                                  </cursor>
+         
+         	                                              </Text>
+         	                                 </children>
+         	                              </VBox>
+         	                                    </children>
+         	                                </VBox>
+         	                                <TextField id="dataField" fx:id="bounceRateF" editable="false" prefWidth="100.0">
+
+	                                </TextField>
+         	                            </children>
+         	                   
          	                        </HBox>
          	                    </children>
          	                </VBox>
@@ -535,8 +600,8 @@
                                  
                               </MenuButton>
 
-                         <Button id="menuButton" fx:id="reset" contentDisplay="CENTER" mnemonicParsing="false" text="Reset" textAlignment="CENTER" />
-                         <Button id="menuButton" fx:id="checkAll" contentDisplay="CENTER" mnemonicParsing="false" text="Select All" textAlignment="CENTER" />
+                         <Button id="menuButton" fx:id="reset" contentDisplay="CENTER" mnemonicParsing="false" text="Reset" textAlignment="CENTER"/>
+                         <Button id="menuButton" fx:id="checkAll" contentDisplay="CENTER" mnemonicParsing="false" text="Select All" textAlignment="CENTER"/>
 
 
                      </children>
