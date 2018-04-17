@@ -70,6 +70,7 @@
 
 .chart {
 	-fx-background-color: #eaf2ff;
+	-fx-background-radius: 10;
     -fx-padding: 10px;
 }
 
@@ -78,7 +79,6 @@
 }
 
 .chart-title {
-    -fx-text-fill: #fbfffd;
     -fx-font-size: 1.6em;
 }
 
@@ -92,6 +92,7 @@
 }
 
 .chart-legend-item {
+    -fx-background-color: #5b5b5b;
     -fx-text-fill: #fbfffd;
 }
 
@@ -102,7 +103,6 @@
 
 .axis {
     -fx-font-size: 1.4em;
-    -fx-tick-label-fill: #fbfffd;
     -fx-tick-length: 20;
     -fx-minor-tick-length: 10;
 }
