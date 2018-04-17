@@ -1066,6 +1066,7 @@ public class MainController implements ScreenInterface {
 
     private void filterGraph(String name, Boolean filter) {
         System.out.println("Filtering...");
+        System.out.println(name);
         switch (name) {
             case "age25to34":
                 if (filter) {

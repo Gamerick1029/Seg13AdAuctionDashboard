@@ -39,8 +39,15 @@ public class TestMain {
         CampaignModelDBTrimmed cmdt = new CampaignModelDBTrimmed("JUnit");
         Step step = Step.DAY;
 
-        Alert alert = new Alert(Alert.AlertType.NONE);
-        alert.show();
+        Filter filter = new Filter();
+
+        filter.genderMale = false;
+        filter.ageBelow25 = false;
+
+        cmdt.setFilter(filter);
+
+        System.out.println(cmdt.getImpressionsNumber());
+
 
 //        System.out.println(cmdt.getImpressionsNumber());
 //        System.out.println(cmdt.getClicksNumber());
