@@ -191,12 +191,12 @@
          	                              <Text id="h1" text="     Campaign Metrics" wrappingWidth="249.8388671875">
          
          	                           <VBox.margin>
-         	                              <Insets left="20.0" top="30.0" />
+         	                              <Insets top="20.0" />
          	                           </VBox.margin>
          	                              </Text>
          	                     </children>
          	                  </VBox>
-      	                                <MenuButton id="menuButton" fx:id="campaignName" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="41.0" prefWidth="233.0" text="Campaign" textAlignment="CENTER">
+      	                                <MenuButton id="menuButton" fx:id="campaignName" contentDisplay="CENTER" mnemonicParsing="false" text="Campaign" textAlignment="CENTER">
       	                                    <items>
       	                                        <CheckMenuItem id="checkMenuItem" fx:id="campaignOne" mnemonicParsing="false" selected="true" />
       	                                    </items>
@@ -373,11 +373,11 @@
               </Pane>
           </left>
           <right>
-              <Pane fx:id="rightPane" layoutX="1155.0" prefHeight="734.0" prefWidth="279.0">
+              <Pane fx:id="rightPane">
                   <children>
-                  <VBox layoutX="6.0" layoutY="-2.0" prefHeight="897.0" prefWidth="274.0">
+                  <VBox>
                      <children>
-                            <Text id="h1" text="                        Audience" wrappingWidth="255.455078125">
+                            <Text id="h1" text="Audience">
                                 <cursor>
                                     <Cursor fx:constant="HAND" />
                                 </cursor>
@@ -386,13 +386,13 @@
                               <Insets top="20.0" />
                            </VBox.margin>
                             </Text>
-                            <Text id="h2" text="Age" wrappingWidth="258.109375">
+                            <Text id="h2" text="Age">
       
                            <VBox.margin>
                               <Insets bottom="10.0" top="10.0" />
                            </VBox.margin>
                             </Text>
-                        <GridPane hgap="5.0" prefHeight="62.0" prefWidth="196.0" vgap="5.0">
+                        <GridPane hgap="5.0" vgap="5.0">
                            <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -406,7 +406,7 @@
                                   <CheckBox id="checkBox" fx:id="ageBelow25" mnemonicParsing="false" text="Below 25" />
                                   <CheckBox id="checkBox" fx:id="age45to54" mnemonicParsing="false" text="45 - 54" GridPane.columnIndex="1" />
                                   <CheckBox id="checkBox" fx:id="age25to34" mnemonicParsing="false" text="25 - 34" GridPane.rowIndex="1" />
-                                  <CheckBox id="checkBox" fx:id="ageAbove54" mnemonicParsing="false" prefHeight="18.0" prefWidth="88.0" text="Above 54" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                  <CheckBox id="checkBox" fx:id="ageAbove54" mnemonicParsing="false" text="Above 54" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                   <CheckBox id="checkBox" fx:id="age35to44" mnemonicParsing="false" text="35 - 44" GridPane.rowIndex="2" />
                            </children>
                         </GridPane>
@@ -495,20 +495,26 @@
                               <Insets top="20.0" />
                            </VBox.margin>
                             </Text>
+                        
+                        <Text id="text" text="Start" />
+                        
                         <HBox spacing="5.0">
                            <children>
-                               <Text id="h2" fx:id="startDate1" text="End"/>
-                                  <TextField fx:id="endDay" maxWidth="80.0" minWidth="80.0" prefHeight="25.0" prefWidth="80.0" promptText="Day" />
+                        
+                                  <TextField fx:id="startDay" maxWidth="80.0" minWidth="80.0" prefHeight="25.0" prefWidth="80.0" promptText="Day" />
                                   <MenuButton id="menuButton" fx:id="startMonth" maxWidth="80.0" minWidth="80.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="80.0" text="Month" />
-                                  <TextField fx:id="endYear" maxHeight="25.0" maxWidth="80.0" prefHeight="25.0" prefWidth="80.0" promptText="Year" />
+                                  <TextField fx:id="startYear" maxHeight="25.0" maxWidth="80.0" prefHeight="25.0" prefWidth="80.0" promptText="Year" />
                            </children>
                         </HBox>
+                        
+                        <Text id="text" text="End" />
+                        
                         <HBox spacing="5.0">
                            <children>
-                               <Text id="h2" fx:id="startDate" text="Start"/>
-                                  <TextField fx:id="startDay" maxWidth="18000.0" minWidth="80.0" prefHeight="25.0" prefWidth="48.0" promptText="Day" />
-                                  <MenuButton id="menuButton" fx:id="endMonth" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Month" />
-                                  <TextField fx:id="startYear" maxWidth="80.0" minWidth="80.0" prefHeight="25.0" prefWidth="80.0" promptText="Year" />
+                           
+                                  <TextField fx:id="endDay" maxWidth="80.0" promptText="Day" />
+                                  <MenuButton id="menuButton" fx:id="endMonth" mnemonicParsing="false" text="Month" />
+                                  <TextField fx:id="endYear" maxWidth="80.0" promptText="Year" />
                            </children>
                         </HBox>
                             <Text id="filterByDate" fx:id="searchDate" onMouseClicked="#applyDateFilter" text="Filter by Date">
