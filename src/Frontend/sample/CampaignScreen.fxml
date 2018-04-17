@@ -74,9 +74,11 @@
                                        </children>
                                     </HBox>
       
-      				
-                                    <MenuButton id="menuButton" fx:id="graphType" mnemonicParsing="false" text="Line Chart">
-      
+      								<HBox HBox.hgrow="ALWAYS" />
+      								
+      								<HBox alignment="TOP_RIGHT">
+                                    	<MenuButton id="menuButton" fx:id="graphType" mnemonicParsing="false" text="Line Chart">
+      								
                                        <items>
                                           <CheckMenuItem id="checkMenuItem" fx:id="lineType" mnemonicParsing="false" selected="true" text="Line Chart" />
                                           <CheckMenuItem id="checkMenuItem" fx:id="barType" mnemonicParsing="false" text="Bar Chart" />
@@ -86,6 +88,7 @@
                                        </items>
 
                                     </MenuButton>
+                                    </HBox>
                                  </children>
 
                               </HBox>
@@ -517,7 +520,7 @@
                               <Insets />
                            </VBox.margin>
                         </GridPane>
-                            <Text id="h2" text="Context" textAlignment="LEFT">
+                            <Text id="h1" text="Context" textAlignment="LEFT">
                                 <cursor>
                                     <Cursor fx:constant="HAND" />
                                 </cursor>
@@ -599,6 +602,13 @@
                            </VBox.margin>
                             </Text>
                             
+                            <VBox VBox.vgrow="ALWAYS" />
+                            
+                            <Text id="h1" text="Theme">
+                           <VBox.margin>
+                              <Insets top="20.0" bottom="10" />
+                           </VBox.margin>
+                            </Text>
                             <MenuButton id="menuButton" fx:id="themes" contentDisplay="CENTER" mnemonicParsing="false" text="Dark Theme" textAlignment="CENTER">
                                  <items>
                                     <CheckMenuItem fx:id="darkTheme" mnemonicParsing="false" text="Dark Theme" />
