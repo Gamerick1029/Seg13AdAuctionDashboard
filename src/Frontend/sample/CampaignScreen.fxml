@@ -89,7 +89,7 @@
                                  </children>
 
                               </HBox>
-                              <LineChart id="chart" fx:id="lineChart" prefHeight="477.0" prefWidth="807.0" verticalGridLinesVisible="false" AnchorPane.bottomAnchor="41.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
+                              <LineChart id="chart" fx:id="lineChart" prefHeight="400.0" prefWidth="600.0" verticalGridLinesVisible="false" AnchorPane.bottomAnchor="41.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
                                 <xAxis>
                                   <CategoryAxis label="Time" side="BOTTOM" fx:id="x" />
                                 </xAxis>
@@ -97,8 +97,8 @@
                                   <NumberAxis fx:id="y" label="Campaign Something" side="LEFT" />
                                 </yAxis>
                               </LineChart>
-                              <PieChart id="chart" fx:id="pieChart" prefHeight="400.0" prefWidth="807.0" visible="false" AnchorPane.bottomAnchor="71.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0" />
-                              <BarChart id="chart" fx:id="barChart" prefHeight="400.0" prefWidth="807.0" visible="false" AnchorPane.bottomAnchor="71.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
+                              <PieChart id="chart" fx:id="pieChart" prefHeight="400.0" prefWidth="600.0" visible="false" AnchorPane.bottomAnchor="71.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0" />
+                              <BarChart id="chart" fx:id="barChart" prefHeight="400.0" prefWidth="600.0" visible="false" AnchorPane.bottomAnchor="71.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
                                 <xAxis>
                                   <CategoryAxis id="text" label="Time" side="BOTTOM" />
                                 </xAxis>
@@ -106,7 +106,7 @@
                                   <NumberAxis id="text" label="Campaign Something" side="LEFT" />
                                 </yAxis>
                               </BarChart>
-                              <AreaChart id="chart" fx:id="areaChart" prefHeight="400.0" prefWidth="807.0" visible="false" AnchorPane.bottomAnchor="71.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
+                              <AreaChart id="chart" fx:id="areaChart" prefHeight="400.0" prefWidth="600.0" visible="false" AnchorPane.bottomAnchor="71.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
                                 <xAxis>
                                   <CategoryAxis id="text" label="Time" side="BOTTOM" />
                                 </xAxis>
