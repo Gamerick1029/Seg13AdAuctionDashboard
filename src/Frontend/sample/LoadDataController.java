@@ -83,7 +83,8 @@ public class LoadDataController implements ScreenInterface {
                     }
                 };
 
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                Alert alert = new Alert(Alert.AlertType.NONE);
+                alert.setTitle("Creating Campaign");
 
                 task.setOnRunning(e -> alert.show());
 
