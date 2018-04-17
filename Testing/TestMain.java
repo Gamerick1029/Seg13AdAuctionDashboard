@@ -7,6 +7,7 @@ import Backend.Model.ImpressionData;
 import Backend.Model.Interfaces.Filter;
 import Backend.Model.Interfaces.Step;
 import Backend.Model.ServerData;
+import javafx.scene.control.Alert;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -38,6 +39,9 @@ public class TestMain {
         CampaignModelDBTrimmed cmdt = new CampaignModelDBTrimmed("JUnit");
         Step step = Step.DAY;
 
+        Alert alert = new Alert(Alert.AlertType.NONE);
+        alert.show();
+
 //        System.out.println(cmdt.getImpressionsNumber());
 //        System.out.println(cmdt.getClicksNumber());
 //        System.out.println(cmdt.getUniquesNumber());
@@ -62,7 +66,7 @@ public class TestMain {
 //        System.out.println(cmdt.getFullCPM(step));
 //        System.out.println(cmdt.getFullBounceRate(step));
 
-        System.out.println(cmdt.getFullUsers(step));
+//        System.out.println(cmdt.getFullUsers(step));
 
 
 //        System.out.println(cmdt.getCTR());
