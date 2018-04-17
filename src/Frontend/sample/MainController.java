@@ -507,7 +507,6 @@ public class MainController implements ScreenInterface {
             lightTheme.setSelected(false);
             darkTheme.setSelected(false);
             Main.scene.getStylesheets().clear();
-            Main.scene.getStylesheets().add("Frontend/sample/StyleSheet.css");
             Main.scene.getStylesheets().add("Frontend/sample/mintTheme.css");
             themes.setText("Mint Theme");
         });
@@ -516,7 +515,6 @@ public class MainController implements ScreenInterface {
             lightTheme.setSelected(true);
             darkTheme.setSelected(false);
             Main.scene.getStylesheets().clear();
-            Main.scene.getStylesheets().add("Frontend/sample/StyleSheet.css");
             Main.scene.getStylesheets().add("Frontend/sample/lightTheme.css");
             themes.setText("Light Theme");
         });
@@ -525,7 +523,6 @@ public class MainController implements ScreenInterface {
             lightTheme.setSelected(false);
             darkTheme.setSelected(true);
             Main.scene.getStylesheets().clear();
-            Main.scene.getStylesheets().add("Frontend/sample/StyleSheet.css");
             Main.scene.getStylesheets().add("Frontend/sample/darkTheme.css");
             themes.setText("Dark Theme");
         });
