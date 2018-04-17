@@ -57,7 +57,6 @@ public class WelcomeController implements ScreenInterface {
 
     }
 
-
     private void goToViewDataScreen(ActionEvent event, String name) {
         DataModel dataModel = null;
         try {

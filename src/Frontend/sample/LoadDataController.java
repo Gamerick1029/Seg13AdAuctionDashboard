@@ -7,11 +7,16 @@ import Backend.Model.Interfaces.DataModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
+import javafx.stage.StageStyle;
 
 import javax.swing.*;
 import java.io.File;
+import java.sql.SQLException;
 import java.util.HashMap;
 
 /**
@@ -43,6 +48,7 @@ public class LoadDataController implements ScreenInterface {
 
     @Override
     public void setScreenParent(ScreensController parent) {
+        dbHelper = new DBHelper();
         this.myController = parent;
     }
 
@@ -55,21 +61,43 @@ public class LoadDataController implements ScreenInterface {
         } else if (currentName.equals("")) {
             JOptionPane.showMessageDialog(null, "You need to input a campaign name before continuing!"
                     , "Warning", 1);
-        } else {
-            DataModel dataModel = null;
-            try {
-                dataModel = new CampaignModelDBTrimmed(currentName, impressions, clicks, server);
-                myController.setCurrentModel(dataModel);
-                myController.setDataModelMap(new HashMap<>());
-                myController.addDataModel(currentName, dataModel);
-                myController.getDataFieldPopulator().populateFields();
-                myController.getCampaignDataPopulator().populateGraph();
-                myController.setScreen(Main.campaignScreenID);
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Cannot load campaign! Please try again."
-                        , "Warning", 1);
-                e.printStackTrace();
+        } else try {
+            if (dbHelper.getCampaigns().contains(currentName)) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.initStyle(StageStyle.UTILITY);
+                alert.setTitle("Warning");
+                GridPane content = new GridPane();
+                content.setPrefSize(300, 50);
+                Label label = new Label("This campaign already exists!");
+                content.add(label, 0, 0);
+                alert.getDialogPane().setContent(content);
+                alert.showAndWait();
+            } else {
+                DataModel dataModel = null;
+                try {
+                    dataModel = new CampaignModelDBTrimmed(currentName, impressions, clicks, server);
+                    myController.setCurrentModel(dataModel);
+                    myController.setDataModelMap(new HashMap<>());
+                    myController.addDataModel(currentName, dataModel);
+                    myController.getDataFieldPopulator().populateFields();
+                    myController.getCampaignDataPopulator().populateGraph();
+                    myController.setScreen(Main.campaignScreenID);
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Cannot load campaign! Please try again."
+                            , "Warning", 1);
+                    e.printStackTrace();
+                }
             }
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.initStyle(StageStyle.UTILITY);
+            alert.setTitle("Warning");
+            GridPane content = new GridPane();
+            content.setPrefSize(500, 50);
+            Label label = new Label(e.getMessage());
+            content.add(label, 0, 0);
+            alert.getDialogPane().setContent(content);
+            alert.showAndWait();
         }
     }
 
