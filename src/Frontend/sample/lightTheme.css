@@ -66,16 +66,78 @@
 	-fx-fill: GREY;
 }
 
-/*
-#menuButton {
-	-fx-background-color: GREY;
+/* StyleSheet.css */
+
+.chart {
+	-fx-background-color: #eaf2ff;
+    -fx-padding: 10px;
 }
 
-#checkMenuItem {
-	-fx-text-fill: BLACK;
+.chart-content {
+    -fx-padding: 30px;
 }
 
-#checkMenuItem:hover {
-	-fx-background-color: GREY;
+.chart-title {
+    -fx-text-fill: #fbfffd;
+    -fx-font-size: 1.6em;
 }
-*/
+
+.chart-legend {
+    -fx-background-color: #5b5b5b;
+    -fx-padding: 20px;
+}
+
+.chart-legend-item-symbol {
+    -fx-background-radius: 0;
+}
+
+.chart-legend-item {
+    -fx-text-fill: #fbfffd;
+}
+
+.chart-series-line {
+    -fx-stroke-width: 2px;
+    -fx-effect: null;
+}
+
+.axis {
+    -fx-font-size: 1.4em;
+    -fx-tick-label-fill: #fbfffd;
+    -fx-tick-length: 20;
+    -fx-minor-tick-length: 10;
+}
+
+.axis-label {
+}
+
+.axis-tick-mark {
+    -fx-stroke-width: 3;
+}
+
+.axis-minor-tick-mark {
+}
+
+
+.default-color0.chart-series-line {
+    -fx-stroke: #5a5397;
+}
+
+.default-color1.chart-series-line {
+    -fx-stroke: #c676f0;
+}
+
+.default-color2.chart-series-line {
+    -fx-stroke: #dd7271;
+}
+
+.default-color0.chart-line-symbol {
+    -fx-background-color:  #5a5397, white;
+}
+
+.default-color1.chart-line-symbol {
+    -fx-background-color: #c676f0, white;
+}
+
+.default-color2.chart-line-symbol {
+    -fx-background-color: #dd7271, white;
+}
