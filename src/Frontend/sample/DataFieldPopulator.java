@@ -1,10 +1,9 @@
 package Frontend.sample;
 
 import Backend.Model.Interfaces.DataModel;
-import javafx.scene.control.CheckMenuItem;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
+import javafx.stage.StageStyle;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -18,15 +17,22 @@ public class DataFieldPopulator {
     private CheckMenuItem menuItem;
     private TextField impressions;
     private TextField clicks;
+    private TextField uniques;
     private TextField bounces;
     private TextField conversions;
-    private TextField cost;
-    private TextField clickRate;
-    private TextField costAquisition;
-    private TextField costConversion;
+    private TextField totalCost;
+    private TextField CTR;
+    private TextField CPA;
+    private TextField CPC;
+    private TextField CPM;
+    private TextField bounceRate;
     private DataModel dataModel;
 
-    public DataFieldPopulator(Campaign currentCampaign, List<Campaign> campaignsLoaded, TableView campaigns, MenuButton menuButton, CheckMenuItem menuItem, TextField impressions, TextField clicks, TextField bounces, TextField conversions, TextField cost, TextField clickRate, TextField costAquisition, TextField costConversion) {
+
+    public DataFieldPopulator(Campaign currentCampaign, List<Campaign> campaignsLoaded, TableView campaigns,
+                              MenuButton menuButton, CheckMenuItem menuItem, TextField impressions,
+                              TextField clicks, TextField uniques, TextField bounces, TextField conversions,
+                              TextField totalCost, TextField CTR, TextField CPA, TextField CPC, TextField CPM, TextField bounceRate) {
         this.currentCampaign = currentCampaign;
         this.campaignsLoaded = campaignsLoaded;
         this.campaigns = campaigns;
@@ -34,12 +40,15 @@ public class DataFieldPopulator {
         this.menuItem = menuItem;
         this.impressions = impressions;
         this.clicks = clicks;
+        this.uniques = uniques;
         this.bounces = bounces;
         this.conversions = conversions;
-        this.cost = cost;
-        this.clickRate = clickRate;
-        this.costAquisition = costAquisition;
-        this.costConversion = costConversion;
+        this.totalCost = totalCost;
+        this.CTR = CTR;
+        this.CPA = CPA;
+        this.CPC = CPC;
+        this.CPM = CPM;
+        this.bounceRate = bounceRate;
     }
 
     public void populateFields() {
@@ -49,24 +58,28 @@ public class DataFieldPopulator {
         campaigns.getItems().add(currentCampaign);
         menuButton.setText(dataModel.getName());
         menuItem.setText(dataModel.getName());
-        try
-        {
+        try {
             impressions.setText(String.valueOf(dataModel.getImpressionsNumber()));
             clicks.setText(String.valueOf(dataModel.getClicksNumber()));
+            uniques.setText(String.valueOf(dataModel.getUniquesNumber()));
             bounces.setText(String.valueOf(dataModel.getBouncesNumber()));
             conversions.setText(String.valueOf(dataModel.getConversionsNumber()));
-            cost.setText(String.valueOf(dataModel.getTotalCost()));
-            clickRate.setText(String.valueOf(dataModel.getCTR()));
-            costAquisition.setText(String.valueOf(dataModel.getCPA()));
-            costConversion.setText(String.valueOf(dataModel.getCPC()));
-        }
-        catch(SQLException e)
-        {
-            e.printStackTrace();
-            /*
-            TODO
-            resolve error onscreen
-             */
+            totalCost.setText(String.valueOf(dataModel.getTotalCost()));
+            CTR.setText(String.valueOf(dataModel.getCTR()));
+            CPA.setText(String.valueOf(dataModel.getCPA()));
+            CPC.setText(String.valueOf(dataModel.getCPC()));
+            CPM.setText(String.valueOf(dataModel.getCPM()));
+            bounceRate.setText(String.valueOf(dataModel.getBounceRate()));
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.initStyle(StageStyle.UTILITY);
+            alert.setTitle("Warning");
+            GridPane content = new GridPane();
+            content.setPrefSize(300, 50);
+            Label label = new Label(e.getMessage());
+            content.add(label, 0, 0);
+            alert.getDialogPane().setContent(content);
+            alert.showAndWait();
         }
     }
 

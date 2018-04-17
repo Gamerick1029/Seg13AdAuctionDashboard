@@ -44,10 +44,13 @@ public class MainController implements ScreenInterface {
     private File currentImpressions;
     private File currentClick;
     private File currentServer;
+
     @FXML
     private javafx.scene.control.TextField impressionsF;
     @FXML
     private javafx.scene.control.TextField clicksF;
+    @FXML
+    private javafx.scene.control.TextField uniquesF;
     @FXML
     private javafx.scene.control.TextField bouncesF;
     @FXML
@@ -55,15 +58,23 @@ public class MainController implements ScreenInterface {
     @FXML
     private javafx.scene.control.TextField totalCostF;
     @FXML
-    private javafx.scene.control.TextField clickRateF;
+    private javafx.scene.control.TextField CTRF;
     @FXML
-    private javafx.scene.control.TextField acquisitionF;
+    private javafx.scene.control.TextField CPAF;
     @FXML
-    private javafx.scene.control.TextField costPerClickF;
+    private javafx.scene.control.TextField CPCF;
+    @FXML
+    private javafx.scene.control.TextField CPMF;
+    @FXML
+    private javafx.scene.control.TextField bounceRateF;
+
+
     @FXML
     private javafx.scene.text.Text impressions;
     @FXML
     private javafx.scene.text.Text clicks;
+    @FXML
+    private javafx.scene.text.Text uniques;
     @FXML
     private javafx.scene.text.Text bounces;
     @FXML
@@ -71,11 +82,16 @@ public class MainController implements ScreenInterface {
     @FXML
     private javafx.scene.text.Text totalCost;
     @FXML
-    private javafx.scene.text.Text clickRate;
+    private javafx.scene.text.Text CTR;
     @FXML
-    private javafx.scene.text.Text acquisition;
+    private javafx.scene.text.Text CPA;
     @FXML
-    private javafx.scene.text.Text costPerClick;
+    private javafx.scene.text.Text CPC;
+    @FXML
+    private javafx.scene.text.Text CPM;
+    @FXML
+    private javafx.scene.text.Text bounceRate;
+
     @FXML
     private CategoryAxis x;
     @FXML
@@ -189,7 +205,8 @@ public class MainController implements ScreenInterface {
     @Override
     public void setScreenParent(ScreensController parent) {
         this.myController = parent;
-        myController.setDataFieldPopulator(new DataFieldPopulator(currentCampaign, campaignsLoaded, campaignsTable, campaignName, campaignOne, impressionsF, clicksF, bouncesF, conversionsF, totalCostF, clickRateF, acquisitionF, costPerClickF));
+        myController.setDataFieldPopulator(new DataFieldPopulator(currentCampaign, campaignsLoaded, campaignsTable, campaignName, campaignOne, impressionsF, clicksF,
+                uniquesF, bouncesF, conversionsF, totalCostF, CTRF, CPAF, CPCF, CPMF, bounceRateF));
         myController.setCampaignDataPopulator(new CampaignDataPopulator(x, y, lineChart, barChart, pieChart, areaChart));
         impressions.setStyle("-fx-font-weight: bold;");
         lineChart.animatedProperty().setValue(false);
@@ -208,6 +225,7 @@ public class MainController implements ScreenInterface {
                     y.animatedProperty().setValue(false);
                     removeCampaign();
                 });
+
         impressions.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
                     showMetric("Impressions");
@@ -215,6 +233,10 @@ public class MainController implements ScreenInterface {
         clicks.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
                     showMetric("Clicks");
+                });
+        uniques.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                e -> {
+                    showMetric("Uniques");
                 });
         bounces.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
@@ -226,20 +248,29 @@ public class MainController implements ScreenInterface {
                 });
         totalCost.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
-                    showMetric("TotalCost");
+                    showMetric("Total Cost");
                 });
-        clickRate.addEventHandler(MouseEvent.MOUSE_CLICKED,
+        CTR.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
-                    showMetric("ClickRate");
+                    showMetric("CTR");
                 });
-        acquisition.addEventHandler(MouseEvent.MOUSE_CLICKED,
+        CPA.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
-                    showMetric("Aquisition");
+                    showMetric("CPA");
                 });
-        costPerClick.addEventHandler(MouseEvent.MOUSE_CLICKED,
+        CPC.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
-                    showMetric("CostPerClick");
+                    showMetric("CPC");
                 });
+        CPM.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                e -> {
+                    showMetric("CPM");
+                });
+        bounceRate.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                e -> {
+                    showMetric("Bounce Rate");
+                });
+
         lineType.setOnAction(t -> {
             changeToLineChart();
         });
@@ -776,12 +807,15 @@ public class MainController implements ScreenInterface {
             campaignName.setText("-");
             impressionsF.setText("-");
             clicksF.setText("-");
+            uniquesF.setText("-");
             bouncesF.setText("-");
             conversionsF.setText("-");
             totalCostF.setText("-");
-            clickRateF.setText("-");
-            acquisitionF.setText("-");
-            costPerClickF.setText("-");
+            CTRF.setText("-");
+            CPAF.setText("-");
+            CPCF.setText("-");
+            CPMF.setText("-");
+            bounceRateF.setText("-");
         } else {
             campaignName.setText(campaignsLoaded.get(0).getName());
             setMetrics(campaignsLoaded.get(0).getName());
@@ -1253,12 +1287,15 @@ public class MainController implements ScreenInterface {
         try {
             impressionsF.setText(String.valueOf(dm.getImpressionsNumber()));
             clicksF.setText(String.valueOf(dm.getClicksNumber()));
+            uniquesF.setText(String.valueOf(dm.getUniquesNumber()));
             bouncesF.setText(String.valueOf(dm.getBouncesNumber()));
             conversionsF.setText(String.valueOf(dm.getConversionsNumber()));
             totalCostF.setText(String.valueOf(dm.getTotalCost()));
-            clickRateF.setText(String.valueOf(dm.getCTR()));
-            acquisitionF.setText(String.valueOf(dm.getCPA()));
-            costPerClickF.setText(String.valueOf(dm.getCPC()));
+            CTRF.setText(String.valueOf(dm.getCTR()));
+            CPAF.setText(String.valueOf(dm.getCPA()));
+            CPCF.setText(String.valueOf(dm.getCPC()));
+            CPMF.setText(String.valueOf(dm.getCPM()));
+            bounceRateF.setText(String.valueOf(dm.getBounceRate()));
         } catch (SQLException e) {
             reportError(e);
         }
@@ -1396,8 +1433,7 @@ public class MainController implements ScreenInterface {
         }
     }
 
-    private static String simpleDateRep(Date d)
-    {
+    private static String simpleDateRep(Date d) {
         String[] s = d.toString().split(" ");
 
         return s[2] + "/" + s[1] + "/" + s[5];
@@ -1416,6 +1452,11 @@ public class MainController implements ScreenInterface {
                     currentMetricDisplayed = "Clicks";
                     populateMetric(metric, currentStep);
                     break;
+                case "Uniques":
+                    setStyleToMetric("Uniques");
+                    currentMetricDisplayed = "Uniques";
+                    populateMetric(metric, currentStep);
+                    break;
                 case "Bounces":
                     setStyleToMetric("Bounces");
                     currentMetricDisplayed = "Bounces";
@@ -1426,24 +1467,34 @@ public class MainController implements ScreenInterface {
                     currentMetricDisplayed = "Conversions";
                     populateMetric(metric, currentStep);
                     break;
-                case "TotalCost":
-                    setStyleToMetric("TotalCost");
-                    currentMetricDisplayed = "TotalCost";
+                case "Total Cost":
+                    setStyleToMetric("Total Cost");
+                    currentMetricDisplayed = "Total Cost";
                     populateMetric(metric, currentStep);
                     break;
-                case "ClickRate":
-                    setStyleToMetric("ClickRate");
-                    currentMetricDisplayed = "ClickRate";
+                case "CTR":
+                    setStyleToMetric("Impressions");
+                    currentMetricDisplayed = "Impressions";
                     populateMetric(metric, currentStep);
                     break;
-                case "Aquisition":
-                    setStyleToMetric("Aquisition");
-                    currentMetricDisplayed = "Aquisition";
+                case "CPA":
+                    setStyleToMetric("CPA");
+                    currentMetricDisplayed = "CPA";
                     populateMetric(metric, currentStep);
                     break;
-                case "CostPerClick":
-                    setStyleToMetric("CostPerClick");
-                    currentMetricDisplayed = "CostPerClick";
+                case "CPC":
+                    setStyleToMetric("CPC");
+                    currentMetricDisplayed = "CPC";
+                    populateMetric(metric, currentStep);
+                    break;
+                case "CPM":
+                    setStyleToMetric("CPM");
+                    currentMetricDisplayed = "CPM";
+                    populateMetric(metric, currentStep);
+                    break;
+                case "Bounce Rate":
+                    setStyleToMetric("Bounce Rate");
+                    currentMetricDisplayed = "Bounce Rate";
                     populateMetric(metric, currentStep);
                     break;
             }
@@ -1453,12 +1504,16 @@ public class MainController implements ScreenInterface {
     private void setStyleToMetric(String metric) {
         impressions.setStyle(null);
         clicks.setStyle(null);
+        uniques.setStyle(null);
         bounces.setStyle(null);
         conversions.setStyle(null);
         totalCost.setStyle(null);
-        clickRate.setStyle(null);
-        acquisition.setStyle(null);
-        costPerClick.setStyle(null);
+        CTR.setStyle(null);
+        CPA.setStyle(null);
+        CPC.setStyle(null);
+        CPM.setStyle(null);
+        bounceRate.setStyle(null);
+
         switch (metric) {
             case "Impressions":
                 impressions.setStyle("-fx-font-weight: bold;");
@@ -1470,6 +1525,11 @@ public class MainController implements ScreenInterface {
                 setMetricText();
                 clicks.setText("▶ " + clicks.getText());
                 break;
+            case "Uniques":
+                uniques.setStyle("-fx-font-weight: bold;");
+                setMetricText();
+                uniques.setText("▶ " + uniques.getText());
+                break;
             case "Bounces":
                 bounces.setStyle("-fx-font-weight: bold;");
                 setMetricText();
@@ -1480,25 +1540,35 @@ public class MainController implements ScreenInterface {
                 setMetricText();
                 conversions.setText("▶ " + conversions.getText());
                 break;
-            case "TotalCost":
+            case "Total Cost":
                 totalCost.setStyle("-fx-font-weight: bold;");
                 setMetricText();
                 totalCost.setText("▶ " + totalCost.getText());
                 break;
-            case "ClickRate":
-                clickRate.setStyle("-fx-font-weight: bold;");
+            case "CTR":
+                CTR.setStyle("-fx-font-weight: bold;");
                 setMetricText();
-                clickRate.setText("▶ " + clickRate.getText());
+                CTR.setText("▶ " + CTR.getText());
                 break;
-            case "Aquisition":
-                acquisition.setStyle("-fx-font-weight: bold;");
+            case "CPA":
+                CPA.setStyle("-fx-font-weight: bold;");
                 setMetricText();
-                acquisition.setText("▶ " + acquisition.getText());
+                CPA.setText("▶ " + CPA.getText());
                 break;
-            case "CostPerClick":
-                costPerClick.setStyle("-fx-font-weight: bold;");
+            case "CPC":
+                CPC.setStyle("-fx-font-weight: bold;");
                 setMetricText();
-                costPerClick.setText("▶ " + costPerClick.getText());
+                CPC.setText("▶ " + CPC.getText());
+                break;
+            case "CPM":
+                CPM.setStyle("-fx-font-weight: bold;");
+                setMetricText();
+                CPM.setText("▶ " + CPM.getText());
+                break;
+            case "Bounce Rate":
+                bounceRate.setStyle("-fx-font-weight: bold;");
+                setMetricText();
+                bounceRate.setText("▶ " + bounceRate.getText());
                 break;
         }
     }
@@ -1506,12 +1576,15 @@ public class MainController implements ScreenInterface {
     private void setMetricText() {
         impressions.setText("Impressions");
         clicks.setText("Clicks");
+        uniques.setText("Uniques");
         bounces.setText("Bounces");
         conversions.setText("Conversions");
         totalCost.setText("Total Cost");
-        clickRate.setText("Click Rate");
-        acquisition.setText("Acquisition");
-        costPerClick.setText("Cost per Click");
+        CTR.setText("CTR");
+        CPA.setText("CPA");
+        CPC.setText("CPC");
+        CPM.setText("CPM");
+        bounceRate.setText("Bounce Rate");
     }
 
     public void populateMetric(String metric, Step step) {
@@ -1542,23 +1615,32 @@ public class MainController implements ScreenInterface {
                         case "Clicks":
                             setData_I(sortMap(dataModel.getFullClicks(step)));
                             break;
+                        case "Uniques":
+                            setData_I(sortMap(dataModel.getFullUniques(step)));
+                            break;
                         case "Bounces":
                             setData_I(sortMap(dataModel.getFullBounces(step)));
                             break;
                         case "Conversions":
                             setData_I(sortMap(dataModel.getFullConversions(step)));
                             break;
-                        case "TotalCost":
+                        case "Total Cost":
                             setData_F(sortMap(dataModel.getFullCost(step)));
                             break;
-                        case "ClickRate":
+                        case "CTR":
                             setData_F(sortMap(dataModel.getFullCTR(step)));
                             break;
-                        case "Aquisition":
+                        case "CPA":
                             setData_F(sortMap(dataModel.getFullCPA(step)));
                             break;
-                        case "CostPerClick":
+                        case "CPC":
                             setData_F(sortMap(dataModel.getFullCPC(step)));
+                            break;
+                        case "CPM":
+                            setData_F(sortMap(dataModel.getFullCPM(step)));
+                            break;
+                        case "Bounce Rate":
+                            setData_F(sortMap(dataModel.getFullBounceRate(step)));
                             break;
                     }
                 } catch (SQLException e) {
