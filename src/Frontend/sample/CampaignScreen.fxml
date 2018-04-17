@@ -42,9 +42,9 @@
       
                         <AnchorPane>
                            <children>
-                              <HBox alignment="TOP_CENTER" AnchorPane.bottomAnchor="649.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="400.0" AnchorPane.topAnchor="0.0">
+                              <HBox alignment="TOP_LEFT" AnchorPane.bottomAnchor="649.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="400.0" AnchorPane.topAnchor="0.0">
                                  <children>
-                                    <HBox alignment="CENTER_LEFT" prefHeight="42.0">
+                                    <HBox alignment="TOP_LEFT">
                                        <children>
                                           <RadioButton id="text" fx:id="byDay" contentDisplay="CENTER" mnemonicParsing="false" selected="true" text="by day">
                                              <cursor>
@@ -89,7 +89,7 @@
                                  </children>
 
                               </HBox>
-                              <LineChart id="chart" fx:id="lineChart" prefHeight="400.0" prefWidth="600.0" verticalGridLinesVisible="false" AnchorPane.bottomAnchor="41.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
+                              <LineChart id="chart" fx:id="lineChart" minHeight="100.0" minWidth="200.0" verticalGridLinesVisible="false" AnchorPane.bottomAnchor="41.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
                                 <xAxis>
                                   <CategoryAxis label="Time" side="BOTTOM" fx:id="x" />
                                 </xAxis>
@@ -97,8 +97,8 @@
                                   <NumberAxis fx:id="y" label="Campaign Something" side="LEFT" />
                                 </yAxis>
                               </LineChart>
-                              <PieChart id="chart" fx:id="pieChart" prefHeight="400.0" prefWidth="600.0" visible="false" AnchorPane.bottomAnchor="71.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0" />
-                              <BarChart id="chart" fx:id="barChart" prefHeight="400.0" prefWidth="600.0" visible="false" AnchorPane.bottomAnchor="71.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
+                              <PieChart id="chart" fx:id="pieChart" minHeight="100.0" minWidth="100.0" visible="false" AnchorPane.bottomAnchor="71.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0" />
+                              <BarChart id="chart" fx:id="barChart" minHeight="100.0" minWidth="100.0" visible="false" AnchorPane.bottomAnchor="71.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
                                 <xAxis>
                                   <CategoryAxis id="text" label="Time" side="BOTTOM" />
                                 </xAxis>
@@ -106,7 +106,7 @@
                                   <NumberAxis id="text" label="Campaign Something" side="LEFT" />
                                 </yAxis>
                               </BarChart>
-                              <AreaChart id="chart" fx:id="areaChart" prefHeight="400.0" prefWidth="600.0" visible="false" AnchorPane.bottomAnchor="71.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
+                              <AreaChart id="chart" fx:id="areaChart" minHeight="100.0" minWidth="200.0" visible="false" AnchorPane.bottomAnchor="71.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
                                 <xAxis>
                                   <CategoryAxis id="text" label="Time" side="BOTTOM" />
                                 </xAxis>
@@ -553,6 +553,16 @@
                                   <CheckBox id="checkBox" fx:id="contextBlog" mnemonicParsing="false" text="Blog" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                            </children>
                         </GridPane>
+                        <HBox spacing="5">
+                        	 <children>
+                        	 <Button id="menuButton" fx:id="reset" contentDisplay="CENTER" mnemonicParsing="false" text="Reset" textAlignment="CENTER" />
+                         	 <Button id="menuButton" fx:id="checkAll" contentDisplay="CENTER" mnemonicParsing="false" text="Select All" textAlignment="CENTER" />
+                         	 </children>
+                         	 <padding>
+                         	 	<Insets top="20" />
+                         	 </padding>
+                         	 
+                        </HBox>
                             <Text id="h1" text="Date">
                            <VBox.margin>
                               <Insets top="20.0" />
@@ -599,11 +609,14 @@
                                  
                               </MenuButton>
 
-                         <Button id="menuButton" fx:id="reset" contentDisplay="CENTER" mnemonicParsing="false" text="Reset" textAlignment="CENTER" />
-                         <Button id="menuButton" fx:id="checkAll" contentDisplay="CENTER" mnemonicParsing="false" text="Select All" textAlignment="CENTER" />
+                        
 
 
                      </children>
+                     <padding>
+       	           	<Insets left="20" right="20" />
+       	           </padding>
+                     
                   </VBox>
        	           </children>
               </Pane>
