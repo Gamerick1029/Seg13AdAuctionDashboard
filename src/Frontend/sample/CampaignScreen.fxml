@@ -183,7 +183,7 @@
          	                    </VBox>
          
          
-         	                <VBox alignment="CENTER" spacing="15">
+         	                <VBox alignment="CENTER" spacing="10">
          	                    <children>
          	                  <VBox alignment="CENTER_LEFT" prefHeight="26.0" prefWidth="298.0">
          	                     <children>
@@ -605,7 +605,7 @@
 
                      </children>
                   </VBox>
-                  </children>
+       	           </children>
               </Pane>
       
           </right>
