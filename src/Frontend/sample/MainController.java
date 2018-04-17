@@ -126,7 +126,7 @@ public class MainController implements ScreenInterface {
     @FXML
     private CheckBox genderOther;
     @FXML
-    private CheckBox ageBelow20;
+    private CheckBox ageBelow25;
     @FXML
     private CheckBox age25to34;
     @FXML
@@ -165,12 +165,10 @@ public class MainController implements ScreenInterface {
     private TextField startYear;
     @FXML
     private TextField endYear;
-
-    /*@FXML
+    @FXML
     private Button reset;
     @FXML
     private Button checkAll;
-    */
     @FXML
     private Text searchDate;
 
@@ -283,7 +281,7 @@ public class MainController implements ScreenInterface {
         genderMale.setSelected(true);
         genderFemale.setSelected(true);
         genderOther.setSelected(true);
-        ageBelow20.setSelected(true);
+        ageBelow25.setSelected(true);
         age25to34.setSelected(true);
         age35to44.setSelected(true);
         age45to54.setSelected(true);
@@ -297,47 +295,15 @@ public class MainController implements ScreenInterface {
         contextBlog.setSelected(true);
         contextHobbies.setSelected(true);
         contextTravel.setSelected(true);
-        //TODO: Add Reset and Check all Buttons on top of all Filters
-        /*reset.addEventHandler(MouseEvent.MOUSE_CLICKED,
+
+        reset.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
-                    genderMale.setSelected(false);
-                    genderFemale.setSelected(false);
-                    genderOther.setSelected(false);
-                    ageBelow20.setSelected(false);
-                    age25to34.setSelected(false);
-                    age35to44.setSelected(false);
-                    age45to54.setSelected(false);
-                    ageAbove54.setSelected(false);
-                    incomeLow.setSelected(false);
-                    incomeMedium.setSelected(false);
-                    incomeHigh.setSelected(false);
-                    contextNews.setSelected(false);
-                    contextShopping.setSelected(false);
-                    contextMedia.setSelected(false);
-                    contextBlog.setSelected(false);
-                    contextHobbies.setSelected(false);
-                    contextTravel.setSelected(false);
+                    resetAll();
                 });
         checkAll.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
-                    genderMale.setSelected(true);
-                    genderFemale.setSelected(true);
-                    genderOther.setSelected(true);
-                    ageBelow20.setSelected(true);
-                    age25to34.setSelected(true);
-                    age35to44.setSelected(true);
-                    age45to54.setSelected(true);
-                    ageAbove54.setSelected(true);
-                    incomeLow.setSelected(true);
-                    incomeMedium.setSelected(true);
-                    incomeHigh.setSelected(true);
-                    contextNews.setSelected(true);
-                    contextShopping.setSelected(true);
-                    contextMedia.setSelected(true);
-                    contextBlog.setSelected(true);
-                    contextHobbies.setSelected(true);
-                    contextTravel.setSelected(true);
-                });*/
+                    selectAll();
+                });
         genderMale.setOnAction(r -> {
             if (genderMale.isSelected()) {
                 filterGraph(genderMale.getText(), true);
@@ -359,11 +325,11 @@ public class MainController implements ScreenInterface {
                 filterGraph(genderOther.getText(), false);
             }
         });
-        ageBelow20.setOnAction(r -> {
-            if (ageBelow20.isSelected()) {
-                filterGraph(ageBelow20.getText(), true);
+        ageBelow25.setOnAction(r -> {
+            if (ageBelow25.isSelected()) {
+                filterGraph(ageBelow25.getText(), true);
             } else {
-                filterGraph(ageBelow20.getText(), false);
+                filterGraph(ageBelow25.getText(), false);
             }
         });
         age25to34.setOnAction(r -> {
@@ -986,7 +952,88 @@ public class MainController implements ScreenInterface {
         }
     }
 
+    private void resetAll() {
+        genderMale.setSelected(false);
+        genderFemale.setSelected(false);
+        genderOther.setSelected(false);
+        ageBelow25.setSelected(false);
+        age25to34.setSelected(false);
+        age35to44.setSelected(false);
+        age45to54.setSelected(false);
+        ageAbove54.setSelected(false);
+        incomeLow.setSelected(false);
+        incomeMedium.setSelected(false);
+        incomeHigh.setSelected(false);
+        contextNews.setSelected(false);
+        contextShopping.setSelected(false);
+        contextMedia.setSelected(false);
+        contextBlog.setSelected(false);
+        contextHobbies.setSelected(false);
+        contextTravel.setSelected(false);
+        for (DataModel dataModel : myController.getDataModelMap().values()) {
+            dataModel.getFilter().genderMale = false;
+            dataModel.getFilter().genderFemale = false;
+            dataModel.getFilter().genderOther = false;
+            dataModel.getFilter().ageBelow25 = false;
+            dataModel.getFilter().age25to34 = false;
+            dataModel.getFilter().age35to44 = false;
+            dataModel.getFilter().age45to54 = false;
+            dataModel.getFilter().ageAbove54 = false;
+            dataModel.getFilter().incomeLow = false;
+            dataModel.getFilter().incomeMedium = false;
+            dataModel.getFilter().incomeHigh = false;
+            dataModel.getFilter().contextNews = false;
+            dataModel.getFilter().contextShopping = false;
+            dataModel.getFilter().contextMedia = false;
+            dataModel.getFilter().contextBlog = false;
+            dataModel.getFilter().contextHobbies = false;
+            dataModel.getFilter().contextTravel = false;
+        }
+        populateMetric(currentMetricDisplayed, currentStep);
+    }
+
+    private void selectAll() {
+        genderMale.setSelected(true);
+        genderFemale.setSelected(true);
+        genderOther.setSelected(true);
+        ageBelow25.setSelected(true);
+        age25to34.setSelected(true);
+        age35to44.setSelected(true);
+        age45to54.setSelected(true);
+        ageAbove54.setSelected(true);
+        incomeLow.setSelected(true);
+        incomeMedium.setSelected(true);
+        incomeHigh.setSelected(true);
+        contextNews.setSelected(true);
+        contextShopping.setSelected(true);
+        contextMedia.setSelected(true);
+        contextBlog.setSelected(true);
+        contextHobbies.setSelected(true);
+        contextTravel.setSelected(true);
+        for (DataModel dataModel : myController.getDataModelMap().values()) {
+            dataModel.getFilter().genderMale = true;
+            dataModel.getFilter().genderFemale = true;
+            dataModel.getFilter().genderOther = true;
+            dataModel.getFilter().ageBelow25 = true;
+            dataModel.getFilter().age25to34 = true;
+            dataModel.getFilter().age35to44 = true;
+            dataModel.getFilter().age45to54 = true;
+            dataModel.getFilter().ageAbove54 = true;
+            dataModel.getFilter().incomeLow = true;
+            dataModel.getFilter().incomeMedium = true;
+            dataModel.getFilter().incomeHigh = true;
+            dataModel.getFilter().contextNews = true;
+            dataModel.getFilter().contextShopping = true;
+            dataModel.getFilter().contextMedia = true;
+            dataModel.getFilter().contextBlog = true;
+            dataModel.getFilter().contextHobbies = true;
+            dataModel.getFilter().contextTravel = true;
+        }
+        populateMetric(currentMetricDisplayed, currentStep);
+    }
+
     private void filterGraph(String name, Boolean filter) {
+        System.out.println("Filtering...");
         switch (name) {
             case "age25to34":
                 if (filter) {
@@ -1327,9 +1374,8 @@ public class MainController implements ScreenInterface {
                 try {
                     int i = 0;
                     List<Map.Entry<Date, Float>> entries = new ArrayList<>(dataModel.getFullCost(currentStep).entrySet());
-                    for(;i<entries.size()-2;i++)
-                    {
-                        String key = entries.get(i).getKey() + " - " + entries.get(i+1).toString();
+                    for (; i < entries.size() - 2; i++) {
+                        String key = entries.get(i).getKey() + " - " + entries.get(i + 1).toString();
                         Float value = entries.get(i).getValue();
                         histogramSeries.getData().add(new XYChart.Data(String.valueOf(key), value));
                     }
