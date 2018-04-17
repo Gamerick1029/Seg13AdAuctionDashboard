@@ -97,7 +97,7 @@
                                   <NumberAxis fx:id="y" label="Campaign Something" side="LEFT" />
                                 </yAxis>
                               </LineChart>
-                              <PieChart id="chart" fx:id="pieChart" minHeight="100.0" minWidth="100.0" visible="false" AnchorPane.bottomAnchor="71.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0" />
+                              <PieChart id="chart" fx:id="pieChart" minHeight="101.0" minWidth="100.0" visible="false" AnchorPane.bottomAnchor="71.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0" />
                               <BarChart id="chart" fx:id="barChart" minHeight="100.0" minWidth="100.0" visible="false" AnchorPane.bottomAnchor="71.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
                                 <xAxis>
                                   <CategoryAxis id="text" label="Time" side="BOTTOM" />
