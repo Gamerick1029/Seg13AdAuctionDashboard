@@ -58,7 +58,6 @@ public class LoadDataController implements ScreenInterface {
         } else {
             DataModel dataModel = null;
             try {
-                //TODO: REPLACE WITH CAMPAIGN MODEL DB TRIMMED
                 dataModel = new CampaignModelDBTrimmed(currentName, impressions, clicks, server);
                 myController.setCurrentModel(dataModel);
                 myController.setDataModelMap(new HashMap<>());

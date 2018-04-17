@@ -1,5 +1,6 @@
 package Frontend.sample;
 
+import Backend.DBHelper;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -31,10 +32,11 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
+        DBHelper.initConnection("seg", "seg13");
+
         ScreensController mainContainer = new ScreensController(primaryStage);
         mainContainer.loadScreen(Main.welcomeScreenID, Main.welcomeScreen);
 
-        //mainContainer.getScreen(welcomeScreenID).getProperties().addListener();
         mainContainer.loadScreen(Main.loadDataScreenID, Main.loadDataScreen);
         mainContainer.loadScreen(Main.viewDataScreenID, Main.viewDataScreen);
         mainContainer.loadScreen(Main.campaignScreenID, Main.campaignScreen);
@@ -56,8 +58,6 @@ public class Main extends Application {
         scene.getStylesheets().add("Frontend/sample/StyleSheet.css");
         scene.getStylesheets().add("Frontend/sample/darkTheme.css");
         primaryStage.setScene(scene);
-        //primaryStage.minWidthProperty().bind(scene.widthProperty());
-        //primaryStage.minHeightProperty().bind(scene.heightProperty());
         primaryStage.setTitle("Ad Auction Dashboard");
         primaryStage.show();
     }
