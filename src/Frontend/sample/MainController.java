@@ -1375,11 +1375,11 @@ public class MainController implements ScreenInterface {
                     int i = 0;
                     List<Map.Entry<Date, Float>> entries = new ArrayList<>(dataModel.getFullCost(currentStep).entrySet());
                     for (; i < entries.size() - 2; i++) {
-                        String key = entries.get(i).getKey() + " - " + entries.get(i + 1).toString();
+                        String key = simpleDateRep(entries.get(i).getKey()) + " - " + simpleDateRep(entries.get(i + 1).getKey());
                         Float value = entries.get(i).getValue();
-                        histogramSeries.getData().add(new XYChart.Data(String.valueOf(key), value));
+                        histogramSeries.getData().add(new XYChart.Data(key, value));
                     }
-                    histogramSeries.getData().add(new XYChart.Data(String.valueOf(entries.get(i).getKey().toString()) + " onwards", entries.get(i).getValue()));
+                    histogramSeries.getData().add(new XYChart.Data(simpleDateRep(entries.get(i).getKey()) + " onwards", entries.get(i).getValue()));
 //                    for (Map.Entry<Date, Float> entry : dataModel.getFullCost(currentStep).entrySet()) {
 //                        Date key = entry.getKey();
 //                        Float value = entry.getValue();
@@ -1394,12 +1394,12 @@ public class MainController implements ScreenInterface {
         }
     }
 
-//    private static String simpleDateRep(Date d)
-//    {
-//        String[] s = d.toString().split(" ");
-//
-//        return s[3] + "-" + s
-//    }
+    private static String simpleDateRep(Date d)
+    {
+        String[] s = d.toString().split(" ");
+
+        return s[2] + "/" + s[1] + "/" + s[5];
+    }
 
     private void showMetric(String metric) {
         if (currentChartType != "Histogram") {
