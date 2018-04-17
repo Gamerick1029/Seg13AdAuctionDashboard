@@ -4,6 +4,7 @@ import Backend.DBHelper;
 import Backend.Model.CampaignModel;
 import Backend.Model.CampaignModelDBTrimmed;
 import Backend.Model.Interfaces.DataModel;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -73,20 +74,34 @@ public class LoadDataController implements ScreenInterface {
                 alert.getDialogPane().setContent(content);
                 alert.showAndWait();
             } else {
-                DataModel dataModel = null;
-                try {
-                    dataModel = new CampaignModelDBTrimmed(currentName, impressions, clicks, server);
-                    myController.setCurrentModel(dataModel);
+                final DataModel[] dataModel = new DataModel[1];
+
+                Task<DataModel> task = new Task<>() {
+                    @Override
+                    protected DataModel call() throws Exception {
+                        return new CampaignModelDBTrimmed(campaignName.getText(), impressions, clicks, server);
+                    }
+                };
+
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+
+                task.setOnRunning(e -> alert.show());
+
+                task.setOnSucceeded(e -> {
+                    dataModel[0] = task.getValue();
+                    myController.setCurrentModel(dataModel[0]);
                     myController.setDataModelMap(new HashMap<>());
-                    myController.addDataModel(currentName, dataModel);
+                    myController.addDataModel(currentName, dataModel[0]);
                     myController.getDataFieldPopulator().populateFields();
                     myController.getCampaignDataPopulator().populateGraph();
+                    alert.close();
                     myController.setScreen(Main.campaignScreenID);
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, "Cannot load campaign! Please try again."
-                            , "Warning", 1);
-                    e.printStackTrace();
-                }
+                });
+
+                task.setOnFailed(e -> JOptionPane.showMessageDialog(null, "Cannot load campaign! Please try again."
+                        , "Warning", 1));
+
+                new Thread(task).start();
             }
         } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.WARNING);

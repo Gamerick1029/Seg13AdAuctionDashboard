@@ -5,11 +5,13 @@ import Backend.Model.Interfaces.ImpressionLog;
 import Backend.Model.Interfaces.ServerLog;
 import junit.framework.Assert;
 import junit.framework.TestCase;
+import org.junit.Test;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
 
 public class CampaignModelTest extends TestCase {
 
@@ -19,6 +21,7 @@ public class CampaignModelTest extends TestCase {
     File currentDirFile = new File(".");
     String path = currentDirFile.getAbsolutePath().substring(0,currentDirFile.getAbsolutePath().length()-1);
 
+    @Test
     public void testGetImpressionsNumber() {
         try {
             CampaignModel_DEPRECATED cm = new CampaignModel_DEPRECATED(new File(path + "TestRuns/Backend/Model/TestSamples/click_log.csv"),new File(path+"TestRuns/Backend/Model/TestSamples/impression_log.csv"),new File(path+"TestRuns/Backend/Model/TestSamples/server_log.csv"));
