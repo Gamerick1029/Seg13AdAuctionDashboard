@@ -2,6 +2,7 @@ package Frontend.sample;
 
 import Backend.DBHelper;
 import Backend.Model.CampaignModel;
+import Backend.Model.CampaignModelDBTrimmed;
 import Backend.Model.Interfaces.DataModel;
 import Backend.Model.Interfaces.Step;
 import javafx.beans.property.ReadOnlyStringWrapper;
@@ -738,7 +739,8 @@ public class MainController implements ScreenInterface {
                 //Adding a new Data Model to ScreensController
                 DataModel dataModel = null;
                 try {
-                    dataModel = new CampaignModel(campaign.getName(), currentClick, currentImpressions, currentServer);
+                    //TODO: REPLACE WITH CAMPAIGN MODEL DB TRIMMED
+                    dataModel = new CampaignModelDBTrimmed(campaign.getName(), currentImpressions, currentClick, currentServer);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

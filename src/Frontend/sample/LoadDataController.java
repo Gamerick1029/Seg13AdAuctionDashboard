@@ -2,6 +2,7 @@ package Frontend.sample;
 
 import Backend.DBHelper;
 import Backend.Model.CampaignModel;
+import Backend.Model.CampaignModelDBTrimmed;
 import Backend.Model.Interfaces.DataModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -57,7 +58,8 @@ public class LoadDataController implements ScreenInterface {
         } else {
             DataModel dataModel = null;
             try {
-                dataModel = new CampaignModel(currentName, clicks, impressions, server);
+                //TODO: REPLACE WITH CAMPAIGN MODEL DB TRIMMED
+                dataModel = new CampaignModelDBTrimmed(currentName, impressions, clicks, server);
                 myController.setCurrentModel(dataModel);
                 myController.setDataModelMap(new HashMap<>());
                 myController.addDataModel(currentName, dataModel);
@@ -67,6 +69,7 @@ public class LoadDataController implements ScreenInterface {
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Cannot load campaign! Please try again."
                         , "Warning", 1);
+                e.printStackTrace();
             }
         }
     }
