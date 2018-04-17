@@ -1,10 +1,13 @@
 package Backend.Model;
 
 import Backend.DBHelper;
+import Backend.FileIO.ReadCSVsToDB;
 import Backend.Model.Interfaces.DataModel;
 import Backend.Model.Interfaces.Filter;
 import Backend.Model.Interfaces.Step;
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -27,6 +30,12 @@ public class CampaignModelDBTrimmed implements DataModel{
         DBHelper.initConnection("seg", "seg13");
         dbHelper = new DBHelper();
 
+    }
+
+    public CampaignModelDBTrimmed(String campaignName, File impressions, File clicks, File server) throws SQLException, IOException {
+        DBHelper.initConnection("seg", "seg13");
+        dbHelper = new DBHelper();
+        ReadCSVsToDB.makeCampaign(dbHelper, campaignName, impressions, clicks, server);
     }
 
 
