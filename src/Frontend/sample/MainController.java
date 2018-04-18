@@ -1681,6 +1681,7 @@ public class MainController implements ScreenInterface {
         content.add(label, 0, 0);
         alert.getDialogPane().setContent(content);
         alert.showAndWait();
+        e.printStackTrace();
     }
 
     private void setData_I(List<Map.Entry<Date, Integer>> sortedList) {

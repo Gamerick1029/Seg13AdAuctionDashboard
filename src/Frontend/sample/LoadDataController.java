@@ -113,6 +113,7 @@ public class LoadDataController implements ScreenInterface {
             content.add(label, 0, 0);
             alert.getDialogPane().setContent(content);
             alert.showAndWait();
+            e.printStackTrace();
         }
     }
 
