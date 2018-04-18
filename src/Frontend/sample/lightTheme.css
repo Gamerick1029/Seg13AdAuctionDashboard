@@ -93,7 +93,7 @@
 
 .chart-legend-item {
     -fx-background-color: #d0cdfc;
-    -fx-text-fill: #fbfffd;
+    -fx-text-fill: #343232;
 }
 
 .chart-series-line {
