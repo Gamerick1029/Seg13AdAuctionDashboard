@@ -14,6 +14,10 @@
 	-fx-background-color: #333030;
 }
 
+.chart-pie-label {
+    -fx-fill: #ffffff;
+    -fx-font-size: 1em;
+}
 
 #text {
 	-fx-fill: WHITE;

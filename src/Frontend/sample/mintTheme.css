@@ -96,6 +96,11 @@
 	-fx-text-fill: #343232;
 }
 
+.chart-pie-label {
+	-fx-fill: #343232;
+	-fx-font-size: 1em;
+}
+
 .chart-series-line {
 	-fx-stroke-width: 2px;
 	-fx-effect: null;
