@@ -40,12 +40,13 @@ public class TestMain {
 //
         CampaignModelDB cmdt = new CampaignModelDB("JUnit");
 
-        Filter filter = new Filter();
-        filter.clearAll();
-        filter.setStartDate(sdf.parse("2015-01-05 00:00:00"));
-        cmdt.setFilter(filter);
+        System.out.println(dbh.getCampaigns());
 
-        System.out.println(cmdt.getFullImpressions(Step.DAY));
+        dbh.deleteCampaign("2-month");
+        dbh.deleteCampaign("Jjas");
+        dbh.deleteCampaign("kfne");
+        dbh.deleteCampaign("lksdfsl");
+        dbh.deleteCampaign("lsdmflskmdfm");
 
 //        System.out.println(cmdt.getImpressionsNumber());
 //        System.out.println(cmdt.getClicksNumber());
