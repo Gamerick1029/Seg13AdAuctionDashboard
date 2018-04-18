@@ -78,6 +78,7 @@
 
 .chart {
 	-fx-background-color: #5b5b5b;
+	-fx-background-radius: 10;
     -fx-padding: 10px;
 }
 

@@ -191,7 +191,7 @@
          	                              <Text id="h1" text="Campaign Metrics">
          
          	                           <VBox.margin>
-         	                              <Insets top="20.0" />
+         	                              <Insets top="20.0" left="25"/>
          	                           </VBox.margin>
          	                              </Text>
          	                     </children>
@@ -207,7 +207,7 @@
       	                                </MenuButton>
       	                         </children>
       	                         <padding>
-      	                         	<Insets left="10" right="10" />
+      	                         	<Insets left="25" right="25" />
       	                         	</padding>       
       	                     </HBox>
          	                        <HBox alignment="CENTER">
