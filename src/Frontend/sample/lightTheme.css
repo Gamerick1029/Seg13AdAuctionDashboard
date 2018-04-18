@@ -83,7 +83,7 @@
 }
 
 .chart-legend {
-    -fx-background-color: #5b5b5b;
+    -fx-background-color: #d0cdfc;
     -fx-padding: 20px;
 }
 
@@ -92,7 +92,7 @@
 }
 
 .chart-legend-item {
-    -fx-background-color: #5b5b5b;
+    -fx-background-color: #d0cdfc;
     -fx-text-fill: #fbfffd;
 }
 
