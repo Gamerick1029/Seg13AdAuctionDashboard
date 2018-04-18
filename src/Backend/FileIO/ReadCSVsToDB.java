@@ -52,9 +52,8 @@ public class ReadCSVsToDB {
 
         //Adds the campaign Name to the table of campaigns
         //TODO: Currently does not discriminate on existing campaigns and will overwrite them. Need to decide what to do about that
+        if (DBH.getCampaigns().contains(campaignName)) DBH.deleteCampaign(campaignName);
         DBH.getConnection().createStatement().execute("INSERT INTO campaignNames VALUES ('" + campaignName +"') ON DUPLICATE KEY UPDATE name=name;");
-
-
         DBH.executeScriptWithVariable(new File("sqlScripts/sqlCreateTables.sql"), "\\[VAR]", campaignName);
     }
 
@@ -74,9 +73,7 @@ public class ReadCSVsToDB {
 
         try {
             loadServerLog();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
     }
@@ -150,7 +147,7 @@ public class ReadCSVsToDB {
         lines.next();
 
         File serv = File.createTempFile("serv", ".csv");
-        FileWriter fw = new FileWriter(serv);
+        BufferedWriter fw = new BufferedWriter(new FileWriter(serv));
 
         while (lines.hasNext()){
             String[] tokens = lines.next();
@@ -158,10 +155,12 @@ public class ReadCSVsToDB {
             String id = tokens[1];
             String exitDate = tokens[2];
             String pagesViewed = tokens[3];
-            String conversion = tokens[4].equals("Yes") ? "1" : "0";
+            int conversion = tokens[4].equals("Yes") ? 1 : 0;
 
             fw.write(entryDate + "," + id + "," + exitDate + "," + pagesViewed + "," + conversion + "\n");
         }
+
+        fw.flush();
 
         stmt.execute("LOAD DATA LOCAL INFILE '" + serv.getAbsolutePath().replace("\\", "\\\\") + "' INTO TABLE " + serverTableName
                 + " FIELDS TERMINATED BY ',';");

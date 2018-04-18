@@ -256,7 +256,6 @@ public class CampaignModelDBTrimmed implements DataModel{
     }
 
     private String buildStatement(String select, String fromTables, String joins, String whereConditions, String otherSuffixes){
-        //TODO: Add join capability
         StringBuilder sb = new StringBuilder();
         sb.append("SELECT " + select + " FROM " + fromTables + " ");
         if (joins != null && !joins.equals("")) sb.append(joins + " ");
@@ -345,10 +344,10 @@ public class CampaignModelDBTrimmed implements DataModel{
 
     @Override
     public int getBouncesNumber() throws SQLException {
-        String select = "COUNT(PagesViewed <= 1)";
+        String select = "COUNT(*)";
         String from = servTable();
         String joins = makeJoins(servTable(), impTable(), userTable());
-        String where = "";
+        String where = "PagesViewed <= 1";
         ResultSet rs = buildAndExecuteStatement(select, from, joins, where, "");
 
         rs.next();
@@ -374,10 +373,10 @@ public class CampaignModelDBTrimmed implements DataModel{
 
     @Override
     public int getConversionsNumber() throws SQLException {
-        String select = "COUNT(Conversion = 1)";
+        String select = "COUNT(*)";
         String from = servTable();
         String joins = makeJoins(servTable(), impTable(), userTable());
-        String where = "";
+        String where = "Conversion = 1";
         ResultSet rs = buildAndExecuteStatement(select, from, joins, where, "");
 
         rs.next();
@@ -386,10 +385,10 @@ public class CampaignModelDBTrimmed implements DataModel{
 
     @Override
     public Map<Date, Integer> getFullConversions(Step step) throws SQLException {
-        String select = "DATE_FORMAT(EntryDate, " + stepToDate(step) +") AS Dated, COUNT(Conversion = 1)";
+        String select = "DATE_FORMAT(EntryDate, " + stepToDate(step) +") AS Dated, COUNT(*)";
         String from = servTable();
         String joins = makeJoins(servTable(), impTable(), userTable());
-        String where = "";
+        String where = "Conversion = 1";
         ResultSet rs = buildAndExecuteStatement(select, from, joins, where, "GROUP BY `Dated`");
 
         return getDateToInt(rs, step);
@@ -566,7 +565,7 @@ public class CampaignModelDBTrimmed implements DataModel{
         Map<Date, Float> result = new HashMap<>();
 
         for (Date date : bounces.keySet()){
-            result.put(date, (float) (bounces.get(date)/clicks.get(date)));
+            result.put(date, (float) bounces.get(date)/clicks.get(date));
         }
 
         return result;

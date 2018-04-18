@@ -35,19 +35,15 @@ public class TestMain {
         DBHelper.initConnection(args[0], args[1]);
         DBHelper dbh = new DBHelper();
 
-
+//        File JUnitClicks = new File("TestRuns/Backend/Model/TestSamples/click_log.csv");
+//        File JUnitImpressions = new File("TestRuns/Backend/Model/TestSamples/impression_log.csv");
+//        File JUnitServerLogs = new File("TestRuns/Backend/Model/TestSamples/server_log.csv");
+//
+//        ReadCSVsToDB.makeCampaign(dbh, "JUnit", JUnitClicks, JUnitImpressions, JUnitServerLogs);
+//
         CampaignModelDBTrimmed cmdt = new CampaignModelDBTrimmed("JUnit");
-        Step step = Step.DAY;
 
-        Filter filter = new Filter();
-
-        filter.genderMale = false;
-        filter.ageBelow25 = false;
-
-        cmdt.setFilter(filter);
-
-        System.out.println(cmdt.getImpressionsNumber());
-
+        System.out.println(cmdt.getFullImpressions(Step.DAY));
 
 //        System.out.println(cmdt.getImpressionsNumber());
 //        System.out.println(cmdt.getClicksNumber());
@@ -79,24 +75,12 @@ public class TestMain {
 //        System.out.println(cmdt.getCTR());
 //        System.out.println(cmdt.getFullCPA(Step.DAY));
 
-//        File JUnitClicks = new File("TestRuns/Backend/Model/TestSamples/click_logMetrics.csv");
-//        File JUnitImpressions = new File("TestRuns/Backend/Model/TestSamples/impression_logMetrics.csv");
-//        File JUnitServerLogs = new File("TestRuns/Backend/Model/TestSamples/server_logMetrics.csv");
-//
-//        ReadCSVsToDB.makeCampaign(dbh, "JUnitMetrics", JUnitClicks, JUnitImpressions, JUnitServerLogs);
-
 //        System.out.println(dbh.getCampaigns());
 //        System.out.println("Success!");
     }
 
     public void databaseTesting(Connection connection) throws SQLException {
         Scanner in = new Scanner(System.in);
-
-        System.out.print("User: ");
-        String user = in.nextLine();
-
-        System.out.print("Pass: ");
-        String pass = in.nextLine();
 
         //This just loops over building and executing statements with pretty output to System.Out
         while (true){
