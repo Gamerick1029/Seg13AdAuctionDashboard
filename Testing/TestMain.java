@@ -1,13 +1,11 @@
-import Backend.FileIO.ReadCSVsToDB;
 import Backend.FileIO.readCSVs;
 import Backend.DBHelper;
-import Backend.Model.CampaignModelDBTrimmed;
+import Backend.Model.CampaignModelDB;
 import Backend.Model.ClickData;
 import Backend.Model.ImpressionData;
 import Backend.Model.Interfaces.Filter;
 import Backend.Model.Interfaces.Step;
 import Backend.Model.ServerData;
-import javafx.scene.control.Alert;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -16,7 +14,6 @@ import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.Scanner;
 
 public class TestMain {
@@ -41,7 +38,7 @@ public class TestMain {
 //
 //        ReadCSVsToDB.makeCampaign(dbh, "JUnit", JUnitClicks, JUnitImpressions, JUnitServerLogs);
 //
-        CampaignModelDBTrimmed cmdt = new CampaignModelDBTrimmed("JUnit");
+        CampaignModelDB cmdt = new CampaignModelDB("JUnit");
 
         Filter filter = new Filter();
         filter.clearAll();

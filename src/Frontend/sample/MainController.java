@@ -1,8 +1,7 @@
 package Frontend.sample;
 
 import Backend.DBHelper;
-import Backend.Model.CampaignModel;
-import Backend.Model.CampaignModelDBTrimmed;
+import Backend.Model.CampaignModelDB;
 import Backend.Model.Interfaces.DataModel;
 import Backend.Model.Interfaces.Step;
 import javafx.beans.property.ReadOnlyStringWrapper;
@@ -23,7 +22,6 @@ import javafx.stage.StageStyle;
 
 import javax.swing.*;
 import java.io.File;
-import java.io.IOException;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -669,7 +667,7 @@ public class MainController implements ScreenInterface {
         content.add(serverL, 0, 7);
         content.add(serverF, 0, 8);
         content.add(serverB, 2, 8);
-        //content.add(clearButton, 2, 10);
+        content.add(clearButton, 2, 10);
 
         alert.getDialogPane().setContent(content);
         alert.showAndWait();
@@ -688,46 +686,44 @@ public class MainController implements ScreenInterface {
                 addNewCampaign(event);
             } else { // If a campaign is loaded correctly:
                 files.clear();
-
+                Campaign campaign = new Campaign(campaignNameF.getText());
+                // add EventHandlers for the Displayed CheckBox button and the Remove button
+                campaign.getDisplayed().addEventHandler(MouseEvent.MOUSE_CLICKED,
+                        e -> {
+                            showMetric(currentMetricDisplayed);
+                        });
+                campaign.getRemove().addEventHandler(MouseEvent.MOUSE_CLICKED,
+                        e -> {
+                            removeCampaign();
+                        });
+                //Adding the new campaign to the Campaigns table
+                campaignsLoaded.add(campaign);
+                //Adding a new CheckMenuItem for the new campaign
+                campaignsTable.getItems().add(campaign);
+                //Adding a new Data Model to ScreensController
                 DataModel dataModel = null;
                 try {
-                    Campaign campaign = new Campaign(campaignNameF.getText());
-                    // add EventHandlers for the Displayed CheckBox button and the Remove button
-                    campaign.getDisplayed().addEventHandler(MouseEvent.MOUSE_CLICKED,
-                            e -> {
-                                showMetric(currentMetricDisplayed);
-                            });
-                    campaign.getRemove().addEventHandler(MouseEvent.MOUSE_CLICKED,
-                            e -> {
-                                removeCampaign();
-                            });
-                    dataModel = new CampaignModelDBTrimmed(campaign.getName(), currentImpressions, currentClick, currentServer);
-
-                    //Adding the new campaign to the Campaigns table
-                    campaignsLoaded.add(campaign);
-                    //Adding a new CheckMenuItem for the new campaign
-                    campaignsTable.getItems().add(campaign);
-                    //Adding a new Data Model to ScreensController
-                    myController.addDataModel(campaign.getName(), dataModel);
-                    populateMetric(currentMetricDisplayed, currentStep);
-                    //Creating a new CheckMenuItem for the new campaign
-                    CheckMenuItem checkMenuItem = new CheckMenuItem(campaignNameF.getText());
-                    //Adding an EventHandler for the new CheckMenuItem
-                    //OnSelected, set the rest of the CheckMenuItems to false and the selected one to true
-                    //and set the metric fields with the selected campaign's data
-                    checkMenuItem.setOnAction(t -> {
-                        for (MenuItem menuItem : campaignName.getItems()) {
-                            ((CheckMenuItem) menuItem).setSelected(false);
-                        }
-                        checkMenuItem.setSelected(true);
-                        setMetrics(checkMenuItem.getText());
-                    });
-                    //Adding the new CheckMenuItem to the MenuButton for the current campaignsLoaded
-                    campaignName.getItems().add(checkMenuItem);
-                    setMetrics(campaignNameF.getText());
+                    dataModel = new CampaignModelDB(campaign.getName(), currentImpressions, currentClick, currentServer);
                 } catch (Exception e) {
-                    reportError(e);
+                    e.printStackTrace();
                 }
+                myController.addDataModel(campaign.getName(), dataModel);
+                populateMetric(currentMetricDisplayed, currentStep);
+                //Creating a new CheckMenuItem for the new campaign
+                CheckMenuItem checkMenuItem = new CheckMenuItem(campaignNameF.getText());
+                //Adding an EventHandler for the new CheckMenuItem
+                //OnSelected, set the rest of the CheckMenuItems to false and the selected one to true
+                //and set the metric fields with the selected campaign's data
+                checkMenuItem.setOnAction(t -> {
+                    for (MenuItem menuItem : campaignName.getItems()) {
+                        ((CheckMenuItem) menuItem).setSelected(false);
+                    }
+                    checkMenuItem.setSelected(true);
+                    setMetrics(checkMenuItem.getText());
+                });
+                //Adding the new CheckMenuItem to the MenuButton for the current campaignsLoaded
+                campaignName.getItems().add(checkMenuItem);
+                setMetrics(campaignNameF.getText());
             }
         }
     }
@@ -961,7 +957,7 @@ public class MainController implements ScreenInterface {
                     dataModel.getFilter().setStartDate(start);
                     dataModel.getFilter().setEndDate(end);
                 } catch (ParseException e) {
-                    reportError(e);
+                    e.printStackTrace();
                 }
             }
             System.out.println(sbE.toString());
@@ -1504,8 +1500,8 @@ public class MainController implements ScreenInterface {
                     populateMetric(metric, currentStep);
                     break;
                 case "CTR":
-                    setStyleToMetric("CTR");
-                    currentMetricDisplayed = "CTR";
+                    setStyleToMetric("Impressions");
+                    currentMetricDisplayed = "Impressions";
                     populateMetric(metric, currentStep);
                     break;
                 case "CPA":
@@ -1685,18 +1681,14 @@ public class MainController implements ScreenInterface {
         }
     }
 
-    private void reportError(Exception e) {
+    private void reportError(SQLException e) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.initStyle(StageStyle.UTILITY);
         alert.setTitle("Warning");
         GridPane content = new GridPane();
         content.setPrefSize(300, 50);
-        Label label1 = new Label("There was an error creating the campaign!");
-        Label label2 = new Label("Please check the format of the files you selected");
-        Label label3 = new Label("and your internet connection!");
-        content.add(label1, 0, 0);
-        content.add(label2, 0, 1);
-        content.add(label3, 0, 2);
+        Label label = new Label(e.getMessage());
+        content.add(label, 0, 0);
         alert.getDialogPane().setContent(content);
         alert.showAndWait();
     }

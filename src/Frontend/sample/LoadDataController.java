@@ -1,8 +1,7 @@
 package Frontend.sample;
 
 import Backend.DBHelper;
-import Backend.Model.CampaignModel;
-import Backend.Model.CampaignModelDBTrimmed;
+import Backend.Model.CampaignModelDB;
 import Backend.Model.Interfaces.DataModel;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
@@ -79,7 +78,7 @@ public class LoadDataController implements ScreenInterface {
                 Task<DataModel> task = new Task<>() {
                     @Override
                     protected DataModel call() throws Exception {
-                        return new CampaignModelDBTrimmed(campaignName.getText(), impressions, clicks, server);
+                        return new CampaignModelDB(campaignName.getText(), impressions, clicks, server);
                     }
                 };
 
