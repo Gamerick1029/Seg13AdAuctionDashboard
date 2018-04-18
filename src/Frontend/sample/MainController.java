@@ -1504,8 +1504,8 @@ public class MainController implements ScreenInterface {
                     populateMetric(metric, currentStep);
                     break;
                 case "CTR":
-                    setStyleToMetric("Impressions");
-                    currentMetricDisplayed = "Impressions";
+                    setStyleToMetric("CTR");
+                    currentMetricDisplayed = "CTR";
                     populateMetric(metric, currentStep);
                     break;
                 case "CPA":
