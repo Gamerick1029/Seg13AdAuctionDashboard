@@ -22,7 +22,7 @@ public class TestMain {
     private static final String defImpressionLog = "2_week_campaign_2\\impression_log.csv";
     private static final String defServerLog = "2_week_campaign_2\\server_log.csv";
 
-    private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
+    private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     public static void main(String[] args) throws IOException, ParseException, SQLException {
 
@@ -38,15 +38,16 @@ public class TestMain {
 //
 //        ReadCSVsToDB.makeCampaign(dbh, "JUnit", JUnitClicks, JUnitImpressions, JUnitServerLogs);
 //
-        CampaignModelDB cmdt = new CampaignModelDB("JUnit");
+        CampaignModelDB cmdt = new CampaignModelDB("test8");
 
-        System.out.println(dbh.getCampaigns());
+        Filter filter = new Filter();
+        filter.setStartDate(sdf.parse("2015-01-03 00:00:00"));
+        filter.setEndDate(sdf.parse("2016-01-01 00:00:00"));
+        filter.step = Step.WEEK;
 
-        dbh.deleteCampaign("2-month");
-        dbh.deleteCampaign("Jjas");
-        dbh.deleteCampaign("kfne");
-        dbh.deleteCampaign("lksdfsl");
-        dbh.deleteCampaign("lsdmflskmdfm");
+        cmdt.setFilter(filter);
+
+        System.out.println(cmdt.getFullImpressions(Step.MONTH));
 
 //        System.out.println(cmdt.getImpressionsNumber());
 //        System.out.println(cmdt.getClicksNumber());

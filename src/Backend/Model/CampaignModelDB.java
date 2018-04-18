@@ -21,10 +21,7 @@ public class CampaignModelDB implements DataModel{
     private DBHelper dbHelper;
     private Filter filterDB = new Filter();
 
-    private static final SimpleDateFormat sdfAll = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss"); //DateTime format as specified in the CSV files
-    private static final SimpleDateFormat sdfDay = new SimpleDateFormat("yyyy-MM-dd");
-    private static final SimpleDateFormat sdfWeek = new SimpleDateFormat("yyyy-ww");
-    private static final SimpleDateFormat sdfMonth = new SimpleDateFormat("yyyy-MM");
+    private static final SimpleDateFormat sdfAll = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //DateTime format as specified in the CSV files
 
     public CampaignModelDB(String campaignName) throws SQLException {
 
@@ -61,20 +58,9 @@ public class CampaignModelDB implements DataModel{
         StringBuilder sb = new StringBuilder();
         SimpleDateFormat sdfHere;
 
-        if (filterDB.step != null){
-            switch (filterDB.step){
-                case DAY:sdfHere = sdfDay; break;
-                case WEEK:sdfHere = sdfWeek; break;
-                case MONTH:sdfHere = sdfMonth; break;
-                default: sdfHere = sdfAll;
-            }
-        } else {
-            sdfHere = sdfAll;
-        }
 
-
-        if (filterDB.getStartDate() != null) sb.append("Date > '" + sdfHere.format(filterDB.getStartDate()) + "' AND ");
-        if (filterDB.getEndDate() != null)   sb.append("Date < '" + sdfHere.format(filterDB.getEndDate()) + "'");
+        if (filterDB.getStartDate() != null) sb.append("Date > '" + sdfAll.format(filterDB.getStartDate()) + "' AND ");
+        if (filterDB.getEndDate() != null)   sb.append("Date < '" + sdfAll.format(filterDB.getEndDate()) + "'");
 
         return trimTrailingOperators(sb.toString());
     }
