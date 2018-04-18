@@ -12,7 +12,6 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.CheckMenuItem?>
 <?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableView?>
@@ -28,7 +27,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<ScrollPane fitToHeight="true" fitToWidth="true" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Frontend.sample.MainController">
+<ScrollPane fitToHeight="true" fitToWidth="true" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Frontend.sample.MainController">
    <content>
       <BorderPane fx:id="bigPane">
          <center>
@@ -197,7 +196,7 @@
          	                              </Text>
          	                     </children>
          	                  </VBox>
-         	                  <HBox HBox.hgrow="ALWAYS" alignment="TOP_LEFT">
+         	                  <HBox alignment="TOP_LEFT" HBox.hgrow="ALWAYS">
          	                  	<children>
          	                  	<Text id="text" text="Metrics for campaign:" />
          	                  	<HBox HBox.hgrow="ALWAYS" />
@@ -444,7 +443,7 @@
               </Pane>
           </left>
           <right>
-              <Pane fx:id="rightPane">
+              <Pane fx:id="rightPane" minHeight="-Infinity" prefHeight="700.0" BorderPane.alignment="TOP_RIGHT">
                   <children>
                   <VBox>
                      <children>
@@ -612,7 +611,7 @@
                             
                             <Text id="h1" text="Theme">
                            <VBox.margin>
-                              <Insets top="20.0" bottom="10" />
+                              <Insets bottom="10" top="20.0" />
                            </VBox.margin>
                             </Text>
                             <MenuButton id="menuButton" fx:id="themes" contentDisplay="CENTER" mnemonicParsing="false" text="Dark Theme" textAlignment="CENTER">
