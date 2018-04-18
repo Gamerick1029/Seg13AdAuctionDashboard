@@ -29,7 +29,7 @@
 
 <ScrollPane fitToHeight="true" fitToWidth="true" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Frontend.sample.MainController">
    <content>
-      <BorderPane fx:id="bigPane">
+      <BorderPane fx:id="bigPane" maxHeight="670" maxWidth="1200">
          <center>
             <AnchorPane fx:id="centerPane" BorderPane.alignment="BOTTOM_CENTER">
                <children>
@@ -486,19 +486,12 @@
                               <Insets bottom="10.0" top="10.0" />
                            </VBox.margin>
                             </Text>
-                        <GridPane hgap="5.0" vgap="5.0">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
+                        <GridPane hgap="15.0" vgap="5.0">
+
                            <children>
                                   <CheckBox id="checkBox" fx:id="incomeLow" mnemonicParsing="false" text="Low" />
-                                  <CheckBox id="checkBox" fx:id="incomeMedium" mnemonicParsing="false" text="Medium" GridPane.rowIndex="1" />
-                                  <CheckBox id="checkBox" fx:id="incomeHigh" mnemonicParsing="false" text="High" GridPane.rowIndex="2" />
+                                  <CheckBox id="checkBox" fx:id="incomeMedium" mnemonicParsing="false" text="Medium" GridPane.columnIndex="1" />
+                                  <CheckBox id="checkBox" fx:id="incomeHigh" mnemonicParsing="false" text="High" GridPane.columnIndex="2" />
                            </children>
                         </GridPane>
                             <Text id="h2" text="Gender">
@@ -512,14 +505,11 @@
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                            </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
+
                            <children>
                                   <CheckBox id="checkBox" fx:id="genderFemale" mnemonicParsing="false" text="Female" />
                                   <CheckBox id="checkBox" fx:id="genderMale" mnemonicParsing="false" text="Male " GridPane.columnIndex="1" />
-                                  <CheckBox id="checkBox" fx:id="genderOther" mnemonicParsing="false" text="Other" GridPane.rowIndex="1" />
+                                  <CheckBox id="checkBox" visible="false" fx:id="genderOther" mnemonicParsing="false" text="Other" GridPane.rowIndex="1" />
                            </children>
                            <VBox.margin>
                               <Insets />
@@ -570,12 +560,12 @@
                          	 </padding>
                          	 
                         </HBox>
-                            <Text id="h1" text="Date">
-                           <VBox.margin>
-                              <Insets top="20.0" />
-                           </VBox.margin>
-                            </Text>
                         
+                        <Text id="h1" text="Date">
+                        	<VBox.margin>
+                        		<Insets top="20" />
+                        	</VBox.margin>
+                        </Text>
                         <Text id="text" text="Start" />
                         
                         <HBox spacing="5.0">
