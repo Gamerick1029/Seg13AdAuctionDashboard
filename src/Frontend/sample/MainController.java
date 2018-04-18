@@ -23,6 +23,7 @@ import javafx.stage.StageStyle;
 
 import javax.swing.*;
 import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -668,7 +669,7 @@ public class MainController implements ScreenInterface {
         content.add(serverL, 0, 7);
         content.add(serverF, 0, 8);
         content.add(serverB, 2, 8);
-        content.add(clearButton, 2, 10);
+        //content.add(clearButton, 2, 10);
 
         alert.getDialogPane().setContent(content);
         alert.showAndWait();
@@ -705,26 +706,26 @@ public class MainController implements ScreenInterface {
                 DataModel dataModel = null;
                 try {
                     dataModel = new CampaignModelDBTrimmed(campaign.getName(), currentImpressions, currentClick, currentServer);
+                    myController.addDataModel(campaign.getName(), dataModel);
+                    populateMetric(currentMetricDisplayed, currentStep);
+                    //Creating a new CheckMenuItem for the new campaign
+                    CheckMenuItem checkMenuItem = new CheckMenuItem(campaignNameF.getText());
+                    //Adding an EventHandler for the new CheckMenuItem
+                    //OnSelected, set the rest of the CheckMenuItems to false and the selected one to true
+                    //and set the metric fields with the selected campaign's data
+                    checkMenuItem.setOnAction(t -> {
+                        for (MenuItem menuItem : campaignName.getItems()) {
+                            ((CheckMenuItem) menuItem).setSelected(false);
+                        }
+                        checkMenuItem.setSelected(true);
+                        setMetrics(checkMenuItem.getText());
+                    });
+                    //Adding the new CheckMenuItem to the MenuButton for the current campaignsLoaded
+                    campaignName.getItems().add(checkMenuItem);
+                    setMetrics(campaignNameF.getText());
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    reportError(e);
                 }
-                myController.addDataModel(campaign.getName(), dataModel);
-                populateMetric(currentMetricDisplayed, currentStep);
-                //Creating a new CheckMenuItem for the new campaign
-                CheckMenuItem checkMenuItem = new CheckMenuItem(campaignNameF.getText());
-                //Adding an EventHandler for the new CheckMenuItem
-                //OnSelected, set the rest of the CheckMenuItems to false and the selected one to true
-                //and set the metric fields with the selected campaign's data
-                checkMenuItem.setOnAction(t -> {
-                    for (MenuItem menuItem : campaignName.getItems()) {
-                        ((CheckMenuItem) menuItem).setSelected(false);
-                    }
-                    checkMenuItem.setSelected(true);
-                    setMetrics(checkMenuItem.getText());
-                });
-                //Adding the new CheckMenuItem to the MenuButton for the current campaignsLoaded
-                campaignName.getItems().add(checkMenuItem);
-                setMetrics(campaignNameF.getText());
             }
         }
     }
@@ -958,7 +959,7 @@ public class MainController implements ScreenInterface {
                     dataModel.getFilter().setStartDate(start);
                     dataModel.getFilter().setEndDate(end);
                 } catch (ParseException e) {
-                    e.printStackTrace();
+                    reportError(e);
                 }
             }
             System.out.println(sbE.toString());
@@ -1682,14 +1683,18 @@ public class MainController implements ScreenInterface {
         }
     }
 
-    private void reportError(SQLException e) {
+    private void reportError(Exception e) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.initStyle(StageStyle.UTILITY);
         alert.setTitle("Warning");
         GridPane content = new GridPane();
         content.setPrefSize(300, 50);
-        Label label = new Label(e.getMessage());
-        content.add(label, 0, 0);
+        Label label1 = new Label("There was an error creating the campaign!");
+        Label label2 = new Label("Please check the format of the files you selected");
+        Label label3 = new Label("and your internet connection!");
+        content.add(label1, 0, 0);
+        content.add(label2, 0, 1);
+        content.add(label3, 0, 2);
         alert.getDialogPane().setContent(content);
         alert.showAndWait();
     }
