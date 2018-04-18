@@ -42,7 +42,7 @@
       
                         <AnchorPane>
                            <children>
-                              <HBox alignment="TOP_LEFT" AnchorPane.bottomAnchor="649.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="400.0" AnchorPane.topAnchor="0.0">
+                              <HBox alignment="TOP_LEFT" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0">
                                  <children>
                                     <HBox alignment="TOP_LEFT">
                                        <children>
@@ -189,7 +189,7 @@
          	                    <children>
          	                  <VBox alignment="CENTER_LEFT" prefHeight="26.0" prefWidth="298.0">
          	                     <children>
-         	                              <Text id="h1" text="     Campaign Metrics" wrappingWidth="249.8388671875">
+         	                              <Text id="h1" text="Campaign Metrics">
          
          	                           <VBox.margin>
          	                              <Insets top="20.0" />
@@ -197,14 +197,20 @@
          	                              </Text>
          	                     </children>
          	                  </VBox>
+         	                  <HBox HBox.hgrow="ALWAYS" alignment="TOP_LEFT">
+         	                  	<children>
+         	                  	<Text id="text" text="Metrics for campaign:" />
+         	                  	<HBox HBox.hgrow="ALWAYS" />
       	                                <MenuButton id="menuButton" fx:id="campaignName" contentDisplay="CENTER" mnemonicParsing="false" text="Campaign" textAlignment="CENTER">
       	                                    <items>
       	                                        <CheckMenuItem id="checkMenuItem" fx:id="campaignOne" mnemonicParsing="false" selected="true" />
       	                                    </items>
-      	                           <VBox.margin>
-      	                              <Insets />
-      	                           </VBox.margin>
       	                                </MenuButton>
+      	                         </children>
+      	                         <padding>
+      	                         	<Insets left="10" right="10" />
+      	                         	</padding>       
+      	                     </HBox>
          	                        <HBox alignment="CENTER">
          	                            <children>
          	                                <VBox alignment="CENTER" />
@@ -285,7 +291,7 @@
          	                        </HBox>
          	                        <HBox alignment="CENTER">
          	                            <children>
-         	                                <VBox alignment="CENTER" prefWidth="114.0">
+         	                                <VBox alignment="CENTER">
          	                                    <children>
          	                                        <Text id="dataText" fx:id="conversions" text="Conversions" wrappingWidth="150.0">
          	                                            <cursor>
@@ -475,7 +481,7 @@
                                   <CheckBox id="checkBox" fx:id="age35to44" mnemonicParsing="false" text="35 - 44" GridPane.rowIndex="2" />
                            </children>
                         </GridPane>
-                            <Text id="h2" text="Income" wrappingWidth="250.2265625">
+                            <Text id="h2" text="Income">
       
                            <VBox.margin>
                               <Insets bottom="10.0" top="10.0" />
@@ -496,7 +502,7 @@
                                   <CheckBox id="checkBox" fx:id="incomeHigh" mnemonicParsing="false" text="High" GridPane.rowIndex="2" />
                            </children>
                         </GridPane>
-                            <Text id="h2" text="Gender" wrappingWidth="252.75">
+                            <Text id="h2" text="Gender">
       
                            <VBox.margin>
                               <Insets bottom="10.0" top="10.0" />
@@ -576,9 +582,9 @@
                         <HBox spacing="5.0">
                            <children>
                         
-                                  <TextField fx:id="startDay" maxWidth="80.0" minWidth="80.0" prefHeight="25.0" prefWidth="80.0" promptText="Day" />
-                                  <MenuButton id="menuButton" fx:id="startMonth" maxWidth="80.0" minWidth="80.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="80.0" text="Month" />
-                                  <TextField fx:id="startYear" maxHeight="25.0" maxWidth="80.0" prefHeight="25.0" prefWidth="80.0" promptText="Year" />
+                                  <TextField fx:id="startDay" maxWidth="50.0" promptText="Day" />
+                                  <MenuButton id="menuButton" fx:id="startMonth" maxWidth="80.0" mnemonicParsing="false" text="Month" />
+                                  <TextField fx:id="startYear" maxWidth="50.0" promptText="Year" />
                            </children>
                         </HBox>
                         
@@ -587,9 +593,9 @@
                         <HBox spacing="5.0">
                            <children>
                            
-                                  <TextField fx:id="endDay" maxWidth="80.0" promptText="Day" />
-                                  <MenuButton id="menuButton" fx:id="endMonth" mnemonicParsing="false" text="Month" />
-                                  <TextField fx:id="endYear" maxWidth="80.0" promptText="Year" />
+                                  <TextField fx:id="endDay" maxWidth="50.0" promptText="Day" />
+                                  <MenuButton id="menuButton" fx:id="endMonth" maxWidth="80.0" mnemonicParsing="false" text="Month" />
+                                  <TextField fx:id="endYear" maxWidth="50.0" promptText="Year" />
                            </children>
                         </HBox>
                             <Text id="filterByDate" fx:id="searchDate" onMouseClicked="#applyDateFilter" text="Filter by Date">

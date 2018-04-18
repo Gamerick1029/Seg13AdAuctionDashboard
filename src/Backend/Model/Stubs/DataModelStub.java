@@ -25,13 +25,13 @@ public class DataModelStub implements DataModel
         floatMap = new HashMap<>();
         try
         {
-            intMap.put(df.parse("01/01/0001"), 1);
-            intMap.put(df.parse("02/02/0002"), 2);
-            intMap.put(df.parse("03/03/0003"), 3);
+            intMap.put(df.parse("05/01/2015"), 1);
+            intMap.put(df.parse("02/01/2015"), 2);
+            intMap.put(df.parse("03/01/2015"), 3);
 
-            floatMap.put(df.parse("01/01/0001"), 1.0f);
-            floatMap.put(df.parse("02/02/0002"), 2.0f);
-            floatMap.put(df.parse("03/03/0003"), 3.0f);
+            floatMap.put(df.parse("05/01/2015"), 1.0f);
+            floatMap.put(df.parse("02/01/2015"), 2.0f);
+            floatMap.put(df.parse("03/01/2015"), 3.0f);
         } catch(ParseException pe)
         {
             System.err.println("Error parsing stub date formats!");
