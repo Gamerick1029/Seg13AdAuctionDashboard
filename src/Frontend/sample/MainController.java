@@ -27,10 +27,7 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Yoana on 12/03/2018.
@@ -201,6 +198,7 @@ public class MainController implements ScreenInterface {
     private String currentChartType = "LineChart";
     private Step currentStep = Step.DAY;
     private List<Campaign> campaignsLoaded = new ArrayList<>();
+    private HashMap<String, File> files = new HashMap<>();
 
     @Override
     public void setScreenParent(ScreensController parent) {
@@ -583,44 +581,19 @@ public class MainController implements ScreenInterface {
         impressionsF.setPromptText("Select Impressions Log...");
         impressionsF.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
-                    Node node = (Node) e.getSource();
-                    FileChooser chooser = new FileChooser();
-                    chooser.setTitle("Select Impressions Log");
-                    FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CSV Files", "*.csv");
-                    chooser.getExtensionFilters().add(extFilter);
-                    File file = chooser.showOpenDialog(node.getScene().getWindow());
-                    if (file != null) {
-                        if (currentClick == file || currentServer == file) {
-                            JOptionPane.showMessageDialog(null, "This file has already been loaded!"
-                                    , "Warning", 1);
-                        } else {
-                            currentImpressions = file;
-                            String fileName = file.getName();
-                            impressionsF.setText(fileName);
-                        }
+                    String s = displayFileChooser(e, "Impressions");
+                    if (s != null) {
+                        impressionsF.setText(s);
                     }
                 });
         Button impressionsB = new Button("Browse");
         impressionsB.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
-                    Node node = (Node) e.getSource();
-                    FileChooser chooser = new FileChooser();
-                    chooser.setTitle("Select Impressions Log");
-                    FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CSV Files", "*.csv");
-                    chooser.getExtensionFilters().add(extFilter);
-                    File file = chooser.showOpenDialog(node.getScene().getWindow());
-                    if (file != null) {
-                        if (currentClick == file || currentServer == file) {
-                            JOptionPane.showMessageDialog(null, "This file has already been loaded!"
-                                    , "Warning", 1);
-                        } else {
-                            currentImpressions = file;
-                            String fileName = file.getName();
-                            impressionsF.setText(fileName);
-                        }
+                    String s = displayFileChooser(e, "Impressions");
+                    if (s != null) {
+                        impressionsF.setText(s);
                     }
                 });
-
 
         Label clicksL = new Label("Select Click Log");
         TextField clicksF = new TextField();
@@ -628,41 +601,17 @@ public class MainController implements ScreenInterface {
         clicksF.setPromptText("Select Click Log...");
         clicksF.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
-                    Node node = (Node) e.getSource();
-                    FileChooser chooser = new FileChooser();
-                    chooser.setTitle("Select Click Log");
-                    FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CSV Files", "*.csv");
-                    chooser.getExtensionFilters().add(extFilter);
-                    File file = chooser.showOpenDialog(node.getScene().getWindow());
-                    if (file != null) {
-                        if (currentImpressions == file || currentServer == file) {
-                            JOptionPane.showMessageDialog(null, "This file has already been loaded!"
-                                    , "Warning", 1);
-                        } else {
-                            currentClick = file;
-                            String fileName = file.getName();
-                            clicksF.setText(fileName);
-                        }
+                    String s = displayFileChooser(e, "Clicks");
+                    if (s != null) {
+                        clicksF.setText(s);
                     }
                 });
         Button clicksB = new Button("Browse");
         clicksB.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
-                    Node node = (Node) e.getSource();
-                    FileChooser chooser = new FileChooser();
-                    chooser.setTitle("Select Click Log");
-                    FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CSV Files", "*.csv");
-                    chooser.getExtensionFilters().add(extFilter);
-                    File file = chooser.showOpenDialog(node.getScene().getWindow());
-                    if (file != null) {
-                        if (currentImpressions == file || currentServer == file) {
-                            JOptionPane.showMessageDialog(null, "This file has already been loaded!"
-                                    , "Warning", 1);
-                        } else {
-                            currentClick = file;
-                            String fileName = file.getName();
-                            clicksF.setText(fileName);
-                        }
+                    String s = displayFileChooser(e, "Clicks");
+                    if (s != null) {
+                        clicksF.setText(s);
                     }
                 });
 
@@ -673,42 +622,18 @@ public class MainController implements ScreenInterface {
         serverF.setPromptText("Select Server Log...");
         serverF.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
-                    Node node = (Node) e.getSource();
-                    FileChooser chooser = new FileChooser();
-                    chooser.setTitle("Select Server Log");
-                    FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CSV Files", "*.csv");
-                    chooser.getExtensionFilters().add(extFilter);
-                    File file = chooser.showOpenDialog(node.getScene().getWindow());
-                    if (file != null) {
-                        if (currentImpressions == file || currentClick == file) {
-                            JOptionPane.showMessageDialog(null, "This file has already been loaded!"
-                                    , "Warning", 1);
-                        } else {
-                            currentServer = file;
-                            String fileName = file.getName();
-                            serverF.setText(fileName);
-                        }
+                    String s = displayFileChooser(e, "Server");
+                    if (s != null) {
+                        serverF.setText(s);
                     }
                 });
 
         Button serverB = new Button("Browse");
         serverB.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
-                    Node node = (Node) e.getSource();
-                    FileChooser chooser = new FileChooser();
-                    chooser.setTitle("Select Server Log");
-                    FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CSV Files", "*.csv");
-                    chooser.getExtensionFilters().add(extFilter);
-                    File file = chooser.showOpenDialog(node.getScene().getWindow());
-                    if (file != null) {
-                        if (currentImpressions == file || currentClick == file) {
-                            JOptionPane.showMessageDialog(null, "This file has already been loaded!"
-                                    , "Warning", 1);
-                        } else {
-                            currentServer = file;
-                            String fileName = file.getName();
-                            serverF.setText(fileName);
-                        }
+                    String s = displayFileChooser(e, "Server");
+                    if (s != null) {
+                        serverF.setText(s);
                     }
                 });
 
@@ -746,18 +671,15 @@ public class MainController implements ScreenInterface {
                         , "Warning", 1);
                 addNewCampaign(event);
             } else { // If a campaign is loaded correctly:
+                files.clear();
                 Campaign campaign = new Campaign(campaignNameF.getText());
                 // add EventHandlers for the Displayed CheckBox button and the Remove button
                 campaign.getDisplayed().addEventHandler(MouseEvent.MOUSE_CLICKED,
                         e -> {
-                            x.animatedProperty().setValue(false);
-                            y.animatedProperty().setValue(false);
                             showMetric(currentMetricDisplayed);
                         });
                 campaign.getRemove().addEventHandler(MouseEvent.MOUSE_CLICKED,
                         e -> {
-                            x.animatedProperty().setValue(false);
-                            y.animatedProperty().setValue(false);
                             removeCampaign();
                         });
                 //Adding the new campaign to the Campaigns table
@@ -790,6 +712,106 @@ public class MainController implements ScreenInterface {
                 setMetrics(campaignNameF.getText());
             }
         }
+    }
+
+    private String displayFileChooser(MouseEvent e, String logType) {
+        Node node = (Node) e.getSource();
+        switch (logType) {
+            case "Impressions":
+                File impressionsFile = checkFile("Impressions", node, "Select Impressions Log");
+                if (impressionsFile != null) {
+                    if (currentImpressions == null) {
+                        currentImpressions = impressionsFile;
+                    } else {
+                        files.remove(currentImpressions.getName());
+                        currentImpressions = impressionsFile;
+                    }
+                    return impressionsFile.getName();
+                }
+                return null;
+            case "Clicks":
+                File clicksFile = checkFile("Clicks", node, "Select Click Log");
+                if (clicksFile != null) {
+                    if (currentClick == null) {
+                        currentClick = clicksFile;
+                    } else {
+                        files.remove(currentClick.getName());
+                        currentClick = clicksFile;
+                    }
+                    return clicksFile.getName();
+                }
+                return null;
+            case "Server":
+                File serverFile = checkFile("Server", node, "Select Server Log");
+                if (serverFile != null) {
+                    if (currentServer == null) {
+                        currentServer = serverFile;
+                    } else {
+                        files.remove(currentServer.getName());
+                        currentServer = serverFile;
+                    }
+                    return serverFile.getName();
+                }
+                return null;
+        }
+        return null;
+    }
+
+    private File checkFile(String logType, Node node, String title) {
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle(title);
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CSV Files", "*.csv");
+        chooser.getExtensionFilters().add(extFilter);
+        File file = chooser.showOpenDialog(node.getScene().getWindow());
+
+        switch (logType) {
+            case "Impressions":
+                if (file != null) {
+                    if (!files.containsKey(file.getName())) {
+                        System.out.println("Adding impressions file...");
+                        files.put(file.getName(), file);
+                        return file;
+                    } else {
+                        showFileAlert();
+                    }
+                }
+                return null;
+            case "Clicks":
+                if (file != null) {
+                    if (!files.containsKey(file.getName())) {
+                        System.out.println("Adding clicks file...");
+                        files.put(file.getName(), file);
+                        return file;
+                    } else {
+                        showFileAlert();
+                    }
+                }
+                return null;
+            case "Server":
+                if (file != null) {
+                    if (!files.containsKey(file.getName())) {
+                        System.out.println("Adding server file...");
+                        files.put(file.getName(), file);
+                        return file;
+                    } else {
+                        showFileAlert();
+                    }
+                }
+                return null;
+        }
+        return null;
+    }
+
+    private void showFileAlert() {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.initStyle(StageStyle.UTILITY);
+        alert.setTitle("Warning");
+        GridPane content = new GridPane();
+        content.setPrefSize(300, 50);
+        Label label = new Label("This file has already been selected!");
+        content.add(label, 0, 0);
+        alert.getDialogPane().setContent(content);
+        alert.showAndWait();
     }
 
     private void removeCampaign() {
@@ -1299,22 +1321,16 @@ public class MainController implements ScreenInterface {
     }
 
     private void groupByDay() {
-        x.animatedProperty().setValue(false);
-        y.animatedProperty().setValue(false);
         currentStep = Step.DAY;
         populateMetric(this.currentMetricDisplayed, currentStep);
     }
 
     private void groupByWeek() {
-        x.animatedProperty().setValue(false);
-        y.animatedProperty().setValue(false);
         currentStep = Step.WEEK;
         populateMetric(this.currentMetricDisplayed, currentStep);
     }
 
     private void groupByMonth() {
-        x.animatedProperty().setValue(false);
-        y.animatedProperty().setValue(false);
         currentStep = Step.MONTH;
         populateMetric(this.currentMetricDisplayed, currentStep);
     }
