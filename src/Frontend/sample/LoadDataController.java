@@ -78,7 +78,11 @@ public class LoadDataController implements ScreenInterface {
                 Task<DataModel> task = new Task<>() {
                     @Override
                     protected DataModel call() throws Exception {
-                        return new CampaignModelDB(campaignName.getText(), impressions, clicks, server);
+                        try {
+                            return new CampaignModelDB(campaignName.getText(), impressions, clicks, server);
+                        } catch (Exception e){
+                            e.printStackTrace();
+                        }
                     }
                 };
 

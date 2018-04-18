@@ -64,9 +64,8 @@ public class ReadCSVsToDB {
             loadClickLog();
             loadServerLog();
         } catch (SQLException | IOException e) {
-            throw e;
-        } finally {
             DBH.deleteCampaign(campaignName);
+            throw e;
         }
 
     }
