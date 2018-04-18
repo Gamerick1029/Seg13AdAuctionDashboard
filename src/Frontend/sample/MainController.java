@@ -298,7 +298,7 @@ public class MainController implements ScreenInterface {
             groupByStep();
         });
         byMonth.setOnAction(r -> {
-            currentStep = Step.MONTH
+            currentStep = Step.MONTH;
             byMonth.setSelected(true);
             byWeek.setSelected(false);
             byDay.setSelected(false);
