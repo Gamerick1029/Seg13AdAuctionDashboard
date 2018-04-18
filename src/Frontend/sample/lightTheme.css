@@ -7,11 +7,11 @@
 }
 
 #leftPane {
-	-fx-background-color: #eaf2ff;
+	-fx-background-color: #cce0fc;
 }
 
 #rightPane {
-	-fx-background-color: #eaf2ff;
+	-fx-background-color: #cce0fc;
 }
 
 
@@ -41,7 +41,6 @@
 }
 
 #dataText {
-	-fx-font-size: 16;
 	-fx-fill: #5b5b5b;
 }
 
@@ -52,8 +51,6 @@
 #dataField {
 	-fx-text-fill: GREY;
 	-fx-background-color: WHITE;
-	-fx-font-size: 16;
-	-fx-font-weight: bold;	
 }
 
 #filterByDate {
@@ -83,7 +80,7 @@
 }
 
 .chart-legend {
-    -fx-background-color: #d0cdfc;
+    -fx-background-color: #cce0fc;
     -fx-padding: 20px;
 }
 
@@ -92,7 +89,7 @@
 }
 
 .chart-legend-item {
-    -fx-background-color: #d0cdfc;
+    -fx-background-color: #cce0fc;
     -fx-text-fill: #343232;
 }
 
