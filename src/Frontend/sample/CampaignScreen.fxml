@@ -29,7 +29,7 @@
 
 <ScrollPane fitToHeight="true" fitToWidth="true" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Frontend.sample.MainController">
    <content>
-      <BorderPane fx:id="bigPane" maxHeight="670" maxWidth="1200">
+      <BorderPane fx:id="bigPane">
          <center>
             <AnchorPane fx:id="centerPane" BorderPane.alignment="BOTTOM_CENTER">
                <children>
@@ -96,7 +96,7 @@
                                   <CategoryAxis label="Time" side="BOTTOM" fx:id="x" />
                                 </xAxis>
                                 <yAxis>
-                                  <NumberAxis fx:id="y" label="Campaign Something" side="LEFT" />
+                                  <NumberAxis fx:id="y" label="Value" side="LEFT" />
                                 </yAxis>
                               </LineChart>
                               <PieChart id="chart" fx:id="pieChart" minHeight="101.0" minWidth="100.0" visible="false" AnchorPane.bottomAnchor="71.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0" />
