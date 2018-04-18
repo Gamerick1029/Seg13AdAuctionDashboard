@@ -1488,8 +1488,8 @@ public class MainController implements ScreenInterface {
                     populateMetric(metric, currentStep);
                     break;
                 case "CTR":
-                    setStyleToMetric("Impressions");
-                    currentMetricDisplayed = "Impressions";
+                    setStyleToMetric("CTR");
+                    currentMetricDisplayed = "CTR";
                     populateMetric(metric, currentStep);
                     break;
                 case "CPA":
@@ -1608,7 +1608,8 @@ public class MainController implements ScreenInterface {
         barChart.getData().clear();
         areaChart.getData().clear();
         pieChart.getData().clear();
-
+        x.setAnimated(false);
+        y.setAnimated(false);
         for (Campaign campaign : this.campaignsLoaded) {
             if (campaign.getDisplayed().isSelected()) {
                 DataModel dataModel = myController.getDataModel(campaign.getName());
@@ -1622,7 +1623,6 @@ public class MainController implements ScreenInterface {
                 campaignMetricLC.setName(dataModel.getName() + " " + metric);
                 campaignMetricBC.setName(dataModel.getName() + " " + metric);
                 campaignMetricAC.setName(dataModel.getName() + " " + metric);
-
 
                 try {
                     switch (metric) {
