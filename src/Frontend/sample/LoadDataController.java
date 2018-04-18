@@ -73,16 +73,18 @@ public class LoadDataController implements ScreenInterface {
                 alert.getDialogPane().setContent(content);
                 alert.showAndWait();
             } else {
-                final DataModel[] dataModel = new DataModel[1];
+
 
                 Task<DataModel> task = new Task<>() {
                     @Override
                     protected DataModel call() throws Exception {
+
                         try {
                             return new CampaignModelDB(campaignName.getText(), impressions, clicks, server);
                         } catch (Exception e){
                             e.printStackTrace();
                         }
+                        return null;
                     }
                 };
 
@@ -91,6 +93,7 @@ public class LoadDataController implements ScreenInterface {
 
                 task.setOnRunning(e -> alert.show());
 
+                final DataModel[] dataModel = new DataModel[1];
                 task.setOnSucceeded(e -> {
                     dataModel[0] = task.getValue();
                     myController.setCurrentModel(dataModel[0]);
