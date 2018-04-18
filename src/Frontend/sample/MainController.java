@@ -284,28 +284,25 @@ public class MainController implements ScreenInterface {
             changeToHistogram();
         });
         byDay.setOnAction(r -> {
+            currentStep = Step.DAY;
             byDay.setSelected(true);
             byWeek.setSelected(false);
             byMonth.setSelected(false);
-            if (byDay.isSelected()) {
-                groupByDay();
-            }
+            groupByStep();
         });
         byWeek.setOnAction(r -> {
+            currentStep = Step.WEEK;
             byWeek.setSelected(true);
             byDay.setSelected(false);
             byMonth.setSelected(false);
-            if (byWeek.isSelected()) {
-                groupByWeek();
-            }
+            groupByStep();
         });
         byMonth.setOnAction(r -> {
+            currentStep = Step.MONTH
             byMonth.setSelected(true);
             byWeek.setSelected(false);
             byDay.setSelected(false);
-            if (byMonth.isSelected()) {
-                groupByMonth();
-            }
+                groupByStep();
         });
         genderMale.setSelected(true);
         genderFemale.setSelected(true);
@@ -1334,18 +1331,7 @@ public class MainController implements ScreenInterface {
         }
     }
 
-    private void groupByDay() {
-        currentStep = Step.DAY;
-        populateMetric(this.currentMetricDisplayed, currentStep);
-    }
-
-    private void groupByWeek() {
-        currentStep = Step.WEEK;
-        populateMetric(this.currentMetricDisplayed, currentStep);
-    }
-
-    private void groupByMonth() {
-        currentStep = Step.MONTH;
+    private void groupByStep() {
         populateMetric(this.currentMetricDisplayed, currentStep);
     }
 
@@ -1615,6 +1601,7 @@ public class MainController implements ScreenInterface {
     }
 
     public void populateMetric(String metric, Step step) {
+
         lineChart.getData().clear();
         barChart.getData().clear();
         areaChart.getData().clear();
@@ -1623,6 +1610,7 @@ public class MainController implements ScreenInterface {
         for (Campaign campaign : this.campaignsLoaded) {
             if (campaign.getDisplayed().isSelected()) {
                 DataModel dataModel = myController.getDataModel(campaign.getName());
+                dataModel.getFilter().step = step;
 
                 campaignMetricLC = new XYChart.Series();
                 campaignMetricBC = new XYChart.Series();

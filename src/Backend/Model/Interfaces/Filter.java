@@ -27,6 +27,7 @@ public class Filter
     public boolean contextBlog;
     public boolean contextHobbies;
     public boolean contextTravel;
+    public Step step;
 
     private Date startDate;
     private Date endDate;
@@ -57,6 +58,8 @@ public class Filter
         contextHobbies = true;
         contextTravel = true;
 
+        step = Step.DAY;
+
         //If we set these to LONG.MIN and so on then many weird and wonderful issues arise. Just be aware of the
         //following initialisation and all will be well
         startDate = null;
@@ -70,7 +73,7 @@ public class Filter
 
     public void setStartDate(Date startDate)
     {
-        startDate = this.startDate;
+        this.startDate = startDate;
     }
 
     public Date getEndDate()
@@ -80,7 +83,7 @@ public class Filter
 
     public void setEndDate(Date endDate)
     {
-        endDate = this.endDate;
+        this.endDate = endDate;
     }
 
     public void clearAll(){

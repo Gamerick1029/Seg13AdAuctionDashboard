@@ -42,6 +42,7 @@ public class TestMain {
 
         Filter filter = new Filter();
         filter.clearAll();
+        filter.setStartDate(sdf.parse("2015-01-05 00:00:00"));
         cmdt.setFilter(filter);
 
         System.out.println(cmdt.getFullImpressions(Step.DAY));
