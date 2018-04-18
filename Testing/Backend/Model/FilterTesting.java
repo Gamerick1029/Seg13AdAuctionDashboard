@@ -1,13 +1,9 @@
 package Backend.Model;
 
-import Backend.DBHelper;
-import Backend.FileIO.ReadCSVsToDB;
 import Backend.Model.Interfaces.Filter;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
-import java.io.File;
-import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,12 +13,12 @@ import static Backend.Model.Interfaces.Step.DAY;
 
 public class FilterTesting extends TestCase {
 
-    CampaignModelDBTrimmed cm;
+    CampaignModelDB cm;
 
     {
         try {
 
-            cm = new CampaignModelDBTrimmed("JUnit");
+            cm = new CampaignModelDB("JUnit");
             cm.setFilter(new Filter());
         } catch (SQLException e) {
             e.printStackTrace();

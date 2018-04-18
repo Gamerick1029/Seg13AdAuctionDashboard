@@ -12,11 +12,11 @@ import static Backend.Model.Interfaces.Step.*;
 public class CampaignModelDBTrimmedTest extends TestCase {
 
 
-    CampaignModelDBTrimmed cm;
+    CampaignModelDB cm;
 
     {
         try {
-            cm = new CampaignModelDBTrimmed("JUnit");
+            cm = new CampaignModelDB("JUnit");
             cm.setFilter(new Filter());
         } catch (SQLException e) {
             e.printStackTrace();

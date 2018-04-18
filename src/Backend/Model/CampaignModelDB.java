@@ -1,801 +1,615 @@
 package Backend.Model;
 
 import Backend.DBHelper;
-import Backend.Model.Interfaces.DataModelDB;
+import Backend.FileIO.ReadCSVsToDB;
+import Backend.Model.Interfaces.DataModel;
+import Backend.Model.Interfaces.Filter;
+import Backend.Model.Interfaces.Step;
 
-import java.sql.Connection;
+import java.io.File;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class CampaignModelDB implements DataModelDB {
+public class CampaignModelDB implements DataModel{
 
     private String campaignName;
-    private Connection connection;
     private DBHelper dbHelper;
 
-    public CampaignModelDB() throws SQLException {
+    private Filter filterDB = new Filter();
 
-        //this.campaignName = campaignName ;
+    private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss"); //DateTime format as specified in the CSV files
 
+    public CampaignModelDB(String campaignName) throws SQLException {
+
+        this.campaignName = campaignName;
         DBHelper.initConnection("seg", "seg13");
-
         dbHelper = new DBHelper();
 
-        connection = dbHelper.getConnection();
-
-
     }
 
-
-    /*
-            Returns the number of all Impressions of a Campaign
-         */
-    @Override
-    public int getImpressionsNumber(String campaignName) throws SQLException {
-        ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM " + campaignName +"_impressions;");
-        int i = 0;
-        while(rs.next()){
-            System.out.println(rs.getString(1));
-            i++;
-        }
-        return i;
-    }
-    /*
-    DEAD FUNCTION
-*/
-    @Override
-    public Map<Date, Integer> getImpressionsByInterval(String campaignName, Date startInterval, Date endInterval) throws SQLException {
-        ResultSet rs = connection.createStatement().executeQuery("SELECT  * FROM " + campaignName + "_impressions \n" +
-                "WHERE   Date >= " + startInterval.toString() +  ";");
-        System.out.println("Starting to gather Impressions");
-        Map<Date, Integer> tempImpressInterv = new HashMap<>();
-        while(rs.next()){
-            Date tempDate = rs.getDate(1);
-            int impressNo = 1;
-            if(tempImpressInterv.keySet().contains(tempDate)) {
-                impressNo += tempImpressInterv.get(tempDate);
-            }
-            tempImpressInterv.put(tempDate,impressNo);
-
-        }
-        System.out.println("Data Gathered");
-        return tempImpressInterv;
+    public CampaignModelDB(String campaignName, File impressions, File clicks, File server) throws SQLException, IOException {
+        DBHelper.initConnection("seg", "seg13");
+        dbHelper = new DBHelper();
+        this.campaignName = campaignName;
+        ReadCSVsToDB.makeCampaign(dbHelper, campaignName, clicks, impressions,  server);
     }
 
-    @Override
-    public Map<Date, Integer> getImpressionsByInterval(String campaignName, Date startInterval, Date endInterval, long step) throws SQLException {
-        return groupI(step, getImpressionsByInterval(campaignName, startInterval, endInterval));
-    }
-
-    @Override
-    public Map<Date, Integer> getFullImpressions(String campaignName, long step) throws SQLException {
-        System.out.println("Getting Impressions");
-        return groupI(step, getImpressionsByInterval(campaignName,MINDATE, MAXDATE, step));
-    }
-
-    @Override
-    public int getOverallImpressionsByInterval(String campaignName, Date startInterval, Date endInterval) throws SQLException{
-        return getImpressionsByInterval(campaignName, startInterval, endInterval).size();
-        //I'm pretty sure the below code can be replaced with the above, but I've left it here just in case
-
-//        Map<Date, Integer> tempImpressInterv = getImpressionsByInterval(campaignName, startInterval, endInterval);
-//        int overallImpressions = 0;
-//        for (Date dt : tempImpressInterv.keySet()) {
-//            overallImpressions ++ ;
-//        }
-//        return overallImpressions;
-    }
-
-    /*
-        Returns the number of all Clicks of a Campaign
-     */
-    @Override
-    public int getClicksNumber(String campaignName) throws SQLException {
-        ResultSet rs = connection.createStatement().executeQuery("SELECT COUNT(ID) FROM " + campaignName + "_clicks;");
-        Set<String> clicks = new HashSet<>();
-        while(rs.next()){
-            clicks.add(rs.getString(2));
-        }
-        return clicks.size();
-    }
-
-    /*
-    DEAD FUNCTION
-     */
-    @Override
-    public Map<Date, Integer> getClicksByInterval(String campaignName, Date startInterval, Date endInterval) throws SQLException {
-        Map<Date, Integer> tempClicksInterv = new HashMap<>();
-        ResultSet rs = connection.createStatement().executeQuery("SELECT  * FROM " + campaignName +"_clicks \n" +
-                "WHERE   Date >= " + startInterval.toString() +  ";");
-        System.out.println("Starting to gather Clicks");
-
-        while(rs.next()){
-            Date tempDate = rs.getDate(1);
-            int clicksNo = 1;
-            if (tempClicksInterv.keySet().contains(tempDate)){
-                clicksNo += tempClicksInterv.get(tempDate);
-            }
-            tempClicksInterv.put(tempDate,clicksNo);
-        }
-
-        return tempClicksInterv;
-    }
-
-    @Override
-    public Map<Date, Integer> getClicksByInterval(String campaignName, Date startInterval, Date endInterval, long step) throws SQLException{
-        return groupI(step, getClicksByInterval(campaignName, startInterval, endInterval));
-    }
-
-    @Override
-    public Map<Date, Integer> getFullClicks(String campaignName, long step) throws SQLException {
-        return resolveI(groupMap(step, getClicksByInterval(campaignName, MINDATE, MAXDATE, step)));
-    }
-
-    @Override
-    public int getOverallClicksByInterval(String campaignName, Date startInterval, Date endInterval) throws SQLException{
-        Map<Date, Integer> tempClicksInterv = getClicksByInterval(campaignName, startInterval, endInterval);
-        int overallClicks = 0;
-        for (Date dt : tempClicksInterv.keySet()) {
-            overallClicks += tempClicksInterv.get(dt);
-        }
-        return overallClicks;
-    }
-
-    /*
-        Returns the number of all Uniques of a Campaign
-     */
-    @Override
-    public int getUniquesNumber(String campaignName) throws SQLException{
-        return getUsersFromClickLog(campaignName).size();
-    }
-
-    /*
-    DEAD FUNCTION
-     */
-    @Override
-    public Map<Date, Integer> getUniquesByInterval(String campaignName, Date startInterval, Date endInterval) throws SQLException {
-        Map<Date, Set<String>> usersMap = getUsersByInterval(campaignName, startInterval, endInterval);
-        Map<Date, Integer> tempUniquesInterv = new HashMap<>();
-        Set<Date> dateSet = usersMap.keySet();
-        for (Date dt : dateSet) {
-
-            tempUniquesInterv.put(dt, usersMap.get(dt).size());
-        }
-        return tempUniquesInterv;
-    }
-
-    @Override
-    public Map<Date, Integer> getUniquesByInterval(String campaignName, Date startInterval, Date endInterval, long step) throws SQLException{
-        return groupI(step, getUniquesByInterval(campaignName, startInterval, endInterval));
-    }
-
-    @Override
-    public Map<Date, Integer> getFullUniques(String campaignName, long step) throws SQLException{
-        return groupI(step, getUniquesByInterval(campaignName, MINDATE, MAXDATE, step));
-    }
-
-    @Override
-    public int getOverallUniquesByInterval(String campaignName, Date startInterval, Date endInterval) throws SQLException {
-        Map<Date, Integer> tempUniquesInterv = getUniquesByInterval(campaignName, startInterval, endInterval);
-        int overallUniques = 0;
-        for (Date dt : tempUniquesInterv.keySet()) {
-            overallUniques += tempUniquesInterv.get(dt);
-        }
-        return overallUniques;
-    }
-
-    /*
-        Returns the number of all Bounces of a Campaign
-     */
-    @Override
-    public int getBouncesNumber(String campaignName) throws SQLException {
-        ResultSet rs = connection.createStatement().executeQuery("SELECT  * FROM " + campaignName +  "_serverLogs;");
-        System.out.println("Starting to gather Impressions");
-        int bouncesNumber = 0;
-        while(rs.next()){
-            if (rs.getInt(4) == 1 || (rs.getDate(3) != null) && ((rs.getDate(3).getTime() - rs.getDate(1).getTime()) <= 120000)) {
-                bouncesNumber++;
-            }
-
-        }
-        return bouncesNumber;
-    }
-
-    /*
-    Must see if we are using the actual Date that represents the key as there should be somehow
-    distinguish the ones with a different exit date but with same entry date. Mapping is made
-    only using entry date at the moment.
-     */
-    @Override
-    public Map<Date, Integer> getBouncesByInterval(String campaignName, Date startInterval, Date endInterval) throws SQLException{
-        Map<Date, Integer> tempBouncesInterv = new HashMap<>();
-        ResultSet rs = connection.createStatement().executeQuery("SELECT  * FROM "  + campaignName +  "_serverLogs \n" +
-                "WHERE   Date >= " + startInterval.toString() + "AND Date <= " + endInterval.toString() +  ";");
-        while(rs.next()){
-            int bounceNo = 0;
-            Date entryLogDate = rs.getDate(1);
-            Date exitLogDate = rs.getDate(3);
-            if (rs.getInt(4) == 1 || (rs.getDate(3) != null) && ((rs.getDate(3).getTime() - rs.getDate(1).getTime()) <= 120000)) {
-                if(tempBouncesInterv.keySet().contains(entryLogDate)){
-                    bounceNo += tempBouncesInterv.get(entryLogDate);
-                }
-                bounceNo++;
-                tempBouncesInterv.put(entryLogDate,bounceNo);
-            }
-
-        }
-
-        return tempBouncesInterv;
-    }
-
-    @Override
-    public Map<Date, Integer> getBouncesByInterval(String campaignName, Date startInterval, Date endInterval, long step)  throws SQLException{
-        return groupI(step, getBouncesByInterval(campaignName, startInterval, endInterval));
-    }
-
-    @Override
-    public Map<Date, Integer> getFullBounces(String campaignName, long step) throws SQLException
-    {
-        return groupI(step, getBouncesByInterval(campaignName, MINDATE, MAXDATE, step));
-    }
-
-    @Override
-    public int getOverallBouncesByInterval(String campaignName, Date startInterval, Date endInterval) throws SQLException{
-        Map<Date, Integer> tempBouncesInterv = getBouncesByInterval(campaignName, startInterval, endInterval);
-        int overallBounces = 0;
-        for (Date dt : tempBouncesInterv.keySet()) {
-            overallBounces += tempBouncesInterv.get(dt);
-        }
-        return overallBounces;
-    }
-
-
-    /*
-        Returns the number of Conversions of a Campaign
-    */
-    @Override
-    public int getConversionsNumber(String campaignName) throws SQLException{
-        ResultSet rs = connection.createStatement().executeQuery("SELECT  * FROM " + campaignName + "_serverLogs ;");
-        int conversionsNumber = 0;
-        while( rs.next() ){
-
-            if(rs.getBoolean(5)){
-                conversionsNumber ++;
-            }
-
-        }
-
-        return conversionsNumber;
-    }
-
-    /*
-    DEAD FUNCTION
-     */
-    @Override
-    public Map<Date, Integer> getConversionsByInterval(String campaignName, Date startInterval, Date endInterval) throws SQLException {
-        Map<Date, Integer> tempConversionsInterv = new HashMap<>();
-        ResultSet rs = connection.createStatement().executeQuery("SELECT  * FROM " + campaignName + "_serverLogs \n" +
-                "WHERE   Date >= " + startInterval.toString() +  ";");
-        while(rs.next()){
-
-            int conversionsNumber = 0;
-            Date entryLogDate = rs.getDate(1);
-            Date exitLogDate = rs.getDate(3);
-            if (rs.getBoolean(5)) {
-                conversionsNumber++;
-                if (tempConversionsInterv.keySet().contains(entryLogDate)) {
-                    conversionsNumber += tempConversionsInterv.get(entryLogDate);
-                }
-                tempConversionsInterv.put(entryLogDate, conversionsNumber);
-            }
-
-
-        }
-
-        return tempConversionsInterv;
-    }
-
-    @Override
-    public Map<Date, Integer> getConversionsByInterval(String campaignName, Date startInterval, Date endInterval, long step) throws SQLException
-    {
-        return groupI(step, getConversionsByInterval(campaignName, startInterval, endInterval));
-    }
-
-    @Override
-    public Map<Date, Integer> getFullConversions(String campaignName, long step) throws SQLException
-    {
-        return groupI(step, getConversionsByInterval(campaignName, MINDATE, MAXDATE, step));
-    }
-
-    @Override
-    public int getOverallConversionsByInterval(String campaignName, Date startInterval, Date endInterval) throws SQLException {
-        Map<Date, Integer> tempConversionsInterv = getConversionsByInterval(campaignName, startInterval, endInterval);
-        int overallConversions = 0;
-        for (Date dt : tempConversionsInterv.keySet()) {
-            overallConversions += tempConversionsInterv.get(dt);
-        }
-        return overallConversions;
-    }
-
-    /*
-        Returns the Total Cost of a Campaign
-    */
-    @Override
-    public float getTotalCost(String campaignName) throws SQLException{
-        ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM " + campaignName +  "_clicks;");
-        float totalCost = 0;
-        while(rs.next()){
-            totalCost = rs.getFloat(3);
-        }
-        return totalCost;
-    }
-
-    /*
-    DEAD FUNCTION
-     */
-    @Override
-    public Map<Date, Float> getCostByInterval(String campaignName, Date startInterval, Date endInterval) throws SQLException {
-        Map<Date, Float> tempClickCostInterv = new HashMap<>();
-        ResultSet rs = connection.createStatement().executeQuery("SELECT  * FROM " + campaignName + "_clicks \n" +
-                "WHERE   Date >= " + startInterval.toString() + "AND Date <= " + endInterval.toString() +  ";");
-
-        while (rs.next()) {
-            float totalCost = 0;
-            Date logDate = rs.getDate(1);
-            if (logDate.after(startInterval) && logDate.before(endInterval)) {
-                totalCost += rs.getFloat(3);
-                if (tempClickCostInterv.keySet().contains(logDate)) {
-                    totalCost += tempClickCostInterv.get(logDate);
-                }
-                tempClickCostInterv.put(logDate, totalCost);
-            }
-        }
-        return tempClickCostInterv;
-    }
-
-    @Override
-    public Map<Date, Float> getCostByInterval(String campaignName, Date startInterval, Date endInterval, long step) throws SQLException{
-        return groupF(step, getCostByInterval(campaignName, startInterval, endInterval));
-    }
-
-    @Override
-    public Map<Date, Float> getFullCost(String campaignName, long step) throws SQLException{
-        return groupF(step, getCostByInterval(campaignName, MINDATE, MAXDATE, step));
-    }
-
-
-    /*
-DEAD FUNCTION
- */
-    @Override
-    public float getOverallCostByInterval(String campaignName, Date startInterval, Date endInterval) throws SQLException {
-        Map<Date, Float> tempClickCostInterv = getCostByInterval(campaignName, startInterval, endInterval);
-        float overall = 0;
-        for (Date dt : tempClickCostInterv.keySet()) {
-            overall += tempClickCostInterv.get(dt);
-        }
-
-        return overall;
-    }
-
-    /*
-        Returns the average number of clicks per impression.
-     */
-    @Override
-    public float getCTR(String campaignName) throws SQLException{
-        return (float) getClicksNumber(campaignName) / (float) getImpressionsNumber(campaignName);
-    }
-
-    /*
-    DEAD FUNCTION
-     */
-    @Override
-    public Map<Date, Float> getCTRByInterval(String campaignName, Date startInterval, Date endInterval) throws SQLException{
-        Map<Date, Float> ctrByInterval = new HashMap<>();
-        Map<Date, Integer> getClicksNumber = getClicksByInterval(campaignName, startInterval, endInterval);
-        Map<Date, Integer> getImpressionNumber = getImpressionsByInterval(campaignName ,startInterval, endInterval);
-
-        /*
-        NOTE: A CTR is only registered if a click and impression
-        happen on the same instant. Is this correct?
-         */
-        for (Date logDate : getClicksNumber.keySet()) {
-
-            if (getImpressionNumber.keySet().contains(logDate))
-                ctrByInterval.put(logDate, ((float) getClicksNumber.get(logDate) / (float) getImpressionNumber.get(logDate)));
-
-        }
-
-
-        return ctrByInterval;
-    }
-
-    @Override
-    public Map<Date, Float> getCTRByInterval(String campaignName, Date startInterval, Date endInterval, long step) throws SQLException {
-        return groupF(step, getCTRByInterval(campaignName, startInterval, endInterval));
-    }
-
-    @Override
-    public Map<Date, Float> getFullCTR(String campaignName, long step) throws SQLException {
-        return groupF(step, getCTRByInterval(campaignName, MINDATE, MAXDATE, step));
-    }
-
-    @Override
-    public float getOverallCTRByInterval(String campaignName, Date startInterval, Date endInterval) throws SQLException {
-        return ((float) getOverallClicksByInterval(campaignName, startInterval, endInterval) / (float) getOverallImpressionsByInterval(campaignName, startInterval, endInterval));
-    }
-
-    /*
-        Returns the average amount of money spent on an advertising campaign
-         for each acquisition (i.e., conversion).
-     */
-    @Override
-    public float getCPA(String campaignName) throws SQLException {
-        return (float) getTotalCost(campaignName) / (float) getConversionsNumber(campaignName);
-    }
-
-    /*
-    DEAD FUNCTION
-     */
-    @Override
-    public Map<Date, Float> getCPAByInterval(String campaignName, Date startInterval, Date endInterval) throws SQLException{
-        Map<Date, Float> cpaByInterval = new HashMap<>();
-        Map<Date, Float> getTotalCosts = getCostByInterval(campaignName, startInterval, endInterval);
-        Map<Date, Integer> getConversionsNumber = getConversionsByInterval(campaignName, startInterval, endInterval);
-
-        for (Date logDate : getTotalCosts.keySet()) {
-            float cpa = 0;
-            if (cpaByInterval.containsKey(logDate)) {
-                cpa += cpaByInterval.get(logDate);
-
-            }
-            if (getTotalCosts.containsKey(logDate) && getConversionsNumber.containsKey(logDate))
-                cpa += (float) getTotalCosts.get(logDate) / (float) getConversionsNumber.get(logDate);
-            cpaByInterval.put(logDate, (cpa));
-        }
-
-
-        return cpaByInterval;
-    }
-
-    @Override
-    public Map<Date, Float> getCPAByInterval(String campaignName, Date startInterval, Date endInterval, long step) throws SQLException {
-        return groupF(step, getCPAByInterval(campaignName, startInterval, endInterval));
-    }
-
-    @Override
-    public Map<Date, Float> getFullCPA(String campaignName, long step) throws SQLException {
-        return groupF(step, getCPAByInterval(campaignName, MINDATE, MAXDATE, step));
-    }
-
-    @Override
-    public float getOverallCPAByInterval(String campaignName, Date startInterval, Date endInterval) throws SQLException {
-        return ((float) getOverallCostByInterval(campaignName, startInterval, endInterval) / (float) getOverallConversionsByInterval(campaignName, startInterval, endInterval));
-    }
-
-    /*
-        Returns the average amount of money spent on an advertising campaign for each
-         click.
-     */
-    @Override
-    public float getCPC(String campaignName) throws SQLException {
-        return (float) getTotalCost(campaignName) / (float) getClicksNumber(campaignName);
-    }
-
-    /*
-    DEAD FUNCTION
-     */
-    @Override
-    public Map<Date, Float> getCPCByInterval(String campaignName, Date startInterval, Date endInterval) throws SQLException{
-        Map<Date, Float> cpcByInterval = new HashMap<>();
-        Map<Date, Float> getTotalCosts = getCostByInterval(campaignName, startInterval, endInterval);
-        Map<Date, Integer> getClicksNumber = getClicksByInterval(campaignName, startInterval, endInterval);
-
-        for (Date logDate : getTotalCosts.keySet()) {
-
-            cpcByInterval.put(logDate, ((float) getTotalCosts.get(logDate) / (float) getClicksNumber.get(logDate)));
-
-        }
-
-
-        return cpcByInterval;
-    }
-
-    @Override
-    public Map<Date, Float> getCPCByInterval(String campaignName, Date startInterval, Date endInterval, long step) throws SQLException{
-        return groupF(step, getCPCByInterval(campaignName, startInterval, endInterval));
-    }
-
-    @Override
-    public Map<Date, Float> getFullCPC(String campaignName, long step) throws SQLException{
-        return groupF(step, getCPCByInterval(campaignName, MINDATE, MAXDATE, step));
-    }
-
-    @Override
-    public float getOverallCPCByInterval(String campaignName, Date startInterval, Date endInterval) throws SQLException {
-        return ((float) getOverallCostByInterval(campaignName, startInterval, endInterval) / (float) getOverallClicksByInterval(campaignName,startInterval, endInterval));
-    }
-
-    /*
-        CPM is calculated by taking the cost of the advertising and dividing by the total
-         number of impressions, then multiplying the total by 1000 (CPM = cost/impressions x 1000).
-         More commonly, a CPM rate is set by a platform for its advertising space and used
-         to calculate the total cost of an ad campaign.
-     */
-    @Override
-    public float getCPM(String campaignName) throws SQLException{
-        return (float) (getTotalCost(campaignName) / (float) getImpressionsNumber(campaignName)) * 1000;
-    }
-
-    /*
-    DEAD FUNCTION
-     */
-    @Override
-    public Map<Date, Float> getCPMByInterval(String campaignName, Date startInterval, Date endInterval) throws SQLException {
-        Map<Date, Float> cpmByInterval = new HashMap<>();
-        Map<Date, Float> getTotalCosts = getCostByInterval(campaignName,startInterval, endInterval);
-        Map<Date, Integer> getImpressionsNumber = getImpressionsByInterval(campaignName,startInterval, endInterval);
-
-        for (Date logDate : getTotalCosts.keySet()) {
-
-            cpmByInterval.put(logDate, ((float) (getTotalCosts.get(logDate) / (float) getImpressionsNumber.get(logDate)) * 1000));
-
-        }
-
-
-        return cpmByInterval;
-    }
-
-    @Override
-    public Map<Date, Float> getCPMByInterval(String campaignName, Date startInterval, Date endInterval, long step) throws SQLException{
-        return groupF(step, getCPMByInterval(campaignName, startInterval, endInterval));
-    }
-
-    @Override
-    public Map<Date, Float> getFullCPM(String campaignName, long step) throws SQLException {
-        return groupF(step, getCPMByInterval(campaignName, MINDATE, MAXDATE, step));
-    }
-
-    @Override
-    public float getOverallCPMByInterval(String campaignName, Date startInterval, Date endInterval) throws SQLException{
-        return ((float) (getOverallCostByInterval(campaignName, startInterval, endInterval) / (float) getOverallImpressionsByInterval(campaignName, startInterval, endInterval)) * 1000);
-    }
-
-    /*
-        The average number of bounces per click.
-     */
-    @Override
-    public float getBounceRate(String campaignName) throws SQLException {
-        if (getClicksNumber(campaignName) > 0)
-            return (float) (getBouncesNumber(campaignName) / (float) getClicksNumber(campaignName));
-        else {
-            return (float) 0.0;
-        }
-    }
-
-    /*
-    DEAD FUNCTION
-     */
-    @Override
-    public Map<Date, Float> getBounceRateByInterval(String campaignName, Date startInterval, Date endInterval) throws SQLException{
-        Map<Date, Float> bounceRateByInterval = new HashMap<>();
-        Map<Date, Integer> getBouncesNumber = getBouncesByInterval(campaignName, startInterval, endInterval);
-        Map<Date, Integer> getClicksNumber = getClicksByInterval(campaignName, startInterval, endInterval);
-
-        for (Date logDate : getBouncesNumber.keySet()) {
-            int clickNo = 0;
-            float bounceRate = 1;
-            if (getClicksNumber.containsKey(logDate) && getBouncesNumber.containsKey(logDate)) {
-                clickNo += getClicksNumber.get(logDate);
-                if (clickNo > 0) {
-                    bounceRate = ((float) getBouncesNumber.get(logDate) / clickNo);
-                }
-                bounceRateByInterval.put(logDate, bounceRate);
-            }
-
-        }
-
-
-        return bounceRateByInterval;
-    }
-
-    @Override
-    public Map<Date, Float> getBounceRateByInterval(String campaignName, Date startInterval, Date endInterval, long step) throws SQLException {
-        return groupF(step, getBounceRateByInterval(campaignName, startInterval, endInterval));
-    }
-
-    @Override
-    public Map<Date, Float> getFullBounceRate(String campaignName, long step) throws SQLException{
-        return groupF(step, getBounceRateByInterval(campaignName, MINDATE, MAXDATE, step));
-    }
-
-    @Override
-    public float getOverallBounceRateByInterval(String campaignName, Date startInterval, Date endInterval) throws SQLException{
-
-        return ((float) getOverallBouncesByInterval(campaignName, startInterval, endInterval) / (float) getOverallClicksByInterval(campaignName, startInterval, endInterval));
-    }
-
-
-    /*
-        Returns a Set of the Unique Users from the ClickData.
-     */
-    @Override
-    public Set<String> getUsersFromClickLog(String campaignName) throws SQLException{
-        Set<String> userSet = new HashSet<String>();
-        ResultSet rs = connection.createStatement().executeQuery("SELECT  * FROM " + campaignName + "_users ;");
-        System.out.println("Starting to gather Impressions");
-        while(rs.next()){
-            userSet.add(rs.getString(1));
-        }
-        return userSet;
-    }
 
     @Override
     public String getName() {
         return campaignName;
     }
 
-    @Override
-    public void setCampaignName(String campaignName) {
-        this.campaignName = campaignName;
+    /**
+     * Used to trim a trailing " OR " or " AND " from the end of a String. Mostly useful for SQL statements
+     * @return The trimmed String
+     */
+    private String trimTrailingOperators(String untrimmed){
+        if (untrimmed.endsWith(" OR ")) return untrimmed.substring(0, untrimmed.length() - 4);
+        if (untrimmed.endsWith(" AND ")) return untrimmed.substring(0, untrimmed.length() - 5);
+        return untrimmed;
     }
 
-    @Override
-    public Map<Date, Set<String>> getUsersByInterval(String campaignName, Date startInterval, Date endInterval) throws SQLException {
+    private String dateCondition() {
+        StringBuilder sb = new StringBuilder();
 
-        Map<Date, Set<String>> usersInterv = new HashMap<>();
-        ResultSet rsDate = connection.createStatement().executeQuery("SELECT * FROM " + campaignName + "_clicks WHERE Date >= "
-                + startInterval.toString() + "AND Date <= " + endInterval.toString() +  ";");
-        while (rsDate.next()) {
-            Date logDate = rsDate.getDate(1);
-            Set<String> users = new HashSet<>();
-            if (logDate.after(startInterval) && logDate.before(endInterval)) {
+        if (filterDB.getStartDate() != null) sb.append("Date > " + sdf.format(filterDB.getStartDate()) + " AND ");
+        if (filterDB.getEndDate() != null)   sb.append("Date < " + sdf.format(filterDB.getEndDate()));
 
-                if (usersInterv.keySet().contains(logDate)) {
-                    users.addAll(usersInterv.get(logDate));
+        return trimTrailingOperators(sb.toString());
+    }
+
+    private String genderCondition(){
+        StringBuilder sb = new StringBuilder();
+
+        if (filterDB.genderMale) sb.append("Gender = 'Male' OR ");
+        if (filterDB.genderFemale) sb.append("Gender = 'Female' OR ");
+        if (filterDB.genderOther) sb.append("Gender = 'Other'");
+
+        return trimTrailingOperators(sb.toString());
+    }
+
+    private String ageCondition(){
+        StringBuilder sb = new StringBuilder();
+
+        if (filterDB.ageBelow25)  sb.append("AgeRange = '<25' OR ");
+        if (filterDB.age25to34)   sb.append("AgeRange = '25-34' OR ");
+        if (filterDB.age35to44)   sb.append("AgeRange = '35-44' OR ");
+        if (filterDB.age45to54)   sb.append("AgeRange = '45-54' OR ");
+        if (filterDB.ageAbove54)  sb.append("AgeRange = '>54'");
+
+        return trimTrailingOperators(sb.toString());
+    }
+
+    private String incomeCondition(){
+        StringBuilder sb = new StringBuilder();
+
+        if (filterDB.incomeLow)    sb.append("Income = 'Low' OR ");
+        if (filterDB.incomeMedium) sb.append("Income = 'Medium' OR ");
+        if (filterDB.incomeHigh)   sb.append("Income = 'High' OR ");
+
+        return trimTrailingOperators(sb.toString());
+    }
+
+    private String contextCondition(){
+        StringBuilder sb = new StringBuilder();
+
+        if (filterDB.contextBlog) sb.append("Context = 'Blog' OR ");
+        if (filterDB.contextNews) sb.append("Context = 'News' OR ");
+        if (filterDB.contextShopping) sb.append("Context = 'Shopping' OR ");
+        if (filterDB.contextBlog) sb.append("Context = 'Social Media' OR ");
+
+        return trimTrailingOperators(sb.toString());
+    }
+
+    /**
+     * Crafts a WHERE statement based on the current Filter Settings
+     * @return
+     */
+    private String conditions(){
+        StringBuilder sb = new StringBuilder();
+
+        String dateCondition = dateCondition();
+        String genderCondition = genderCondition();
+        String ageCondition = ageCondition();
+        String incomeCondition = incomeCondition();
+        String contextCondition = contextCondition();
+
+        if (!dateCondition.equals(""))    sb.append("(").append(dateCondition).append(")").append(" AND ");
+        if (!genderCondition.equals(""))  sb.append("(").append(genderCondition).append(")").append(" AND ");
+        if (!ageCondition.equals(""))     sb.append("(").append(ageCondition).append(")").append(" AND ");
+        if (!incomeCondition.equals(""))  sb.append("(").append(incomeCondition).append(")").append(" AND ");
+        if (!contextCondition.equals("")) sb.append("(").append(contextCondition).append(")");
+
+        return trimTrailingOperators(sb.toString());
+    }
+
+    private String userTable(){
+        return campaignName + DBHelper.userTableSuffix;
+    }
+
+    private String impTable(){
+        return campaignName + DBHelper.impressionTableSuffix;
+    }
+
+    private String clickTable(){
+        return campaignName + DBHelper.clickTableSuffix;
+    }
+
+    private String servTable(){
+        return campaignName + DBHelper.serverLogTableSuffix;
+    }
+
+    /**
+     *
+     * @param rs
+     * @throws SQLException
+     */
+    private Map<Date, Integer> getDateToInt(ResultSet rs, Step step) throws SQLException {
+        Map<Date, Integer> result = new HashMap<>();
+        while (rs.next()){
+            Date date = sqlDateToJavaDate(rs.getString(1), step);
+            int num = rs.getInt(2);
+            result.put(date, num);
+        }
+        return result;
+    }
+
+    private Map<Date, Float> getDateToFloat(ResultSet rs, Step step) throws SQLException {
+        Map<Date, Float> result = new HashMap<>();
+        while (rs.next()){
+            Date date = sqlDateToJavaDate(rs.getString(1), step);
+            float num = rs.getFloat(2);
+            result.put(date, num);
+        }
+        return result;
+    }
+
+    private Date sqlDateToJavaDate(String date, Step step){
+        Date result = null;
+        SimpleDateFormat sdf = new SimpleDateFormat();
+        switch (step){
+            case MONTH:
+                sdf.applyPattern("yyyy-MM");
+                try {
+                    result = sdf.parse(date);
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
-                users.add(rsDate.getString(2));
-                usersInterv.put(logDate, users);
-            }
-
-        }
-        return usersInterv;
-    }
-
-    @Override
-    public Map<Date, Set<String>> getUsersByInterval(String campaignName, Date startInterval, Date endInterval, long step) throws SQLException {
-        return getUsersByInterval(campaignName, startInterval, endInterval);
-    }
-
-    @Override
-    public Map<Date, Set<String>> getFullUsers(String campaignName, long step) throws SQLException {
-        return getUsersByInterval(campaignName, MINDATE, MAXDATE, step);
-    }
-
-    @Override
-    public Set<String> getOverallUsersByInterval(String campaignName, Date startInterval, Date endInterval) throws SQLException {
-
-        Map<Date,Set<String>> tempUsersInterv = getUsersByInterval(campaignName, startInterval,endInterval);
-        Set<String> users = new HashSet<>();
-        for(Date dt: tempUsersInterv.keySet()){
-            users.addAll(tempUsersInterv.get(dt));
-        }
-        return users;
-    }
-
-    /*
-    A helper method to group a map by specified step values
-    Probably an unnecessarily complicated method. Having specific types might have
-    simplified this
-     */
-    @Override
-    public <T> Map<Date, List<T>> groupMapOld(long step, Map<Date, T> map) {
-        System.out.println("Starting to group");
-        int total = map.size();
-        int current = 0;
-        Date start = getEarliestDate(map.keySet());
-        Date end = new Date(start.getTime() + step);
-        Map<Date, List<T>> output = new HashMap<>();
-        Map<Integer, List<T>> groups = new HashMap<>();
-        while (current < total) {
-            System.out.println(current);
-            List<T> listable = new ArrayList<>();
-            for (Date d : map.keySet()) {
-                //Admin decision. Include the early date, exclude the later date
-                if (d.before(end) && (d.after(start) || d.equals(start))) {
-                    listable.add(map.get(d));
-                    current++;
+                break;
+            case WEEK:
+                sdf.applyPattern("yyyy-ww");
+                try {
+                    result = sdf.parse(date);
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
-            }
-            output.put(start, listable);
-            start = new Date(end.getTime());
-            end = new Date(end.getTime() + step);
+                break;
+            case DAY:
+                sdf.applyPattern("yyyy-MM-dd");
+                try {
+                    result = sdf.parse(date);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                break;
+        }
+        return result;
+    }
+
+    /**
+     * Builds a system of joins, where the first argument is the master table and all other are slaves.
+     * @param tables
+     * @return
+     */
+    private String makeJoins(String... tables){
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 1; i < tables.length ; i++) {
+            sb.append("LEFT OUTER JOIN " + tables[i] + " ON " + tables[0] + ".ID = " + tables[i] + ".ID ");
         }
 
-        return output;
+        return sb.toString();
+    }
+
+    private String stepToDate(Step step){
+        String result = "";
+        switch (step){
+            case DAY:   result = "\"%Y-%m-%d\"";
+                        break;
+            case WEEK:  result = "\"%Y-%u\"";
+                        break;
+            case MONTH: result = "\"%Y-%m\"";
+                        break;
+            default:
+        }
+        return result;
+    }
+
+    /**
+     * Simple helper function for building SQL queries
+     * @param select
+     * @param fromTables
+     * @param whereConditions
+     * @return
+     * @throws SQLException
+     */
+    private ResultSet buildAndExecuteStatement(String select, String fromTables, String joins, String whereConditions, String otherSuffixes) throws SQLException {
+        Statement stmt = dbHelper.getConnection().createStatement();
+        ResultSet rs;
+        rs = stmt.executeQuery(buildStatement(select, fromTables, joins, whereConditions, otherSuffixes));
+        return rs;
+    }
+
+    private ResultSet buildAndExecuteSubStatements(String[] select, String[] fromTables, String[] joins, String[] whereConditions, String[] asSuffixes) throws SQLException {
+        StringBuilder sb = new StringBuilder();
+        sb.append("SELECT");
+        for (int i = 0; i < select.length ; i++) {
+            sb.append("(").append(buildStatement(select[i], fromTables[i], joins[i], whereConditions[i], "")).append(")").append("AS " + asSuffixes[i]).append(",");
+        }
+        return dbHelper.getConnection().createStatement().executeQuery(sb.toString().substring(0, sb.toString().length() - 1 ));
+    }
+
+    private String buildStatement(String select, String fromTables, String joins, String whereConditions, String otherSuffixes){
+        StringBuilder sb = new StringBuilder();
+        sb.append("SELECT " + select + " FROM " + fromTables + " ");
+        if (joins != null && !joins.equals("")) sb.append(joins + " ");
+
+        String conditions = conditions();
+        if (!whereConditions.equals("")){
+            if (!conditions.equals("")){
+                sb.append("WHERE ").append(whereConditions).append(" AND ").append(conditions);
+            }
+        } else {
+            if (!conditions.equals("")){
+                sb.append("WHERE ").append(conditions);
+            }
+        }
+
+        sb.append(otherSuffixes);
+
+        return trimTrailingOperators(sb.toString());
+    }
+
+    //Public methods
+
+    @Override
+    public int getImpressionsNumber() throws SQLException {
+        String select = "COUNT(*)";
+        String fromTables = impTable();
+        String joins = makeJoins(impTable(), userTable());
+        String whereConditions = "";
+        ResultSet rs = buildAndExecuteStatement(select, fromTables, joins, whereConditions, "");
+
+        rs.next();
+        return rs.getInt("COUNT(*)");
     }
 
     @Override
-    public <T> Map<Date, List<T>> groupMap(long step, Map<Date, T> map) {
-        System.out.println("Starting to group");
-//        int total = map.size();
-//        int current = 0;
-        Date start = getEarliestDate(map.keySet());
-//        Date end = new Date(start.getTime() + step);
-        Map<Date, List<T>> output = new HashMap<>();
-        Map<Long, List<T>> groups = new HashMap<>();
-        for (Date d : map.keySet()) {
-            long pos = Math.floorDiv(d.getTime() - start.getTime(), step);
-            if (!groups.containsKey(pos)) {
-                groups.put(pos, new ArrayList<>());
-            }
-            groups.get(pos).add(map.get(d));
+    public Map<Date, Integer> getFullImpressions(Step step) throws SQLException {
+        String select = "DATE_FORMAT(Date, " + stepToDate(step) +") AS Dated, COUNT(*)";
+        String fromTables = impTable();
+        String joins = makeJoins(impTable(), userTable());
+        String whereConditions = "";
 
-        }
-        for (Long pos : groups.keySet()) {
-            output.put(new Date(start.getTime() + (pos * step)), groups.get(pos));
-        }
+        ResultSet rs = buildAndExecuteStatement(select, fromTables, joins, whereConditions, "GROUP BY `Dated`");
 
-        return output;
+        return getDateToInt(rs, step);
     }
 
     @Override
-    public Map<Date, Float> resolveF(Map<Date, List<Float>> in) {
-        Map<Date, Float> out = new HashMap<>();
-        for (Date d : in.keySet()) {
-            float sum = 0f;
-            for (Float f : in.get(d)) {
-                sum = sum + f;
-            }
-            out.put(d, sum);
-        }
-        return out;
+    public int getClicksNumber() throws SQLException {
+        String select = "COUNT(*)";
+        String from = clickTable();
+        String joins = makeJoins(clickTable(), impTable(), userTable());
+        String where = "";
+        ResultSet rs = buildAndExecuteStatement(select, from, joins, where, "");
+
+        rs.next();
+        return rs.getInt(select);
     }
 
     @Override
-    public Map<Date, Integer> resolveI(Map<Date, List<Integer>> in) {
-        System.out.println("Starting to Resolve");
-        Map<Date, Integer> out = new HashMap<>();
-        for (Date d : in.keySet()) {
-            int sum = 0;
-            for (Integer i : in.get(d)) {
-                sum += i;
-            }
-            out.put(d, sum);
-        }
-        System.out.println("Ending resolve");
-        return out;
+    public Map<Date, Integer> getFullClicks(Step step) throws SQLException {
+        String select = "DATE_FORMAT(" + clickTable() + ".Date, " + stepToDate(step) +") AS Dated, COUNT(*)";
+        String from = clickTable();
+        String joins = makeJoins(clickTable(), impTable(), userTable());
+        String where = "";
+        ResultSet rs = buildAndExecuteStatement(select, from, joins, where, "GROUP BY `Dated`");
+
+        return getDateToInt(rs, step);
     }
 
-//    pr
+    @Override
+    public int getUniquesNumber() throws SQLException {
+        String select = "COUNT(DISTINCT(" + clickTable() + ".ID))";
+        String from = clickTable();
+        String joins = makeJoins(clickTable(), impTable(), userTable());
+        String where = "";
+        ResultSet rs = buildAndExecuteStatement(select, from, joins, where, "");
 
-    /*
-    Another helper method to get the starting date
+        rs.next();
+        return rs.getInt(select);
+    }
+
+    @Override
+    public Map<Date, Integer> getFullUniques(Step step) throws SQLException {
+        String select = "DATE_FORMAT(" + clickTable() + ".Date, " + stepToDate(step) +") AS Dated, COUNT(DISTINCT(" + clickTable() + ".ID))";
+        String from = clickTable();
+        String joins = makeJoins(clickTable(), impTable(), userTable());
+        String where = "";
+        ResultSet rs = buildAndExecuteStatement(select, from, joins, where, "GROUP BY `Dated`" );
+
+        return getDateToInt(rs, step);
+    }
+
+    @Override
+    public int getBouncesNumber() throws SQLException {
+        String select = "COUNT(*)";
+        String from = servTable();
+        String joins = makeJoins(servTable(), impTable(), userTable());
+        String where = "PagesViewed <= 1";
+        ResultSet rs = buildAndExecuteStatement(select, from, joins, where, "");
+
+        rs.next();
+        return rs.getInt(select);
+    }
+
+    /**
+     * Gets a mapping of bounces to dates. Bounces defined as someone who only visits one page
+     * @param step the millisecond interval by which to group
+     * @return
+     * @throws SQLException
      */
     @Override
-    public Date getEarliestDate(Set<Date> dates) {
-        Date output = MAXDATE;
-        for (Date d : dates) {
-            if (d.before(output))
-                output = d;
+    public Map<Date, Integer> getFullBounces(Step step) throws SQLException {
+        String select = "DATE_FORMAT(EntryDate, " + stepToDate(step) +") AS Dated, COUNT(PagesViewed <= 1)";
+        String from = servTable();
+        String joins = makeJoins(servTable(), impTable(), userTable());
+        String where = "";
+        ResultSet rs = buildAndExecuteStatement(select, from, joins, where, "GROUP BY `Dated`");
+
+        return getDateToInt(rs, step);
+    }
+
+    @Override
+    public int getConversionsNumber() throws SQLException {
+        String select = "COUNT(*)";
+        String from = servTable();
+        String joins = makeJoins(servTable(), impTable(), userTable());
+        String where = "Conversion = 1";
+        ResultSet rs = buildAndExecuteStatement(select, from, joins, where, "");
+
+        rs.next();
+        return rs.getInt(select);
+    }
+
+    @Override
+    public Map<Date, Integer> getFullConversions(Step step) throws SQLException {
+        String select = "DATE_FORMAT(EntryDate, " + stepToDate(step) +") AS Dated, COUNT(*)";
+        String from = servTable();
+        String joins = makeJoins(servTable(), impTable(), userTable());
+        String where = "Conversion = 1";
+        ResultSet rs = buildAndExecuteStatement(select, from, joins, where, "GROUP BY `Dated`");
+
+        return getDateToInt(rs, step);
+    }
+
+    @Override
+    public float getTotalCost() throws SQLException {
+        String select = "SUM(Cost)";
+        String from = impTable();
+        String joins = makeJoins(impTable(), userTable());
+        String where = "";
+        ResultSet rs = buildAndExecuteStatement(select, from, joins, where, "");
+
+        rs.next();
+        return rs.getFloat(select);
+    }
+
+    @Override
+    public Map<Date, Float> getFullCost(Step step) throws SQLException {
+        String select = "DATE_FORMAT(" + impTable() + ".Date, " + stepToDate(step) +") AS Dated, SUM(Cost)";
+        String from = impTable();
+        String joins = makeJoins(impTable(), userTable());
+        String where = "";
+        ResultSet rs = buildAndExecuteStatement(select, from, joins, where, "GROUP BY `Dated`");
+
+        return getDateToFloat(rs, step);
+    }
+
+    @Override
+    public float getCTR() throws SQLException {
+        String select = "COUNT(*)";
+
+        String fromClicks = clickTable();
+        String joinClicks = makeJoins(clickTable(), impTable(), userTable());
+        String whereClicks = "";
+
+        String fromImpr = impTable();
+        String joinImpr = makeJoins(impTable(), userTable());
+        String whereImpr = "";
+
+        String[] selects = {select, select};
+        String[] froms = {fromClicks, fromImpr};
+        String[] joins = {joinClicks, joinImpr};
+        String[] wheres = {whereClicks, whereImpr};
+        String[] asSuffixes = {"Clicks", "Impressions"};
+        ResultSet rs = buildAndExecuteSubStatements(selects, froms, joins, wheres, asSuffixes);
+
+        rs.next();
+        float clickCount = rs.getFloat("Clicks");
+        float impCount = rs.getFloat("Impressions");
+        return clickCount/impCount;
+    }
+
+    @Override
+    public Map<Date, Float> getFullCTR(Step step) throws SQLException {
+        String select = "DATE_FORMAT(" + clickTable() + ".Date, " + stepToDate(step) + ") AS CDated, COUNT(*) AS clickCount";
+        String from = clickTable();
+        String join = makeJoins(clickTable(), impTable(), userTable());
+        String where = "";
+        String statement = buildStatement(select, from, join, where, "GROUP BY `CDated`");
+
+        String select2 = "DATE_FORMAT(" + impTable() + ".Date, " + stepToDate(step) + ") AS IDated, COUNT(*) AS impCount";
+        String from2 = impTable();
+        String join2 = makeJoins(impTable(), userTable());
+        String where2 = "";
+        String statement2 = buildStatement(select2, from2, join2, where2, "GROUP BY `IDated` ORDER BY `IDated`");
+
+        String statementFinal = "SELECT IDated, (clickCount/impCount)  FROM (" + statement2 + ") AS impressions LEFT OUTER JOIN (" + statement + ") AS clicks ON impressions.IDated = clicks.CDated";
+
+        ResultSet rs = dbHelper.getConnection().createStatement().executeQuery(statementFinal);
+
+        return getDateToFloat(rs, step);
+    }
+
+    @Override
+    public float getCPA() throws SQLException {
+        String selectCost = "SUM(Cost)";
+        String fromCost = impTable();
+        String joinCost = makeJoins(impTable(), userTable());
+        String whereCost = "";
+
+        String selectConv = "COUNT(Conversion = 1)";
+        String fromConv = servTable();
+        String joinConv = makeJoins(servTable(), impTable(), userTable());
+        String whereConv = "";
+
+        String[] selects = {selectCost, selectConv};
+        String[] froms = {fromCost, fromConv};
+        String[] joins = {joinCost, joinConv};
+        String[] wheres = {whereCost, whereConv};
+        String[] asSuffixes = {"totalCost", "convCount"};
+
+        ResultSet rs = buildAndExecuteSubStatements(selects, froms, joins, wheres, asSuffixes);
+
+        rs.next();
+        float totalCost = rs.getFloat("totalCost");
+        float convCount = rs.getFloat("convCount");
+        return totalCost/convCount;
+    }
+
+    @Override
+    public Map<Date, Float> getFullCPA(Step step) throws SQLException {
+        String select = "DATE_FORMAT(EntryDate, " + stepToDate(step) + ") AS SDated, COUNT(Conversion = 1) AS convCount";
+        String from = servTable();
+        String join = makeJoins(servTable(), impTable(), userTable());
+        String where = "";
+        String statement = buildStatement(select, from, join, where, "GROUP BY `SDated`");
+
+        String select2 = "DATE_FORMAT(" + impTable() + ".Date, " + stepToDate(step) + ") AS IDated, SUM(Cost) AS costTotal";
+        String from2 = impTable();
+        String join2 = makeJoins(impTable(), userTable());
+        String where2 = "";
+        String statement2 = buildStatement(select2, from2, join2, where2, "GROUP BY `IDated`");
+
+        String statementFinal = "SELECT IDated, (costTotal/convCount)  FROM (" + statement2 + ") AS impressions LEFT OUTER JOIN (" + statement + ") AS servs ON impressions.IDated = servs.SDated";
+
+        ResultSet rs = dbHelper.getConnection().createStatement().executeQuery(statementFinal);
+
+        return getDateToFloat(rs, step);
+    }
+
+    @Override
+    public float getCPC() throws SQLException {
+        float totalCost = getTotalCost();
+        float clicksNum = getClicksNumber();
+
+        return totalCost/clicksNum;
+    }
+
+    @Override
+    public Map<Date, Float> getFullCPC(Step step) throws SQLException {
+        String select = "DATE_FORMAT(" + clickTable() + ".Date, " + stepToDate(step) + ") AS CDated, COUNT(*) AS clickCount";
+        String from = clickTable();
+        String join = makeJoins(clickTable(), impTable(), userTable());
+        String where = "";
+        String statement = buildStatement(select, from, join, where, "GROUP BY `CDated`");
+
+        String select2 = "DATE_FORMAT(" + impTable() + ".Date, " + stepToDate(step) + ") AS IDated, SUM(Cost) AS costTotal";
+        String from2 = impTable();
+        String join2 = makeJoins(impTable(), userTable());
+        String where2 = "";
+        String statement2 = buildStatement(select2, from2, join2, where2, "GROUP BY `IDated`");
+
+        String statementFinal = "SELECT IDated, (costTotal/clickCount)  FROM (" + statement2 + ") AS impressions LEFT OUTER JOIN (" + statement + ") AS clicks ON impressions.IDated = clicks.CDated";
+
+        ResultSet rs = dbHelper.getConnection().createStatement().executeQuery(statementFinal);
+
+        return getDateToFloat(rs, step);
+    }
+
+    @Override
+    public float getCPM() throws SQLException {
+        return (getTotalCost()/getImpressionsNumber()) * 1000;
+    }
+
+    @Override
+    public Map<Date, Float> getFullCPM(Step step) throws SQLException {
+        Map <Date, Float> result = getFullCost(step);
+        for (Date date:result.keySet()){
+            result.put(date, result.get(date) * 1000);
         }
-        return output;
-    }
-
-    /*
-    These methods simplify the control chain for this.
-     */
-    @Override
-    public Map<Date, Integer> groupI(long step, Map<Date, Integer> in) {
-        return resolveI(groupMap(step, in));
+        return result;
     }
 
     @Override
-    public Map<Date, Float> groupF(long step, Map<Date, Float> in) {
-        return resolveF(groupMap(step, in));
+    public float getBounceRate() throws SQLException {
+        return (float)getBouncesNumber()/getClicksNumber();
     }
 
+    @Override
+    public Map<Date, Float> getFullBounceRate(Step step) throws SQLException {
+        Map<Date, Integer> bounces = getFullBounces(step);
+        Map<Date, Integer> clicks = getFullClicks(step);
+        Map<Date, Float> result = new HashMap<>();
 
+        for (Date date : bounces.keySet()){
+            result.put(date, (float) bounces.get(date)/clicks.get(date));
+        }
 
+        return result;
+    }
+
+    @Override
+    public Map<Date, Set<String>> getFullUsers(Step step) throws SQLException {
+        String select = "DATE_FORMAT(" + impTable() + ".Date, " + stepToDate(step) + ") As Dated, " + impTable() + ".ID";
+        String from = impTable();
+        String join = makeJoins(impTable(), userTable());
+        String where = "";
+
+        ResultSet rs = buildAndExecuteStatement(select, from, join, where, "ORDER BY `Dated`");
+
+        Map<Date, Set<String>> result = new HashMap<>();
+        while(rs.next()){
+            Date date = sqlDateToJavaDate(rs.getString(1), step);
+            String id = rs.getString(2);
+
+            if (result.containsKey(date)) {
+                result.get(date).add(id);
+            } else {
+                HashSet<String> hs = new HashSet<>();
+                hs.add(id);
+                result.put(date, hs);
+            }
+        }
+
+        return result;
+    }
+
+    @Override
+    public Filter getFilter() {
+        return filterDB;
+    }
+
+    @Override
+    public void setFilter(Filter filter) {
+        filterDB = filter;
+    }
 }

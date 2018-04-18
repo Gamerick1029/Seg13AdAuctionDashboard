@@ -1,7 +1,7 @@
 package Frontend.sample;
 
 import Backend.DBHelper;
-import Backend.Model.CampaignModelDBTrimmed;
+import Backend.Model.CampaignModelDB;
 import Backend.Model.Interfaces.DataModel;
 import Backend.Model.Stubs.DataModelStub;
 import javafx.event.ActionEvent;
@@ -10,7 +10,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.StageStyle;
 
@@ -60,7 +59,7 @@ public class WelcomeController implements ScreenInterface {
     private void goToViewDataScreen(ActionEvent event, String name) {
         DataModel dataModel = null;
         try {
-            dataModel = new CampaignModelDBTrimmed(name);
+            dataModel = new CampaignModelDB(name);
             myController.setCurrentModel(dataModel);
             myController.setDataModelMap(new HashMap<>());
             myController.addDataModel(name, dataModel);

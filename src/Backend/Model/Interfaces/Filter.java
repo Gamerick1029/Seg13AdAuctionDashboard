@@ -83,4 +83,27 @@ public class Filter
         endDate = this.endDate;
     }
 
+    public void clearAll(){
+        age25to34 = false;
+        age35to44 = false;
+        age45to54 = false;
+        ageBelow25 = false;
+        ageAbove54 = false;
+
+        genderFemale = false;
+        genderMale = false;
+        genderOther = false;
+
+        incomeLow = false;
+        incomeMedium = false;
+        incomeHigh = false;
+
+        contextNews = false;
+        contextShopping = false;
+        contextMedia = false;
+        contextBlog = false;
+        contextHobbies = false;
+        contextTravel = false;
+    }
+
 }

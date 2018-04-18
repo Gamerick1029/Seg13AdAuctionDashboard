@@ -57,25 +57,18 @@ public class ReadCSVsToDB {
         DBH.executeScriptWithVariable(new File("sqlScripts/sqlCreateTables.sql"), "\\[VAR]", campaignName);
     }
 
-    private static void loadFilesToDB(){
+    private static void loadFilesToDB() throws IOException, SQLException {
 
         try {
             loadImpressionLog();
-        } catch (SQLException | IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
             loadClickLog();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        try {
             loadServerLog();
         } catch (SQLException | IOException e) {
-            e.printStackTrace();
+            throw e;
+        } finally {
+            DBH.deleteCampaign(campaignName);
         }
+
     }
 
     private static void loadImpressionLog() throws SQLException, IOException {

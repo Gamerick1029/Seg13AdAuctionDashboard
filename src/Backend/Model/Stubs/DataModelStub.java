@@ -20,18 +20,18 @@ public class DataModelStub implements DataModel
     {
         filter = new Filter();
         SimpleDateFormat df = new SimpleDateFormat();
-        df.applyPattern("dd/mm/yyyy");
+        df.applyPattern("dd/mm/yyyy HH:mm:ss");
         intMap = new HashMap<>();
         floatMap = new HashMap<>();
         try
         {
-            intMap.put(df.parse("05/01/2015"), 1);
-            intMap.put(df.parse("02/01/2015"), 2);
-            intMap.put(df.parse("03/01/2015"), 3);
+            intMap.put(df.parse("01/01/0001 00:00:00"), 1);
+            intMap.put(df.parse("02/02/0002 00:00:00"), 2);
+            intMap.put(df.parse("03/03/0003 00:00:00"), 3);
 
-            floatMap.put(df.parse("05/01/2015"), 1.0f);
-            floatMap.put(df.parse("02/01/2015"), 2.0f);
-            floatMap.put(df.parse("03/01/2015"), 3.0f);
+            floatMap.put(df.parse("01/01/0001 00:00:00"), 1.0f);
+            floatMap.put(df.parse("02/02/0002 00:00:00"), 2.0f);
+            floatMap.put(df.parse("03/03/0003 00:00:00"), 3.0f);
         } catch(ParseException pe)
         {
             System.err.println("Error parsing stub date formats!");
