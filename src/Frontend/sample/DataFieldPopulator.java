@@ -64,12 +64,12 @@ public class DataFieldPopulator {
             uniques.setText(String.valueOf(dataModel.getUniquesNumber()));
             bounces.setText(String.valueOf(dataModel.getBouncesNumber()));
             conversions.setText(String.valueOf(dataModel.getConversionsNumber()));
-            totalCost.setText(String.valueOf(dataModel.getTotalCost()));
-            CTR.setText(String.valueOf(dataModel.getCTR()));
-            CPA.setText(String.valueOf(dataModel.getCPA()));
-            CPC.setText(String.valueOf(dataModel.getCPC()));
-            CPM.setText(String.valueOf(dataModel.getCPM()));
-            bounceRate.setText(String.valueOf(dataModel.getBounceRate()));
+            totalCost.setText(String.valueOf(Math.round(dataModel.getTotalCost())));
+            CTR.setText(String.valueOf(Math.round(dataModel.getCTR())));
+            CPA.setText(String.valueOf(Math.round(dataModel.getCPA())));
+            CPC.setText(String.valueOf(Math.round(dataModel.getCPC())));
+            CPM.setText(String.valueOf(Math.round(dataModel.getCPM())));
+            bounceRate.setText(String.valueOf(Math.round(dataModel.getBounceRate())));
         } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.initStyle(StageStyle.UTILITY);
