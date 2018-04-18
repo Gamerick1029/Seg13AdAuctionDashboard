@@ -1324,11 +1324,11 @@ public class MainController implements ScreenInterface {
             bouncesF.setText(String.valueOf(dm.getBouncesNumber()));
             conversionsF.setText(String.valueOf(dm.getConversionsNumber()));
             totalCostF.setText(String.valueOf(dm.getTotalCost()));
-            CTRF.setText(String.valueOf(dm.getCTR()));
-            CPAF.setText(String.valueOf(dm.getCPA()));
-            CPCF.setText(String.valueOf(dm.getCPC()));
-            CPMF.setText(String.valueOf(dm.getCPM()));
-            bounceRateF.setText(String.valueOf(dm.getBounceRate()));
+            CTRF.setText(String.valueOf(Math.round(dm.getCTR())));
+            CPAF.setText(String.valueOf(Math.round(dm.getCPA())));
+            CPCF.setText(String.valueOf(Math.round(dm.getCPC())));
+            CPMF.setText(String.valueOf(Math.round(dm.getCPM())));
+            bounceRateF.setText(String.valueOf(Math.round(dm.getBounceRate())));
         } catch (SQLException e) {
             reportError(e);
         }
