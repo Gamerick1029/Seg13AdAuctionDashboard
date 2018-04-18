@@ -1464,7 +1464,7 @@ public class MainController implements ScreenInterface {
     private static String simpleDateRep(Date d) {
         String[] s = d.toString().split(" ");
 
-        return s[2] + "/" + s[1] + "/" + s[5];
+        return s[2] + " " + s[1] + " " + s[5];
     }
 
     private void showMetric(String metric) {
@@ -1696,9 +1696,9 @@ public class MainController implements ScreenInterface {
 
     private void setData_I(List<Map.Entry<Date, Integer>> sortedList) {
         for (Map.Entry<Date, Integer> e : sortedList) {
-            campaignMetricLC.getData().add(new XYChart.Data(String.valueOf(e.getKey()), e.getValue()));
-            campaignMetricAC.getData().add(new XYChart.Data(String.valueOf(e.getKey()), e.getValue()));
-            campaignMetricBC.getData().add(new XYChart.Data(String.valueOf(e.getKey()), e.getValue()));
+            campaignMetricLC.getData().add(new XYChart.Data(simpleDateRep(e.getKey()), e.getValue()));
+            campaignMetricAC.getData().add(new XYChart.Data(simpleDateRep(e.getKey()), e.getValue()));
+            campaignMetricBC.getData().add(new XYChart.Data(simpleDateRep(e.getKey()), e.getValue()));
 
             campaignMetricPC.add(new PieChart.Data(e.getKey().toString(), e.getValue()));
         }
@@ -1706,9 +1706,9 @@ public class MainController implements ScreenInterface {
 
     private void setData_F(List<Map.Entry<Date, Float>> sortedList) {
         for (Map.Entry<Date, Float> e : sortedList) {
-            campaignMetricLC.getData().add(new XYChart.Data(String.valueOf(e.getKey()), e.getValue()));
-            campaignMetricAC.getData().add(new XYChart.Data(String.valueOf(e.getKey()), e.getValue()));
-            campaignMetricBC.getData().add(new XYChart.Data(String.valueOf(e.getKey()), e.getValue()));
+            campaignMetricLC.getData().add(new XYChart.Data(simpleDateRep(e.getKey()), e.getValue()));
+            campaignMetricAC.getData().add(new XYChart.Data(simpleDateRep(e.getKey()), e.getValue()));
+            campaignMetricBC.getData().add(new XYChart.Data(simpleDateRep(e.getKey()), e.getValue()));
 
             campaignMetricPC.add(new PieChart.Data(e.getKey().toString(), e.getValue()));
         }

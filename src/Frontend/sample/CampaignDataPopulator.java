@@ -45,6 +45,12 @@ public class CampaignDataPopulator {
         this.dataModel = dataModel;
     }
 
+    private static String simpleDateRep(Date d) {
+        String[] s = d.toString().split(" ");
+
+        return s[2] + " " + s[1] + " " + s[5];
+    }
+    
     public void populateGraph() {
         try {
             XYChart.Series campaignImpressionsLC = new XYChart.Series();
@@ -67,10 +73,10 @@ public class CampaignDataPopulator {
                 Date key = entry.getKey();
                 Integer value = entry.getValue();
 
-                campaignImpressionsLC.getData().add(new XYChart.Data(entry.getKey().toString(), entry.getValue()));
-                campaignImpressionsAC.getData().add(new XYChart.Data(entry.getKey().toString(), entry.getValue()));
-                campaignImpressionsBC.getData().add(new XYChart.Data(entry.getKey().toString(), entry.getValue()));
-                campaignHistogram.getData().add(new XYChart.Data(entry.getKey().toString(), entry.getValue()));
+                campaignImpressionsLC.getData().add(new XYChart.Data(simpleDateRep(entry.getKey()), entry.getValue()));
+                campaignImpressionsAC.getData().add(new XYChart.Data(simpleDateRep(entry.getKey()), entry.getValue()));
+                campaignImpressionsBC.getData().add(new XYChart.Data(simpleDateRep(entry.getKey()), entry.getValue()));
+                campaignHistogram.getData().add(new XYChart.Data(simpleDateRep(entry.getKey()), entry.getValue()));
                 campaignImpressionsPC.add(new PieChart.Data(String.valueOf(key), value));
             }
             lineChart.getData().add(campaignImpressionsLC);
