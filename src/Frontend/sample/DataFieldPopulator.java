@@ -6,6 +6,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.StageStyle;
 
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class DataFieldPopulator {
@@ -58,18 +59,21 @@ public class DataFieldPopulator {
         campaigns.getItems().add(currentCampaign);
         menuButton.setText(dataModel.getName());
         menuItem.setText(dataModel.getName());
+
+        DecimalFormat df = new DecimalFormat("#.##");
+
         try {
             impressions.setText(String.valueOf(dataModel.getImpressionsNumber()));
             clicks.setText(String.valueOf(dataModel.getClicksNumber()));
             uniques.setText(String.valueOf(dataModel.getUniquesNumber()));
             bounces.setText(String.valueOf(dataModel.getBouncesNumber()));
             conversions.setText(String.valueOf(dataModel.getConversionsNumber()));
-            totalCost.setText(String.valueOf(Math.round(dataModel.getTotalCost())));
-            CTR.setText(String.valueOf(Math.round(dataModel.getCTR())));
-            CPA.setText(String.valueOf(Math.round(dataModel.getCPA())));
-            CPC.setText(String.valueOf(Math.round(dataModel.getCPC())));
-            CPM.setText(String.valueOf(Math.round(dataModel.getCPM())));
-            bounceRate.setText(String.valueOf(Math.round(dataModel.getBounceRate())));
+            totalCost.setText(String.valueOf(df.format(dataModel.getTotalCost())));
+            CTR.setText(String.valueOf(df.format(dataModel.getCTR())));
+            CPA.setText(String.valueOf(df.format(dataModel.getCPA())));
+            CPC.setText(String.valueOf(df.format(dataModel.getCPC())));
+            CPM.setText(String.valueOf(df.format(dataModel.getCPM())));
+            bounceRate.setText(String.valueOf(df.format(dataModel.getBounceRate())));
         } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.initStyle(StageStyle.UTILITY);
