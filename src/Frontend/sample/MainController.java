@@ -1686,7 +1686,7 @@ public class MainController implements ScreenInterface {
         alert.initStyle(StageStyle.UTILITY);
         alert.setTitle("Warning");
         GridPane content = new GridPane();
-        content.setPrefSize(300, 50);
+        content.setPrefSize(600, 50);
         Label label = new Label(e.getMessage());
         content.add(label, 0, 0);
         alert.getDialogPane().setContent(content);
