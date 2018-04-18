@@ -688,24 +688,26 @@ public class MainController implements ScreenInterface {
                 addNewCampaign(event);
             } else { // If a campaign is loaded correctly:
                 files.clear();
-                Campaign campaign = new Campaign(campaignNameF.getText());
-                // add EventHandlers for the Displayed CheckBox button and the Remove button
-                campaign.getDisplayed().addEventHandler(MouseEvent.MOUSE_CLICKED,
-                        e -> {
-                            showMetric(currentMetricDisplayed);
-                        });
-                campaign.getRemove().addEventHandler(MouseEvent.MOUSE_CLICKED,
-                        e -> {
-                            removeCampaign();
-                        });
-                //Adding the new campaign to the Campaigns table
-                campaignsLoaded.add(campaign);
-                //Adding a new CheckMenuItem for the new campaign
-                campaignsTable.getItems().add(campaign);
-                //Adding a new Data Model to ScreensController
+
                 DataModel dataModel = null;
                 try {
+                    Campaign campaign = new Campaign(campaignNameF.getText());
+                    // add EventHandlers for the Displayed CheckBox button and the Remove button
+                    campaign.getDisplayed().addEventHandler(MouseEvent.MOUSE_CLICKED,
+                            e -> {
+                                showMetric(currentMetricDisplayed);
+                            });
+                    campaign.getRemove().addEventHandler(MouseEvent.MOUSE_CLICKED,
+                            e -> {
+                                removeCampaign();
+                            });
                     dataModel = new CampaignModelDBTrimmed(campaign.getName(), currentImpressions, currentClick, currentServer);
+
+                    //Adding the new campaign to the Campaigns table
+                    campaignsLoaded.add(campaign);
+                    //Adding a new CheckMenuItem for the new campaign
+                    campaignsTable.getItems().add(campaign);
+                    //Adding a new Data Model to ScreensController
                     myController.addDataModel(campaign.getName(), dataModel);
                     populateMetric(currentMetricDisplayed, currentStep);
                     //Creating a new CheckMenuItem for the new campaign
