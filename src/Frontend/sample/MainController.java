@@ -24,6 +24,7 @@ import javax.swing.*;
 import java.io.File;
 import java.sql.SQLException;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -1314,18 +1315,19 @@ public class MainController implements ScreenInterface {
     private void setMetrics(String name) {
         campaignName.setText(name);
         DataModel dm = myController.getDataModel(name);
+        DecimalFormat df = new DecimalFormat("#.##");
         try {
             impressionsF.setText(String.valueOf(dm.getImpressionsNumber()));
             clicksF.setText(String.valueOf(dm.getClicksNumber()));
             uniquesF.setText(String.valueOf(dm.getUniquesNumber()));
             bouncesF.setText(String.valueOf(dm.getBouncesNumber()));
             conversionsF.setText(String.valueOf(dm.getConversionsNumber()));
-            totalCostF.setText(String.valueOf(dm.getTotalCost()));
-            CTRF.setText(String.valueOf(Math.round(dm.getCTR())));
-            CPAF.setText(String.valueOf(Math.round(dm.getCPA())));
-            CPCF.setText(String.valueOf(Math.round(dm.getCPC())));
-            CPMF.setText(String.valueOf(Math.round(dm.getCPM())));
-            bounceRateF.setText(String.valueOf(Math.round(dm.getBounceRate())));
+            totalCostF.setText(String.valueOf(df.format(dm.getTotalCost())));
+            CTRF.setText(String.valueOf(df.format(dm.getCTR())));
+            CPAF.setText(String.valueOf(df.format(dm.getCPA())));
+            CPCF.setText(String.valueOf(df.format(dm.getCPC())));
+            CPMF.setText(String.valueOf(df.format(dm.getCPM())));
+            bounceRateF.setText(String.valueOf(df.format(dm.getBounceRate())));
         } catch (SQLException e) {
             reportError(e);
         }
