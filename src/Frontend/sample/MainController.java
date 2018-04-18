@@ -639,6 +639,20 @@ public class MainController implements ScreenInterface {
 
         GridPane content = new GridPane();
         content.setPrefSize(400, 200);
+        Button clearButton = new Button("Reset");
+        clearButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                e -> {
+                    files.clear();
+                    impressionsF.setPromptText("Select Impressions Log...");
+                    clicksF.setPromptText("Select Click Log...");
+                    serverF.setPromptText("Select Server Log...");
+                    campaignNameF.setPromptText("Input Campaign Name...");
+                    campaignNameF.setText("");
+
+                    currentClick = null;
+                    currentImpressions = null;
+                    currentServer = null;
+                });
 
         content.add(campaignNameL, 0, 0);
         content.add(campaignNameF, 0, 1);
@@ -654,6 +668,7 @@ public class MainController implements ScreenInterface {
         content.add(serverL, 0, 7);
         content.add(serverF, 0, 8);
         content.add(serverB, 2, 8);
+        content.add(clearButton, 2, 10);
 
         alert.getDialogPane().setContent(content);
         alert.showAndWait();
