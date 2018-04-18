@@ -43,6 +43,10 @@ public class TestMain {
 //
         CampaignModelDBTrimmed cmdt = new CampaignModelDBTrimmed("JUnit");
 
+        Filter filter = new Filter();
+        filter.clearAll();
+        cmdt.setFilter(filter);
+
         System.out.println(cmdt.getFullImpressions(Step.DAY));
 
 //        System.out.println(cmdt.getImpressionsNumber());

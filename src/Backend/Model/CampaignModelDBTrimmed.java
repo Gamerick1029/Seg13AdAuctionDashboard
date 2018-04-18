@@ -259,15 +259,21 @@ public class CampaignModelDBTrimmed implements DataModel{
         StringBuilder sb = new StringBuilder();
         sb.append("SELECT " + select + " FROM " + fromTables + " ");
         if (joins != null && !joins.equals("")) sb.append(joins + " ");
-        if (whereConditions != null && !whereConditions.equals("")) {
-            sb.append("WHERE " + whereConditions + " AND " + conditions() + " ");
+
+        String conditions = conditions();
+        if (!whereConditions.equals("")){
+            if (!conditions.equals("")){
+                sb.append("WHERE ").append(whereConditions).append(" AND ").append(conditions);
+            }
         } else {
-            sb.append("WHERE " + conditions() + " ");
+            if (!conditions.equals("")){
+                sb.append("WHERE ").append(conditions);
+            }
         }
 
         sb.append(otherSuffixes);
 
-        return sb.toString();
+        return trimTrailingOperators(sb.toString());
     }
 
     //Public methods
