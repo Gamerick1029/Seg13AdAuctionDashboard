@@ -206,10 +206,10 @@ public class MainController implements ScreenInterface {
                 uniquesF, bouncesF, conversionsF, totalCostF, CTRF, CPAF, CPCF, CPMF, bounceRateF));
         myController.setCampaignDataPopulator(new CampaignDataPopulator(x, y, lineChart, barChart, pieChart, areaChart));
         impressions.setStyle("-fx-font-weight: bold;");
-        lineChart.animatedProperty().setValue(false);
+        /*lineChart.animatedProperty().setValue(false);
         barChart.animatedProperty().setValue(false);
         pieChart.animatedProperty().setValue(false);
-        areaChart.animatedProperty().setValue(false);
+        areaChart.animatedProperty().setValue(false);*/
         currentCampaign.getDisplayed().addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
                     x.animatedProperty().setValue(false);
