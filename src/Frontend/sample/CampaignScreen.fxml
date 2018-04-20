@@ -450,6 +450,24 @@
                   <children>
                   <VBox>
                      <children>
+                     
+                     <HBox spacing="10">
+							<children>
+      	                    <MenuButton id="menuButton" fx:id="filterDropDown" contentDisplay="CENTER" mnemonicParsing="false" text="Filter" textAlignment="CENTER">
+      	                          <items>
+      	                                <CheckMenuItem id="checkMenuItem" fx:id="filterOne" mnemonicParsing="false" selected="true" />
+      	                          </items>
+      	                    </MenuButton>
+      	                    <Button id="menuButton" fx:id="addFilter" contentDisplay="CENTER" mnemonicParsing="false" text="+" textAlignment="CENTER" />
+                     		<Button id="menuButton" fx:id="removeFilter" contentDisplay="CENTER" mnemonicParsing="false" text="-" textAlignment="CENTER" />
+                     		
+                     		</children>
+                     		<padding>
+                     			<Insets top="15" />
+                     		</padding>
+                     		
+                     		</HBox>
+                     
                             <Text id="h1" text="Audience">
                                 <cursor>
                                     <Cursor fx:constant="HAND" />
