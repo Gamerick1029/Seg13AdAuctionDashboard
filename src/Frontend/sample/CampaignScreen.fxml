@@ -37,9 +37,6 @@
             <AnchorPane fx:id="centerPane" BorderPane.alignment="BOTTOM_CENTER">
                <children>
                   <BorderPane layoutX="4.0" layoutY="2.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="2.0">
-                      <top>
-
-                </top>
                      <center>
       
                         <AnchorPane>
@@ -667,12 +664,19 @@
               <menus>
                 <Menu mnemonicParsing="false" text="File">
                   <items>
-                    <MenuItem mnemonicParsing="false" text="Close" />
+                    <MenuItem fx:id="exportPNG" mnemonicParsing="false" text="Export PNG" />
+                    <MenuItem fx:id="print" mnemonicParsing="false" text="Print..." />
                   </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="Edit">
+                <Menu mnemonicParsing="false" text="Options">
                   <items>
-                    <MenuItem mnemonicParsing="false" text="Delete" />
+                    <MenuItem fx:id="bounceRateOptions" mnemonicParsing="false" text="Bounce Rate" />
+                    <Menu fx:id="themesOptions" mnemonicParsing="false" text="Themes">
+                    		<MenuItem fx:id="darkThemeOption" text="Dark Theme" mnemonicParsing="false" />
+                    		<MenuItem fx:id="lightThemeOption" text="Light Theme" mnemonicParsing="false" />
+                    		<MenuItem fx:id="mintThemeOption" text="Mint Theme" mnemonicParsing="false" />
+                    	
+                    </Menu>
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
