@@ -90,6 +90,7 @@ public class LoadDataController implements ScreenInterface {
 
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Creating Campaign");
+                alert.setContentText("Please wait. Campaign creation in progress.");
 
                 task.setOnRunning(e -> alert.show());
 
