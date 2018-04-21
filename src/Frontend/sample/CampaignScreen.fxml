@@ -668,15 +668,21 @@
                     <MenuItem fx:id="print" mnemonicParsing="false" text="Print..." />
                   </items>
                 </Menu>
+
                 <Menu mnemonicParsing="false" text="Options">
-                  <items>
-                    <MenuItem fx:id="bounceRateOptions" mnemonicParsing="false" text="Bounce Rate" />
+					<items>
+
+                  <Menu fx:id="bounceOptions" mnemonicParsing="false" text="Bounce Rate">
+					  <MenuItem fx:id="timeSpent" text="By time spent on website" mnemonicParsing="false" />
+					  <MenuItem fx:id="numberPages" text="By number of pages visited" mnemonicParsing="false" />
+				  </Menu>
+
                     <Menu fx:id="themesOptions" mnemonicParsing="false" text="Themes">
                     		<MenuItem fx:id="darkThemeOption" text="Dark Theme" mnemonicParsing="false" />
                     		<MenuItem fx:id="lightThemeOption" text="Light Theme" mnemonicParsing="false" />
                     		<MenuItem fx:id="mintThemeOption" text="Mint Theme" mnemonicParsing="false" />
-                    	
                     </Menu>
+
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">

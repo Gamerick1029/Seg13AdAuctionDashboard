@@ -3,6 +3,7 @@ package Frontend.sample;
 import Backend.DBHelper;
 import Backend.Model.CampaignModelDB;
 import Backend.Model.Interfaces.DataModel;
+import Backend.Model.Interfaces.Filter;
 import Backend.Model.Interfaces.Step;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
@@ -185,6 +186,20 @@ public class MainController implements ScreenInterface {
     private Button checkAll;
     @FXML
     private Text searchDate;
+    @FXML
+    private MenuItem timeSpent;
+    @FXML
+    private MenuItem numberPages;
+    @FXML
+    private MenuItem exportPNG;
+    @FXML
+    private MenuItem print;
+    @FXML
+    private MenuItem darkThemeOption;
+    @FXML
+    private MenuItem lightThemeOption;
+    @FXML
+    private MenuItem mintThemeOption;
 
     private XYChart.Series campaignMetricLC;
     private XYChart.Series campaignMetricBC;
@@ -199,6 +214,7 @@ public class MainController implements ScreenInterface {
     private Step currentStep = Step.DAY;
     private List<Campaign> campaignsLoaded = new ArrayList<>();
     private HashMap<String, File> files = new HashMap<>();
+    private HashMap<String, Filter> filters = new HashMap<>();
 
     @Override
     public void setScreenParent(ScreensController parent) {
@@ -303,7 +319,7 @@ public class MainController implements ScreenInterface {
             byMonth.setSelected(true);
             byWeek.setSelected(false);
             byDay.setSelected(false);
-                groupByStep();
+            groupByStep();
         });
         genderMale.setSelected(true);
         genderFemale.setSelected(true);
@@ -496,8 +512,7 @@ public class MainController implements ScreenInterface {
                 endMonth.setText(month.getText());
             });
         }
-        darkTheme.setSelected(true);
-        mintTheme.setOnAction(event -> {
+        mintThemeOption.setOnAction(event -> {
             mintTheme.setSelected(true);
             lightTheme.setSelected(false);
             darkTheme.setSelected(false);
@@ -505,7 +520,7 @@ public class MainController implements ScreenInterface {
             Main.scene.getStylesheets().add("Frontend/sample/mintTheme.css");
             themes.setText("Mint Theme");
         });
-        lightTheme.setOnAction(event -> {
+        lightThemeOption.setOnAction(event -> {
             mintTheme.setSelected(false);
             lightTheme.setSelected(true);
             darkTheme.setSelected(false);
@@ -513,7 +528,7 @@ public class MainController implements ScreenInterface {
             Main.scene.getStylesheets().add("Frontend/sample/lightTheme.css");
             themes.setText("Light Theme");
         });
-        darkTheme.setOnAction(event -> {
+        darkThemeOption.setOnAction(event -> {
             mintTheme.setSelected(false);
             lightTheme.setSelected(false);
             darkTheme.setSelected(true);
