@@ -574,6 +574,15 @@ public class MainController implements ScreenInterface {
     }
 
     private void exportToPNG() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.initStyle(StageStyle.UTILITY);
+        alert.setTitle("Update");
+        GridPane content = new GridPane();
+        content.setPrefSize(300, 50);
+        Label label = new Label("Image saved!");
+        content.add(label, 0, 0);
+        alert.getDialogPane().setContent(content);
+
         SnapshotParameters snap = new SnapshotParameters();
         WritableImage writableImage = new WritableImage(100, 100);
         WritableImage snapshot;
@@ -583,6 +592,7 @@ public class MainController implements ScreenInterface {
                 snapshot = barChart.snapshot(new SnapshotParameters(), null);
                 try {
                     ImageIO.write(SwingFXUtils.fromFXImage(snapshot, null), "png", output);
+                    alert.showAndWait();
                 } catch (IOException e) {
                     Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, e);
                 }
@@ -591,6 +601,7 @@ public class MainController implements ScreenInterface {
                 snapshot = lineChart.snapshot(new SnapshotParameters(), null);
                 try {
                     ImageIO.write(SwingFXUtils.fromFXImage(snapshot, null), "png", output);
+                    alert.showAndWait();
                 } catch (IOException e) {
                     Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, e);
                 }
@@ -599,6 +610,7 @@ public class MainController implements ScreenInterface {
                 snapshot = areaChart.snapshot(new SnapshotParameters(), null);
                 try {
                     ImageIO.write(SwingFXUtils.fromFXImage(snapshot, null), "png", output);
+                    alert.showAndWait();
                 } catch (IOException e) {
                     Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, e);
                 }
@@ -607,12 +619,19 @@ public class MainController implements ScreenInterface {
                 snapshot = pieChart.snapshot(new SnapshotParameters(), null);
                 try {
                     ImageIO.write(SwingFXUtils.fromFXImage(snapshot, null), "png", output);
+                    alert.showAndWait();
                 } catch (IOException e) {
                     Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, e);
                 }
                 break;
             case "Histogram":
                 snapshot = barChart.snapshot(new SnapshotParameters(), null);
+                try {
+                    ImageIO.write(SwingFXUtils.fromFXImage(snapshot, null), "png", output);
+                    alert.showAndWait();
+                } catch (IOException e) {
+                    Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, e);
+                }
                 break;
         }
     }
