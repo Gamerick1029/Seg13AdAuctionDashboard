@@ -630,23 +630,6 @@
                             </Text>
                             
                             <VBox VBox.vgrow="ALWAYS" />
-                            
-                            <Text id="h1" text="Theme">
-                           <VBox.margin>
-                              <Insets bottom="10" top="20.0" />
-                           </VBox.margin>
-                            </Text>
-                            <MenuButton id="menuButton" fx:id="themes" contentDisplay="CENTER" mnemonicParsing="false" text="Dark Theme" textAlignment="CENTER">
-                                 <items>
-                                    <CheckMenuItem fx:id="darkTheme" mnemonicParsing="false" text="Dark Theme" />
-                                    <CheckMenuItem fx:id="lightTheme" mnemonicParsing="false" text="Light Theme" />
-                                    <CheckMenuItem fx:id="mintTheme" mnemonicParsing="false" text="Mint Theme" />
-                                 </items>
-                                 
-                              </MenuButton>
-
-                        
-
 
                      </children>
                      <padding>

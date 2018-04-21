@@ -558,7 +558,6 @@ public class MainController implements ScreenInterface {
 
         campaignsTable.setPrefSize(250, 225);
         campaignsTable.setPlaceholder(new Label("No campaigns loaded!"));
-        //campaignsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         campaignOne.setOnAction(t -> {
             for (MenuItem menuItem : campaignName.getItems()) {
@@ -597,8 +596,9 @@ public class MainController implements ScreenInterface {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.initStyle(StageStyle.UTILITY);
         alert.setTitle("Add New Filter");
+        alert.setHeaderText("");
         GridPane content = new GridPane();
-        content.setPrefSize(100, 50);
+        content.setPrefSize(200, 50);
         Label label = new Label("Input Filter Name:");
         TextField textField = new TextField();
         textField.setPromptText("Filter Name...");
@@ -607,11 +607,11 @@ public class MainController implements ScreenInterface {
         alert.getDialogPane().setContent(content);
         alert.showAndWait();
         if (alert.getResult() == ButtonType.OK) {
+            String s;
             if (Objects.equals(textField.getText(), "")) {
-                alert.setHeaderText("You need to input filter name!");
-                alert.showAndWait();
+                s = String.valueOf(new Date().getTime());
             } else {
-                String s = "Filter " + textField.getText();
+                s = "Filter " + textField.getText();
                 addFilterToMap(s);
                 CheckMenuItem newFilter = new CheckMenuItem(s);
                 newFilter.setOnAction(t -> {
@@ -676,6 +676,83 @@ public class MainController implements ScreenInterface {
     }
 
     private void exportToPNG() {
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.initStyle(StageStyle.UTILITY);
+        alert.setTitle("Exporting Chart Image");
+        alert.setHeaderText("");
+        GridPane content = new GridPane();
+        content.setPrefSize(200, 50);
+        Label label = new Label("Input Image Name:");
+        TextField textField = new TextField();
+        textField.setPromptText("Image Name...");
+        content.add(label, 0, 0);
+        content.add(textField, 0, 1);
+        alert.getDialogPane().setContent(content);
+        alert.showAndWait();
+        if (alert.getResult() == ButtonType.OK) {
+            String s;
+            if (Objects.equals(textField.getText(), "")) {
+                s = String.valueOf(new Date().getTime());
+            } else {
+                s = "Filter " + textField.getText();
+
+                SnapshotParameters snap = new SnapshotParameters();
+                WritableImage writableImage = new WritableImage(100, 100);
+                WritableImage snapshot;
+                File output = new File("snapshot_" + s + ".png");
+                switch (currentChartType) {
+                    case "BarChart":
+                        snapshot = barChart.snapshot(new SnapshotParameters(), null);
+                        try {
+                            ImageIO.write(SwingFXUtils.fromFXImage(snapshot, null), "png", output);
+                            showUpdate();
+                        } catch (IOException e) {
+                            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, e);
+                        }
+                        break;
+                    case "LineChart":
+                        snapshot = lineChart.snapshot(new SnapshotParameters(), null);
+                        try {
+                            ImageIO.write(SwingFXUtils.fromFXImage(snapshot, null), "png", output);
+                            showUpdate();
+                        } catch (IOException e) {
+                            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, e);
+                        }
+                        break;
+                    case "AreaChart":
+                        snapshot = areaChart.snapshot(new SnapshotParameters(), null);
+                        try {
+                            ImageIO.write(SwingFXUtils.fromFXImage(snapshot, null), "png", output);
+                            showUpdate();
+                        } catch (IOException e) {
+                            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, e);
+                        }
+                        break;
+                    case "PieChart":
+                        snapshot = pieChart.snapshot(new SnapshotParameters(), null);
+                        try {
+                            ImageIO.write(SwingFXUtils.fromFXImage(snapshot, null), "png", output);
+                            showUpdate();
+                        } catch (IOException e) {
+                            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, e);
+                        }
+                        break;
+                    case "Histogram":
+                        snapshot = barChart.snapshot(new SnapshotParameters(), null);
+                        try {
+                            ImageIO.write(SwingFXUtils.fromFXImage(snapshot, null), "png", output);
+                            showUpdate();
+                        } catch (IOException e) {
+                            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, e);
+                        }
+                        break;
+                }
+            }
+        }
+    }
+
+    private void showUpdate(){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.initStyle(StageStyle.UTILITY);
         alert.setTitle("Update");
@@ -684,58 +761,7 @@ public class MainController implements ScreenInterface {
         Label label = new Label("Image saved!");
         content.add(label, 0, 0);
         alert.getDialogPane().setContent(content);
-
-        SnapshotParameters snap = new SnapshotParameters();
-        WritableImage writableImage = new WritableImage(100, 100);
-        WritableImage snapshot;
-        File output = new File("snapshot" + new Date().getTime() + ".png");
-        switch (currentChartType) {
-            case "BarChart":
-                snapshot = barChart.snapshot(new SnapshotParameters(), null);
-                try {
-                    ImageIO.write(SwingFXUtils.fromFXImage(snapshot, null), "png", output);
-                    alert.showAndWait();
-                } catch (IOException e) {
-                    Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, e);
-                }
-                break;
-            case "LineChart":
-                snapshot = lineChart.snapshot(new SnapshotParameters(), null);
-                try {
-                    ImageIO.write(SwingFXUtils.fromFXImage(snapshot, null), "png", output);
-                    alert.showAndWait();
-                } catch (IOException e) {
-                    Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, e);
-                }
-                break;
-            case "AreaChart":
-                snapshot = areaChart.snapshot(new SnapshotParameters(), null);
-                try {
-                    ImageIO.write(SwingFXUtils.fromFXImage(snapshot, null), "png", output);
-                    alert.showAndWait();
-                } catch (IOException e) {
-                    Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, e);
-                }
-                break;
-            case "PieChart":
-                snapshot = pieChart.snapshot(new SnapshotParameters(), null);
-                try {
-                    ImageIO.write(SwingFXUtils.fromFXImage(snapshot, null), "png", output);
-                    alert.showAndWait();
-                } catch (IOException e) {
-                    Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, e);
-                }
-                break;
-            case "Histogram":
-                snapshot = barChart.snapshot(new SnapshotParameters(), null);
-                try {
-                    ImageIO.write(SwingFXUtils.fromFXImage(snapshot, null), "png", output);
-                    alert.showAndWait();
-                } catch (IOException e) {
-                    Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, e);
-                }
-                break;
-        }
+        alert.showAndWait();
     }
 
     private void printPDF() {
