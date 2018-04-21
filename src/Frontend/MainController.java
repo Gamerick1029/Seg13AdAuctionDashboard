@@ -43,7 +43,7 @@ import java.util.logging.Logger;
 public class MainController implements ScreenInterface {
 
     private ScreensController myController;
-//    private DBHelper dbHelper;
+    //    private DBHelper dbHelper;
     private File currentImpressions;
     private File currentClick;
     private File currentServer;
@@ -647,7 +647,7 @@ public class MainController implements ScreenInterface {
         for (String filterName : filters.keySet()) {
             CheckMenuItem cmi = new CheckMenuItem(filterName);
             cmi.setOnAction(a -> {
-               changeFilter(cmi);
+                changeFilter(cmi);
             });
             filterDropDown.getItems().add(cmi);
             filterDropDown.setText(cmi.getText());
@@ -1074,43 +1074,53 @@ public class MainController implements ScreenInterface {
     }
 
     private void removeCampaign() {
-        campaignsLoaded.remove(currentCampaign);
-        campaignsTable.getItems().remove(currentCampaign);
-        myController.removeDataModel(currentCampaign.getName());
-        campaignName.getItems().clear();
-        x.animatedProperty().setValue(false);
-        y.animatedProperty().setValue(false);
-        if (campaignsLoaded.size() == 0) {
-            campaignName.setText("-");
-            impressionsF.setText("-");
-            clicksF.setText("-");
-            uniquesF.setText("-");
-            bouncesF.setText("-");
-            conversionsF.setText("-");
-            totalCostF.setText("-");
-            CTRF.setText("-");
-            CPAF.setText("-");
-            CPCF.setText("-");
-            CPMF.setText("-");
-            bounceRateF.setText("-");
-        } else {
-            campaignName.setText(campaignsLoaded.get(0).getName());
-            setMetrics(campaignsLoaded.get(0).getName());
-            for (Campaign c : campaignsLoaded) {
-                CheckMenuItem checkMenuItem = new CheckMenuItem(c.getName());
-                checkMenuItem.setOnAction(t -> {
-                    for (MenuItem menuItem : campaignName.getItems()) {
-                        if (menuItem instanceof CheckMenuItem) {
-                            ((CheckMenuItem) menuItem).setSelected(false);
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.initStyle(StageStyle.UTILITY);
+        alert.setTitle("Warning");
+        GridPane content = new GridPane();
+        content.setPrefSize(150, 50);
+        Label label = new Label("Are you sure you want to delete this campaign permanently?");
+        content.add(label, 0, 0);
+        alert.getDialogPane().setContent(content);
+        alert.showAndWait();
+        if (alert.getResult() == ButtonType.OK){
+            campaignsLoaded.remove(currentCampaign);
+            campaignsTable.getItems().remove(currentCampaign);
+            myController.removeDataModel(currentCampaign.getName());
+            campaignName.getItems().clear();
+
+            if (campaignsLoaded.size() == 0) {
+                campaignName.setText("-");
+                impressionsF.setText("-");
+                clicksF.setText("-");
+                uniquesF.setText("-");
+                bouncesF.setText("-");
+                conversionsF.setText("-");
+                totalCostF.setText("-");
+                CTRF.setText("-");
+                CPAF.setText("-");
+                CPCF.setText("-");
+                CPMF.setText("-");
+                bounceRateF.setText("-");
+            } else {
+                campaignName.setText(campaignsLoaded.get(0).getName());
+                setMetrics(campaignsLoaded.get(0).getName());
+                for (Campaign c : campaignsLoaded) {
+                    CheckMenuItem checkMenuItem = new CheckMenuItem(c.getName());
+                    checkMenuItem.setOnAction(t -> {
+                        for (MenuItem menuItem : campaignName.getItems()) {
+                            if (menuItem instanceof CheckMenuItem) {
+                                ((CheckMenuItem) menuItem).setSelected(false);
+                            }
                         }
-                    }
-                    checkMenuItem.setSelected(true);
-                    setMetrics(checkMenuItem.getText());
-                });
-                campaignName.getItems().add(checkMenuItem);
+                        checkMenuItem.setSelected(true);
+                        setMetrics(checkMenuItem.getText());
+                    });
+                    campaignName.getItems().add(checkMenuItem);
+                }
             }
+            populateMetric(currentMetricDisplayed, currentStep);
         }
-        populateMetric(currentMetricDisplayed, currentStep);
     }
 
     @FXML
@@ -1282,25 +1292,25 @@ public class MainController implements ScreenInterface {
         contextBlog.setSelected(false);
         contextHobbies.setSelected(false);
         contextTravel.setSelected(false);
-        for (DataModel dataModel : myController.getDataModelMap().values()) {
-            dataModel.getFilter().genderMale = false;
-            dataModel.getFilter().genderFemale = false;
-            dataModel.getFilter().genderOther = false;
-            dataModel.getFilter().ageBelow25 = false;
-            dataModel.getFilter().age25to34 = false;
-            dataModel.getFilter().age35to44 = false;
-            dataModel.getFilter().age45to54 = false;
-            dataModel.getFilter().ageAbove54 = false;
-            dataModel.getFilter().incomeLow = false;
-            dataModel.getFilter().incomeMedium = false;
-            dataModel.getFilter().incomeHigh = false;
-            dataModel.getFilter().contextNews = false;
-            dataModel.getFilter().contextShopping = false;
-            dataModel.getFilter().contextMedia = false;
-            dataModel.getFilter().contextBlog = false;
-            dataModel.getFilter().contextHobbies = false;
-            dataModel.getFilter().contextTravel = false;
-        }
+
+        currentFilter.genderMale = false;
+        currentFilter.genderFemale = false;
+        currentFilter.genderOther = false;
+        currentFilter.ageBelow25 = false;
+        currentFilter.age25to34 = false;
+        currentFilter.age35to44 = false;
+        currentFilter.age45to54 = false;
+        currentFilter.ageAbove54 = false;
+        currentFilter.incomeLow = false;
+        currentFilter.incomeMedium = false;
+        currentFilter.incomeHigh = false;
+        currentFilter.contextNews = false;
+        currentFilter.contextShopping = false;
+        currentFilter.contextMedia = false;
+        currentFilter.contextBlog = false;
+        currentFilter.contextHobbies = false;
+        currentFilter.contextTravel = false;
+
         populateMetric(currentMetricDisplayed, currentStep);
     }
 
@@ -1321,25 +1331,25 @@ public class MainController implements ScreenInterface {
         contextBlog.setSelected(true);
         contextHobbies.setSelected(true);
         contextTravel.setSelected(true);
-        for (DataModel dataModel : myController.getDataModelMap().values()) {
-            dataModel.getFilter().genderMale = true;
-            dataModel.getFilter().genderFemale = true;
-            dataModel.getFilter().genderOther = true;
-            dataModel.getFilter().ageBelow25 = true;
-            dataModel.getFilter().age25to34 = true;
-            dataModel.getFilter().age35to44 = true;
-            dataModel.getFilter().age45to54 = true;
-            dataModel.getFilter().ageAbove54 = true;
-            dataModel.getFilter().incomeLow = true;
-            dataModel.getFilter().incomeMedium = true;
-            dataModel.getFilter().incomeHigh = true;
-            dataModel.getFilter().contextNews = true;
-            dataModel.getFilter().contextShopping = true;
-            dataModel.getFilter().contextMedia = true;
-            dataModel.getFilter().contextBlog = true;
-            dataModel.getFilter().contextHobbies = true;
-            dataModel.getFilter().contextTravel = true;
-        }
+
+        currentFilter.genderMale = true;
+        currentFilter.genderFemale = true;
+        currentFilter.genderOther = true;
+        currentFilter.ageBelow25 = true;
+        currentFilter.age25to34 = true;
+        currentFilter.age35to44 = true;
+        currentFilter.age45to54 = true;
+        currentFilter.ageAbove54 = true;
+        currentFilter.incomeLow = true;
+        currentFilter.incomeMedium = true;
+        currentFilter.incomeHigh = true;
+        currentFilter.contextNews = true;
+        currentFilter.contextShopping = true;
+        currentFilter.contextMedia = true;
+        currentFilter.contextBlog = true;
+        currentFilter.contextHobbies = true;
+        currentFilter.contextTravel = true;
+
         populateMetric(currentMetricDisplayed, currentStep);
     }
 
@@ -1348,123 +1358,55 @@ public class MainController implements ScreenInterface {
         System.out.println(name);
         switch (name) {
             case "age25to34":
-                if (filter) {
-                    currentFilter.age25to34 = true;
-                } else {
-                    currentFilter.age25to34 = false;
-                }
+                currentFilter.age25to34 = filter;
                 break;
             case "age35to44":
-                if (filter) {
-                    currentFilter.age35to44 = true;
-                } else {
-                    currentFilter.age35to44 = false;
-                }
+                currentFilter.age35to44 = filter;
                 break;
             case "age45to54":
-                if (filter) {
-                    currentFilter.age45to54 = true;
-                } else {
-                    currentFilter.age45to54 = false;
-                }
+                currentFilter.age45to54 = filter;
                 break;
             case "ageBelow20":
-                if (filter) {
-                    currentFilter.ageBelow25 = true;
-                } else {
-                    currentFilter.ageBelow25 = false;
-                }
+                currentFilter.ageBelow25 = filter;
                 break;
             case "ageAbove54":
-                if (filter) {
-                    currentFilter.ageAbove54 = true;
-                } else {
-                    currentFilter.ageAbove54 = false;
-                }
+                currentFilter.ageAbove54 = filter;
                 break;
             case "genderFemale":
-                if (filter) {
-                    currentFilter.genderFemale = true;
-                } else {
-                    currentFilter.genderFemale = false;
-                }
+                currentFilter.genderFemale = filter;
                 break;
             case "genderMale":
-                if (filter) {
-                    currentFilter.genderMale = true;
-                } else {
-                    currentFilter.genderMale = false;
-                }
+                currentFilter.genderMale = filter;
                 break;
             case "genderOther":
-                if (filter) {
-                    currentFilter.genderOther = true;
-                } else {
-                    currentFilter.genderOther = false;
-                }
+                currentFilter.genderOther = filter;
                 break;
             case "incomeLow":
-                if (filter) {
-                    currentFilter.incomeLow = true;
-                } else {
-                    currentFilter.incomeLow = false;
-                }
+                currentFilter.incomeLow = filter;
                 break;
             case "incomeMedium":
-                if (filter) {
-                    currentFilter.incomeMedium = true;
-                } else {
-                    currentFilter.incomeMedium = false;
-                }
+                currentFilter.incomeMedium = filter;
                 break;
             case "incomeHigh":
-                if (filter) {
-                    currentFilter.incomeHigh = true;
-                } else {
-                    currentFilter.incomeHigh = false;
-                }
+                currentFilter.incomeHigh = filter;
                 break;
             case "contextNews":
-                if (filter) {
-                    currentFilter.contextNews = true;
-                } else {
-                    currentFilter.contextNews = false;
-                }
+                currentFilter.contextNews = filter;
                 break;
             case "contextShopping":
-                if (filter) {
-                    currentFilter.contextShopping = true;
-                } else {
-                    currentFilter.contextShopping = false;
-                }
+                currentFilter.contextShopping = filter;
                 break;
             case "contextMedia":
-                if (filter) {
-                    currentFilter.contextMedia = true;
-                } else {
-                    currentFilter.contextMedia = false;
-                }
+                currentFilter.contextMedia = filter;
                 break;
             case "contextBlog":
-                if (filter) {
-                    currentFilter.contextBlog = true;
-                } else {
-                    currentFilter.contextBlog = false;
-                }
+                currentFilter.contextBlog = filter;
                 break;
             case "contextHobbies":
-                if (filter) {
-                    currentFilter.contextHobbies = true;
-                } else {
-                    currentFilter.contextHobbies = false;
-                }
+                currentFilter.contextHobbies = filter;
                 break;
             case "contextTravel":
-                if (filter) {
-                    currentFilter.contextTravel = true;
-                } else {
-                    currentFilter.contextTravel = false;
-                }
+                currentFilter.contextTravel = filter;
                 break;
         }
     }
@@ -1594,11 +1536,6 @@ public class MainController implements ScreenInterface {
                         histogramSeries.getData().add(new XYChart.Data(key, value));
                     }
                     histogramSeries.getData().add(new XYChart.Data(simpleDateRep(entries.get(i).getKey()) + " onwards", entries.get(i).getValue()));
-//                    for (Map.Entry<Date, Float> entry : dataModel.getFullCost(currentStep).entrySet()) {
-//                        Date key = entry.getKey();
-//                        Float value = entry.getValue();
-//                        histogramSeries.getData().add(new XYChart.Data(String.valueOf(key), value));
-//                    }
                     barChart.getData().add(histogramSeries);
                     histogramSeries.setName(dataModel.getName() + "Click Cost Histogram");
                 } catch (SQLException e) {
@@ -1762,14 +1699,26 @@ public class MainController implements ScreenInterface {
         bounceRate.setText("Bounce Rate");
     }
 
+    private void reportError(SQLException e) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.initStyle(StageStyle.UTILITY);
+        alert.setTitle("Warning");
+        GridPane content = new GridPane();
+        content.setPrefSize(600, 50);
+        Label label = new Label(e.getMessage());
+        content.add(label, 0, 0);
+        alert.getDialogPane().setContent(content);
+        alert.showAndWait();
+        e.printStackTrace();
+    }
+
     public void populateMetric(String metric, Step step) {
 
         lineChart.getData().clear();
         barChart.getData().clear();
         areaChart.getData().clear();
         pieChart.getData().clear();
-        x.setAnimated(false);
-        y.setAnimated(false);
+
         for (Campaign campaign : this.campaignsLoaded) {
             if (campaign.getDisplayed().isSelected()) {
                 DataModel dataModel = myController.getDataModel(campaign.getName());
@@ -1829,19 +1778,6 @@ public class MainController implements ScreenInterface {
                 pieChart.getData().addAll(campaignMetricPC);
             }
         }
-    }
-
-    private void reportError(SQLException e) {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.initStyle(StageStyle.UTILITY);
-        alert.setTitle("Warning");
-        GridPane content = new GridPane();
-        content.setPrefSize(600, 50);
-        Label label = new Label(e.getMessage());
-        content.add(label, 0, 0);
-        alert.getDialogPane().setContent(content);
-        alert.showAndWait();
-        e.printStackTrace();
     }
 
     private void setData_I(List<Map.Entry<Date, Integer>> sortedList) {
