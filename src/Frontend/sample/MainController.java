@@ -45,7 +45,7 @@ import java.util.logging.Logger;
 public class MainController implements ScreenInterface {
 
     private ScreensController myController;
-    private DBHelper dbHelper;
+//    private DBHelper dbHelper;
     private File currentImpressions;
     private File currentClick;
     private File currentServer;
@@ -214,7 +214,6 @@ public class MainController implements ScreenInterface {
     private List<Campaign> campaignsLoaded = new ArrayList<>();
     private HashMap<String, File> files = new HashMap<>();
     private HashMap<String, Filter> filters = new HashMap<>();
-
     @Override
     public void setScreenParent(ScreensController parent) {
         this.myController = parent;
@@ -222,10 +221,10 @@ public class MainController implements ScreenInterface {
                 uniquesF, bouncesF, conversionsF, totalCostF, CTRF, CPAF, CPCF, CPMF, bounceRateF));
         myController.setCampaignDataPopulator(new CampaignDataPopulator(x, y, lineChart, barChart, pieChart, areaChart));
         impressions.setStyle("-fx-font-weight: bold;");
-        /*lineChart.animatedProperty().setValue(false);
-        barChart.animatedProperty().setValue(false);
-        pieChart.animatedProperty().setValue(false);
-        areaChart.animatedProperty().setValue(false);*/
+//        lineChart.animatedProperty().setValue(false);
+//        barChart.animatedProperty().setValue(false);
+//        pieChart.animatedProperty().setValue(false);
+//        areaChart.animatedProperty().setValue(false);
         currentCampaign.getDisplayed().addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
                     x.animatedProperty().setValue(false);
@@ -1445,9 +1444,9 @@ public class MainController implements ScreenInterface {
         areaType.setSelected(false);
         pieType.setSelected(false);
         histogramType.setSelected(false);
+        pieChart.setLabelsVisible(false);
         barChart.setCategoryGap(1);
         barChart.setBarGap(1);
-        populateMetric(currentMetricDisplayed, currentStep);
     }
 
     private void changeToAreaChart() {
@@ -1478,6 +1477,7 @@ public class MainController implements ScreenInterface {
         areaType.setSelected(false);
         pieType.setSelected(true);
         histogramType.setSelected(false);
+        pieChart.setLabelsVisible(true);
     }
 
     private void changeToHistogram() {
@@ -1743,7 +1743,7 @@ public class MainController implements ScreenInterface {
                 lineChart.getData().add(campaignMetricLC);
                 barChart.getData().add(campaignMetricBC);
                 areaChart.getData().add(campaignMetricAC);
-                pieChart.setData(campaignMetricPC);
+                pieChart.getData().addAll(campaignMetricPC);
             }
         }
     }
@@ -1767,7 +1767,7 @@ public class MainController implements ScreenInterface {
             campaignMetricAC.getData().add(new XYChart.Data(simpleDateRep(e.getKey()), e.getValue()));
             campaignMetricBC.getData().add(new XYChart.Data(simpleDateRep(e.getKey()), e.getValue()));
 
-            campaignMetricPC.add(new PieChart.Data(e.getKey().toString(), e.getValue()));
+            campaignMetricPC.add(new PieChart.Data(simpleDateRep(e.getKey()), e.getValue()));
         }
     }
 
@@ -1777,16 +1777,10 @@ public class MainController implements ScreenInterface {
             campaignMetricAC.getData().add(new XYChart.Data(simpleDateRep(e.getKey()), e.getValue()));
             campaignMetricBC.getData().add(new XYChart.Data(simpleDateRep(e.getKey()), e.getValue()));
 
-            campaignMetricPC.add(new PieChart.Data(e.getKey().toString(), e.getValue()));
+            campaignMetricPC.add(new PieChart.Data(simpleDateRep(e.getKey()), e.getValue()));
         }
     }
 
-    private void addData(Date key, Integer value) {
-        campaignMetricLC.getData().add(new XYChart.Data(String.valueOf(key), value));
-        campaignMetricBC.getData().add(new XYChart.Data(String.valueOf(key), value));
-        campaignMetricAC.getData().add(new XYChart.Data(String.valueOf(key), value));
-        campaignMetricPC.add(new PieChart.Data(String.valueOf(key), value));
-    }
 
     private static <T> List<Map.Entry<Date, T>> sortMap(Map<Date, T> in) {
         List<Date> unsortedDates = new ArrayList<>();
