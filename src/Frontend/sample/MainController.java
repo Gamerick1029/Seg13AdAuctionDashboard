@@ -9,26 +9,33 @@ import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.chart.*;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.StageStyle;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by Yoana on 12/03/2018.
@@ -120,14 +127,6 @@ public class MainController implements ScreenInterface {
     private CheckMenuItem areaType;
     @FXML
     private CheckMenuItem histogramType;
-    @FXML
-    private MenuButton themes;
-    @FXML
-    private CheckMenuItem mintTheme;
-    @FXML
-    private CheckMenuItem lightTheme;
-    @FXML
-    private CheckMenuItem darkTheme;
     @FXML
     private RadioButton byDay;
     @FXML
@@ -513,28 +512,28 @@ public class MainController implements ScreenInterface {
             });
         }
         mintThemeOption.setOnAction(event -> {
-            mintTheme.setSelected(true);
-            lightTheme.setSelected(false);
-            darkTheme.setSelected(false);
             Main.scene.getStylesheets().clear();
             Main.scene.getStylesheets().add("Frontend/sample/mintTheme.css");
-            themes.setText("Mint Theme");
         });
         lightThemeOption.setOnAction(event -> {
-            mintTheme.setSelected(false);
-            lightTheme.setSelected(true);
-            darkTheme.setSelected(false);
             Main.scene.getStylesheets().clear();
             Main.scene.getStylesheets().add("Frontend/sample/lightTheme.css");
-            themes.setText("Light Theme");
         });
         darkThemeOption.setOnAction(event -> {
-            mintTheme.setSelected(false);
-            lightTheme.setSelected(false);
-            darkTheme.setSelected(true);
             Main.scene.getStylesheets().clear();
             Main.scene.getStylesheets().add("Frontend/sample/darkTheme.css");
-            themes.setText("Dark Theme");
+        });
+        timeSpent.setOnAction(event -> {
+
+        });
+        numberPages.setOnAction(event -> {
+
+        });
+        exportPNG.setOnAction(event -> {
+            exportToPNG();
+        });
+        print.setOnAction(event -> {
+
         });
         campaignsTable.setPrefSize(250, 225);
         campaignsTable.setPlaceholder(new Label("No campaigns loaded!"));
@@ -572,6 +571,50 @@ public class MainController implements ScreenInterface {
         );
         campaignsTable.getColumns().setAll(nameColumn, displayColumn, removeColumn);
 
+    }
+
+    private void exportToPNG() {
+        SnapshotParameters snap = new SnapshotParameters();
+        WritableImage writableImage = new WritableImage(100, 100);
+        WritableImage snapshot;
+        File output = new File("snapshot" + new Date().getTime() + ".png");
+        switch (currentChartType) {
+            case "BarChart":
+                snapshot = barChart.snapshot(new SnapshotParameters(), null);
+                try {
+                    ImageIO.write(SwingFXUtils.fromFXImage(snapshot, null), "png", output);
+                } catch (IOException e) {
+                    Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, e);
+                }
+                break;
+            case "LineChart":
+                snapshot = lineChart.snapshot(new SnapshotParameters(), null);
+                try {
+                    ImageIO.write(SwingFXUtils.fromFXImage(snapshot, null), "png", output);
+                } catch (IOException e) {
+                    Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, e);
+                }
+                break;
+            case "AreaChart":
+                snapshot = areaChart.snapshot(new SnapshotParameters(), null);
+                try {
+                    ImageIO.write(SwingFXUtils.fromFXImage(snapshot, null), "png", output);
+                } catch (IOException e) {
+                    Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, e);
+                }
+                break;
+            case "PieChart":
+                snapshot = pieChart.snapshot(new SnapshotParameters(), null);
+                try {
+                    ImageIO.write(SwingFXUtils.fromFXImage(snapshot, null), "png", output);
+                } catch (IOException e) {
+                    Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, e);
+                }
+                break;
+            case "Histogram":
+                snapshot = barChart.snapshot(new SnapshotParameters(), null);
+                break;
+        }
     }
 
     @FXML
