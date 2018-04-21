@@ -1,4 +1,4 @@
-package Frontend.sample;
+package Frontend;
 
 import Backend.Model.Interfaces.DataModel;
 import Backend.Model.Interfaces.Step;

@@ -1,4 +1,4 @@
-package Frontend.sample;
+package Frontend;
 
 /**
  * Created by Yoana on 25/02/2018.

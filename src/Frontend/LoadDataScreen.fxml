@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Text?>
 
 
-<ScrollPane fitToHeight="true" fitToWidth="true" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Frontend.sample.LoadDataController">
+<ScrollPane fitToHeight="true" fitToWidth="true" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Frontend.LoadDataController">
    <content>
       <HBox alignment="TOP_CENTER" style="-fx-background-color: #595454;">
           <padding>

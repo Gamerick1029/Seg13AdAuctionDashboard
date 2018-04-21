@@ -1,4 +1,4 @@
-package Frontend.sample;
+package Frontend;
 
 import Backend.DBHelper;
 import Backend.Model.CampaignModelDB;
