@@ -77,7 +77,7 @@ public class CampaignDataPopulator {
                 campaignImpressionsAC.getData().add(new XYChart.Data(simpleDateRep(entry.getKey()), entry.getValue()));
                 campaignImpressionsBC.getData().add(new XYChart.Data(simpleDateRep(entry.getKey()), entry.getValue()));
                 campaignHistogram.getData().add(new XYChart.Data(simpleDateRep(entry.getKey()), entry.getValue()));
-                campaignImpressionsPC.add(new PieChart.Data(String.valueOf(key), value));
+                campaignImpressionsPC.add(new PieChart.Data(simpleDateRep(key), value));
             }
             lineChart.getData().add(campaignImpressionsLC);
             barChart.setBarGap(3);
