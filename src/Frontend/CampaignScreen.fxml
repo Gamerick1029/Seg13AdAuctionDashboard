@@ -537,7 +537,6 @@
                            <children>
                                   <CheckBox id="checkBox" fx:id="genderFemale" mnemonicParsing="false" text="Female" />
                                   <CheckBox id="checkBox" fx:id="genderMale" mnemonicParsing="false" text="Male " GridPane.columnIndex="1" />
-                                  <CheckBox id="checkBox" fx:id="genderOther" mnemonicParsing="false" text="Other" visible="false" GridPane.rowIndex="1" />
                            </children>
                            <VBox.margin>
                               <Insets />

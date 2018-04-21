@@ -136,8 +136,6 @@ public class MainController implements ScreenInterface {
     @FXML
     private CheckBox genderFemale;
     @FXML
-    private CheckBox genderOther;
-    @FXML
     private CheckBox ageBelow25;
     @FXML
     private CheckBox age25to34;
@@ -328,7 +326,6 @@ public class MainController implements ScreenInterface {
 
         genderMale.setSelected(true);
         genderFemale.setSelected(true);
-        genderOther.setSelected(true);
         ageBelow25.setSelected(true);
         age25to34.setSelected(true);
         age35to44.setSelected(true);
@@ -364,13 +361,6 @@ public class MainController implements ScreenInterface {
                 updateCurrentFilter("genderFemale", true);
             } else {
                 updateCurrentFilter("genderFemale", false);
-            }
-        });
-        genderOther.setOnAction(r -> {
-            if (genderOther.isSelected()) {
-                updateCurrentFilter("genderOther", true);
-            } else {
-                updateCurrentFilter("genderOther", false);
             }
         });
         ageBelow25.setOnAction(r -> {
@@ -546,9 +536,7 @@ public class MainController implements ScreenInterface {
 
         filters.put(filterOne.getText(), new Filter());
         filterOne.setOnAction(t -> {
-            filterDropDown.setText(filterOne.getText());
-            currentFilter = filters.get(filterOne.getText());
-            setFilter(filterOne.getText());
+            changeFilter(filterOne);
         });
 
         filterDropDown.setText(filterOne.getText());
@@ -627,9 +615,7 @@ public class MainController implements ScreenInterface {
                 addFilterToMap(s);
                 CheckMenuItem newFilter = new CheckMenuItem(s);
                 newFilter.setOnAction(t -> {
-                    filterDropDown.setText(newFilter.getText());
-                    currentFilter = filters.get(newFilter.getText());
-                    setFilter(newFilter.getText());
+                    changeFilter(newFilter);
                 });
 
                 filterDropDown.setText(newFilter.getText());
@@ -638,6 +624,16 @@ public class MainController implements ScreenInterface {
                 filterDropDown.getItems().add(newFilter);
             }
         }
+    }
+
+    private void changeFilter(CheckMenuItem newFilter) {
+        for (MenuItem menuItem : filterDropDown.getItems()) {
+            ((CheckMenuItem) menuItem).setSelected(false);
+        }
+        newFilter.setSelected(true);
+        filterDropDown.setText(newFilter.getText());
+        currentFilter = filters.get(newFilter.getText());
+        setFilter(newFilter.getText());
     }
 
     private void addFilterToMap(String filterName) {
@@ -651,9 +647,10 @@ public class MainController implements ScreenInterface {
         for (String filterName : filters.keySet()) {
             CheckMenuItem cmi = new CheckMenuItem(filterName);
             cmi.setOnAction(a -> {
-                //TODO: show on graph
+               changeFilter(cmi);
             });
             filterDropDown.getItems().add(cmi);
+            filterDropDown.setText(cmi.getText());
         }
     }
 
@@ -661,7 +658,6 @@ public class MainController implements ScreenInterface {
         Filter filter = filters.get(f);
         genderMale.setSelected(filter.genderMale);
         genderFemale.setSelected(filter.genderFemale);
-        genderOther.setSelected(filter.genderOther);
         ageBelow25.setSelected(filter.ageBelow25);
         age25to34.setSelected(filter.age25to34);
         age35to44.setSelected(filter.age35to44);
@@ -1272,7 +1268,6 @@ public class MainController implements ScreenInterface {
     private void resetAll() {
         genderMale.setSelected(false);
         genderFemale.setSelected(false);
-        genderOther.setSelected(false);
         ageBelow25.setSelected(false);
         age25to34.setSelected(false);
         age35to44.setSelected(false);
@@ -1312,7 +1307,6 @@ public class MainController implements ScreenInterface {
     private void selectAll() {
         genderMale.setSelected(true);
         genderFemale.setSelected(true);
-        genderOther.setSelected(true);
         ageBelow25.setSelected(true);
         age25to34.setSelected(true);
         age35to44.setSelected(true);
