@@ -1,4 +1,4 @@
-package Frontend.sample;
+package Frontend;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;

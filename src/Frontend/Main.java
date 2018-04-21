@@ -1,4 +1,4 @@
-package Frontend.sample;
+package Frontend;
 
 import Backend.DBHelper;
 import javafx.application.Application;
@@ -7,10 +7,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by Yoana on 25/02/2018.
@@ -55,7 +51,7 @@ public class Main extends Application {
         Group root = new Group();
         root.getChildren().addAll(mainContainer);
         scene = new Scene(root);
-        scene.getStylesheets().add("Frontend/sample/darkTheme.css");
+        scene.getStylesheets().add("Frontend/darkTheme.css");
         primaryStage.setScene(scene);
         primaryStage.setTitle("Ad Auction Dashboard");
         primaryStage.show();

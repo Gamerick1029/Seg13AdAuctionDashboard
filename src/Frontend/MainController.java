@@ -1,4 +1,4 @@
-package Frontend.sample;
+package Frontend;
 
 import Backend.DBHelper;
 import Backend.Model.CampaignModelDB;
@@ -12,7 +12,6 @@ import javafx.collections.transformation.SortedList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.chart.*;
 import javafx.scene.control.*;
@@ -26,8 +25,7 @@ import javafx.stage.StageStyle;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -138,8 +136,6 @@ public class MainController implements ScreenInterface {
     @FXML
     private CheckBox genderFemale;
     @FXML
-    private CheckBox genderOther;
-    @FXML
     private CheckBox ageBelow25;
     @FXML
     private CheckBox age25to34;
@@ -186,6 +182,16 @@ public class MainController implements ScreenInterface {
     @FXML
     private Text searchDate;
     @FXML
+    private MenuButton filterDropDown;
+    @FXML
+    private CheckMenuItem filterOne;
+    @FXML
+    private Button applyFilters;
+    @FXML
+    private Button addFilter;
+    @FXML
+    private Button removeFilter;
+    @FXML
     private MenuItem timeSpent;
     @FXML
     private MenuItem numberPages;
@@ -205,7 +211,6 @@ public class MainController implements ScreenInterface {
     private XYChart.Series campaignMetricAC;
     private XYChart.Series histogramSeries;
     private ObservableList<PieChart.Data> campaignMetricPC;
-    private Scene scene;
 
     private Campaign currentCampaign = new Campaign("");
     private String currentMetricDisplayed = "Impressions";
@@ -214,6 +219,8 @@ public class MainController implements ScreenInterface {
     private List<Campaign> campaignsLoaded = new ArrayList<>();
     private HashMap<String, File> files = new HashMap<>();
     private HashMap<String, Filter> filters = new HashMap<>();
+    private Filter currentFilter;
+
     @Override
     public void setScreenParent(ScreensController parent) {
         this.myController = parent;
@@ -221,10 +228,6 @@ public class MainController implements ScreenInterface {
                 uniquesF, bouncesF, conversionsF, totalCostF, CTRF, CPAF, CPCF, CPMF, bounceRateF));
         myController.setCampaignDataPopulator(new CampaignDataPopulator(x, y, lineChart, barChart, pieChart, areaChart));
         impressions.setStyle("-fx-font-weight: bold;");
-//        lineChart.animatedProperty().setValue(false);
-//        barChart.animatedProperty().setValue(false);
-//        pieChart.animatedProperty().setValue(false);
-//        areaChart.animatedProperty().setValue(false);
         currentCampaign.getDisplayed().addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
                     x.animatedProperty().setValue(false);
@@ -298,6 +301,7 @@ public class MainController implements ScreenInterface {
         histogramType.setOnAction(t -> {
             changeToHistogram();
         });
+
         byDay.setOnAction(r -> {
             currentStep = Step.DAY;
             byDay.setSelected(true);
@@ -319,9 +323,9 @@ public class MainController implements ScreenInterface {
             byDay.setSelected(false);
             groupByStep();
         });
+
         genderMale.setSelected(true);
         genderFemale.setSelected(true);
-        genderOther.setSelected(true);
         ageBelow25.setSelected(true);
         age25to34.setSelected(true);
         age35to44.setSelected(true);
@@ -347,121 +351,114 @@ public class MainController implements ScreenInterface {
                 });
         genderMale.setOnAction(r -> {
             if (genderMale.isSelected()) {
-                filterGraph("genderMale", true);
+                updateCurrentFilter("genderMale", true);
             } else {
-                filterGraph("genderMale", false);
+                updateCurrentFilter("genderMale", false);
             }
         });
         genderFemale.setOnAction(r -> {
             if (genderFemale.isSelected()) {
-                filterGraph("genderFemale", true);
+                updateCurrentFilter("genderFemale", true);
             } else {
-                filterGraph("genderFemale", false);
-            }
-        });
-        genderOther.setOnAction(r -> {
-            if (genderOther.isSelected()) {
-                filterGraph("genderOther", true);
-            } else {
-                filterGraph("genderOther", false);
+                updateCurrentFilter("genderFemale", false);
             }
         });
         ageBelow25.setOnAction(r -> {
             if (ageBelow25.isSelected()) {
-                filterGraph("ageBelow25", true);
+                updateCurrentFilter("ageBelow25", true);
             } else {
-                filterGraph("ageBelow25", false);
+                updateCurrentFilter("ageBelow25", false);
             }
         });
         age25to34.setOnAction(r -> {
             if (age25to34.isSelected()) {
-                filterGraph("age25to34", true);
+                updateCurrentFilter("age25to34", true);
             } else {
-                filterGraph("age25to34", false);
+                updateCurrentFilter("age25to34", false);
             }
         });
         age35to44.setOnAction(r -> {
             if (age35to44.isSelected()) {
-                filterGraph("age35to44", true);
+                updateCurrentFilter("age35to44", true);
             } else {
-                filterGraph("age35to44", false);
+                updateCurrentFilter("age35to44", false);
             }
         });
         age45to54.setOnAction(r -> {
             if (age45to54.isSelected()) {
-                filterGraph("age45to54", true);
+                updateCurrentFilter("age45to54", true);
             } else {
-                filterGraph("age45to54", false);
+                updateCurrentFilter("age45to54", false);
             }
         });
         ageAbove54.setOnAction(r -> {
             if (ageAbove54.isSelected()) {
-                filterGraph("ageAbove54", true);
+                updateCurrentFilter("ageAbove54", true);
             } else {
-                filterGraph("ageAbove54", false);
+                updateCurrentFilter("ageAbove54", false);
             }
         });
         incomeLow.setOnAction(r -> {
             if (incomeLow.isSelected()) {
-                filterGraph("incomeLow", true);
+                updateCurrentFilter("incomeLow", true);
             } else {
-                filterGraph("incomeLow", false);
+                updateCurrentFilter("incomeLow", false);
             }
         });
         incomeMedium.setOnAction(r -> {
             if (incomeMedium.isSelected()) {
-                filterGraph("incomeMedium", true);
+                updateCurrentFilter("incomeMedium", true);
             } else {
-                filterGraph("incomeMedium", false);
+                updateCurrentFilter("incomeMedium", false);
             }
         });
         incomeHigh.setOnAction(r -> {
             if (incomeHigh.isSelected()) {
-                filterGraph("incomeHigh", true);
+                updateCurrentFilter("incomeHigh", true);
             } else {
-                filterGraph("incomeHigh", false);
+                updateCurrentFilter("incomeHigh", false);
             }
         });
         contextNews.setOnAction(r -> {
             if (contextNews.isSelected()) {
-                filterGraph("contextNews", true);
+                updateCurrentFilter("contextNews", true);
             } else {
-                filterGraph("contextNews", false);
+                updateCurrentFilter("contextNews", false);
             }
         });
         contextShopping.setOnAction(r -> {
             if (contextShopping.isSelected()) {
-                filterGraph("contextShopping", true);
+                updateCurrentFilter("contextShopping", true);
             } else {
-                filterGraph("contextShopping", false);
+                updateCurrentFilter("contextShopping", false);
             }
         });
         contextMedia.setOnAction(r -> {
             if (contextMedia.isSelected()) {
-                filterGraph("contextMedia", true);
+                updateCurrentFilter("contextMedia", true);
             } else {
-                filterGraph("contextMedia", false);
+                updateCurrentFilter("contextMedia", false);
             }
         });
         contextBlog.setOnAction(r -> {
             if (contextBlog.isSelected()) {
-                filterGraph("contextBlog", true);
+                updateCurrentFilter("contextBlog", true);
             } else {
-                filterGraph("contextBlog", false);
+                updateCurrentFilter("contextBlog", false);
             }
         });
         contextHobbies.setOnAction(r -> {
             if (contextHobbies.isSelected()) {
-                filterGraph("contextHobbies", true);
+                updateCurrentFilter("contextHobbies", true);
             } else {
-                filterGraph("contextHobbies", false);
+                updateCurrentFilter("contextHobbies", false);
             }
         });
         contextTravel.setOnAction(r -> {
             if (contextTravel.isSelected()) {
-                filterGraph("contextTravel", true);
+                updateCurrentFilter("contextTravel", true);
             } else {
-                filterGraph("contextTravel", false);
+                updateCurrentFilter("contextTravel", false);
             }
         });
         searchDate.addEventHandler(MouseEvent.MOUSE_CLICKED,
@@ -510,30 +507,55 @@ public class MainController implements ScreenInterface {
                 endMonth.setText(month.getText());
             });
         }
+
         mintThemeOption.setOnAction(event -> {
             Main.scene.getStylesheets().clear();
-            Main.scene.getStylesheets().add("Frontend/sample/mintTheme.css");
+            Main.scene.getStylesheets().add("Frontend/mintTheme.css");
         });
         lightThemeOption.setOnAction(event -> {
             Main.scene.getStylesheets().clear();
-            Main.scene.getStylesheets().add("Frontend/sample/lightTheme.css");
+            Main.scene.getStylesheets().add("Frontend/lightTheme.css");
         });
         darkThemeOption.setOnAction(event -> {
             Main.scene.getStylesheets().clear();
-            Main.scene.getStylesheets().add("Frontend/sample/darkTheme.css");
+            Main.scene.getStylesheets().add("Frontend/darkTheme.css");
         });
-        timeSpent.setOnAction(event -> {
 
+        timeSpent.setOnAction(event -> {
+            chooseTimeSpent();
         });
         numberPages.setOnAction(event -> {
-
+            chooseNumberOfPages();
         });
         exportPNG.setOnAction(event -> {
             exportToPNG();
         });
         print.setOnAction(event -> {
-
+            printPDF();
         });
+
+        filters.put(filterOne.getText(), new Filter());
+        filterOne.setOnAction(t -> {
+            changeFilter(filterOne);
+        });
+
+        filterDropDown.setText(filterOne.getText());
+        applyFilters.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                e -> {
+                    populateMetric(currentMetricDisplayed, currentStep);
+                    setMetrics(campaignName.getText());
+                });
+        removeFilter.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                e -> {
+                    if (filterDropDown.getItems().size() > 1) {
+                        removeFilterFromMap(filterDropDown.getText());
+                    }
+                });
+        addFilter.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                e -> {
+                    addNewFilter();
+                });
+
         campaignsTable.setPrefSize(250, 225);
         campaignsTable.setPlaceholder(new Label("No campaigns loaded!"));
         //campaignsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -569,7 +591,88 @@ public class MainController implements ScreenInterface {
                 new PropertyValueFactory<>("remove")
         );
         campaignsTable.getColumns().setAll(nameColumn, displayColumn, removeColumn);
+    }
 
+    private void addNewFilter() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.initStyle(StageStyle.UTILITY);
+        alert.setTitle("Add New Filter");
+        GridPane content = new GridPane();
+        content.setPrefSize(100, 50);
+        Label label = new Label("Input Filter Name:");
+        TextField textField = new TextField();
+        textField.setPromptText("Filter Name...");
+        content.add(label, 0, 0);
+        content.add(textField, 0, 1);
+        alert.getDialogPane().setContent(content);
+        alert.showAndWait();
+        if (alert.getResult() == ButtonType.OK) {
+            if (Objects.equals(textField.getText(), "")) {
+                alert.setHeaderText("You need to input filter name!");
+                alert.showAndWait();
+            } else {
+                String s = "Filter " + textField.getText();
+                addFilterToMap(s);
+                CheckMenuItem newFilter = new CheckMenuItem(s);
+                newFilter.setOnAction(t -> {
+                    changeFilter(newFilter);
+                });
+
+                filterDropDown.setText(newFilter.getText());
+                currentFilter = filters.get(newFilter.getText());
+                setFilter(newFilter.getText());
+                filterDropDown.getItems().add(newFilter);
+            }
+        }
+    }
+
+    private void changeFilter(CheckMenuItem newFilter) {
+        for (MenuItem menuItem : filterDropDown.getItems()) {
+            ((CheckMenuItem) menuItem).setSelected(false);
+        }
+        newFilter.setSelected(true);
+        filterDropDown.setText(newFilter.getText());
+        currentFilter = filters.get(newFilter.getText());
+        setFilter(newFilter.getText());
+    }
+
+    private void addFilterToMap(String filterName) {
+        Filter filter = new Filter();
+        filters.put(filterName, filter);
+    }
+
+    private void removeFilterFromMap(String s) {
+        filters.remove(s);
+        filterDropDown.getItems().clear();
+        for (String filterName : filters.keySet()) {
+            CheckMenuItem cmi = new CheckMenuItem(filterName);
+            cmi.setOnAction(a -> {
+               changeFilter(cmi);
+            });
+            filterDropDown.getItems().add(cmi);
+            filterDropDown.setText(cmi.getText());
+        }
+    }
+
+    private void setFilter(String f) {
+        Filter filter = filters.get(f);
+        genderMale.setSelected(filter.genderMale);
+        genderFemale.setSelected(filter.genderFemale);
+        ageBelow25.setSelected(filter.ageBelow25);
+        age25to34.setSelected(filter.age25to34);
+        age35to44.setSelected(filter.age35to44);
+        age45to54.setSelected(filter.age45to54);
+        ageAbove54.setSelected(filter.ageAbove54);
+        incomeLow.setSelected(filter.incomeLow);
+        incomeMedium.setSelected(filter.incomeMedium);
+        incomeHigh.setSelected(filter.incomeHigh);
+        contextNews.setSelected(filter.contextNews);
+        contextShopping.setSelected(filter.contextShopping);
+        contextMedia.setSelected(filter.contextMedia);
+        contextBlog.setSelected(filter.contextBlog);
+        contextHobbies.setSelected(filter.contextHobbies);
+        contextTravel.setSelected(filter.contextTravel);
+        setMetrics(campaignName.getText());
     }
 
     private void exportToPNG() {
@@ -633,6 +736,74 @@ public class MainController implements ScreenInterface {
                 }
                 break;
         }
+    }
+
+    private void printPDF() {
+        Writer bw = null;
+        try {
+            bw = new BufferedWriter(new OutputStreamWriter(
+                    new FileOutputStream("file" + new Date().getTime() + ".txt"), "utf-8"));
+            bw.write("Current campaign: " + campaignName.getText() + "\n");
+            bw.write("Impressions: " + impressionsF.getText() + "\n");
+            bw.write("Clicks: " + clicksF.getText() + "\n");
+            bw.write("Uniques: " + uniquesF.getText() + "\n");
+            bw.write("Bounces: " + bouncesF.getText() + "\n");
+            bw.write("Conversions: " + conversionsF.getText() + "\n");
+            bw.write("Total Cost: " + totalCostF.getText() + "\n");
+            bw.write("Click Through Rate: " + CTRF.getText() + "\n");
+            bw.write("Cost per Acquisition: " + CPAF.getText() + "\n");
+            bw.write("Cost per Click: " + CPCF.getText() + "\n");
+            bw.write("Click per Million Impressions: " + CPMF.getText() + "\n");
+            bw.write("Bounce Rate: " + bounceRateF.getText() + "\n");
+            /*Node node = new Circle(100, 200, 200);
+            PrinterJob job = PrinterJob.createPrinterJob();
+            if (job != null) {
+                boolean success = job.printPage(node);
+                if (success) {
+                    job.endJob();
+                }
+            }*/
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                bw.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void chooseTimeSpent() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.initStyle(StageStyle.UTILITY);
+        alert.setHeaderText("Please specify spent on the website: ");
+        alert.setTitle("Bounce Rate Settings");
+        GridPane content = new GridPane();
+        content.setPrefSize(400, 200);
+        content.add(new Label("Time"), 0, 0);
+        TextField time = new TextField();
+        time.setPromptText("Time");
+        content.add(time, 0, 1);
+
+        alert.getDialogPane().setContent(content);
+        alert.showAndWait();
+    }
+
+    private void chooseNumberOfPages() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.initStyle(StageStyle.UTILITY);
+        alert.setHeaderText("Please specify number of pages: ");
+        alert.setTitle("Bounce Rate Settings");
+        GridPane content = new GridPane();
+        content.setPrefSize(400, 200);
+        content.add(new Label("Number of pages"), 0, 0);
+        TextField number = new TextField();
+        number.setPromptText("Time");
+        content.add(number, 0, 1);
+
+        alert.getDialogPane().setContent(content);
+        alert.showAndWait();
     }
 
     @FXML
@@ -1097,7 +1268,6 @@ public class MainController implements ScreenInterface {
     private void resetAll() {
         genderMale.setSelected(false);
         genderFemale.setSelected(false);
-        genderOther.setSelected(false);
         ageBelow25.setSelected(false);
         age25to34.setSelected(false);
         age35to44.setSelected(false);
@@ -1137,7 +1307,6 @@ public class MainController implements ScreenInterface {
     private void selectAll() {
         genderMale.setSelected(true);
         genderFemale.setSelected(true);
-        genderOther.setSelected(true);
         ageBelow25.setSelected(true);
         age25to34.setSelected(true);
         age35to44.setSelected(true);
@@ -1174,213 +1343,128 @@ public class MainController implements ScreenInterface {
         populateMetric(currentMetricDisplayed, currentStep);
     }
 
-    private void filterGraph(String name, Boolean filter) {
+    private void updateCurrentFilter(String name, Boolean filter) {
         System.out.println("Filtering...");
         System.out.println(name);
         switch (name) {
             case "age25to34":
                 if (filter) {
-                    for (DataModel dataModel : myController.getDataModelMap().values()) {
-                        dataModel.getFilter().age25to34 = true;
-                    }
+                    currentFilter.age25to34 = true;
                 } else {
-                    for (DataModel dataModel : myController.getDataModelMap().values()) {
-                        dataModel.getFilter().age25to34 = false;
-                    }
+                    currentFilter.age25to34 = false;
                 }
-                populateMetric(currentMetricDisplayed, currentStep);
                 break;
             case "age35to44":
                 if (filter) {
-                    for (DataModel dataModel : myController.getDataModelMap().values()) {
-                        dataModel.getFilter().age35to44 = true;
-                    }
+                    currentFilter.age35to44 = true;
                 } else {
-                    for (DataModel dataModel : myController.getDataModelMap().values()) {
-                        dataModel.getFilter().age35to44 = false;
-                    }
+                    currentFilter.age35to44 = false;
                 }
-                populateMetric(currentMetricDisplayed, currentStep);
                 break;
             case "age45to54":
                 if (filter) {
-                    for (DataModel dataModel : myController.getDataModelMap().values()) {
-                        dataModel.getFilter().age45to54 = true;
-                    }
+                    currentFilter.age45to54 = true;
                 } else {
-                    for (DataModel dataModel : myController.getDataModelMap().values()) {
-                        dataModel.getFilter().age45to54 = false;
-                    }
+                    currentFilter.age45to54 = false;
                 }
-                populateMetric(currentMetricDisplayed, currentStep);
                 break;
             case "ageBelow20":
                 if (filter) {
-                    for (DataModel dataModel : myController.getDataModelMap().values()) {
-                        dataModel.getFilter().ageBelow25 = true;
-                    }
+                    currentFilter.ageBelow25 = true;
                 } else {
-                    for (DataModel dataModel : myController.getDataModelMap().values()) {
-                        dataModel.getFilter().ageBelow25 = false;
-                    }
+                    currentFilter.ageBelow25 = false;
                 }
-                populateMetric(currentMetricDisplayed, currentStep);
                 break;
             case "ageAbove54":
                 if (filter) {
-                    for (DataModel dataModel : myController.getDataModelMap().values()) {
-                        dataModel.getFilter().ageAbove54 = true;
-                    }
+                    currentFilter.ageAbove54 = true;
                 } else {
-                    for (DataModel dataModel : myController.getDataModelMap().values()) {
-                        dataModel.getFilter().ageAbove54 = false;
-                    }
+                    currentFilter.ageAbove54 = false;
                 }
-                populateMetric(currentMetricDisplayed, currentStep);
                 break;
             case "genderFemale":
                 if (filter) {
-                    for (DataModel dataModel : myController.getDataModelMap().values()) {
-                        dataModel.getFilter().genderFemale = true;
-                    }
+                    currentFilter.genderFemale = true;
                 } else {
-                    for (DataModel dataModel : myController.getDataModelMap().values()) {
-                        dataModel.getFilter().genderFemale = false;
-                    }
+                    currentFilter.genderFemale = false;
                 }
-                populateMetric(currentMetricDisplayed, currentStep);
                 break;
             case "genderMale":
                 if (filter) {
-                    for (DataModel dataModel : myController.getDataModelMap().values()) {
-                        dataModel.getFilter().genderMale = true;
-                    }
+                    currentFilter.genderMale = true;
                 } else {
-                    for (DataModel dataModel : myController.getDataModelMap().values()) {
-                        dataModel.getFilter().genderMale = false;
-                    }
+                    currentFilter.genderMale = false;
                 }
-                populateMetric(currentMetricDisplayed, currentStep);
                 break;
             case "genderOther":
                 if (filter) {
-                    for (DataModel dataModel : myController.getDataModelMap().values()) {
-                        dataModel.getFilter().genderOther = true;
-                    }
+                    currentFilter.genderOther = true;
                 } else {
-                    for (DataModel dataModel : myController.getDataModelMap().values()) {
-                        dataModel.getFilter().genderOther = false;
-                    }
+                    currentFilter.genderOther = false;
                 }
-                populateMetric(currentMetricDisplayed, currentStep);
                 break;
             case "incomeLow":
                 if (filter) {
-                    for (DataModel dataModel : myController.getDataModelMap().values()) {
-                        dataModel.getFilter().incomeLow = true;
-                    }
+                    currentFilter.incomeLow = true;
                 } else {
-                    for (DataModel dataModel : myController.getDataModelMap().values()) {
-                        dataModel.getFilter().incomeLow = false;
-                    }
+                    currentFilter.incomeLow = false;
                 }
-                populateMetric(currentMetricDisplayed, currentStep);
                 break;
             case "incomeMedium":
                 if (filter) {
-                    for (DataModel dataModel : myController.getDataModelMap().values()) {
-                        dataModel.getFilter().incomeMedium = true;
-                    }
+                    currentFilter.incomeMedium = true;
                 } else {
-                    for (DataModel dataModel : myController.getDataModelMap().values()) {
-                        dataModel.getFilter().incomeMedium = false;
-                    }
+                    currentFilter.incomeMedium = false;
                 }
-                populateMetric(currentMetricDisplayed, currentStep);
                 break;
             case "incomeHigh":
                 if (filter) {
-                    for (DataModel dataModel : myController.getDataModelMap().values()) {
-                        dataModel.getFilter().incomeHigh = true;
-                    }
+                    currentFilter.incomeHigh = true;
                 } else {
-                    for (DataModel dataModel : myController.getDataModelMap().values()) {
-                        dataModel.getFilter().incomeHigh = false;
-                    }
+                    currentFilter.incomeHigh = false;
                 }
-                populateMetric(currentMetricDisplayed, currentStep);
                 break;
             case "contextNews":
                 if (filter) {
-                    for (DataModel dataModel : myController.getDataModelMap().values()) {
-                        dataModel.getFilter().contextNews = true;
-                    }
+                    currentFilter.contextNews = true;
                 } else {
-                    for (DataModel dataModel : myController.getDataModelMap().values()) {
-                        dataModel.getFilter().contextNews = false;
-                    }
+                    currentFilter.contextNews = false;
                 }
-                populateMetric(currentMetricDisplayed, currentStep);
                 break;
             case "contextShopping":
                 if (filter) {
-                    for (DataModel dataModel : myController.getDataModelMap().values()) {
-                        dataModel.getFilter().contextShopping = true;
-                    }
+                    currentFilter.contextShopping = true;
                 } else {
-                    for (DataModel dataModel : myController.getDataModelMap().values()) {
-                        dataModel.getFilter().contextShopping = false;
-                    }
+                    currentFilter.contextShopping = false;
                 }
-                populateMetric(currentMetricDisplayed, currentStep);
                 break;
             case "contextMedia":
                 if (filter) {
-                    for (DataModel dataModel : myController.getDataModelMap().values()) {
-                        dataModel.getFilter().contextMedia = true;
-                    }
+                    currentFilter.contextMedia = true;
                 } else {
-                    for (DataModel dataModel : myController.getDataModelMap().values()) {
-                        dataModel.getFilter().contextMedia = false;
-                    }
+                    currentFilter.contextMedia = false;
                 }
-                populateMetric(currentMetricDisplayed, currentStep);
                 break;
             case "contextBlog":
                 if (filter) {
-                    for (DataModel dataModel : myController.getDataModelMap().values()) {
-                        dataModel.getFilter().contextBlog = true;
-                    }
+                    currentFilter.contextBlog = true;
                 } else {
-                    for (DataModel dataModel : myController.getDataModelMap().values()) {
-                        dataModel.getFilter().contextBlog = false;
-                    }
+                    currentFilter.contextBlog = false;
                 }
-                populateMetric(currentMetricDisplayed, currentStep);
                 break;
             case "contextHobbies":
                 if (filter) {
-                    for (DataModel dataModel : myController.getDataModelMap().values()) {
-                        dataModel.getFilter().contextHobbies = true;
-                    }
+                    currentFilter.contextHobbies = true;
                 } else {
-                    for (DataModel dataModel : myController.getDataModelMap().values()) {
-                        dataModel.getFilter().contextHobbies = false;
-                    }
+                    currentFilter.contextHobbies = false;
                 }
-                populateMetric(currentMetricDisplayed, currentStep);
                 break;
             case "contextTravel":
                 if (filter) {
-                    for (DataModel dataModel : myController.getDataModelMap().values()) {
-                        dataModel.getFilter().contextTravel = true;
-                    }
+                    currentFilter.contextTravel = true;
                 } else {
-                    for (DataModel dataModel : myController.getDataModelMap().values()) {
-                        dataModel.getFilter().contextTravel = false;
-                    }
+                    currentFilter.contextTravel = false;
                 }
-                populateMetric(currentMetricDisplayed, currentStep);
                 break;
         }
     }
@@ -1444,7 +1528,6 @@ public class MainController implements ScreenInterface {
         areaType.setSelected(false);
         pieType.setSelected(false);
         histogramType.setSelected(false);
-        pieChart.setLabelsVisible(false);
         barChart.setCategoryGap(1);
         barChart.setBarGap(1);
     }
@@ -1795,4 +1878,5 @@ public class MainController implements ScreenInterface {
         //ObservableList<XYChart.Data> myout = FXCollections.observableList(output);
         return output;
     }
+
 }
