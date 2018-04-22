@@ -2,8 +2,7 @@ package Backend.Model.Interfaces;
 
 import java.util.Date;
 
-public class Filter
-{
+public class Filter {
     /*
     No type safety issues with booleans, so these can be publicly accessible
      */
@@ -39,8 +38,7 @@ public class Filter
     /*
     By default, filter allows everything;
      */
-    public Filter()
-    {
+    public Filter() {
         age25to34 = true;
         age35to44 = true;
         age45to54 = true;
@@ -70,27 +68,23 @@ public class Filter
         endDate = null;
     }
 
-    public Date getStartDate()
-    {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate)
-    {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate()
-    {
+    public Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate)
-    {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 
-    public void clearAll(){
+    public void clearAll() {
         age25to34 = false;
         age35to44 = false;
         age45to54 = false;

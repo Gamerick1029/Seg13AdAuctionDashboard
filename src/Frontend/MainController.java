@@ -838,7 +838,7 @@ public class MainController implements ScreenInterface {
         content.setPrefSize(300, 50);
         content.add(new Label("Please specify time spent on website: "), 0, 0);
         TextField time = new TextField();
-        time.setPromptText("Time...");
+        time.setPromptText("Seconds");
         content.add(time, 0, 1);
 
         alert.getDialogPane().setContent(content);
@@ -847,6 +847,11 @@ public class MainController implements ScreenInterface {
         if (alert.getResult() == ButtonType.OK) {
             if (time.getText().equals("")) {
                 chooseTimeSpent("Please input a time!");
+            } else if (!time.getText().matches("[0-9]+")) {
+                chooseNumberOfPages("Field can contain digits only!");
+            } else {
+                Filter.bounceRateByPages = false;
+                Filter.timeOnSiteForBounce = Integer.parseInt(time.getText());
             }
         }
     }
@@ -860,7 +865,7 @@ public class MainController implements ScreenInterface {
         content.setPrefSize(300, 50);
         content.add(new Label("Please specify number of pages: "), 0, 0);
         TextField number = new TextField();
-        number.setPromptText("Number of pages...");
+        number.setPromptText("Number of pages");
         content.add(number, 0, 1);
 
         alert.getDialogPane().setContent(content);
@@ -869,8 +874,11 @@ public class MainController implements ScreenInterface {
         if (alert.getResult() == ButtonType.OK) {
             if (number.getText().equals("")) {
                 chooseNumberOfPages("Please input a number!");
+            } else if (!number.getText().matches("[0-9]+")) {
+                chooseNumberOfPages("Field can contain digits only!");
             } else {
-
+                Filter.bounceRateByPages = true;
+                Filter.pagesViewedForBounce = Integer.parseInt(number.getText());
             }
         }
     }
