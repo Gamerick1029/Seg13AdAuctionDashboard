@@ -146,6 +146,15 @@ public class CampaignModelDB implements DataModel{
         return campaignName + DBHelper.serverLogTableSuffix;
     }
 
+    private String bounceCon() {
+        if (Filter.bounceRateByPages){
+            return "PagesViewed <= " + Filter.pagesViewedForBounce;
+        } else {
+            return "TIMESTAMPDIFF(SECOND, EntryDate, ExitDate) <= " + Filter.timeOnSiteForBounce;
+        }
+    }
+
+
     /**
      *
      * @param rs
@@ -277,6 +286,8 @@ public class CampaignModelDB implements DataModel{
         return trimTrailingOperators(sb.toString());
     }
 
+
+
     //Public methods
 
     @Override
@@ -354,7 +365,7 @@ public class CampaignModelDB implements DataModel{
         String select = "COUNT(*)";
         String from = servTable();
         String joins = makeJoins(servTable(), impTable(), userTable());
-        String where = "PagesViewed <= 1";
+        String where = bounceCon();
         ResultSet rs = buildAndExecuteStatement(select, from, joins, where, "");
 
         rs.next();
@@ -369,10 +380,10 @@ public class CampaignModelDB implements DataModel{
      */
     @Override
     public Map<Date, Integer> getFullBounces(Step step) throws SQLException {
-        String select = "DATE_FORMAT(EntryDate, " + stepToDate(step) +") AS Dated, COUNT(PagesViewed <= 1)";
+        String select = "DATE_FORMAT(EntryDate, " + stepToDate(step) +") AS Dated, COUNT(*)";
         String from = servTable();
         String joins = makeJoins(servTable(), impTable(), userTable());
-        String where = "";
+        String where = bounceCon();
         ResultSet rs = buildAndExecuteStatement(select, from, joins, where, "GROUP BY `Dated`");
 
         return getDateToInt(rs, step);

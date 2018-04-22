@@ -38,16 +38,13 @@ public class TestMain {
 //
 //        ReadCSVsToDB.makeCampaign(dbh, "JUnit", JUnitClicks, JUnitImpressions, JUnitServerLogs);
 //
-        CampaignModelDB cmdt = new CampaignModelDB("test8");
+        CampaignModelDB cmdt = new CampaignModelDB("JUnit");
 
-        Filter filter = new Filter();
-        filter.setStartDate(sdf.parse("2015-01-03 00:00:00"));
-        filter.setEndDate(sdf.parse("2016-01-01 00:00:00"));
-        filter.step = Step.WEEK;
+        Filter.bounceRateByPages = false;
+        Filter.timeOnSiteForBounce = 10;
 
-        cmdt.setFilter(filter);
-
-        System.out.println(cmdt.getFullImpressions(Step.MONTH));
+        System.out.println(cmdt.getBouncesNumber());
+        System.out.println(cmdt.getFullBounces(Step.DAY));
 
 //        System.out.println(cmdt.getImpressionsNumber());
 //        System.out.println(cmdt.getClicksNumber());
