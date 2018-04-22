@@ -532,10 +532,10 @@ public class MainController implements ScreenInterface {
         });
 
         timeSpent.setOnAction(event -> {
-            chooseTimeSpent();
+            chooseTimeSpent("");
         });
         numberPages.setOnAction(event -> {
-            chooseNumberOfPages();
+            chooseNumberOfPages("");
         });
         exportPNG.setOnAction(event -> {
             exportToPNG(event);
@@ -555,8 +555,7 @@ public class MainController implements ScreenInterface {
         filterDropDown.setText(filterOne.getText());
         applyFilters.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
-                    populateMetric(currentMetricDisplayed, currentStep);
-                    setMetrics(campaignName.getText());
+                    applyFilters();
                 });
         removeFilter.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
@@ -603,6 +602,11 @@ public class MainController implements ScreenInterface {
                 new PropertyValueFactory<>("remove")
         );
         campaignsTable.getColumns().setAll(nameColumn, displayColumn, removeColumn);
+    }
+
+    private void applyFilters() {
+        populateMetric(currentMetricDisplayed, currentStep);
+        setMetrics(campaignName.getText());
     }
 
     private void addNewFilter() {
@@ -773,7 +777,7 @@ public class MainController implements ScreenInterface {
     }
 
     private void setScene(MouseEvent event) {
-        this.node = (Node)event.getSource();
+        this.node = (Node) event.getSource();
     }
 
     private void showUpdate() {
@@ -825,36 +829,50 @@ public class MainController implements ScreenInterface {
         }
     }
 
-    private void chooseTimeSpent() {
+    private void chooseTimeSpent(String s) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.initStyle(StageStyle.UTILITY);
-        alert.setHeaderText("Please specify spent on the website: ");
+        alert.setHeaderText(s);
         alert.setTitle("Bounce Rate Settings");
         GridPane content = new GridPane();
-        content.setPrefSize(400, 200);
-        content.add(new Label("Time"), 0, 0);
+        content.setPrefSize(300, 50);
+        content.add(new Label("Please specify time spent on website: "), 0, 0);
         TextField time = new TextField();
-        time.setPromptText("Time");
+        time.setPromptText("Time...");
         content.add(time, 0, 1);
 
         alert.getDialogPane().setContent(content);
         alert.showAndWait();
+
+        if (alert.getResult() == ButtonType.OK) {
+            if (time.getText().equals("")) {
+                chooseTimeSpent("Please input a time!");
+            }
+        }
     }
 
-    private void chooseNumberOfPages() {
+    private void chooseNumberOfPages(String s) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.initStyle(StageStyle.UTILITY);
-        alert.setHeaderText("Please specify number of pages: ");
+        alert.setHeaderText(s);
         alert.setTitle("Bounce Rate Settings");
         GridPane content = new GridPane();
-        content.setPrefSize(400, 200);
-        content.add(new Label("Number of pages"), 0, 0);
+        content.setPrefSize(300, 50);
+        content.add(new Label("Please specify number of pages: "), 0, 0);
         TextField number = new TextField();
-        number.setPromptText("Time");
+        number.setPromptText("Number of pages...");
         content.add(number, 0, 1);
 
         alert.getDialogPane().setContent(content);
         alert.showAndWait();
+
+        if (alert.getResult() == ButtonType.OK) {
+            if (number.getText().equals("")) {
+                chooseNumberOfPages("Please input a number!");
+            } else {
+
+            }
+        }
     }
 
     @FXML
@@ -1129,7 +1147,7 @@ public class MainController implements ScreenInterface {
         alert.initStyle(StageStyle.UTILITY);
         alert.setTitle("Warning");
         GridPane content = new GridPane();
-        content.setPrefSize(150, 50);
+        content.setPrefSize(350, 50);
         Label label = new Label("Are you sure you want to delete this campaign permanently?");
         content.add(label, 0, 0);
         alert.getDialogPane().setContent(content);
