@@ -10,8 +10,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.chart.*;
 import javafx.scene.control.*;
@@ -20,11 +22,16 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+
+import javafx.event.ActionEvent;
+
 import java.io.*;
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -198,6 +205,8 @@ public class MainController implements ScreenInterface {
     @FXML
     private MenuItem exportPNG;
     @FXML
+    private MenuBar myMenuBar;
+    @FXML
     private MenuItem print;
     @FXML
     private MenuItem darkThemeOption;
@@ -212,6 +221,7 @@ public class MainController implements ScreenInterface {
     private XYChart.Series histogramSeries;
     private ObservableList<PieChart.Data> campaignMetricPC;
 
+    private Node node;
     private Campaign currentCampaign = new Campaign("");
     private String currentMetricDisplayed = "Impressions";
     private String currentChartType = "LineChart";
@@ -528,12 +538,15 @@ public class MainController implements ScreenInterface {
             chooseNumberOfPages();
         });
         exportPNG.setOnAction(event -> {
-            exportToPNG();
+            exportToPNG(event);
         });
         print.setOnAction(event -> {
             printPDF();
         });
 
+        myMenuBar.setOnMouseEntered(event -> {
+            setScene(event);
+        });
         filters.put(filterOne.getText(), new Filter());
         filterOne.setOnAction(t -> {
             changeFilter(filterOne);
@@ -675,7 +688,7 @@ public class MainController implements ScreenInterface {
         setMetrics(campaignName.getText());
     }
 
-    private void exportToPNG() {
+    private void exportToPNG(ActionEvent event) {
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.initStyle(StageStyle.UTILITY);
@@ -697,10 +710,17 @@ public class MainController implements ScreenInterface {
             } else {
                 s = "Filter " + textField.getText();
 
+                DirectoryChooser chooser = new DirectoryChooser();
+                chooser.setTitle("Select Directory");
+                File defaultDirectory = new File("c://");
+                chooser.setInitialDirectory(defaultDirectory);
+                File selectedDirectory = chooser.showDialog(node.getScene().getWindow());
+
                 SnapshotParameters snap = new SnapshotParameters();
                 WritableImage writableImage = new WritableImage(100, 100);
                 WritableImage snapshot;
-                File output = new File("snapshot_" + s + ".png");
+                File output = new File(selectedDirectory.getPath() + "/" + s + ".png");
+
                 switch (currentChartType) {
                     case "BarChart":
                         snapshot = barChart.snapshot(new SnapshotParameters(), null);
@@ -752,10 +772,15 @@ public class MainController implements ScreenInterface {
         }
     }
 
-    private void showUpdate(){
+    private void setScene(MouseEvent event) {
+        this.node = (Node)event.getSource();
+    }
+
+    private void showUpdate() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.initStyle(StageStyle.UTILITY);
         alert.setTitle("Update");
+        alert.setHeaderText("");
         GridPane content = new GridPane();
         content.setPrefSize(300, 50);
         Label label = new Label("Image saved!");
@@ -1109,7 +1134,7 @@ public class MainController implements ScreenInterface {
         content.add(label, 0, 0);
         alert.getDialogPane().setContent(content);
         alert.showAndWait();
-        if (alert.getResult() == ButtonType.OK){
+        if (alert.getResult() == ButtonType.OK) {
             campaignsLoaded.remove(currentCampaign);
             campaignsTable.getItems().remove(currentCampaign);
             myController.removeDataModel(currentCampaign.getName());
