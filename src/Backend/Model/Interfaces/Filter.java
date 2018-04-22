@@ -29,6 +29,10 @@ public class Filter
     public boolean contextTravel;
     public Step step;
 
+    public static int pagesViewedForBounce = 1;
+    public static int timeOnSiteForBounce = 10;
+    public static boolean bounceRateByPages = true;
+
     private Date startDate;
     private Date endDate;
 
