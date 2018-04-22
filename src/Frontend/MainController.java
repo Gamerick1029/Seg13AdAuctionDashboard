@@ -12,6 +12,7 @@ import javafx.collections.transformation.SortedList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.print.PrinterJob;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
@@ -801,6 +802,14 @@ public class MainController implements ScreenInterface {
     }
 
     private void printPDF() {
+
+        /*PrinterJob job = PrinterJob.createPrinterJob();
+        if(job != null){
+            job.showPrintDialog(node.getScene().getWindow());
+            job.printPage(node);
+            job.endJob();
+        }*/
+
         Writer bw = null;
         String fileName = "file" + new Date().getTime() + ".txt";
         try {
