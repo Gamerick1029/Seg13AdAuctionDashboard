@@ -28,7 +28,14 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import javax.imageio.ImageIO;
+import javax.print.*;
+import javax.print.attribute.HashPrintRequestAttributeSet;
+import javax.print.attribute.PrintRequestAttributeSet;
+import javax.print.attribute.standard.Copies;
+import javax.print.attribute.standard.MediaSize;
+import javax.print.attribute.standard.Sides;
 import javax.swing.*;
+import javax.swing.text.Document;
 
 import javafx.event.ActionEvent;
 
@@ -795,9 +802,10 @@ public class MainController implements ScreenInterface {
 
     private void printPDF() {
         Writer bw = null;
+        String fileName = "file" + new Date().getTime() + ".txt";
         try {
             bw = new BufferedWriter(new OutputStreamWriter(
-                    new FileOutputStream("file" + new Date().getTime() + ".txt"), "utf-8"));
+                    new FileOutputStream(fileName), "utf-8"));
             bw.write("Current campaign: " + campaignName.getText() + "\n");
             bw.write("Impressions: " + impressionsF.getText() + "\n");
             bw.write("Clicks: " + clicksF.getText() + "\n");
@@ -810,15 +818,43 @@ public class MainController implements ScreenInterface {
             bw.write("Cost per Click: " + CPCF.getText() + "\n");
             bw.write("Click per Million Impressions: " + CPMF.getText() + "\n");
             bw.write("Bounce Rate: " + bounceRateF.getText() + "\n");
-            /*Node node = new Circle(100, 200, 200);
-            PrinterJob job = PrinterJob.createPrinterJob();
-            if (job != null) {
-                boolean success = job.printPage(node);
-                if (success) {
-                    job.endJob();
+
+            FileInputStream textStream;
+            textStream = new FileInputStream(fileName);
+
+            DocFlavor flavor = DocFlavor.INPUT_STREAM.AUTOSENSE;
+            Doc mydoc = new SimpleDoc(textStream, flavor, null);
+
+            PrintRequestAttributeSet aset = new HashPrintRequestAttributeSet();
+            aset.add(new Copies(5));
+            //aset.add(MediaSize.A4);
+            aset.add(Sides.DUPLEX);
+
+            PrintService[] services = PrintServiceLookup.lookupPrintServices(
+                    flavor, aset);
+            PrintService defaultService = PrintServiceLookup.lookupDefaultPrintService();
+
+            if (services.length == 0) {
+                System.out.println("No services...");
+                if (defaultService == null) {
+                    System.out.println("Cannot find printer!");
+                } else {
+                    System.out.println("Printing...");
+
+                    DocPrintJob job = defaultService.createPrintJob();
+                    job.print(mydoc, aset);
                 }
-            }*/
+            } else {
+                PrintService service = ServiceUI.printDialog(null, 200, 200, services, defaultService, flavor, aset);
+
+                if (service != null) {
+                    DocPrintJob job = service.createPrintJob();
+                    job.print(mydoc, null);
+                }
+            }
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (PrintException e) {
             e.printStackTrace();
         } finally {
             try {
