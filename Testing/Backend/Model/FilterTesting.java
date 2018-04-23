@@ -25,6 +25,64 @@ public class FilterTesting extends TestCase {
         }
     }
 
+    public void testGetImpressionsNumberAllFilters() {
+        try {
+            cm.getFilter().genderMale = true;
+            cm.getFilter().genderFemale = true;
+            cm.getFilter().genderOther = true;
+            cm.getFilter().contextShopping = true;
+            cm.getFilter().contextHobbies = true;
+            cm.getFilter().contextTravel = true;
+            cm.getFilter().incomeLow = true;
+            cm.getFilter().incomeMedium = true;
+            cm.getFilter().incomeHigh = true;
+            cm.getFilter().ageBelow25 = true;
+            cm.getFilter().age25to34 = true;
+            cm.getFilter().age35to44 = true;
+            cm.getFilter().age45to54 = true;
+            cm.getFilter().ageAbove54 = true;
+            cm.getFilter().contextNews = true;
+            cm.getFilter().contextMedia = true;
+            cm.getFilter().contextBlog = true;
+            cm.setFilter(cm.getFilter());
+            Assert.assertEquals(10, cm.getImpressionsNumber());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void testGetImpressionsNumberNoFilter() {
+        try {
+            cm.getFilter().genderMale = false;
+            cm.getFilter().genderFemale = false;
+            cm.getFilter().genderOther = false;
+            cm.getFilter().contextShopping = false;
+            cm.getFilter().contextHobbies = false;
+            cm.getFilter().contextTravel = false;
+            cm.getFilter().incomeLow = false;
+            cm.getFilter().incomeMedium = false;
+            cm.getFilter().incomeHigh = false;
+            cm.getFilter().ageBelow25 = false;
+            cm.getFilter().age25to34 = false;
+            cm.getFilter().age35to44 = false;
+            cm.getFilter().age45to54 = false;
+            cm.getFilter().ageAbove54 = false;
+            cm.getFilter().contextNews = false;
+            cm.getFilter().contextMedia = false;
+            cm.getFilter().contextBlog = false;
+            cm.getFilter().setStartDate(null);
+            cm.getFilter().setEndDate(null);
+            cm.setFilter(cm.getFilter());
+            Assert.assertEquals(10, cm.getImpressionsNumber());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+
     public void testGetImpressionsNumberNoMale() {
         try {
             cm.getFilter().genderMale = false;

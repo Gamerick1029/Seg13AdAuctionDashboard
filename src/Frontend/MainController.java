@@ -6,6 +6,7 @@ import Backend.Model.Interfaces.DataModel;
 import Backend.Model.Interfaces.Filter;
 import Backend.Model.Interfaces.Step;
 import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
@@ -36,6 +37,8 @@ import javax.print.attribute.standard.Copies;
 import javax.print.attribute.standard.MediaSize;
 import javax.print.attribute.standard.Sides;
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.text.Document;
 
 import javafx.event.ActionEvent;
@@ -507,6 +510,124 @@ public class MainController implements ScreenInterface {
         endMonth.getItems().add(new CheckMenuItem("November"));
         startMonth.getItems().add(new CheckMenuItem("December"));
         endMonth.getItems().add(new CheckMenuItem("December"));
+
+        // Remove alphabetical and symbol input for numerical Fields
+        startDay.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")  ) {
+               startDay.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+            System.out.println("textfield changed from " + oldValue + " to " + newValue);
+        });
+        endDay.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")  ) {
+                endDay.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+            System.out.println("textfield changed from " + oldValue + " to " + newValue);
+        });
+        startYear.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")  ) {
+                startYear.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+
+        });
+        endYear.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")  ) {
+                endYear.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+
+        });
+
+
+
+        // Remove alphabetical and symbol input for numerical Fields
+        startDay.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.length() > 2 || newValue == "00"  ) {
+                startDay.setText("01");
+            }
+            System.out.println("textfield changed from " + oldValue + " to " + newValue);
+        });
+        endDay.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.length() > 2 || newValue == "00")  {
+                endDay.setText("01");
+            }
+            System.out.println("textfield changed from " + oldValue + " to " + newValue);
+        });
+        startYear.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.length() > 4  ) {
+                startYear.setText(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
+            }
+            System.out.println("textfield changed from " + oldValue + " to " + newValue);
+        });
+        endYear.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.length() > 4 ) {
+                endYear.setText(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
+            }
+            System.out.println("textfield changed from " + oldValue + " to " + newValue);
+        });
+        startYear.textProperty().addListener((observable, oldValue, newValue) -> {
+            if ( Integer.valueOf(newValue) > Calendar.getInstance().get(Calendar.YEAR) ) {
+                startYear.setText(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
+            }
+            System.out.println("textfield changed from " + oldValue + " to " + newValue);
+        });
+        endYear.textProperty().addListener((observable, oldValue, newValue) -> {
+            if ( Integer.valueOf(newValue) > Calendar.getInstance().get(Calendar.YEAR)) {
+                endYear.setText(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
+            }
+            System.out.println("textfield changed from " + oldValue + " to " + newValue);
+        });
+        startDay.textProperty().addListener((observable, oldValue, newValue) -> {
+            if ( Integer.valueOf(newValue) > 31  ){
+                startDay.setText("01");
+            }
+        });
+        endDay.textProperty().addListener((observable, oldValue, newValue) -> {
+            if ( Integer.valueOf(newValue) > 31  ){
+                endDay.setText("01");
+            }
+        });
+        startDay.textProperty().addListener((observable, oldValue, newValue) -> {
+
+            if ( Integer.valueOf(newValue) > 30 && (startMonth.textProperty().getValue() == "April" || startMonth.textProperty().getValue() == "June" || startMonth.textProperty().getValue() == "September" || startMonth.textProperty().getValue() == "November" )){
+                startDay.setText("30");
+            } else if (Integer.valueOf(startYear.getText()) % 4 == 0 && Integer.valueOf(newValue) > 29 && (startMonth.textProperty().getValue() == "February")){
+                startDay.setText("29");
+            } else if (Integer.valueOf(startYear.getText()) % 4 != 0 && Integer.valueOf(newValue) > 28 && (startMonth.textProperty().getValue() == "February")){
+                startDay.setText("28");
+            }
+
+        });
+
+        endDay.textProperty().addListener((observable, oldValue, newValue) -> {
+
+            if ( Integer.valueOf(newValue) > 30 && (endMonth.textProperty().getValue() == "April" || endMonth.textProperty().getValue() == "June" || endMonth.textProperty().getValue() == "September" || endMonth.textProperty().getValue() == "November" )){
+                endDay.setText("30");
+            } else if (Integer.valueOf(endYear.getText()) % 4 == 0 && Integer.valueOf(newValue) > 29 && (endMonth.textProperty().getValue() == "February")){
+                endDay.setText("29");
+            } else if (Integer.valueOf(endYear.getText()) % 4 != 0 && Integer.valueOf(newValue) > 28 && (endMonth.textProperty().getValue() == "February")){
+                endDay.setText("28");
+            }
+
+        });
+
+        endDay.textProperty().addListener((observable, oldValue, newValue) -> {
+            if ( Integer.valueOf(newValue) > 31 ){
+                endDay.setText("30");
+            }
+        });
+
+        startDay.textProperty().addListener((observable, oldValue, newValue) -> {
+            if ( newValue.matches("00") ){
+                startDay.setText("01");
+            }
+
+        });
+        endDay.textProperty().addListener((observable, oldValue, newValue) -> {
+            if ( newValue.matches("00") ){
+                endDay.setText("01");
+            }
+        });
+
         for (MenuItem month : startMonth.getItems()) {
             month.setOnAction(r -> {
                 for (MenuItem startMonth : startMonth.getItems()) {
@@ -1281,16 +1402,33 @@ public class MainController implements ScreenInterface {
             content.add(l, 0, 1);
             alert.getDialogPane().setContent(content);
             alert.showAndWait();
-        } else if (startDay.getText().length() != 2 || startYear.getText().length() != 4) {
+        } else if ( Integer.valueOf(startYear.getText()) < 1975) {
             alert.setHeaderText("Invalid start date!");
             label = new Label("Please input a valid start date.");
-            Label l = new Label("Number of required digits for day: 2.");
-            Label ll = new Label("Number of required digits for year: 4.");
+            Label l = new Label("Year should not be below 1975.");
             content.add(label, 0, 0);
             content.add(l, 0, 1);
-            content.add(ll, 0, 2);
             alert.getDialogPane().setContent(content);
             alert.showAndWait();
+        } else if ( Integer.valueOf(endYear.getText()) < 1975 ) {
+            alert.setHeaderText("Invalid end date!");
+            label = new Label("Please input a valid end date.");
+            Label l = new Label("Year should not be below 1975.");
+            content.add(label, 0, 0);
+            content.add(l, 0, 1);
+            alert.getDialogPane().setContent(content);
+            alert.showAndWait();
+
+    }   else if (startDay.getText().length() != 2 || startYear.getText().length() != 4) {
+                alert.setHeaderText("Invalid start date!");
+                label = new Label("Please input a valid start date.");
+                Label l = new Label("Number of required digits for day: 2.");
+                Label ll = new Label("Number of required digits for year: 4.");
+                content.add(label, 0, 0);
+                content.add(l, 0, 1);
+                content.add(ll, 0, 2);
+                alert.getDialogPane().setContent(content);
+                alert.showAndWait();
         } else if (endDay.getText().length() != 2 || endYear.getText().length() != 4) {
             alert.setHeaderText("Invalid end date!");
             label = new Label("Please input a valid end date.");

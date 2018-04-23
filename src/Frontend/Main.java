@@ -52,6 +52,7 @@ public class Main extends Application {
         root.getChildren().addAll(mainContainer);
         scene = new Scene(root);
         scene.getStylesheets().add("Frontend/darkTheme.css");
+
         primaryStage.setScene(scene);
         primaryStage.setTitle("Ad Auction Dashboard");
         primaryStage.show();
