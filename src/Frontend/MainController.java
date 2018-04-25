@@ -6,16 +6,13 @@ import Backend.Model.Interfaces.DataModel;
 import Backend.Model.Interfaces.Filter;
 import Backend.Model.Interfaces.Step;
 import javafx.beans.property.ReadOnlyStringWrapper;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
 import javafx.embed.swing.SwingFXUtils;
-import javafx.event.Event;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.print.PrinterJob;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.chart.*;
 import javafx.scene.control.*;
@@ -26,7 +23,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import javax.imageio.ImageIO;
@@ -34,15 +30,8 @@ import javax.print.*;
 import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.PrintRequestAttributeSet;
 import javax.print.attribute.standard.Copies;
-import javax.print.attribute.standard.MediaSize;
 import javax.print.attribute.standard.Sides;
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.text.Document;
-
-import javafx.event.ActionEvent;
-
 import java.io.*;
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -61,7 +50,7 @@ import java.util.logging.Logger;
 public class MainController implements ScreenInterface {
 
     private ScreensController myController;
-    //    private DBHelper dbHelper;
+    private DBHelper dbHelper;
     private File currentImpressions;
     private File currentClick;
     private File currentServer;
@@ -200,6 +189,8 @@ public class MainController implements ScreenInterface {
     @FXML
     private Text searchDate;
     @FXML
+    private MenuButton loadExistingCampaign;
+    @FXML
     private MenuButton filterDropDown;
     @FXML
     private CheckMenuItem filterOne;
@@ -249,16 +240,13 @@ public class MainController implements ScreenInterface {
                 uniquesF, bouncesF, conversionsF, totalCostF, CTRF, CPAF, CPCF, CPMF, bounceRateF));
         myController.setCampaignDataPopulator(new CampaignDataPopulator(x, y, lineChart, barChart, pieChart, areaChart));
         impressions.setStyle("-fx-font-weight: bold;");
+        currentFilter = new Filter();
         currentCampaign.getDisplayed().addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
-                    x.animatedProperty().setValue(false);
-                    y.animatedProperty().setValue(false);
                     showMetric(currentMetricDisplayed);
                 });
         currentCampaign.getRemove().addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
-                    x.animatedProperty().setValue(false);
-                    y.animatedProperty().setValue(false);
                     removeCampaign();
                 });
 
@@ -323,6 +311,7 @@ public class MainController implements ScreenInterface {
             changeToHistogram();
         });
 
+
         byDay.setOnAction(r -> {
             currentStep = Step.DAY;
             byDay.setSelected(true);
@@ -361,6 +350,20 @@ public class MainController implements ScreenInterface {
         contextBlog.setSelected(true);
         contextHobbies.setSelected(true);
         contextTravel.setSelected(true);
+
+        dbHelper = new DBHelper();
+        try {
+            for (String s : dbHelper.getCampaigns()) {
+                //if (campaignsLoaded.contains(s))
+                MenuItem menuItem = new MenuItem(s);
+                menuItem.setOnAction(e -> {
+                    addCampaign(menuItem.getText(), false);
+                });
+                loadExistingCampaign.getItems().add(menuItem);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         reset.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
@@ -513,86 +516,85 @@ public class MainController implements ScreenInterface {
 
         // Remove alphabetical and symbol input for numerical Fields
         startDay.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d*")  ) {
-               startDay.setText(newValue.replaceAll("[^\\d]", ""));
+            if (!newValue.matches("\\d*")) {
+                startDay.setText(newValue.replaceAll("[^\\d]", ""));
             }
             System.out.println("textfield changed from " + oldValue + " to " + newValue);
         });
         endDay.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d*")  ) {
+            if (!newValue.matches("\\d*")) {
                 endDay.setText(newValue.replaceAll("[^\\d]", ""));
             }
             System.out.println("textfield changed from " + oldValue + " to " + newValue);
         });
         startYear.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d*")  ) {
+            if (!newValue.matches("\\d*")) {
                 startYear.setText(newValue.replaceAll("[^\\d]", ""));
             }
 
         });
         endYear.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d*")  ) {
+            if (!newValue.matches("\\d*")) {
                 endYear.setText(newValue.replaceAll("[^\\d]", ""));
             }
 
         });
 
 
-
         // Remove alphabetical and symbol input for numerical Fields
         startDay.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue.length() > 2 || newValue == "00"  ) {
+            if (newValue.length() > 2 || newValue == "00") {
                 startDay.setText("01");
             }
             System.out.println("textfield changed from " + oldValue + " to " + newValue);
         });
         endDay.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue.length() > 2 || newValue == "00")  {
+            if (newValue.length() > 2 || newValue == "00") {
                 endDay.setText("01");
             }
             System.out.println("textfield changed from " + oldValue + " to " + newValue);
         });
         startYear.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue.length() > 4  ) {
+            if (newValue.length() > 4) {
                 startYear.setText(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
             }
             System.out.println("textfield changed from " + oldValue + " to " + newValue);
         });
         endYear.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue.length() > 4 ) {
+            if (newValue.length() > 4) {
                 endYear.setText(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
             }
             System.out.println("textfield changed from " + oldValue + " to " + newValue);
         });
         startYear.textProperty().addListener((observable, oldValue, newValue) -> {
-            if ( Integer.valueOf(newValue) > Calendar.getInstance().get(Calendar.YEAR) ) {
+            if (Integer.valueOf(newValue) > Calendar.getInstance().get(Calendar.YEAR)) {
                 startYear.setText(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
             }
             System.out.println("textfield changed from " + oldValue + " to " + newValue);
         });
         endYear.textProperty().addListener((observable, oldValue, newValue) -> {
-            if ( Integer.valueOf(newValue) > Calendar.getInstance().get(Calendar.YEAR)) {
+            if (Integer.valueOf(newValue) > Calendar.getInstance().get(Calendar.YEAR)) {
                 endYear.setText(String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
             }
             System.out.println("textfield changed from " + oldValue + " to " + newValue);
         });
         startDay.textProperty().addListener((observable, oldValue, newValue) -> {
-            if ( Integer.valueOf(newValue) > 31  ){
+            if (Integer.valueOf(newValue) > 31) {
                 startDay.setText("01");
             }
         });
         endDay.textProperty().addListener((observable, oldValue, newValue) -> {
-            if ( Integer.valueOf(newValue) > 31  ){
+            if (Integer.valueOf(newValue) > 31) {
                 endDay.setText("01");
             }
         });
         startDay.textProperty().addListener((observable, oldValue, newValue) -> {
 
-            if ( Integer.valueOf(newValue) > 30 && (startMonth.textProperty().getValue() == "April" || startMonth.textProperty().getValue() == "June" || startMonth.textProperty().getValue() == "September" || startMonth.textProperty().getValue() == "November" )){
+            if (Integer.valueOf(newValue) > 30 && (startMonth.textProperty().getValue() == "April" || startMonth.textProperty().getValue() == "June" || startMonth.textProperty().getValue() == "September" || startMonth.textProperty().getValue() == "November")) {
                 startDay.setText("30");
-            } else if (Integer.valueOf(startYear.getText()) % 4 == 0 && Integer.valueOf(newValue) > 29 && (startMonth.textProperty().getValue() == "February")){
+            } else if (Integer.valueOf(startYear.getText()) % 4 == 0 && Integer.valueOf(newValue) > 29 && (startMonth.textProperty().getValue() == "February")) {
                 startDay.setText("29");
-            } else if (Integer.valueOf(startYear.getText()) % 4 != 0 && Integer.valueOf(newValue) > 28 && (startMonth.textProperty().getValue() == "February")){
+            } else if (Integer.valueOf(startYear.getText()) % 4 != 0 && Integer.valueOf(newValue) > 28 && (startMonth.textProperty().getValue() == "February")) {
                 startDay.setText("28");
             }
 
@@ -600,30 +602,30 @@ public class MainController implements ScreenInterface {
 
         endDay.textProperty().addListener((observable, oldValue, newValue) -> {
 
-            if ( Integer.valueOf(newValue) > 30 && (endMonth.textProperty().getValue() == "April" || endMonth.textProperty().getValue() == "June" || endMonth.textProperty().getValue() == "September" || endMonth.textProperty().getValue() == "November" )){
+            if (Integer.valueOf(newValue) > 30 && (endMonth.textProperty().getValue() == "April" || endMonth.textProperty().getValue() == "June" || endMonth.textProperty().getValue() == "September" || endMonth.textProperty().getValue() == "November")) {
                 endDay.setText("30");
-            } else if (Integer.valueOf(endYear.getText()) % 4 == 0 && Integer.valueOf(newValue) > 29 && (endMonth.textProperty().getValue() == "February")){
+            } else if (Integer.valueOf(endYear.getText()) % 4 == 0 && Integer.valueOf(newValue) > 29 && (endMonth.textProperty().getValue() == "February")) {
                 endDay.setText("29");
-            } else if (Integer.valueOf(endYear.getText()) % 4 != 0 && Integer.valueOf(newValue) > 28 && (endMonth.textProperty().getValue() == "February")){
+            } else if (Integer.valueOf(endYear.getText()) % 4 != 0 && Integer.valueOf(newValue) > 28 && (endMonth.textProperty().getValue() == "February")) {
                 endDay.setText("28");
             }
 
         });
 
         endDay.textProperty().addListener((observable, oldValue, newValue) -> {
-            if ( Integer.valueOf(newValue) > 31 ){
+            if (Integer.valueOf(newValue) > 31) {
                 endDay.setText("30");
             }
         });
 
         startDay.textProperty().addListener((observable, oldValue, newValue) -> {
-            if ( newValue.matches("00") ){
+            if (newValue.matches("00")) {
                 startDay.setText("01");
             }
 
         });
         endDay.textProperty().addListener((observable, oldValue, newValue) -> {
-            if ( newValue.matches("00") ){
+            if (newValue.matches("00")) {
                 endDay.setText("01");
             }
         });
@@ -943,10 +945,10 @@ public class MainController implements ScreenInterface {
             bw.write("Bounces: " + bouncesF.getText() + "\n");
             bw.write("Conversions: " + conversionsF.getText() + "\n");
             bw.write("Total Cost: " + totalCostF.getText() + "\n");
-            bw.write("Click Through Rate: " + CTRF.getText() + "\n");
+            bw.write("Click through Rate: " + CTRF.getText() + "\n");
             bw.write("Cost per Acquisition: " + CPAF.getText() + "\n");
             bw.write("Cost per Click: " + CPCF.getText() + "\n");
-            bw.write("Click per Million Impressions: " + CPMF.getText() + "\n");
+            bw.write("Click per Thousand Impressions: " + CPMF.getText() + "\n");
             bw.write("Bounce Rate: " + bounceRateF.getText() + "\n");
 
             FileInputStream textStream;
@@ -1174,47 +1176,65 @@ public class MainController implements ScreenInterface {
                 addNewCampaign(event);
             } else { // If a campaign is loaded correctly:
                 files.clear();
-                Campaign campaign = new Campaign(campaignNameF.getText());
-                // add EventHandlers for the Displayed CheckBox button and the Remove button
-                campaign.getDisplayed().addEventHandler(MouseEvent.MOUSE_CLICKED,
-                        e -> {
-                            showMetric(currentMetricDisplayed);
-                        });
-                campaign.getRemove().addEventHandler(MouseEvent.MOUSE_CLICKED,
-                        e -> {
-                            removeCampaign();
-                        });
-                //Adding the new campaign to the Campaigns table
-                campaignsLoaded.add(campaign);
-                //Adding a new CheckMenuItem for the new campaign
-                campaignsTable.getItems().add(campaign);
-                //Adding a new Data Model to ScreensController
-                DataModel dataModel = null;
-                try {
-                    dataModel = new CampaignModelDB(campaign.getName(), currentImpressions, currentClick, currentServer);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                myController.addDataModel(campaign.getName(), dataModel);
-                populateMetric(currentMetricDisplayed, currentStep);
-                //Creating a new CheckMenuItem for the new campaign
-                CheckMenuItem checkMenuItem = new CheckMenuItem(campaignNameF.getText());
-                //Adding an EventHandler for the new CheckMenuItem
-                //OnSelected, set the rest of the CheckMenuItems to false and the selected one to true
-                //and set the metric fields with the selected campaign's data
-                checkMenuItem.setOnAction(t -> {
-                    for (MenuItem menuItem : campaignName.getItems()) {
-                        ((CheckMenuItem) menuItem).setSelected(false);
-                    }
-                    checkMenuItem.setSelected(true);
-                    setMetrics(checkMenuItem.getText());
-                });
-                //Adding the new CheckMenuItem to the MenuButton for the current campaignsLoaded
-                campaignName.getItems().add(checkMenuItem);
-                setMetrics(campaignNameF.getText());
+                addCampaign(campaignNameF.getText(), true);
             }
         }
     }
+
+    private void addCampaign(String name, Boolean source) {
+        Campaign campaign = new Campaign(name);
+        campaign.getDisplayed().setSelected(true);
+        // add EventHandlers for the Displayed CheckBox button and the Remove button
+        campaign.getDisplayed().addEventHandler(MouseEvent.MOUSE_CLICKED,
+                e -> {
+                    showMetric(currentMetricDisplayed);
+                });
+        campaign.getRemove().addEventHandler(MouseEvent.MOUSE_CLICKED,
+                e -> {
+                    removeCampaign();
+                });
+        //Adding the new campaign to the Campaigns table
+        campaignsLoaded.add(campaign);
+        //Adding a new CheckMenuItem for the new campaign
+        campaignsTable.getItems().add(campaign);
+        //Adding a new Data Model to ScreensController
+        //Source - if a new campaign is being created - True
+        // if an existing one is loaded - False
+        if (source) {
+            DataModel dataModel = null;
+            try {
+                dataModel = new CampaignModelDB(campaign.getName(), currentImpressions, currentClick, currentServer);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            myController.addDataModel(campaign.getName(), dataModel);
+        } else {
+            DataModel dataModel = null;
+            try {
+                dataModel = new CampaignModelDB(name);
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            myController.addDataModel(name, dataModel);
+        }
+        populateMetric(currentMetricDisplayed, currentStep);
+        //Creating a new CheckMenuItem for the new campaign
+        CheckMenuItem checkMenuItem = new CheckMenuItem(name);
+        //Adding an EventHandler for the new CheckMenuItem
+        //OnSelected, set the rest of the CheckMenuItems to false and the selected one to true
+        //and set the metric fields with the selected campaign's data
+        checkMenuItem.setOnAction(t -> {
+            for (MenuItem menuItem : campaignName.getItems()) {
+                ((CheckMenuItem) menuItem).setSelected(false);
+            }
+            checkMenuItem.setSelected(true);
+            setMetrics(checkMenuItem.getText());
+        });
+        //Adding the new CheckMenuItem to the MenuButton for the current campaignsLoaded
+        campaignName.getItems().add(checkMenuItem);
+        setMetrics(name);
+    }
+
 
     private String displayFileChooser(MouseEvent e, String logType) {
         Node node = (Node) e.getSource();
@@ -1402,7 +1422,7 @@ public class MainController implements ScreenInterface {
             content.add(l, 0, 1);
             alert.getDialogPane().setContent(content);
             alert.showAndWait();
-        } else if ( Integer.valueOf(startYear.getText()) < 1975) {
+        } else if (Integer.valueOf(startYear.getText()) < 1975) {
             alert.setHeaderText("Invalid start date!");
             label = new Label("Please input a valid start date.");
             Label l = new Label("Year should not be below 1975.");
@@ -1410,7 +1430,7 @@ public class MainController implements ScreenInterface {
             content.add(l, 0, 1);
             alert.getDialogPane().setContent(content);
             alert.showAndWait();
-        } else if ( Integer.valueOf(endYear.getText()) < 1975 ) {
+        } else if (Integer.valueOf(endYear.getText()) < 1975) {
             alert.setHeaderText("Invalid end date!");
             label = new Label("Please input a valid end date.");
             Label l = new Label("Year should not be below 1975.");
@@ -1419,16 +1439,16 @@ public class MainController implements ScreenInterface {
             alert.getDialogPane().setContent(content);
             alert.showAndWait();
 
-    }   else if (startDay.getText().length() != 2 || startYear.getText().length() != 4) {
-                alert.setHeaderText("Invalid start date!");
-                label = new Label("Please input a valid start date.");
-                Label l = new Label("Number of required digits for day: 2.");
-                Label ll = new Label("Number of required digits for year: 4.");
-                content.add(label, 0, 0);
-                content.add(l, 0, 1);
-                content.add(ll, 0, 2);
-                alert.getDialogPane().setContent(content);
-                alert.showAndWait();
+        } else if (startDay.getText().length() != 2 || startYear.getText().length() != 4) {
+            alert.setHeaderText("Invalid start date!");
+            label = new Label("Please input a valid start date.");
+            Label l = new Label("Number of required digits for day: 2.");
+            Label ll = new Label("Number of required digits for year: 4.");
+            content.add(label, 0, 0);
+            content.add(l, 0, 1);
+            content.add(ll, 0, 2);
+            alert.getDialogPane().setContent(content);
+            alert.showAndWait();
         } else if (endDay.getText().length() != 2 || endYear.getText().length() != 4) {
             alert.setHeaderText("Invalid end date!");
             label = new Label("Please input a valid end date.");
@@ -1979,6 +1999,9 @@ public class MainController implements ScreenInterface {
         areaChart.getData().clear();
         pieChart.getData().clear();
 
+        x.setAnimated(false);
+        y.setAnimated(false);
+
         for (Campaign campaign : this.campaignsLoaded) {
             if (campaign.getDisplayed().isSelected()) {
                 DataModel dataModel = myController.getDataModel(campaign.getName());
@@ -2036,6 +2059,7 @@ public class MainController implements ScreenInterface {
                 barChart.getData().add(campaignMetricBC);
                 areaChart.getData().add(campaignMetricAC);
                 pieChart.getData().addAll(campaignMetricPC);
+
             }
         }
     }

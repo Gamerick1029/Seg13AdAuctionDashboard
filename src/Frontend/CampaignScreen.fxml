@@ -157,6 +157,11 @@
          	                                            <Insets top="20.0" />
          	                                        </HBox.margin>
          	                                    </Text>
+												<MenuButton fx:id="loadExistingCampaign" mnemonicParsing="false" text="Load Existing Campaign">
+													<font>
+														<Font size="12.0" />
+													</font>
+												</MenuButton>
          	                                </children>
          	                                <opaqueInsets>
          	                                    <Insets />

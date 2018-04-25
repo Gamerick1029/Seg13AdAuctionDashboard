@@ -38,13 +38,9 @@ public class Main extends Application {
         mainContainer.loadScreen(Main.campaignScreenID, Main.campaignScreen);
        
         
-        mainContainer.sceneProperty().addListener(new ChangeListener<Scene>() {
-            @Override
-            public void changed(ObservableValue<? extends Scene> observable,
-                                Scene oldValue, Scene newValue) {
-                mainContainer.prefWidthProperty().bind(newValue.widthProperty());
-                mainContainer.prefHeightProperty().bind(newValue.heightProperty());
-            }
+        mainContainer.sceneProperty().addListener((observable, oldValue, newValue) -> {
+            mainContainer.prefWidthProperty().bind(newValue.widthProperty());
+            mainContainer.prefHeightProperty().bind(newValue.heightProperty());
         });
 
         mainContainer.setScreen(Main.welcomeScreenID);
