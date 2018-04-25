@@ -1708,27 +1708,47 @@ public class MainController implements ScreenInterface {
         campaignName.setText(name);
         DataModel dm = myController.getDataModel(name);
         DecimalFormat df = new DecimalFormat("#.##");
+        Task<String> tsk = new Task<>()
+        {
+            @Override protected String call() throws Exception{
+                try
 
-        try
+                {
+                    impressionsF.setText(String.valueOf(dm.getImpressionsNumber()));
+                    clicksF.setText(String.valueOf(dm.getClicksNumber()));
+                    uniquesF.setText(String.valueOf(dm.getUniquesNumber()));
+                    bouncesF.setText(String.valueOf(dm.getBouncesNumber()));
+                    conversionsF.setText(String.valueOf(dm.getConversionsNumber()));
+                    totalCostF.setText(String.valueOf(df.format(dm.getTotalCost())));
+                    CTRF.setText(String.valueOf(df.format(dm.getCTR())));
+                    CPAF.setText(String.valueOf(df.format(dm.getCPA())));
+                    CPCF.setText(String.valueOf(df.format(dm.getCPC())));
+                    CPMF.setText(String.valueOf(df.format(dm.getCPM())));
+                    bounceRateF.setText(String.valueOf(df.format(dm.getBounceRate())));
+                } catch(
+                        SQLException e)
 
-            {
-                impressionsF.setText(String.valueOf(dm.getImpressionsNumber()));
-                clicksF.setText(String.valueOf(dm.getClicksNumber()));
-                uniquesF.setText(String.valueOf(dm.getUniquesNumber()));
-                bouncesF.setText(String.valueOf(dm.getBouncesNumber()));
-                conversionsF.setText(String.valueOf(dm.getConversionsNumber()));
-                totalCostF.setText(String.valueOf(df.format(dm.getTotalCost())));
-                CTRF.setText(String.valueOf(df.format(dm.getCTR())));
-                CPAF.setText(String.valueOf(df.format(dm.getCPA())));
-                CPCF.setText(String.valueOf(df.format(dm.getCPC())));
-                CPMF.setText(String.valueOf(df.format(dm.getCPM())));
-                bounceRateF.setText(String.valueOf(df.format(dm.getBounceRate())));
-            } catch(
-            SQLException e)
-
-            {
-                reportError(e);
+                {
+                    reportError(e);
+                }
+                return null;
             }
+        };
+
+        impressionsF.setText("Waiting...");
+        clicksF.setText("Waiting...");
+        uniquesF.setText("Waiting...");
+        bouncesF.setText("Waiting...");
+        conversionsF.setText("Waiting...");
+        totalCostF.setText("Waiting...");
+        CTRF.setText("Waiting...");
+        CPAF.setText("Waiting...");
+        CPCF.setText("Waiting...");
+        CPMF.setText("Waiting...");
+        bounceRateF.setText("Waiting...");
+            Thread th = new Thread(tsk);
+            th.setDaemon(true);
+            th.start();
         }
 
 
