@@ -9,6 +9,7 @@ import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
+import javafx.concurrent.Task;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -39,6 +40,9 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -241,6 +245,7 @@ public class MainController implements ScreenInterface {
         myController.setCampaignDataPopulator(new CampaignDataPopulator(x, y, lineChart, barChart, pieChart, areaChart));
         impressions.setStyle("-fx-font-weight: bold;");
         currentFilter = new Filter();
+        filters.put("Filter 1", currentFilter);
         currentCampaign.getDisplayed().addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
                     showMetric(currentMetricDisplayed);
@@ -759,6 +764,7 @@ public class MainController implements ScreenInterface {
             if (Objects.equals(textField.getText(), "")) {
                 s = String.valueOf(new Date().getTime());
             } else {
+
                 s = "Filter " + textField.getText();
                 addFilterToMap(s);
                 CheckMenuItem newFilter = new CheckMenuItem(s);
@@ -766,10 +772,12 @@ public class MainController implements ScreenInterface {
                     changeFilter(newFilter);
                 });
 
+
                 filterDropDown.setText(newFilter.getText());
                 currentFilter = filters.get(newFilter.getText());
                 setFilter(newFilter.getText());
                 filterDropDown.getItems().add(newFilter);
+
             }
         }
     }
@@ -820,6 +828,7 @@ public class MainController implements ScreenInterface {
         contextBlog.setSelected(filter.contextBlog);
         contextHobbies.setSelected(filter.contextHobbies);
         contextTravel.setSelected(filter.contextTravel);
+
         setMetrics(campaignName.getText());
     }
 
@@ -1695,25 +1704,33 @@ public class MainController implements ScreenInterface {
     Sets the TextFields with the selected campaign's metrics
      */
     private void setMetrics(String name) {
+
         campaignName.setText(name);
         DataModel dm = myController.getDataModel(name);
         DecimalFormat df = new DecimalFormat("#.##");
-        try {
-            impressionsF.setText(String.valueOf(dm.getImpressionsNumber()));
-            clicksF.setText(String.valueOf(dm.getClicksNumber()));
-            uniquesF.setText(String.valueOf(dm.getUniquesNumber()));
-            bouncesF.setText(String.valueOf(dm.getBouncesNumber()));
-            conversionsF.setText(String.valueOf(dm.getConversionsNumber()));
-            totalCostF.setText(String.valueOf(df.format(dm.getTotalCost())));
-            CTRF.setText(String.valueOf(df.format(dm.getCTR())));
-            CPAF.setText(String.valueOf(df.format(dm.getCPA())));
-            CPCF.setText(String.valueOf(df.format(dm.getCPC())));
-            CPMF.setText(String.valueOf(df.format(dm.getCPM())));
-            bounceRateF.setText(String.valueOf(df.format(dm.getBounceRate())));
-        } catch (SQLException e) {
-            reportError(e);
+
+        try
+
+            {
+                impressionsF.setText(String.valueOf(dm.getImpressionsNumber()));
+                clicksF.setText(String.valueOf(dm.getClicksNumber()));
+                uniquesF.setText(String.valueOf(dm.getUniquesNumber()));
+                bouncesF.setText(String.valueOf(dm.getBouncesNumber()));
+                conversionsF.setText(String.valueOf(dm.getConversionsNumber()));
+                totalCostF.setText(String.valueOf(df.format(dm.getTotalCost())));
+                CTRF.setText(String.valueOf(df.format(dm.getCTR())));
+                CPAF.setText(String.valueOf(df.format(dm.getCPA())));
+                CPCF.setText(String.valueOf(df.format(dm.getCPC())));
+                CPMF.setText(String.valueOf(df.format(dm.getCPM())));
+                bounceRateF.setText(String.valueOf(df.format(dm.getBounceRate())));
+            } catch(
+            SQLException e)
+
+            {
+                reportError(e);
+            }
         }
-    }
+
 
     private void groupByStep() {
         populateMetric(this.currentMetricDisplayed, currentStep);
@@ -2007,59 +2024,67 @@ public class MainController implements ScreenInterface {
                 DataModel dataModel = myController.getDataModel(campaign.getName());
                 dataModel.getFilter().step = step;
 
+                for(String key : filters.keySet())
+                {
                 campaignMetricLC = new XYChart.Series();
                 campaignMetricBC = new XYChart.Series();
                 campaignMetricAC = new XYChart.Series();
                 campaignMetricPC = FXCollections.observableArrayList();
 
-                campaignMetricLC.setName(dataModel.getName() + " " + metric);
-                campaignMetricBC.setName(dataModel.getName() + " " + metric);
-                campaignMetricAC.setName(dataModel.getName() + " " + metric);
+                campaignMetricLC.setName(dataModel.getName() + " " + metric + " - " + key);
+                campaignMetricBC.setName(dataModel.getName() + " " + metric + " - " + key);
+                campaignMetricAC.setName(dataModel.getName() + " " + metric + " - " + key);
 
-                try {
-                    switch (metric) {
-                        case "Impressions":
-                            setData_I(sortMap(dataModel.getFullImpressions(step)));
-                            break;
-                        case "Clicks":
-                            setData_I(sortMap(dataModel.getFullClicks(step)));
-                            break;
-                        case "Uniques":
-                            setData_I(sortMap(dataModel.getFullUniques(step)));
-                            break;
-                        case "Bounces":
-                            setData_I(sortMap(dataModel.getFullBounces(step)));
-                            break;
-                        case "Conversions":
-                            setData_I(sortMap(dataModel.getFullConversions(step)));
-                            break;
-                        case "Total Cost":
-                            setData_F(sortMap(dataModel.getFullCost(step)));
-                            break;
-                        case "CTR":
-                            setData_F(sortMap(dataModel.getFullCTR(step)));
-                            break;
-                        case "CPA":
-                            setData_F(sortMap(dataModel.getFullCPA(step)));
-                            break;
-                        case "CPC":
-                            setData_F(sortMap(dataModel.getFullCPC(step)));
-                            break;
-                        case "CPM":
-                            setData_F(sortMap(dataModel.getFullCPM(step)));
-                            break;
-                        case "Bounce Rate":
-                            setData_F(sortMap(dataModel.getFullBounceRate(step)));
-                            break;
+
+                    dataModel.setFilter(filters.get(key));
+                    try
+                    {
+                        switch (metric)
+                        {
+                            case "Impressions":
+                                setData_I(sortMap(dataModel.getFullImpressions(step)));
+                                break;
+                            case "Clicks":
+                                setData_I(sortMap(dataModel.getFullClicks(step)));
+                                break;
+                            case "Uniques":
+                                setData_I(sortMap(dataModel.getFullUniques(step)));
+                                break;
+                            case "Bounces":
+                                setData_I(sortMap(dataModel.getFullBounces(step)));
+                                break;
+                            case "Conversions":
+                                setData_I(sortMap(dataModel.getFullConversions(step)));
+                                break;
+                            case "Total Cost":
+                                setData_F(sortMap(dataModel.getFullCost(step)));
+                                break;
+                            case "CTR":
+                                setData_F(sortMap(dataModel.getFullCTR(step)));
+                                break;
+                            case "CPA":
+                                setData_F(sortMap(dataModel.getFullCPA(step)));
+                                break;
+                            case "CPC":
+                                setData_F(sortMap(dataModel.getFullCPC(step)));
+                                break;
+                            case "CPM":
+                                setData_F(sortMap(dataModel.getFullCPM(step)));
+                                break;
+                            case "Bounce Rate":
+                                setData_F(sortMap(dataModel.getFullBounceRate(step)));
+                                break;
+                        }
+                    } catch (SQLException e)
+                    {
+                        reportError(e);
                     }
-                } catch (SQLException e) {
-                    reportError(e);
-                }
-                lineChart.getData().add(campaignMetricLC);
-                barChart.getData().add(campaignMetricBC);
-                areaChart.getData().add(campaignMetricAC);
-                pieChart.getData().addAll(campaignMetricPC);
 
+                    lineChart.getData().add(campaignMetricLC);
+                    barChart.getData().add(campaignMetricBC);
+                    areaChart.getData().add(campaignMetricAC);
+                    pieChart.getData().addAll(campaignMetricPC);
+                }
             }
         }
     }
