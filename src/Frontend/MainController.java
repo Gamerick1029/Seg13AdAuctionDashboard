@@ -5,6 +5,10 @@ import Backend.Model.CampaignModelDB;
 import Backend.Model.Interfaces.DataModel;
 import Backend.Model.Interfaces.Filter;
 import Backend.Model.Interfaces.Step;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -34,12 +38,17 @@ import javax.print.attribute.standard.Copies;
 import javax.print.attribute.standard.Sides;
 import javax.swing.*;
 import java.io.*;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -677,7 +686,19 @@ public class MainController implements ScreenInterface {
             exportToPNG(event);
         });
         print.setOnAction(event -> {
-            printPDF();
+            try {
+                printPDF();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (DocumentException e) {
+                e.printStackTrace();
+            } catch (PrintException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
         });
 
         myMenuBar.setOnMouseEntered(event -> {
@@ -832,6 +853,14 @@ public class MainController implements ScreenInterface {
         setMetrics(campaignName.getText());
     }
 
+    private File openDirectoryChooser() {
+        DirectoryChooser chooser = new DirectoryChooser();
+        chooser.setTitle("Select Directory");
+        File defaultDirectory = new File("c://");
+        chooser.setInitialDirectory(defaultDirectory);
+        return chooser.showDialog(node.getScene().getWindow());
+    }
+
     private void exportToPNG(ActionEvent event) {
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -852,67 +881,62 @@ public class MainController implements ScreenInterface {
             if (Objects.equals(textField.getText(), "")) {
                 s = String.valueOf(new Date().getTime());
             } else {
-                s = "Filter " + textField.getText();
-
-                DirectoryChooser chooser = new DirectoryChooser();
-                chooser.setTitle("Select Directory");
-                File defaultDirectory = new File("c://");
-                chooser.setInitialDirectory(defaultDirectory);
-                File selectedDirectory = chooser.showDialog(node.getScene().getWindow());
-
-                SnapshotParameters snap = new SnapshotParameters();
-                WritableImage writableImage = new WritableImage(100, 100);
-                WritableImage snapshot;
-                File output = new File(selectedDirectory.getPath() + "/" + s + ".png");
-
-                switch (currentChartType) {
-                    case "BarChart":
-                        snapshot = barChart.snapshot(new SnapshotParameters(), null);
-                        try {
-                            ImageIO.write(SwingFXUtils.fromFXImage(snapshot, null), "png", output);
-                            showUpdate();
-                        } catch (IOException e) {
-                            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, e);
-                        }
-                        break;
-                    case "LineChart":
-                        snapshot = lineChart.snapshot(new SnapshotParameters(), null);
-                        try {
-                            ImageIO.write(SwingFXUtils.fromFXImage(snapshot, null), "png", output);
-                            showUpdate();
-                        } catch (IOException e) {
-                            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, e);
-                        }
-                        break;
-                    case "AreaChart":
-                        snapshot = areaChart.snapshot(new SnapshotParameters(), null);
-                        try {
-                            ImageIO.write(SwingFXUtils.fromFXImage(snapshot, null), "png", output);
-                            showUpdate();
-                        } catch (IOException e) {
-                            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, e);
-                        }
-                        break;
-                    case "PieChart":
-                        snapshot = pieChart.snapshot(new SnapshotParameters(), null);
-                        try {
-                            ImageIO.write(SwingFXUtils.fromFXImage(snapshot, null), "png", output);
-                            showUpdate();
-                        } catch (IOException e) {
-                            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, e);
-                        }
-                        break;
-                    case "Histogram":
-                        snapshot = barChart.snapshot(new SnapshotParameters(), null);
-                        try {
-                            ImageIO.write(SwingFXUtils.fromFXImage(snapshot, null), "png", output);
-                            showUpdate();
-                        } catch (IOException e) {
-                            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, e);
-                        }
-                        break;
-                }
+                s = textField.getText();
             }
+            saveImage(new File(openDirectoryChooser().getPath() + "/" + s + ".png"), true, "Image " + s +  " saved!");
+        }
+    }
+
+    private void saveImage(File output, Boolean show, String s) {
+
+        WritableImage snapshot;
+
+        switch (currentChartType) {
+            case "BarChart":
+                snapshot = barChart.snapshot(new SnapshotParameters(), null);
+                try {
+                    ImageIO.write(SwingFXUtils.fromFXImage(snapshot, null), "png", output);
+                    if (show) showUpdate(s);
+                } catch (IOException e) {
+                    Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, e);
+                }
+                break;
+            case "LineChart":
+                snapshot = lineChart.snapshot(new SnapshotParameters(), null);
+                try {
+                    ImageIO.write(SwingFXUtils.fromFXImage(snapshot, null), "png", output);
+                    if (show) showUpdate(s);
+                } catch (IOException e) {
+                    Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, e);
+                }
+                break;
+            case "AreaChart":
+                snapshot = areaChart.snapshot(new SnapshotParameters(), null);
+                try {
+                    ImageIO.write(SwingFXUtils.fromFXImage(snapshot, null), "png", output);
+                    if (show) showUpdate(s);
+                } catch (IOException e) {
+                    Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, e);
+                }
+                break;
+            case "PieChart":
+                snapshot = pieChart.snapshot(new SnapshotParameters(), null);
+                try {
+                    ImageIO.write(SwingFXUtils.fromFXImage(snapshot, null), "png", output);
+                    if (show) showUpdate(s);
+                } catch (IOException e) {
+                    Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, e);
+                }
+                break;
+            case "Histogram":
+                snapshot = barChart.snapshot(new SnapshotParameters(), null);
+                try {
+                    ImageIO.write(SwingFXUtils.fromFXImage(snapshot, null), "png", output);
+                    if (show) showUpdate(s);
+                } catch (IOException e) {
+                    Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, e);
+                }
+                break;
         }
     }
 
@@ -920,88 +944,168 @@ public class MainController implements ScreenInterface {
         this.node = (Node) event.getSource();
     }
 
-    private void showUpdate() {
+    private void showUpdate(String s) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.initStyle(StageStyle.UTILITY);
         alert.setTitle("Update");
         alert.setHeaderText("");
         GridPane content = new GridPane();
         content.setPrefSize(300, 50);
-        Label label = new Label("Image saved!");
+        Label label = new Label(s);
         content.add(label, 0, 0);
         alert.getDialogPane().setContent(content);
         alert.showAndWait();
     }
 
-    private void printPDF() {
+    private void printPDF() throws IOException, DocumentException, PrintException, URISyntaxException {
 
-        /*PrinterJob job = PrinterJob.createPrinterJob();
-        if(job != null){
-            job.showPrintDialog(node.getScene().getWindow());
-            job.printPage(node);
-            job.endJob();
-        }*/
-
-        Writer bw = null;
-        String fileName = "file" + new Date().getTime() + ".txt";
-        try {
-            bw = new BufferedWriter(new OutputStreamWriter(
-                    new FileOutputStream(fileName), "utf-8"));
-            bw.write("Current campaign: " + campaignName.getText() + "\n");
-            bw.write("Impressions: " + impressionsF.getText() + "\n");
-            bw.write("Clicks: " + clicksF.getText() + "\n");
-            bw.write("Uniques: " + uniquesF.getText() + "\n");
-            bw.write("Bounces: " + bouncesF.getText() + "\n");
-            bw.write("Conversions: " + conversionsF.getText() + "\n");
-            bw.write("Total Cost: " + totalCostF.getText() + "\n");
-            bw.write("Click through Rate: " + CTRF.getText() + "\n");
-            bw.write("Cost per Acquisition: " + CPAF.getText() + "\n");
-            bw.write("Cost per Click: " + CPCF.getText() + "\n");
-            bw.write("Click per Thousand Impressions: " + CPMF.getText() + "\n");
-            bw.write("Bounce Rate: " + bounceRateF.getText() + "\n");
-
-            FileInputStream textStream;
-            textStream = new FileInputStream(fileName);
-
-            DocFlavor flavor = DocFlavor.INPUT_STREAM.AUTOSENSE;
-            Doc mydoc = new SimpleDoc(textStream, flavor, null);
-
-            PrintRequestAttributeSet aset = new HashPrintRequestAttributeSet();
-            aset.add(new Copies(5));
-            //aset.add(MediaSize.A4);
-            aset.add(Sides.DUPLEX);
-
-            PrintService[] services = PrintServiceLookup.lookupPrintServices(
-                    flavor, aset);
-            PrintService defaultService = PrintServiceLookup.lookupDefaultPrintService();
-
-            if (services.length == 0) {
-                System.out.println("No services...");
-                if (defaultService == null) {
-                    System.out.println("Cannot find printer!");
-                } else {
-                    System.out.println("Printing...");
-
-                    DocPrintJob job = defaultService.createPrintJob();
-                    job.print(mydoc, aset);
-                }
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.initStyle(StageStyle.UTILITY);
+        alert.setTitle("Creating PDF File...");
+        alert.setHeaderText("");
+        GridPane content = new GridPane();
+        content.setPrefSize(200, 50);
+        Label label = new Label("Input File Name:");
+        TextField textField = new TextField();
+        textField.setPromptText("File Name...");
+        content.add(label, 0, 0);
+        content.add(textField, 0, 1);
+        alert.getDialogPane().setContent(content);
+        alert.showAndWait();
+        if (alert.getResult() == ButtonType.OK) {
+            String s;
+            if (Objects.equals(textField.getText(), "")) {
+                s = String.valueOf(new Date().getTime());
             } else {
-                PrintService service = ServiceUI.printDialog(null, 200, 200, services, defaultService, flavor, aset);
+                s = textField.getText();
 
-                if (service != null) {
-                    DocPrintJob job = service.createPrintJob();
-                    job.print(mydoc, null);
+                File src = openDirectoryChooser();
+                String fileName = src.getPath() + "/" + s + ".png";
+                saveImage(new File(fileName), false, "");
+
+                Document document = new Document();
+                PdfWriter.getInstance(document, new FileOutputStream(src.getAbsolutePath() + "/" + s + ".pdf"));
+                document.open();
+
+                document.add(new Paragraph("Ad Auction Dashboard Data for Campaign " + campaignName.getText()));
+                document.add(Chunk.NEWLINE);
+
+                Image image = Image.getInstance(src.getAbsolutePath() + "/" + s + ".png");
+                float scaler = ((document.getPageSize().getWidth() - document.leftMargin()
+                        - document.rightMargin()) / image.getWidth()) * 100;
+                image.scalePercent(scaler);
+
+                document.add(image);
+                document.add(Chunk.NEWLINE);
+                document.add(Chunk.NEWLINE);
+                document.add(createTable());
+                document.close();
+
+                showUpdate("PDF file " + s +  " created!");
+                openPrinter(fileName);
+            }
+        }
+    }
+
+    public PdfPTable createTable() {
+        PdfPTable table = new PdfPTable(2);
+
+        table.addCell("Impressions");
+        table.addCell(impressionsF.getText());
+
+        table.addCell("Clicks");
+        table.addCell(clicksF.getText());
+
+        table.addCell("Uniques");
+        table.addCell(uniquesF.getText());
+
+        table.addCell("Bounces");
+        table.addCell(bouncesF.getText());
+
+        table.addCell("Conversions");
+        table.addCell(conversionsF.getText());
+
+        table.addCell("Total Cost");
+        table.addCell(totalCostF.getText());
+
+        table.addCell("Click through Rate");
+        table.addCell(CTRF.getText());
+
+        table.addCell("Cost per Acquisition");
+        table.addCell(CPAF.getText());
+
+        table.addCell("Cost per Click");
+        table.addCell(CPCF.getText());
+
+        table.addCell("Click per Thousand Impressions");
+        table.addCell(CPMF.getText());
+
+        table.addCell("Bounce Rate");
+        table.addCell(bounceRateF.getText());
+
+        return table;
+    }
+
+    private void openPrinter(String fileName) {
+
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.initStyle(StageStyle.UTILITY);
+        alert.setTitle("Warning");
+        alert.setHeaderText("");
+        GridPane content = new GridPane();
+        content.setPrefSize(200, 50);
+
+
+        FileInputStream textStream = null;
+        try {
+            textStream = new FileInputStream(fileName);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        DocFlavor flavor = DocFlavor.INPUT_STREAM.AUTOSENSE;
+        Doc mydoc = new SimpleDoc(textStream, flavor, null);
+
+        PrintRequestAttributeSet aset = new HashPrintRequestAttributeSet();
+        aset.add(new Copies(5));
+        aset.add(Sides.DUPLEX);
+
+        PrintService[] services = PrintServiceLookup.lookupPrintServices(
+                flavor, aset);
+        PrintService defaultService = PrintServiceLookup.lookupDefaultPrintService();
+
+        if (services.length == 0) {
+
+            Label label = new Label("No printers connected!");
+            content.add(label, 0, 0);
+            alert.getDialogPane().setContent(content);
+            alert.showAndWait();
+
+            if (alert.getResult() != ButtonType.OK) {
+                if (defaultService == null) {
+                    label = new Label("Cannot find printer");
+                    content.add(label, 0, 0);
+                    alert.getDialogPane().setContent(content);
+                    alert.showAndWait();
+                } else {
+                    DocPrintJob job = defaultService.createPrintJob();
+                    try {
+                        job.print(mydoc, aset);
+                    } catch (PrintException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (PrintException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                bw.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+        } else {
+            System.out.println("Printing...");
+            PrintService service = ServiceUI.printDialog(null, 200, 200, services, defaultService, flavor, aset);
+            if (service != null) {
+                DocPrintJob job = service.createPrintJob();
+                try {
+                    job.print(mydoc, null);
+                } catch (PrintException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
@@ -1708,9 +1812,9 @@ public class MainController implements ScreenInterface {
         campaignName.setText(name);
         DataModel dm = myController.getDataModel(name);
         DecimalFormat df = new DecimalFormat("#.##");
-        Task<String> tsk = new Task<>()
-        {
-            @Override protected String call() throws Exception{
+        Task<String> tsk = new Task<>() {
+            @Override
+            protected String call() throws Exception {
                 try
 
                 {
@@ -1725,7 +1829,7 @@ public class MainController implements ScreenInterface {
                     CPCF.setText(String.valueOf(df.format(dm.getCPC())));
                     CPMF.setText(String.valueOf(df.format(dm.getCPM())));
                     bounceRateF.setText(String.valueOf(df.format(dm.getBounceRate())));
-                } catch(
+                } catch (
                         SQLException e)
 
                 {
@@ -1746,10 +1850,10 @@ public class MainController implements ScreenInterface {
         CPCF.setText("Waiting...");
         CPMF.setText("Waiting...");
         bounceRateF.setText("Waiting...");
-            Thread th = new Thread(tsk);
-            th.setDaemon(true);
-            th.start();
-        }
+        Thread th = new Thread(tsk);
+        th.setDaemon(true);
+        th.start();
+    }
 
 
     private void groupByStep() {
@@ -2044,23 +2148,20 @@ public class MainController implements ScreenInterface {
                 DataModel dataModel = myController.getDataModel(campaign.getName());
                 dataModel.getFilter().step = step;
 
-                for(String key : filters.keySet())
-                {
-                campaignMetricLC = new XYChart.Series();
-                campaignMetricBC = new XYChart.Series();
-                campaignMetricAC = new XYChart.Series();
-                campaignMetricPC = FXCollections.observableArrayList();
+                for (String key : filters.keySet()) {
+                    campaignMetricLC = new XYChart.Series();
+                    campaignMetricBC = new XYChart.Series();
+                    campaignMetricAC = new XYChart.Series();
+                    campaignMetricPC = FXCollections.observableArrayList();
 
-                campaignMetricLC.setName(dataModel.getName() + " " + metric + " - " + key);
-                campaignMetricBC.setName(dataModel.getName() + " " + metric + " - " + key);
-                campaignMetricAC.setName(dataModel.getName() + " " + metric + " - " + key);
+                    campaignMetricLC.setName(dataModel.getName() + " " + metric + " - " + key);
+                    campaignMetricBC.setName(dataModel.getName() + " " + metric + " - " + key);
+                    campaignMetricAC.setName(dataModel.getName() + " " + metric + " - " + key);
 
 
                     dataModel.setFilter(filters.get(key));
-                    try
-                    {
-                        switch (metric)
-                        {
+                    try {
+                        switch (metric) {
                             case "Impressions":
                                 setData_I(sortMap(dataModel.getFullImpressions(step)));
                                 break;
@@ -2095,8 +2196,7 @@ public class MainController implements ScreenInterface {
                                 setData_F(sortMap(dataModel.getFullBounceRate(step)));
                                 break;
                         }
-                    } catch (SQLException e)
-                    {
+                    } catch (SQLException e) {
                         reportError(e);
                     }
 
