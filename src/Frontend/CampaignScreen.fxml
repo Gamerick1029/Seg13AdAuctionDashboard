@@ -169,9 +169,9 @@
          	                            <HBox>
          	                            	<MenuButton fx:id="loadExistingCampaign" mnemonicParsing="false" text="Load Existing Campaign">			
 											</MenuButton>
-											<HBox.margin>
+											<padding>
 												<Insets left="20" />
-											</HBox.margin>
+											</padding>
 										</HBox>
          	                            <HBox alignment="TOP_LEFT">
          	                                <children>
