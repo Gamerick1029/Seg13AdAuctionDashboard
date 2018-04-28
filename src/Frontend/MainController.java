@@ -2033,10 +2033,6 @@ public class MainController implements ScreenInterface {
         barChart.getData().clear();
         areaChart.getData().clear();
         pieChart.getData().clear();
-//        campaignMetricLC = new XYChart.Series();
-//        campaignMetricAC = new XYChart.Series();
-//        campaignMetricBC = new XYChart.Series();
-//        campaignMetricPC = FXCollections.observableArrayList();
 
         x.setAnimated(false);
         y.setAnimated(false);
@@ -2048,15 +2044,6 @@ public class MainController implements ScreenInterface {
 
                 for(String key : filters.keySet())
                 {
-//                XYChart.Series tempCampaignMetricLC = new XYChart.Series();
-////                XYChart.Series tempCampaignMetricBC = new XYChart.Series();
-//                //campaignMetricAC = new XYChart.Series();
-//                ObservableList tempCampaignMetricPC = FXCollections.observableArrayList();
-//
-//                tempCampaignMetricLC.setName(dataModel.getName() + " " + metric + " - " + key);
-////                tempCampaignMetricBC.setName(dataModel.getName() + " " + metric + " - " + key);
-//                //campaignMetricAC.setName(dataModel.getName() + " " + metric + " - " + key);
-
                 Task<String> tsk = new Task<>(){
                     @Override
                     protected String call()
@@ -2199,7 +2186,6 @@ public class MainController implements ScreenInterface {
         for (Date d : sortedDates) {
             output.add(Map.entry(d, in.get(d)));
         }
-        //ObservableList<XYChart.Data> myout = FXCollections.observableList(output);
         return output;
     }
 
