@@ -41,9 +41,6 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.ThreadPoolExecutor;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -2036,10 +2033,10 @@ public class MainController implements ScreenInterface {
         barChart.getData().clear();
         areaChart.getData().clear();
         pieChart.getData().clear();
-        campaignMetricLC = new XYChart.Series();
-        campaignMetricAC = new XYChart.Series();
-        campaignMetricLC = new XYChart.Series();
-        campaignMetricPC = FXCollections.observableArrayList();
+//        campaignMetricLC = new XYChart.Series();
+//        campaignMetricAC = new XYChart.Series();
+//        campaignMetricBC = new XYChart.Series();
+//        campaignMetricPC = FXCollections.observableArrayList();
 
         x.setAnimated(false);
         y.setAnimated(false);
@@ -2051,56 +2048,68 @@ public class MainController implements ScreenInterface {
 
                 for(String key : filters.keySet())
                 {
-                XYChart.Series tempCampaignMetricLC = new XYChart.Series();
-                XYChart.Series tempCampaignMetricBC = new XYChart.Series();
-                //campaignMetricAC = new XYChart.Series();
-                ObservableList tempCampaignMetricPC = FXCollections.observableArrayList();
-
-                tempCampaignMetricLC.setName(dataModel.getName() + " " + metric + " - " + key);
-                tempCampaignMetricBC.setName(dataModel.getName() + " " + metric + " - " + key);
-                campaignMetricAC.setName(dataModel.getName() + " " + metric + " - " + key);
+//                XYChart.Series tempCampaignMetricLC = new XYChart.Series();
+////                XYChart.Series tempCampaignMetricBC = new XYChart.Series();
+//                //campaignMetricAC = new XYChart.Series();
+//                ObservableList tempCampaignMetricPC = FXCollections.observableArrayList();
+//
+//                tempCampaignMetricLC.setName(dataModel.getName() + " " + metric + " - " + key);
+////                tempCampaignMetricBC.setName(dataModel.getName() + " " + metric + " - " + key);
+//                //campaignMetricAC.setName(dataModel.getName() + " " + metric + " - " + key);
 
                 Task<String> tsk = new Task<>(){
                     @Override
                     protected String call()
                     {
+                        String name = dataModel.getName() + " " + metric + " - " + key;
                         dataModel.setFilter(filters.get(key));
                         try
                         {
                             switch (metric)
                             {
                                 case "Impressions":
-                                    setData_I(sortMap(dataModel.getFullImpressions(step)), tempCampaignMetricLC, tempCampaignMetricPC);
+//                                    setData_I(sortMap(dataModel.getFullImpressions(step)), tempCampaignMetricLC, tempCampaignMetricPC);
+                                    sortAndSet_I(dataModel.getFullImpressions(step), name);
                                     break;
                                 case "Clicks":
-                                    setData_I(sortMap(dataModel.getFullClicks(step)), tempCampaignMetricLC, tempCampaignMetricPC);
+//                                    setData_I(sortMap(dataModel.getFullClicks(step)), tempCampaignMetricLC, tempCampaignMetricPC);
+                                    sortAndSet_I(dataModel.getFullClicks(step), name);
                                     break;
                                 case "Uniques":
-                                    setData_I(sortMap(dataModel.getFullUniques(step)), tempCampaignMetricLC, tempCampaignMetricPC);
+//                                    setData_I(sortMap(dataModel.getFullUniques(step)), tempCampaignMetricLC, tempCampaignMetricPC);
+                                    sortAndSet_I(dataModel.getFullUniques(step), name);
                                     break;
                                 case "Bounces":
-                                    setData_I(sortMap(dataModel.getFullBounces(step)), tempCampaignMetricLC, tempCampaignMetricPC);
+//                                    setData_I(sortMap(dataModel.getFullBounces(step)), tempCampaignMetricLC, tempCampaignMetricPC);
+                                    sortAndSet_I(dataModel.getFullBounces(step), name);
                                     break;
                                 case "Conversions":
-                                    setData_I(sortMap(dataModel.getFullConversions(step)), tempCampaignMetricLC, tempCampaignMetricPC);
+//                                    setData_I(sortMap(dataModel.getFullConversions(step)), tempCampaignMetricLC, tempCampaignMetricPC);
+                                    sortAndSet_I(dataModel.getFullConversions(step), name);
                                     break;
                                 case "Total Cost":
-                                    setData_F(sortMap(dataModel.getFullCost(step)), tempCampaignMetricLC, tempCampaignMetricPC);
+//                                    setData_F(sortMap(dataModel.getFullCost(step)), tempCampaignMetricLC, tempCampaignMetricPC);
+                                    sortAndSet_F(dataModel.getFullCost(step), name);
                                     break;
                                 case "CTR":
-                                    setData_F(sortMap(dataModel.getFullCTR(step)), tempCampaignMetricLC, tempCampaignMetricPC);
+//                                    setData_F(sortMap(dataModel.getFullCTR(step)), tempCampaignMetricLC, tempCampaignMetricPC);
+                                    sortAndSet_F(dataModel.getFullCTR(step), name);
                                     break;
                                 case "CPA":
-                                    setData_F(sortMap(dataModel.getFullCPA(step)), tempCampaignMetricLC, tempCampaignMetricPC);
+//                                    setData_F(sortMap(dataModel.getFullCPA(step)), tempCampaignMetricLC, tempCampaignMetricPC);
+                                    sortAndSet_F(dataModel.getFullCPA(step), name);
                                     break;
                                 case "CPC":
-                                    setData_F(sortMap(dataModel.getFullCPC(step)), tempCampaignMetricLC, tempCampaignMetricPC);
+//                                    setData_F(sortMap(dataModel.getFullCPC(step)), tempCampaignMetricLC, tempCampaignMetricPC);
+                                    sortAndSet_F(dataModel.getFullCPC(step), name);
                                     break;
                                 case "CPM":
-                                    setData_F(sortMap(dataModel.getFullCPM(step)), tempCampaignMetricLC, tempCampaignMetricPC);
+//                                    setData_F(sortMap(dataModel.getFullCPM(step)), tempCampaignMetricLC, tempCampaignMetricPC);
+                                    sortAndSet_F(dataModel.getFullCPC(step), name);
                                     break;
                                 case "Bounce Rate":
-                                    setData_F(sortMap(dataModel.getFullBounceRate(step)), tempCampaignMetricLC, tempCampaignMetricPC);
+//                                    setData_F(sortMap(dataModel.getFullBounceRate(step)), tempCampaignMetricLC, tempCampaignMetricPC);
+                                    sortAndSet_F(dataModel.getFullBounceRate(step), name);
                                     break;
                             }
                         } catch (SQLException e)
@@ -2109,13 +2118,6 @@ public class MainController implements ScreenInterface {
                         }
 
                         return null;
-                    }
-
-                    @Override
-                    protected void done()
-                    {
-                        super.done();
-                        updateGraphs(tempCampaignMetricLC, tempCampaignMetricLC, tempCampaignMetricLC, tempCampaignMetricPC);
                     }
                 };
                 Thread th = new Thread(tsk);
@@ -2126,40 +2128,66 @@ public class MainController implements ScreenInterface {
         }
     }
 
-    private void updateGraphs(XYChart.Series LC, XYChart.Series BC, XYChart.Series AC, ObservableList PC)
+
+    /*
+    I tried to do this with generics, but it locked up
+    at the getData().add stage.
+     */
+    private void sortAndSet_I(Map<Date, Integer> dataPoints, String name)
     {
+        XYChart.Series LC = new XYChart.Series();
+        XYChart.Series AC = new XYChart.Series();
+        XYChart.Series BC = new XYChart.Series();
+        ObservableList PC = FXCollections.observableArrayList();
+
+        LC.setName(name);
+        AC.setName(name);
+        BC.setName(name);
+
+        List<Map.Entry<Date, Integer>> sortedPoints = sortMap(dataPoints);
+        for(Map.Entry<Date, Integer> point : sortedPoints)
+        {
+            LC.getData().add(new XYChart.Data(simpleDateRep(point.getKey()), point.getValue()));
+            AC.getData().add(new XYChart.Data(simpleDateRep(point.getKey()), point.getValue()));
+            BC.getData().add(new XYChart.Data(simpleDateRep(point.getKey()), point.getValue()));
+            PC.add(new PieChart.Data(simpleDateRep(point.getKey()), (double)point.getValue()));
+        }
         Platform.runLater(()-> {
-            lineChart.getData().add(LC);
+            lineChart.animatedProperty().setValue(false);
+            areaChart.getData().add(LC);
+            lineChart.getData().add(AC);
             barChart.getData().add(BC);
-            areaChart.getData().add(AC);
             pieChart.getData().addAll(PC);
         });
     }
 
-    private void setData_I(List<Map.Entry<Date, Integer>> sortedList, XYChart.Series LC, ObservableList PC) {
-        for (Map.Entry<Date, Integer> e : sortedList)
+    private void sortAndSet_F(Map<Date, Float> dataPoints, String name)
+    {
+        XYChart.Series LC = new XYChart.Series();
+        XYChart.Series AC = new XYChart.Series();
+        XYChart.Series BC = new XYChart.Series();
+        ObservableList PC = FXCollections.observableArrayList();
+
+        LC.setName(name);
+        AC.setName(name);
+        BC.setName(name);
+
+        List<Map.Entry<Date, Float>> sortedPoints = sortMap(dataPoints);
+        for(Map.Entry<Date, Float> point : sortedPoints)
         {
-            LC.getData().add(new XYChart.Data(simpleDateRep(e.getKey()), e.getValue()));
-//            campaignMetricAC.getData().add(new XYChart.Data(simpleDateRep(e.getKey()), e.getValue()));
-//            campaignMetricBC.getData().add(new XYChart.Data(simpleDateRep(e.getKey()), e.getValue()));
-
-            PC.add(new PieChart.Data(simpleDateRep(e.getKey()), e.getValue()));
+            LC.getData().add(new XYChart.Data(simpleDateRep(point.getKey()), point.getValue()));
+            AC.getData().add(new XYChart.Data(simpleDateRep(point.getKey()), point.getValue()));
+            BC.getData().add(new XYChart.Data(simpleDateRep(point.getKey()), point.getValue()));
+            PC.add(new PieChart.Data(simpleDateRep(point.getKey()), (double)point.getValue()));
         }
+        Platform.runLater(()-> {
+            lineChart.animatedProperty().setValue(false);
+            areaChart.getData().add(LC);
+            lineChart.getData().add(AC);
+            barChart.getData().add(BC);
+            pieChart.getData().addAll(PC);
+        });
     }
-
-    private void setData_F(List<Map.Entry<Date, Float>> sortedList, XYChart.Series LC, ObservableList PC) {
-//        Platform.runLater(() -> {
-        for (Map.Entry<Date, Float> e : sortedList)
-        {
-            LC.getData().add(new XYChart.Data(simpleDateRep(e.getKey()), e.getValue()));
-//            campaignMetricAC.getData().add(new XYChart.Data(simpleDateRep(e.getKey()), e.getValue()));
-//            campaignMetricBC.getData().add(new XYChart.Data(simpleDateRep(e.getKey()), e.getValue()));
-
-            PC.add(new PieChart.Data(simpleDateRep(e.getKey()), e.getValue()));
-//        }});
-        }
-    }
-
 
     private static <T> List<Map.Entry<Date, T>> sortMap(Map<Date, T> in) {
         List<Date> unsortedDates = new ArrayList<>();
