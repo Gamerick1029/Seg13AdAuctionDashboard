@@ -69,6 +69,9 @@ public class MainController implements ScreenInterface {
     private File currentClick;
     private File currentServer;
 
+    private boolean graphLoading = false;
+    private boolean metricsLoading = false;
+
     @FXML
     private javafx.scene.control.TextField impressionsF;
     @FXML
@@ -1809,51 +1812,63 @@ public class MainController implements ScreenInterface {
     Sets the TextFields with the selected campaign's metrics
      */
     private void setMetrics(String name) {
-
-        campaignName.setText(name);
-        DataModel dm = myController.getDataModel(name);
-        DecimalFormat df = new DecimalFormat("#.##");
-        Task<String> tsk = new Task<>() {
-            @Override
-            protected String call() throws Exception {
-                try
-
+        if(!metricsLoading)
+        {
+            metricsLoading = true;
+            campaignName.setText(name);
+            DataModel dm = myController.getDataModel(name);
+            DecimalFormat df = new DecimalFormat("#.##");
+            Task<String> tsk = new Task<>()
+            {
+                @Override
+                protected String call() throws Exception
                 {
-                    impressionsF.setText(String.valueOf(dm.getImpressionsNumber()));
-                    clicksF.setText(String.valueOf(dm.getClicksNumber()));
-                    uniquesF.setText(String.valueOf(dm.getUniquesNumber()));
-                    bouncesF.setText(String.valueOf(dm.getBouncesNumber()));
-                    conversionsF.setText(String.valueOf(dm.getConversionsNumber()));
-                    totalCostF.setText(String.valueOf(df.format(dm.getTotalCost())));
-                    CTRF.setText(String.valueOf(df.format(dm.getCTR())));
-                    CPAF.setText(String.valueOf(df.format(dm.getCPA())));
-                    CPCF.setText(String.valueOf(df.format(dm.getCPC())));
-                    CPMF.setText(String.valueOf(df.format(dm.getCPM())));
-                    bounceRateF.setText(String.valueOf(df.format(dm.getBounceRate())));
-                } catch (
-                        SQLException e)
+                    try
 
-                {
-                    reportError(e);
+                    {
+                        impressionsF.setText(String.valueOf(dm.getImpressionsNumber()));
+                        clicksF.setText(String.valueOf(dm.getClicksNumber()));
+                        uniquesF.setText(String.valueOf(dm.getUniquesNumber()));
+                        bouncesF.setText(String.valueOf(dm.getBouncesNumber()));
+                        conversionsF.setText(String.valueOf(dm.getConversionsNumber()));
+                        totalCostF.setText(String.valueOf(df.format(dm.getTotalCost())));
+                        CTRF.setText(String.valueOf(df.format(dm.getCTR())));
+                        CPAF.setText(String.valueOf(df.format(dm.getCPA())));
+                        CPCF.setText(String.valueOf(df.format(dm.getCPC())));
+                        CPMF.setText(String.valueOf(df.format(dm.getCPM())));
+                        bounceRateF.setText(String.valueOf(df.format(dm.getBounceRate())));
+                    } catch (
+                            SQLException e)
+
+                    {
+                        reportError(e);
+                    }
+                    return null;
                 }
-                return null;
-            }
-        };
 
-        impressionsF.setText("Waiting...");
-        clicksF.setText("Waiting...");
-        uniquesF.setText("Waiting...");
-        bouncesF.setText("Waiting...");
-        conversionsF.setText("Waiting...");
-        totalCostF.setText("Waiting...");
-        CTRF.setText("Waiting...");
-        CPAF.setText("Waiting...");
-        CPCF.setText("Waiting...");
-        CPMF.setText("Waiting...");
-        bounceRateF.setText("Waiting...");
-        Thread th = new Thread(tsk);
-        th.setDaemon(true);
-        th.start();
+                @Override
+                protected void done()
+                {
+                    super.done();
+                    metricsLoading = false;
+                }
+            };
+
+            impressionsF.setText("Waiting...");
+            clicksF.setText("Waiting...");
+            uniquesF.setText("Waiting...");
+            bouncesF.setText("Waiting...");
+            conversionsF.setText("Waiting...");
+            totalCostF.setText("Waiting...");
+            CTRF.setText("Waiting...");
+            CPAF.setText("Waiting...");
+            CPCF.setText("Waiting...");
+            CPMF.setText("Waiting...");
+            bounceRateF.setText("Waiting...");
+            Thread th = new Thread(tsk);
+            th.setDaemon(true);
+            th.start();
+        }
     }
 
 
@@ -2136,10 +2151,15 @@ public class MainController implements ScreenInterface {
 
     public void populateMetric(String metric, Step step) {
 
+        if(!graphLoading)
+        {
+            graphLoading = true;
         lineChart.getData().clear();
         barChart.getData().clear();
         areaChart.getData().clear();
         pieChart.getData().clear();
+
+//        lineChart.getData().
 
         x.setAnimated(false);
         y.setAnimated(false);
@@ -2151,72 +2171,80 @@ public class MainController implements ScreenInterface {
 
                 for(String key : filters.keySet())
                 {
-                Task<String> tsk = new Task<>(){
-                    @Override
-                    protected String call()
+                    Task<String> tsk = new Task<>()
                     {
-                        String name = dataModel.getName() + " " + metric + " - " + key;
-                        dataModel.setFilter(filters.get(key));
-                        try
+                        @Override
+                        protected String call()
                         {
-                            switch (metric)
+                            String name = dataModel.getName() + " " + metric + " - " + key;
+                            dataModel.setFilter(filters.get(key));
+                            try
                             {
-                                case "Impressions":
+                                switch (metric)
+                                {
+                                    case "Impressions":
 //                                    setData_I(sortMap(dataModel.getFullImpressions(step)), tempCampaignMetricLC, tempCampaignMetricPC);
-                                    sortAndSet_I(dataModel.getFullImpressions(step), name);
-                                    break;
-                                case "Clicks":
+                                        sortAndSet_I(dataModel.getFullImpressions(step), name);
+                                        break;
+                                    case "Clicks":
 //                                    setData_I(sortMap(dataModel.getFullClicks(step)), tempCampaignMetricLC, tempCampaignMetricPC);
-                                    sortAndSet_I(dataModel.getFullClicks(step), name);
-                                    break;
-                                case "Uniques":
+                                        sortAndSet_I(dataModel.getFullClicks(step), name);
+                                        break;
+                                    case "Uniques":
 //                                    setData_I(sortMap(dataModel.getFullUniques(step)), tempCampaignMetricLC, tempCampaignMetricPC);
-                                    sortAndSet_I(dataModel.getFullUniques(step), name);
-                                    break;
-                                case "Bounces":
+                                        sortAndSet_I(dataModel.getFullUniques(step), name);
+                                        break;
+                                    case "Bounces":
 //                                    setData_I(sortMap(dataModel.getFullBounces(step)), tempCampaignMetricLC, tempCampaignMetricPC);
-                                    sortAndSet_I(dataModel.getFullBounces(step), name);
-                                    break;
-                                case "Conversions":
+                                        sortAndSet_I(dataModel.getFullBounces(step), name);
+                                        break;
+                                    case "Conversions":
 //                                    setData_I(sortMap(dataModel.getFullConversions(step)), tempCampaignMetricLC, tempCampaignMetricPC);
-                                    sortAndSet_I(dataModel.getFullConversions(step), name);
-                                    break;
-                                case "Total Cost":
+                                        sortAndSet_I(dataModel.getFullConversions(step), name);
+                                        break;
+                                    case "Total Cost":
 //                                    setData_F(sortMap(dataModel.getFullCost(step)), tempCampaignMetricLC, tempCampaignMetricPC);
-                                    sortAndSet_F(dataModel.getFullCost(step), name);
-                                    break;
-                                case "CTR":
+                                        sortAndSet_F(dataModel.getFullCost(step), name);
+                                        break;
+                                    case "CTR":
 //                                    setData_F(sortMap(dataModel.getFullCTR(step)), tempCampaignMetricLC, tempCampaignMetricPC);
-                                    sortAndSet_F(dataModel.getFullCTR(step), name);
-                                    break;
-                                case "CPA":
+                                        sortAndSet_F(dataModel.getFullCTR(step), name);
+                                        break;
+                                    case "CPA":
 //                                    setData_F(sortMap(dataModel.getFullCPA(step)), tempCampaignMetricLC, tempCampaignMetricPC);
-                                    sortAndSet_F(dataModel.getFullCPA(step), name);
-                                    break;
-                                case "CPC":
+                                        sortAndSet_F(dataModel.getFullCPA(step), name);
+                                        break;
+                                    case "CPC":
 //                                    setData_F(sortMap(dataModel.getFullCPC(step)), tempCampaignMetricLC, tempCampaignMetricPC);
-                                    sortAndSet_F(dataModel.getFullCPC(step), name);
-                                    break;
-                                case "CPM":
+                                        sortAndSet_F(dataModel.getFullCPC(step), name);
+                                        break;
+                                    case "CPM":
 //                                    setData_F(sortMap(dataModel.getFullCPM(step)), tempCampaignMetricLC, tempCampaignMetricPC);
-                                    sortAndSet_F(dataModel.getFullCPC(step), name);
-                                    break;
-                                case "Bounce Rate":
+                                        sortAndSet_F(dataModel.getFullCPC(step), name);
+                                        break;
+                                    case "Bounce Rate":
 //                                    setData_F(sortMap(dataModel.getFullBounceRate(step)), tempCampaignMetricLC, tempCampaignMetricPC);
-                                    sortAndSet_F(dataModel.getFullBounceRate(step), name);
-                                    break;
+                                        sortAndSet_F(dataModel.getFullBounceRate(step), name);
+                                        break;
+                                }
+                            } catch (SQLException e)
+                            {
+                                reportError(e);
                             }
-                        } catch (SQLException e)
-                        {
-                            reportError(e);
+
+                            return null;
                         }
 
-                        return null;
-                    }
-                };
-                Thread th = new Thread(tsk);
-                th.start();
-
+                        @Override
+                        protected void done()
+                        {
+                            super.done();
+                            graphLoading = false;
+                        }
+                    };
+                    Thread th = new Thread(tsk);
+                    th.start();
+                }
                 }
             }
         }
@@ -2248,6 +2276,9 @@ public class MainController implements ScreenInterface {
         }
         Platform.runLater(()-> {
             lineChart.animatedProperty().setValue(false);
+            areaChart.animatedProperty().setValue(false);
+            barChart.animatedProperty().setValue(false);
+            pieChart.animatedProperty().setValue(false);
             areaChart.getData().add(LC);
             lineChart.getData().add(AC);
             barChart.getData().add(BC);
