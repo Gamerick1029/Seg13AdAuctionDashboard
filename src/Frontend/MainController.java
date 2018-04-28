@@ -1842,6 +1842,7 @@ public class MainController implements ScreenInterface {
 
                     {
                         reportError(e);
+                        metricsLoading = false;
                     }
                     return null;
                 }
@@ -2230,6 +2231,7 @@ public class MainController implements ScreenInterface {
                             } catch (SQLException e)
                             {
                                 reportError(e);
+                                graphLoading = false;
                             }
 
                             return null;
