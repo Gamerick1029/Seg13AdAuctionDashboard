@@ -17,6 +17,7 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -30,7 +31,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<ScrollPane fitToHeight="true" fitToWidth="true" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Frontend.MainController">
+<ScrollPane fitToHeight="true" fitToWidth="true" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Frontend.MainController">
    <content>
       <BorderPane fx:id="bigPane">
          <center>
@@ -464,7 +465,7 @@
 
                                 <MenuButton id="menuButton" fx:id="filterDropDown" contentDisplay="CENTER" mnemonicParsing="false" text="Filter 1" textAlignment="CENTER">
       	                          <items>
-      	                                <CheckMenuItem id="checkMenuItem" fx:id="filterOne" text="Filter 1" mnemonicParsing="false" selected="true" />
+      	                                <CheckMenuItem id="checkMenuItem" fx:id="filterOne" mnemonicParsing="false" selected="true" text="Filter 1" />
       	                          </items>
       	                    </MenuButton>
                      		<Button id="menuButton" fx:id="removeFilter" contentDisplay="CENTER" mnemonicParsing="false" text="-" textAlignment="CENTER" />
@@ -614,7 +615,7 @@
                         
                                   <TextField fx:id="startDay" maxWidth="50.0" promptText="Day" />
                                   <MenuButton id="menuButton" fx:id="startMonth" maxWidth="80.0" mnemonicParsing="false" text="Month" />
-                                  <TextField fx:id="startYear" maxWidth="50.0" promptText="Year" />
+                                  <Spinner fx:id="startYear" maxHeight="26.0" maxWidth="100.0" minHeight="26.0" minWidth="100.0" />
                            </children>
                         </HBox>
                         
@@ -625,7 +626,7 @@
                            
                                   <TextField fx:id="endDay" maxWidth="50.0" promptText="Day" />
                                   <MenuButton id="menuButton" fx:id="endMonth" maxWidth="80.0" mnemonicParsing="false" text="Month" />
-                                  <TextField fx:id="endYear" maxWidth="50.0" promptText="Year" />
+                                  <Spinner fx:id="endYear" maxHeight="26.0" maxWidth="100.0" minHeight="26.0" minWidth="100.0" />
                            </children>
                         </HBox>
                             <Text id="filterByDate" fx:id="searchDate" onMouseClicked="#applyDateFilter" text="Filter by Date">
@@ -664,14 +665,14 @@
 					<items>
 
                   <Menu fx:id="bounceOptions" mnemonicParsing="false" text="Bounce Rate">
-					  <MenuItem fx:id="timeSpent" text="By time spent on website" mnemonicParsing="false" />
-					  <MenuItem fx:id="numberPages" text="By number of pages visited" mnemonicParsing="false" />
+					  <MenuItem fx:id="timeSpent" mnemonicParsing="false" text="By time spent on website" />
+					  <MenuItem fx:id="numberPages" mnemonicParsing="false" text="By number of pages visited" />
 				  </Menu>
 
                     <Menu fx:id="themesOptions" mnemonicParsing="false" text="Themes">
-                    		<MenuItem fx:id="darkThemeOption" text="Dark Theme" mnemonicParsing="false" />
-                    		<MenuItem fx:id="lightThemeOption" text="Light Theme" mnemonicParsing="false" />
-                    		<MenuItem fx:id="mintThemeOption" text="Mint Theme" mnemonicParsing="false" />
+                    		<MenuItem fx:id="darkThemeOption" mnemonicParsing="false" text="Dark Theme" />
+                    		<MenuItem fx:id="lightThemeOption" mnemonicParsing="false" text="Light Theme" />
+                    		<MenuItem fx:id="mintThemeOption" mnemonicParsing="false" text="Mint Theme" />
                     </Menu>
 
                   </items>
