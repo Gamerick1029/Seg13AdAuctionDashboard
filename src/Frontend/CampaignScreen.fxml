@@ -645,7 +645,40 @@
                      <padding>
        	           	<Insets left="20" right="20" />
        	           </padding>
-                     
+
+					  <HBox spacing="5.0">
+						  <children>
+
+							  <Text text="Filter per Day of Week" />
+							  <CheckBox id="checkBox" fx:id="monday" mnemonicParsing="false" text="Monday" GridPane.columnIndex="1" />
+							  <CheckBox id="checkBox" fx:id="tuesday" mnemonicParsing="false" text="Tuesday" GridPane.columnIndex="1" />
+
+							  <CheckBox id="checkBox" fx:id="wednesday" mnemonicParsing="false" text="Wednesday" GridPane.columnIndex="1" />
+
+							  <CheckBox id="checkBox" fx:id="thursday" mnemonicParsing="false" text="Thursday" GridPane.columnIndex="1" />
+							  <CheckBox id="checkBox" fx:id="friday" mnemonicParsing="false" text="Friday" GridPane.columnIndex="1" />
+							  <CheckBox id="checkBox" fx:id="saturday" mnemonicParsing="false" text="Saturday" GridPane.columnIndex="1" />
+							  <CheckBox id="checkBox" fx:id="sunday" mnemonicParsing="false" text="Sunday" GridPane.columnIndex="1" />
+						  </children>
+					  </HBox>
+
+					  <HBox spacing="5.0">
+						  <children>
+							  <Text text="Filter per Time of Day" />
+							  <Text text="Start"/>
+							  <Spinner fx:id="startHour" maxHeight="26.0" maxWidth="100.0" minHeight="26.0" minWidth="100.0" />
+							  <Spinner fx:id="startMin" maxHeight="26.0" maxWidth="100.0" minHeight="26.0" minWidth="100.0" />
+						  </children>
+					  </HBox>
+
+					  <HBox spacing="5.0">
+						  <children>
+							  <Text text="Filter per Time of Day" />
+							  <Text text="End"/>
+							  <Spinner fx:id="endHour" maxHeight="26.0" maxWidth="100.0" minHeight="26.0" minWidth="100.0" />
+							  <Spinner fx:id="endMin" maxHeight="26.0" maxWidth="100.0" minHeight="26.0" minWidth="100.0" />
+						  </children>
+					  </HBox>
                   </VBox>
        	           </children>
               </Pane>

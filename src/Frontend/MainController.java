@@ -1029,7 +1029,7 @@ public class MainController implements ScreenInterface {
         table.addCell("Cost per Click");
         table.addCell(CPCF.getText());
 
-        table.addCell("Click per Thousand Impressions");
+        table.addCell("Cost per Thousand Impressions");
         table.addCell(CPMF.getText());
 
         table.addCell("Bounce Rate");
