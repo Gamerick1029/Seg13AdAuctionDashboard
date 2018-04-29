@@ -260,6 +260,14 @@ public class MainController implements ScreenInterface {
         currentFilter = new Filter();
         filters.put("Filter 1", currentFilter);
 
+        /*
+        Disable animation to preserve axis positions
+         */
+        lineChart.animatedProperty().set(false);
+        barChart.animatedProperty().set(false);
+        pieChart.animatedProperty().set(false);
+        areaChart.animatedProperty().set(false);
+
 
         currentCampaign.getDisplayed().addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
@@ -1864,7 +1872,15 @@ public class MainController implements ScreenInterface {
 
 
     private void groupByStep() {
-        populateMetric(this.currentMetricDisplayed, currentStep);
+
+        if(currentChartType.equals("Histogram"))
+        {
+            changeToHistogram();
+        }
+        else
+        {
+            populateMetric(this.currentMetricDisplayed, currentStep);
+        }
     }
 
     private void changeToLineChart() {
@@ -2150,8 +2166,6 @@ public class MainController implements ScreenInterface {
         areaChart.getData().clear();
         pieChart.getData().clear();
 
-//        lineChart.getData().
-
         x.setAnimated(false);
         y.setAnimated(false);
 
@@ -2174,39 +2188,30 @@ public class MainController implements ScreenInterface {
                                 switch (metric)
                                 {
                                     case "Impressions":
-//                                    setData_I(sortMap(dataModel.getFullImpressions(step)), tempCampaignMetricLC, tempCampaignMetricPC);
                                         sortAndSet_I(dataModel.getFullImpressions(step), name);
                                         break;
                                     case "Clicks":
-//                                    setData_I(sortMap(dataModel.getFullClicks(step)), tempCampaignMetricLC, tempCampaignMetricPC);
                                         sortAndSet_I(dataModel.getFullClicks(step), name);
                                         break;
                                     case "Uniques":
-//                                    setData_I(sortMap(dataModel.getFullUniques(step)), tempCampaignMetricLC, tempCampaignMetricPC);
                                         sortAndSet_I(dataModel.getFullUniques(step), name);
                                         break;
                                     case "Bounces":
-//                                    setData_I(sortMap(dataModel.getFullBounces(step)), tempCampaignMetricLC, tempCampaignMetricPC);
                                         sortAndSet_I(dataModel.getFullBounces(step), name);
                                         break;
                                     case "Conversions":
-//                                    setData_I(sortMap(dataModel.getFullConversions(step)), tempCampaignMetricLC, tempCampaignMetricPC);
                                         sortAndSet_I(dataModel.getFullConversions(step), name);
                                         break;
                                     case "Total Cost":
-//                                    setData_F(sortMap(dataModel.getFullCost(step)), tempCampaignMetricLC, tempCampaignMetricPC);
                                         sortAndSet_F(dataModel.getFullCost(step), name);
                                         break;
                                     case "CTR":
-//                                    setData_F(sortMap(dataModel.getFullCTR(step)), tempCampaignMetricLC, tempCampaignMetricPC);
                                         sortAndSet_F(dataModel.getFullCTR(step), name);
                                         break;
                                     case "CPA":
-//                                    setData_F(sortMap(dataModel.getFullCPA(step)), tempCampaignMetricLC, tempCampaignMetricPC);
                                         sortAndSet_F(dataModel.getFullCPA(step), name);
                                         break;
                                     case "CPC":
-//                                    setData_F(sortMap(dataModel.getFullCPC(step)), tempCampaignMetricLC, tempCampaignMetricPC);
                                         sortAndSet_F(dataModel.getFullCPC(step), name);
                                         break;
                                     case "CPM":
@@ -2214,7 +2219,6 @@ public class MainController implements ScreenInterface {
                                         sortAndSet_F(dataModel.getFullCPC(step), name);
                                         break;
                                     case "Bounce Rate":
-//                                    setData_F(sortMap(dataModel.getFullBounceRate(step)), tempCampaignMetricLC, tempCampaignMetricPC);
                                         sortAndSet_F(dataModel.getFullBounceRate(step), name);
                                         break;
                                 }
