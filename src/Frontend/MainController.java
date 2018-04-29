@@ -94,6 +94,15 @@ public class MainController implements ScreenInterface {
     private javafx.scene.control.TextField CPMF;
     @FXML
     private javafx.scene.control.TextField bounceRateF;
+    @FXML
+    private javafx.scene.control.Spinner startHour;
+    @FXML
+    javafx.scene.control.Spinner endHour;
+    @FXML
+    javafx.scene.control.Spinner startMin;
+    @FXML
+    javafx.scene.control.Spinner endMin;
+
 
 
     @FXML
@@ -258,7 +267,10 @@ public class MainController implements ScreenInterface {
         myController.setCampaignDataPopulator(new CampaignDataPopulator(x, y, lineChart, barChart, pieChart, areaChart));
         impressions.setStyle("-fx-font-weight: bold;");
         currentFilter = new Filter();
-        filters.put("Filter 1", currentFilter);
+
+
+
+
 
         /*
         Disable animation to preserve axis positions
@@ -365,6 +377,11 @@ public class MainController implements ScreenInterface {
         });
         startYear.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1970,Calendar.getInstance().get(Calendar.YEAR),Calendar.getInstance().get(Calendar.YEAR), 1));
         endYear.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1970,Calendar.getInstance().get(Calendar.YEAR),Calendar.getInstance().get(Calendar.YEAR), 1));
+
+        startHour.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(00,23,Calendar.getInstance().get(Calendar.HOUR), 1));
+        startMin.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(00,59,Calendar.getInstance().get(Calendar.MINUTE), 1));
+        endHour.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(00,23 ,Calendar.getInstance().get(Calendar.HOUR), 1));
+        endMin.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(00,59,Calendar.getInstance().get(Calendar.MINUTE), 1));
 
         genderMale.setSelected(true);
         genderFemale.setSelected(true);
@@ -560,6 +577,12 @@ public class MainController implements ScreenInterface {
             System.out.println("textfield changed from " + oldValue + " to " + newValue);
         });
 
+        addFilterToMap("Filter 1");
+        //filters.put("Filter 1", currentFilter);
+        //changeFilter(filterOne);
+
+        currentFilter = filters.get("Filter 1");
+        //setFilter("Filter 1");
 
 
         // Remove alphabetical and symbol input for numerical Fields
