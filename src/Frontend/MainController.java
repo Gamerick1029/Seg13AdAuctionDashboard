@@ -693,13 +693,14 @@ public class MainController implements ScreenInterface {
         myMenuBar.setOnMouseEntered(event -> {
             setScene(event);
         });
-        filters.put(filterOne.getText(), new Filter());
+        filters.put(filterOne.getText(), currentFilter);
 
         filterOne.setOnAction(t -> {
             changeFilter(filterOne);
         });
 
         filterDropDown.setText(filterOne.getText());
+
         applyFilters.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
                     applyFilters();
@@ -749,7 +750,6 @@ public class MainController implements ScreenInterface {
                 new PropertyValueFactory<>("remove")
         );
         campaignsTable.getColumns().setAll(nameColumn, displayColumn, removeColumn);
-
 
     }
 
