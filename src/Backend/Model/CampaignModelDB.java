@@ -212,7 +212,7 @@ public class CampaignModelDB implements DataModel{
             case HOUR_OF_DAY:
                 return StepHolder.hours[Integer.parseInt(date)];
             case DAY_OF_WEEK:
-                return StepHolder.days.get(date);
+                return StepHolder.dayToDate.get(date);
         }
         return result;
     }
@@ -618,6 +618,27 @@ public class CampaignModelDB implements DataModel{
                 hs.add(id);
                 result.put(date, hs);
             }
+        }
+
+        return result;
+    }
+
+    @Override
+    public LinkedHashMap<String, Integer> getHistogramData() throws SQLException {
+        String select = "CONCAT(3*FLOOR(ClickCost/3), '-', 3*FLOOR(ClickCost/3) + 3) as `range`, COUNT(*) as `numClicks`";
+        String from = clickTable();
+        String join = makeJoins(clickTable(), impTable(), userTable());
+        String where = "";
+        String otherSuffixes = "GROUP BY `range` ORDER BY `ClickCost`";
+
+        ResultSet rs = buildAndExecuteStatement(select, from, join, where, otherSuffixes);
+
+        LinkedHashMap<String, Integer> result = new LinkedHashMap<>();
+
+        while(rs.next()){
+            String s = rs.getString("range");
+            int i = rs.getInt("numClicks");
+            result.put(s, i);
         }
 
         return result;

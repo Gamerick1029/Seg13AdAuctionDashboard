@@ -3,6 +3,7 @@ package Backend.Model.Stubs;
 import Backend.Model.Interfaces.*;
 import Backend.Model.Interfaces.StepHolder.Step;
 
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -395,7 +396,12 @@ public class DataModelStub implements DataModel
         return null;
     }
 
-     
+    @Override
+    public LinkedHashMap<String, Integer> getHistogramData() throws SQLException {
+        return null;
+    }
+
+
     public Filter getFilter()
     {
         return filter;

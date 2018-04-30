@@ -13,9 +13,10 @@ public class StepHolder {
     private static final Date FRIDAY = new Date(5);
     private static final Date SATURDAY = new Date(6);
 
-    //Use these to get the dates corresponding with specific days in the week or hours in the day
+    //Use these to get the dates corresponding with specific dayToDate in the week or hours in the day
     //hours are from 0-23
-    public static HashMap<String, Date> days = new HashMap<>();
+    public static HashMap<String, Date> dayToDate = new HashMap<>();
+    public static HashMap<Date, String> dateToDay = new HashMap<>();
     public static Date[] hours = new Date[24];
 
     static {
@@ -44,13 +45,21 @@ public class StepHolder {
         hours[22]  = new Date(29);
         hours[23]  = new Date(30);
 
-        days.put("Mon", MONDAY);
-        days.put("Tue", TUESDAY);
-        days.put("Wed", WEDNESDAY);
-        days.put("Thu", THURSDAY);
-        days.put("Fri", FRIDAY);
-        days.put("Sat", SATURDAY);
-        days.put("Sun", SUNDAY);
+        dayToDate.put("Mon", MONDAY);
+        dayToDate.put("Tue", TUESDAY);
+        dayToDate.put("Wed", WEDNESDAY);
+        dayToDate.put("Thu", THURSDAY);
+        dayToDate.put("Fri", FRIDAY);
+        dayToDate.put("Sat", SATURDAY);
+        dayToDate.put("Sun", SUNDAY);
+
+        dateToDay.put(MONDAY, "Mon");
+        dateToDay.put(TUESDAY, "Tue");
+        dateToDay.put(WEDNESDAY, "Wed");
+        dateToDay.put(THURSDAY, "Thu");
+        dateToDay.put(FRIDAY, "Fri");
+        dateToDay.put(SATURDAY, "Sat");
+        dateToDay.put(SUNDAY, "Sun");
     }
 
     public enum Step {

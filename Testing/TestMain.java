@@ -40,13 +40,10 @@ public class TestMain{
 //
 //        ReadCSVsToDB.makeCampaign(dbh, "JUnit", JUnitClicks, JUnitImpressions, JUnitServerLogs);
 //
-        CampaignModelDB cmdt = new CampaignModelDB("JUnit");
+        CampaignModelDB cmdt = new CampaignModelDB("name");
 
-        Filter.bounceRateByPages = false;
-        Filter.timeOnSiteForBounce = 10;
-//
         cmdt.setFilter(filter);
-        System.out.println(cmdt.getFullImpressions(StepHolder.Step.HOUR_OF_DAY));
+        System.out.println(cmdt.getHistogramData());
 
 //        System.out.println(cmdt.getBouncesNumber());
 //        System.out.println(cmdt.getFullBounces(Step.DAY));

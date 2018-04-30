@@ -3,6 +3,7 @@ package Backend.Model.Interfaces;
 import Backend.Model.Interfaces.StepHolder.Step;
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -237,6 +238,8 @@ public interface DataModel {
      * @return map of user sets within associated time intervals
      */
     Map<Date, Set<String>> getFullUsers(Step step) throws SQLException;
+
+    LinkedHashMap<String, Integer> getHistogramData() throws SQLException;
 
 //    Set<String> getOverallUsersRateByInterval(Date startInterval, Date endInterval);
 

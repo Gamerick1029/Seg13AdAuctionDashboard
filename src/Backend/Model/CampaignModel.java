@@ -6,8 +6,8 @@ import Backend.Model.Interfaces.StepHolder.Step;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.sql.SQLException;
 import java.text.ParseException;
-import java.time.DayOfWeek;
 import java.util.*;
 
 /**
@@ -751,6 +751,11 @@ DEAD FUNCTION
     public Map<Date, Set<String>> getFullUsers(Step step)
     {
         return getUsersByInterval(MINDATE, MAXDATE, convStep(step));
+    }
+
+    @Override
+    public LinkedHashMap<String, Integer> getHistogramData() throws SQLException {
+        return null;
     }
 
     @Override
