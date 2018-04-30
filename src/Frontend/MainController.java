@@ -104,7 +104,6 @@ public class MainController implements ScreenInterface {
     javafx.scene.control.Spinner endMin;
 
 
-
     @FXML
     private javafx.scene.text.Text impressions;
     @FXML
@@ -242,6 +241,24 @@ public class MainController implements ScreenInterface {
     private MenuItem lightThemeOption;
     @FXML
     private MenuItem mintThemeOption;
+    @FXML
+    private CheckBox monday;
+    @FXML
+    private CheckBox tuesday;
+    @FXML
+    private CheckBox wednesday;
+    @FXML
+    private CheckBox thursday;
+    @FXML
+    private CheckBox friday;
+    @FXML
+    private CheckBox saturday;
+    @FXML
+    private CheckBox sunday;
+    @FXML
+    private Button applyPerTime;
+    @FXML
+    private Button applyPerDay;
 
     private XYChart.Series campaignMetricLC;
     private XYChart.Series campaignMetricBC;
@@ -375,13 +392,13 @@ public class MainController implements ScreenInterface {
             byDay.setSelected(false);
             groupByStep();
         });
-        startYear.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1970,Calendar.getInstance().get(Calendar.YEAR),Calendar.getInstance().get(Calendar.YEAR), 1));
-        endYear.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1970,Calendar.getInstance().get(Calendar.YEAR),Calendar.getInstance().get(Calendar.YEAR), 1));
+        startYear.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1970, Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.YEAR), 1));
+        endYear.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1970, Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.YEAR), 1));
 
-        startHour.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(00,23,Calendar.getInstance().get(Calendar.HOUR), 1));
-        startMin.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(00,59,Calendar.getInstance().get(Calendar.MINUTE), 1));
-        endHour.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(00,23 ,Calendar.getInstance().get(Calendar.HOUR), 1));
-        endMin.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(00,59,Calendar.getInstance().get(Calendar.MINUTE), 1));
+        startHour.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(00, 23, Calendar.getInstance().get(Calendar.HOUR), 1));
+        startMin.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(00, 59, Calendar.getInstance().get(Calendar.MINUTE), 1));
+        endHour.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(00, 23, Calendar.getInstance().get(Calendar.HOUR), 1));
+        endMin.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(00, 59, Calendar.getInstance().get(Calendar.MINUTE), 1));
 
         genderMale.setSelected(true);
         genderFemale.setSelected(true);
@@ -739,6 +756,14 @@ public class MainController implements ScreenInterface {
                     addNewFilter();
                 });
 
+        applyPerDay.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                e -> {
+                    applyPerDayFilter();
+                });
+        applyPerTime.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                e -> {
+                    applyPerTimeFilter();
+                });
         campaignsTable.setPrefSize(250, 225);
         campaignsTable.setPlaceholder(new Label("No campaigns loaded!"));
 
@@ -779,6 +804,16 @@ public class MainController implements ScreenInterface {
     private void applyFilters() {
         populateMetric(currentMetricDisplayed, currentStep);
         setMetrics(campaignName.getText());
+    }
+
+    private void applyPerTimeFilter() {
+        //TODO: apply filter
+        populateMetric(currentMetricDisplayed, currentStep);
+    }
+
+    private void applyPerDayFilter() {
+        //TODO: apply filter
+        populateMetric(currentMetricDisplayed, currentStep);
     }
 
     private void addNewFilter() {
@@ -898,7 +933,7 @@ public class MainController implements ScreenInterface {
             } else {
                 s = textField.getText();
             }
-            saveImage(new File(openDirectoryChooser().getPath() + "/" + s + ".png"), true, "Image " + s +  " saved!");
+            saveImage(new File(openDirectoryChooser().getPath() + "/" + s + ".png"), true, "Image " + s + " saved!");
         }
     }
 
@@ -1016,7 +1051,7 @@ public class MainController implements ScreenInterface {
                 document.add(createTable());
                 document.close();
 
-                showUpdate("PDF file " + s +  " created!");
+                showUpdate("PDF file " + s + " created!");
                 openPrinter(fileName);
             }
         }
@@ -1528,7 +1563,7 @@ public class MainController implements ScreenInterface {
             content.add(label, 0, 0);
             alert.getDialogPane().setContent(content);
             alert.showAndWait();
-        } else if (endDay.getText().equals("") || endMonth.getText().equals("Month") ) {
+        } else if (endDay.getText().equals("") || endMonth.getText().equals("Month")) {
             alert.setHeaderText("Invalid end date!");
             label = new Label("Please select a full end date.");
             content.add(label, 0, 0);
@@ -1542,7 +1577,7 @@ public class MainController implements ScreenInterface {
             content.add(l, 0, 1);
             alert.getDialogPane().setContent(content);
             alert.showAndWait();
-        } else if (!endDay.getText().matches("[0-9]+") ) {
+        } else if (!endDay.getText().matches("[0-9]+")) {
             alert.setHeaderText("Invalid end date!");
             label = new Label("Please input a valid end date.");
             Label l = new Label("Fields can only contain digits.");
@@ -1551,7 +1586,7 @@ public class MainController implements ScreenInterface {
             alert.getDialogPane().setContent(content);
             alert.showAndWait();
 
-        } else if (startDay.getText().length() != 2 ) {
+        } else if (startDay.getText().length() != 2) {
             alert.setHeaderText("Invalid start date!");
             label = new Label("Please input a valid start date.");
             Label l = new Label("Number of required digits for day: 2.");
@@ -1561,7 +1596,7 @@ public class MainController implements ScreenInterface {
             content.add(ll, 0, 2);
             alert.getDialogPane().setContent(content);
             alert.showAndWait();
-        } else if (endDay.getText().length() != 2 ) {
+        } else if (endDay.getText().length() != 2) {
             alert.setHeaderText("Invalid end date!");
             label = new Label("Please input a valid end date.");
             Label l = new Label("Number of required digits for day: 2.");
@@ -1590,23 +1625,21 @@ public class MainController implements ScreenInterface {
             content.add(label, 0, 0);
             alert.getDialogPane().setContent(content);
             alert.showAndWait();
-        } else if (((int) startYear.getValue() <= (int) endYear.getValue() && (Integer.valueOf(convertMonth(startMonth.getText())) <= Integer.valueOf(convertMonth(endMonth.getText())))) && Integer.valueOf(startDay.getText()) > Integer.valueOf(endDay.getText())){
-                alert.setHeaderText("Start date must be before end date!");
-                label = new Label("The end date " + endDay.getText() + "-" + endMonth.getText() + "-" + endYear.getValue() + " is before the start date: "
-                        + startDay.getText() + "-" + startMonth.getText() + "-" + startYear.getValue());
-                content.add(label, 0, 0);
-                alert.getDialogPane().setContent(content);
-                alert.showAndWait();
-            }
-        else if (((int) startYear.getValue() <= (int) endYear.getValue() && Integer.valueOf(convertMonth(startMonth.getText())) > Integer.valueOf(convertMonth(endMonth.getText())))){
+        } else if (((int) startYear.getValue() <= (int) endYear.getValue() && (Integer.valueOf(convertMonth(startMonth.getText())) <= Integer.valueOf(convertMonth(endMonth.getText())))) && Integer.valueOf(startDay.getText()) > Integer.valueOf(endDay.getText())) {
             alert.setHeaderText("Start date must be before end date!");
             label = new Label("The end date " + endDay.getText() + "-" + endMonth.getText() + "-" + endYear.getValue() + " is before the start date: "
                     + startDay.getText() + "-" + startMonth.getText() + "-" + startYear.getValue());
             content.add(label, 0, 0);
             alert.getDialogPane().setContent(content);
             alert.showAndWait();
-        }
-         else {
+        } else if (((int) startYear.getValue() <= (int) endYear.getValue() && Integer.valueOf(convertMonth(startMonth.getText())) > Integer.valueOf(convertMonth(endMonth.getText())))) {
+            alert.setHeaderText("Start date must be before end date!");
+            label = new Label("The end date " + endDay.getText() + "-" + endMonth.getText() + "-" + endYear.getValue() + " is before the start date: "
+                    + startDay.getText() + "-" + startMonth.getText() + "-" + startYear.getValue());
+            content.add(label, 0, 0);
+            alert.getDialogPane().setContent(content);
+            alert.showAndWait();
+        } else {
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             StringBuilder sbS = new StringBuilder();
             sbS.append(startDay.getText());
@@ -1833,17 +1866,14 @@ public class MainController implements ScreenInterface {
     Sets the TextFields with the selected campaign's metrics
      */
     private void setMetrics(String name) {
-        if(!metricsLoading)
-        {
+        if (!metricsLoading) {
             metricsLoading = true;
             campaignName.setText(name);
             DataModel dm = myController.getDataModel(name);
             DecimalFormat df = new DecimalFormat("#.##");
-            Task<String> tsk = new Task<>()
-            {
+            Task<String> tsk = new Task<>() {
                 @Override
-                protected String call() throws Exception
-                {
+                protected String call() throws Exception {
                     try
 
                     {
@@ -1869,8 +1899,7 @@ public class MainController implements ScreenInterface {
                 }
 
                 @Override
-                protected void done()
-                {
+                protected void done() {
                     super.done();
                     metricsLoading = false;
                 }
@@ -1896,12 +1925,9 @@ public class MainController implements ScreenInterface {
 
     private void groupByStep() {
 
-        if(currentChartType.equals("Histogram"))
-        {
+        if (currentChartType.equals("Histogram")) {
             changeToHistogram();
-        }
-        else
-        {
+        } else {
             populateMetric(this.currentMetricDisplayed, currentStep);
         }
     }
@@ -2181,89 +2207,81 @@ public class MainController implements ScreenInterface {
 
     public void populateMetric(String metric, Step step) {
 
-        if(!graphLoading)
-        {
+        if (!graphLoading) {
             graphLoading = true;
-        lineChart.getData().clear();
-        barChart.getData().clear();
-        areaChart.getData().clear();
-        pieChart.getData().clear();
+            lineChart.getData().clear();
+            barChart.getData().clear();
+            areaChart.getData().clear();
+            pieChart.getData().clear();
 
-        x.setAnimated(false);
-        y.setAnimated(false);
+            x.setAnimated(false);
+            y.setAnimated(false);
 
-        for (Campaign campaign : this.campaignsLoaded) {
-            if (campaign.getDisplayed().isSelected()) {
-                DataModel dataModel = myController.getDataModel(campaign.getName());
-                dataModel.getFilter().step = step;
+            for (Campaign campaign : this.campaignsLoaded) {
+                if (campaign.getDisplayed().isSelected()) {
+                    DataModel dataModel = myController.getDataModel(campaign.getName());
+                    dataModel.getFilter().step = step;
 
-                for(String key : filters.keySet())
-                {
-                    Task<String> tsk = new Task<>()
-                    {
-                        @Override
-                        protected String call()
-                        {
-                            String name = dataModel.getName() + " " + metric + " - " + key;
-                            dataModel.setFilter(filters.get(key));
-                            try
-                            {
-                                switch (metric)
-                                {
-                                    case "Impressions":
-                                        sortAndSet_I(dataModel.getFullImpressions(step), name);
-                                        break;
-                                    case "Clicks":
-                                        sortAndSet_I(dataModel.getFullClicks(step), name);
-                                        break;
-                                    case "Uniques":
-                                        sortAndSet_I(dataModel.getFullUniques(step), name);
-                                        break;
-                                    case "Bounces":
-                                        sortAndSet_I(dataModel.getFullBounces(step), name);
-                                        break;
-                                    case "Conversions":
-                                        sortAndSet_I(dataModel.getFullConversions(step), name);
-                                        break;
-                                    case "Total Cost":
-                                        sortAndSet_F(dataModel.getFullCost(step), name);
-                                        break;
-                                    case "CTR":
-                                        sortAndSet_F(dataModel.getFullCTR(step), name);
-                                        break;
-                                    case "CPA":
-                                        sortAndSet_F(dataModel.getFullCPA(step), name);
-                                        break;
-                                    case "CPC":
-                                        sortAndSet_F(dataModel.getFullCPC(step), name);
-                                        break;
-                                    case "CPM":
+                    for (String key : filters.keySet()) {
+                        Task<String> tsk = new Task<>() {
+                            @Override
+                            protected String call() {
+                                String name = dataModel.getName() + " " + metric + " - " + key;
+                                dataModel.setFilter(filters.get(key));
+                                try {
+                                    switch (metric) {
+                                        case "Impressions":
+                                            sortAndSet_I(dataModel.getFullImpressions(step), name);
+                                            break;
+                                        case "Clicks":
+                                            sortAndSet_I(dataModel.getFullClicks(step), name);
+                                            break;
+                                        case "Uniques":
+                                            sortAndSet_I(dataModel.getFullUniques(step), name);
+                                            break;
+                                        case "Bounces":
+                                            sortAndSet_I(dataModel.getFullBounces(step), name);
+                                            break;
+                                        case "Conversions":
+                                            sortAndSet_I(dataModel.getFullConversions(step), name);
+                                            break;
+                                        case "Total Cost":
+                                            sortAndSet_F(dataModel.getFullCost(step), name);
+                                            break;
+                                        case "CTR":
+                                            sortAndSet_F(dataModel.getFullCTR(step), name);
+                                            break;
+                                        case "CPA":
+                                            sortAndSet_F(dataModel.getFullCPA(step), name);
+                                            break;
+                                        case "CPC":
+                                            sortAndSet_F(dataModel.getFullCPC(step), name);
+                                            break;
+                                        case "CPM":
 //                                    setData_F(sortMap(dataModel.getFullCPM(step)), tempCampaignMetricLC, tempCampaignMetricPC);
-                                        sortAndSet_F(dataModel.getFullCPC(step), name);
-                                        break;
-                                    case "Bounce Rate":
-                                        sortAndSet_F(dataModel.getFullBounceRate(step), name);
-                                        break;
+                                            sortAndSet_F(dataModel.getFullCPC(step), name);
+                                            break;
+                                        case "Bounce Rate":
+                                            sortAndSet_F(dataModel.getFullBounceRate(step), name);
+                                            break;
+                                    }
+                                } catch (SQLException e) {
+                                    reportError(e);
+                                    graphLoading = false;
                                 }
-                            } catch (SQLException e)
-                            {
-                                reportError(e);
-                                graphLoading = false;
+
+                                return null;
                             }
 
-                            return null;
-                        }
-
-                        @Override
-                        protected void done()
-                        {
-                            super.done();
-                            graphLoading = false;
-                        }
-                    };
-                    Thread th = new Thread(tsk);
-                    th.start();
-                }
+                            @Override
+                            protected void done() {
+                                super.done();
+                                graphLoading = false;
+                            }
+                        };
+                        Thread th = new Thread(tsk);
+                        th.start();
+                    }
                 }
             }
         }
@@ -2274,8 +2292,7 @@ public class MainController implements ScreenInterface {
     I tried to do this with generics, but it locked up
     at the getData().add stage.
      */
-    private void sortAndSet_I(Map<Date, Integer> dataPoints, String name)
-    {
+    private void sortAndSet_I(Map<Date, Integer> dataPoints, String name) {
         XYChart.Series LC = new XYChart.Series();
         XYChart.Series AC = new XYChart.Series();
         XYChart.Series BC = new XYChart.Series();
@@ -2286,14 +2303,13 @@ public class MainController implements ScreenInterface {
         BC.setName(name);
 
         List<Map.Entry<Date, Integer>> sortedPoints = sortMap(dataPoints);
-        for(Map.Entry<Date, Integer> point : sortedPoints)
-        {
+        for (Map.Entry<Date, Integer> point : sortedPoints) {
             LC.getData().add(new XYChart.Data(simpleDateRep(point.getKey()), point.getValue()));
             AC.getData().add(new XYChart.Data(simpleDateRep(point.getKey()), point.getValue()));
             BC.getData().add(new XYChart.Data(simpleDateRep(point.getKey()), point.getValue()));
-            PC.add(new PieChart.Data(simpleDateRep(point.getKey()), (double)point.getValue()));
+            PC.add(new PieChart.Data(simpleDateRep(point.getKey()), (double) point.getValue()));
         }
-        Platform.runLater(()-> {
+        Platform.runLater(() -> {
             lineChart.animatedProperty().setValue(false);
             areaChart.animatedProperty().setValue(false);
             barChart.animatedProperty().setValue(false);
@@ -2305,8 +2321,7 @@ public class MainController implements ScreenInterface {
         });
     }
 
-    private void sortAndSet_F(Map<Date, Float> dataPoints, String name)
-    {
+    private void sortAndSet_F(Map<Date, Float> dataPoints, String name) {
         XYChart.Series LC = new XYChart.Series();
         XYChart.Series AC = new XYChart.Series();
         XYChart.Series BC = new XYChart.Series();
@@ -2317,14 +2332,13 @@ public class MainController implements ScreenInterface {
         BC.setName(name);
 
         List<Map.Entry<Date, Float>> sortedPoints = sortMap(dataPoints);
-        for(Map.Entry<Date, Float> point : sortedPoints)
-        {
+        for (Map.Entry<Date, Float> point : sortedPoints) {
             LC.getData().add(new XYChart.Data(simpleDateRep(point.getKey()), point.getValue()));
             AC.getData().add(new XYChart.Data(simpleDateRep(point.getKey()), point.getValue()));
             BC.getData().add(new XYChart.Data(simpleDateRep(point.getKey()), point.getValue()));
-            PC.add(new PieChart.Data(simpleDateRep(point.getKey()), (double)point.getValue()));
+            PC.add(new PieChart.Data(simpleDateRep(point.getKey()), (double) point.getValue()));
         }
-        Platform.runLater(()-> {
+        Platform.runLater(() -> {
             lineChart.animatedProperty().setValue(false);
             areaChart.getData().add(LC);
             lineChart.getData().add(AC);
