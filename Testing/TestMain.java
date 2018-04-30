@@ -34,15 +34,16 @@ public class TestMain{
         DBHelper dbh = new DBHelper();
 
 
+
 //        File JUnitClicks = new File("TestRuns/Backend/Model/TestSamples/click_log.csv");
 //        File JUnitImpressions = new File("TestRuns/Backend/Model/TestSamples/impression_log.csv");
 //        File JUnitServerLogs = new File("TestRuns/Backend/Model/TestSamples/server_log.csv");
 //
 //        ReadCSVsToDB.makeCampaign(dbh, "JUnit", JUnitClicks, JUnitImpressions, JUnitServerLogs);
 //
-        CampaignModelDB cmdt = new CampaignModelDB("name");
-
-        cmdt.setFilter(filter);
+        CampaignModelDB cmdt = new CampaignModelDB("JUnit");
+//
+//        cmdt.setFilter(filter);
         System.out.println(cmdt.getHistogramData());
 
 //        System.out.println(cmdt.getBouncesNumber());

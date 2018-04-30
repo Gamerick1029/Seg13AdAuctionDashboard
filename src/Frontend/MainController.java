@@ -6,7 +6,6 @@ import Backend.Model.Interfaces.DataModel;
 import Backend.Model.Interfaces.Filter;
 import Backend.Model.Interfaces.StepHolder.Step;
 import com.itextpdf.text.*;
-import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import javafx.application.Platform;
@@ -40,9 +39,6 @@ import javax.print.attribute.standard.Sides;
 import javax.swing.*;
 import java.io.*;
 import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -50,9 +46,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.ThreadPoolExecutor;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -2021,16 +2014,12 @@ public class MainController implements ScreenInterface {
                 DataModel dataModel = myController.getDataModel(campaign.getName());
                 histogramSeries = new XYChart.Series();
                 try {
-                    int i = 0;
-                    List<Map.Entry<Date, Float>> entries = new ArrayList<>(dataModel.getFullCost(currentStep).entrySet());
-                    for (; i < entries.size() - 2; i++) {
-                        String key = simpleDateRep(entries.get(i).getKey()) + " - " + simpleDateRep(entries.get(i + 1).getKey());
-                        Float value = entries.get(i).getValue();
-                        histogramSeries.getData().add(new XYChart.Data(key, value));
-                    }
-                    histogramSeries.getData().add(new XYChart.Data(simpleDateRep(entries.get(i).getKey()) + " onwards", entries.get(i).getValue()));
-                    barChart.getData().add(histogramSeries);
-                    histogramSeries.setName(dataModel.getName() + "Click Cost Histogram");
+                        LinkedHashMap<String, Integer> data = dataModel.getHistogramData();
+                        for (String range : data.keySet()){
+                            histogramSeries.getData().add(new XYChart.Data(range, data.get(range)));
+                        }
+                        barChart.getData().add(histogramSeries);
+                        histogramSeries.setName(dataModel.getName() + " Click Cost Histogram");
                 } catch (SQLException e) {
                     reportError(e);
                 }
