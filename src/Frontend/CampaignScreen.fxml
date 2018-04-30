@@ -41,7 +41,7 @@
                            <children>
                               <HBox alignment="TOP_LEFT" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0">
                                  <children>
-                                    <HBox alignment="TOP_LEFT" spacing="30">
+                                    <HBox alignment="TOP_LEFT" spacing="10">
                                        <children>
       									<Text id="text" text="Timescale:" />
                                           <RadioButton id="text" fx:id="byDay" contentDisplay="CENTER" mnemonicParsing="false" selected="true" text="by day">
@@ -96,7 +96,7 @@
                                   <CategoryAxis id="text" label="Time" side="BOTTOM" />
                                 </xAxis>
                                 <yAxis>
-                                  <NumberAxis id="text" label="Campaign Something" side="LEFT" />
+                                  <NumberAxis id="text" label="Value" side="LEFT" />
                                 </yAxis>
                               </BarChart>
                               <AreaChart id="chart" fx:id="areaChart" minHeight="100.0" minWidth="200.0" visible="false" AnchorPane.bottomAnchor="71.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
@@ -104,7 +104,7 @@
                                   <CategoryAxis id="text" label="Time" side="BOTTOM" />
                                 </xAxis>
                                 <yAxis>
-                                  <NumberAxis id="text" label="Campaign Something" side="LEFT" />
+                                  <NumberAxis id="text" label="Value" side="LEFT" />
                                 </yAxis>
                               </AreaChart>
                            </children>
