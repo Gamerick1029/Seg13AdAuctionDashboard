@@ -22,16 +22,13 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<ScrollPane fitToHeight="true" fitToWidth="true" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Frontend.MainController">
+<ScrollPane fitToHeight="true" fitToWidth="true" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Frontend.MainController">
    <content>
       <BorderPane fx:id="bigPane">
          <center>
@@ -44,32 +41,23 @@
                            <children>
                               <HBox alignment="TOP_LEFT" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0">
                                  <children>
-                                    <HBox alignment="TOP_LEFT">
+                                    <HBox alignment="TOP_LEFT" spacing="30">
                                        <children>
+      									<Text id="text" text="Timescale:" />
                                           <RadioButton id="text" fx:id="byDay" contentDisplay="CENTER" mnemonicParsing="false" selected="true" text="by day">
                                              <cursor>
                                                 <Cursor fx:constant="HAND" />
                                              </cursor>
-                                             <padding>
-                           						<Insets right="30.0" />
-                           					</padding>
-      
                                           </RadioButton>
                                           <RadioButton id="text" fx:id="byWeek" contentDisplay="CENTER" mnemonicParsing="false" text="by week">
                                              <cursor>
                                                 <Cursor fx:constant="HAND" />
                                              </cursor>
-                                             <padding>
-                           						<Insets right="30.0" />
-                           					</padding>
                                           </RadioButton>
                                           <RadioButton id="text" fx:id="byMonth" contentDisplay="CENTER" mnemonicParsing="false" text="by month">
                                              <cursor>
                                                 <Cursor fx:constant="HAND" />
                                              </cursor>
-                                             <padding>
-                           						<Insets right="30.0" />
-                           					</padding>
                                           </RadioButton>
                                        </children>
                                     </HBox>
@@ -454,7 +442,8 @@
               </Pane>
           </left>
           <right>
-              <Pane fx:id="rightPane" minHeight="-Infinity" prefHeight="700.0" BorderPane.alignment="TOP_RIGHT">
+          	<ScrollPane hbarPolicy="NEVER" vbarPolicy="ALWAYS">
+              <Pane fx:id="rightPane" BorderPane.alignment="TOP_RIGHT">
                   <children>
                   <VBox>
                      <children>
@@ -493,15 +482,6 @@
                            </VBox.margin>
                             </Text>
                         <GridPane hgap="5.0" vgap="5.0">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
                            <children>
                                   <CheckBox id="checkBox" fx:id="ageBelow25" mnemonicParsing="false" text="Below 25" />
                                   <CheckBox id="checkBox" fx:id="age45to54" mnemonicParsing="false" text="45 - 54" GridPane.columnIndex="1" />
@@ -523,14 +503,6 @@
                                   <CheckBox id="checkBox" fx:id="incomeMedium" mnemonicParsing="false" text="Medium" GridPane.columnIndex="1" />
                                   <CheckBox id="checkBox" fx:id="incomeHigh" mnemonicParsing="false" text="High" GridPane.columnIndex="2" />
                            </children>
-                           <columnConstraints>
-                              <ColumnConstraints />
-                              <ColumnConstraints />
-                              <ColumnConstraints />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints />
-                           </rowConstraints>
                         </GridPane>
                             <Text id="h2" text="Gender">
       
@@ -539,11 +511,6 @@
                            </VBox.margin>
                             </Text>
                         <GridPane hgap="5.0" vgap="5.0">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                           </columnConstraints>
-
                            <children>
                                   <CheckBox id="checkBox" fx:id="genderFemale" mnemonicParsing="false" text="Female" />
                                   <CheckBox id="checkBox" fx:id="genderMale" mnemonicParsing="false" text="Male " GridPane.columnIndex="1" />
@@ -551,11 +518,7 @@
                            <VBox.margin>
                               <Insets />
                            </VBox.margin>
-                           <rowConstraints>
-                              <RowConstraints />
-                              <RowConstraints />
-                           </rowConstraints>
-                        </GridPane>
+                         </GridPane>
                             <Text id="h1" text="Context" textAlignment="LEFT">
                                 <cursor>
                                     <Cursor fx:constant="HAND" />
@@ -564,20 +527,8 @@
                            <VBox.margin>
                               <Insets bottom="10.0" top="10.0" />
                            </VBox.margin>
-                           <font>
-                              <Font size="22.0" />
-                           </font>
                             </Text>
                         <GridPane hgap="5.0" vgap="5.0">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
                            <children>
                                   <CheckBox id="checkBox" fx:id="contextNews" mnemonicParsing="false" text="News">
                                  <padding>
@@ -591,14 +542,35 @@
                                   <CheckBox id="checkBox" fx:id="contextBlog" mnemonicParsing="false" text="Blog" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                            </children>
                         </GridPane>
+                       
+                        <VBox spacing="5.0">
+						  <children>
+
+							  <Text text="Day of Week" id="h1" />
+							  <CheckBox id="checkBox" fx:id="monday" mnemonicParsing="false" text="Monday" GridPane.columnIndex="1" />
+							  <CheckBox id="checkBox" fx:id="tuesday" mnemonicParsing="false" text="Tuesday" GridPane.columnIndex="1" />
+
+							  <CheckBox id="checkBox" fx:id="wednesday" mnemonicParsing="false" text="Wednesday" GridPane.columnIndex="1" />
+
+							  <CheckBox id="checkBox" fx:id="thursday" mnemonicParsing="false" text="Thursday" GridPane.columnIndex="1" />
+							  <CheckBox id="checkBox" fx:id="friday" mnemonicParsing="false" text="Friday" GridPane.columnIndex="1" />
+							  <CheckBox id="checkBox" fx:id="saturday" mnemonicParsing="false" text="Saturday" GridPane.columnIndex="1" />
+							  <CheckBox id="checkBox" fx:id="sunday" mnemonicParsing="false" text="Sunday" GridPane.columnIndex="1" />
+
+                              <Button fx:id="applyPerDay" text="Apply Filter" visible="false" />
+                          </children>
+                             <padding>
+                         	 	<Insets top="20" />
+                         	 </padding>
+					  </VBox>
+                        
                         <HBox spacing="5">
                         	 <children>
-                        	 <Button id="menuButton" fx:id="applyFilters" contentDisplay="CENTER" mnemonicParsing="false" text="Apply Filters" textAlignment="CENTER" />
                         	 <Button id="menuButton" fx:id="reset" contentDisplay="CENTER" mnemonicParsing="false" text="Reset" textAlignment="CENTER" />
                          	 <Button id="menuButton" fx:id="checkAll" contentDisplay="CENTER" mnemonicParsing="false" text="Select All" textAlignment="CENTER" />
                          	 </children>
                          	 <padding>
-                         	 	<Insets top="20" />
+                         	 	<Insets top="10" />
                          	 </padding>
                          	 
                         </HBox>
@@ -646,46 +618,36 @@
        	           	<Insets left="20" right="20" />
        	           </padding>
 
+					  
+
+					  <Text text="Time of Day" id="h1"/>
+					  <Text text="Start" id="text" />
 					  <HBox spacing="5.0">
 						  <children>
-
-							  <Text text="Filter per Day of Week" />
-							  <CheckBox id="checkBox" fx:id="monday" mnemonicParsing="false" text="Monday" GridPane.columnIndex="1" />
-							  <CheckBox id="checkBox" fx:id="tuesday" mnemonicParsing="false" text="Tuesday" GridPane.columnIndex="1" />
-
-							  <CheckBox id="checkBox" fx:id="wednesday" mnemonicParsing="false" text="Wednesday" GridPane.columnIndex="1" />
-
-							  <CheckBox id="checkBox" fx:id="thursday" mnemonicParsing="false" text="Thursday" GridPane.columnIndex="1" />
-							  <CheckBox id="checkBox" fx:id="friday" mnemonicParsing="false" text="Friday" GridPane.columnIndex="1" />
-							  <CheckBox id="checkBox" fx:id="saturday" mnemonicParsing="false" text="Saturday" GridPane.columnIndex="1" />
-							  <CheckBox id="checkBox" fx:id="sunday" mnemonicParsing="false" text="Sunday" GridPane.columnIndex="1" />
-
-                              <Button fx:id="applyPerDay" text="Apply Filter"/>
-                          </children>
-					  </HBox>
-
-					  <HBox spacing="5.0">
-						  <children>
-							  <Text text="Filter per Time of Day" />
-							  <Text text="Start"/>
 							  <Spinner fx:id="startHour" maxHeight="26.0" maxWidth="100.0" minHeight="26.0" minWidth="100.0" />
 							  <Spinner fx:id="startMin" maxHeight="26.0" maxWidth="100.0" minHeight="26.0" minWidth="100.0" />
 						  </children>
 					  </HBox>
-
+					  
+					  <Text text="End" id="text" />
 					  <HBox spacing="5.0">
 						  <children>
-							  <Text text="Filter per Time of Day" />
-							  <Text text="End"/>
+	
 							  <Spinner fx:id="endHour" maxHeight="26.0" maxWidth="100.0" minHeight="26.0" minWidth="100.0" />
 							  <Spinner fx:id="endMin" maxHeight="26.0" maxWidth="100.0" minHeight="26.0" minWidth="100.0" />
 						  </children>
 					  </HBox>
-                      <Button fx:id="applyPerTime" text="Apply Filter"/>
+                      <Button fx:id="applyPerTime" text="Apply Filter" visible="false" />
+					<Button id="menuButton" fx:id="applyFilters" contentDisplay="CENTER" mnemonicParsing="false" text="Apply Filters" textAlignment="CENTER" />
+						
                   </VBox>
+                  
        	           </children>
+       	           <padding>
+                   <Insets bottom="20" />
+                   </padding>
               </Pane>
-      
+      		</ScrollPane>
           </right>
          <top>
             <MenuBar fx:id="myMenuBar" BorderPane.alignment="CENTER">
