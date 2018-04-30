@@ -587,7 +587,7 @@
                         <HBox spacing="5.0">
                            <children>
                         
-                                  <TextField fx:id="startDay" maxWidth="50.0" promptText="Day" />
+                                  <Spinner fx:id="startDay" maxWidth="75" maxHeight="26.0"  minHeight="26.0" minWidth="75.0" />
                                   <MenuButton id="menuButton" fx:id="startMonth" maxWidth="80.0" mnemonicParsing="false" text="Month" />
                                   <Spinner fx:id="startYear" maxHeight="26.0" maxWidth="100.0" minHeight="26.0" minWidth="100.0" />
                            </children>
@@ -598,7 +598,7 @@
                         <HBox spacing="5.0">
                            <children>
                            
-                                  <TextField fx:id="endDay" maxWidth="50.0" promptText="Day" />
+                                  <Spinner fx:id="endDay" maxWidth="75" maxHeight="26.0"  minHeight="26.0" minWidth="75.0"/>
                                   <MenuButton id="menuButton" fx:id="endMonth" maxWidth="80.0" mnemonicParsing="false" text="Month" />
                                   <Spinner fx:id="endYear" maxHeight="26.0" maxWidth="100.0" minHeight="26.0" minWidth="100.0" />
                            </children>

@@ -10,6 +10,8 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
@@ -189,9 +191,9 @@ public class MainController implements ScreenInterface {
     @FXML
     private CheckBox contextTravel;
     @FXML
-    private TextField startDay;
+    private Spinner startDay;
     @FXML
-    private TextField endDay;
+    private Spinner endDay;
     @FXML
     private MenuButton startMonth;
     @FXML
@@ -385,13 +387,240 @@ public class MainController implements ScreenInterface {
             byDay.setSelected(false);
             groupByStep();
         });
-        startYear.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1970, Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.YEAR), 1));
-        endYear.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1970, Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.YEAR), 1));
 
-        startHour.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(00, 23, Calendar.getInstance().get(Calendar.HOUR), 1));
-        startMin.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(00, 59, Calendar.getInstance().get(Calendar.MINUTE), 1));
-        endHour.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(00, 23, Calendar.getInstance().get(Calendar.HOUR), 1));
-        endMin.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(00, 59, Calendar.getInstance().get(Calendar.MINUTE), 1));
+        startMonth.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if(startMonth.textProperty().getValue().matches("February")){
+                    if((int) startYear.getValue() % 4 == 0){
+                        if((int) startDay.getValue() > 29 ){
+                            startDay.decrement((int)startDay.getValue() -1 );
+                        } else if ((int) startDay.getValue() < 1){
+                            startDay.increment((int)startDay.getValue() -1);
+                        }
+                    } else {
+                        if((int) startDay.getValue() > 28 ){
+                            startDay.decrement((int)startDay.getValue() -1);
+                        } else if ((int) startDay.getValue() < 1){
+                            startDay.increment((int)startDay.getValue() -1);
+                        }
+
+                    }
+                } else if (startMonth.textProperty().getValue().matches("April") || startMonth.textProperty().getValue().matches("June") || startMonth.textProperty().getValue().matches("September") || startMonth.textProperty().getValue().matches("November"))
+                {
+                    if((int) startDay.getValue() > 30 ){
+                        startDay.decrement(30 );
+                    } else if ((int) startDay.getValue() < 1){
+                        startDay.increment(30);
+                    }
+                } else {
+
+                    if((int) startDay.getValue() > 31){
+                        startDay.decrement(31 );
+                    } else if ((int) startDay.getValue() < 1){
+                        startDay.increment(31);
+                    }
+
+                }
+            }
+        });
+        endMonth.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if(endMonth.textProperty().getValue().matches("February")){
+                    if((int) endYear.getValue() % 4 == 0){
+                        if((int) endDay.getValue() > 29 ){
+                            endDay.decrement((int)endDay.getValue() -1 );
+                        } else if ((int) endDay.getValue() < 1){
+                            endDay.increment((int)endDay.getValue() -1);
+                        }
+                    } else {
+                        if((int) endDay.getValue() > 28 ){
+                            endDay.decrement((int)endDay.getValue() -1);
+                        } else if ((int) startDay.getValue() < 1){
+                            endDay.increment((int)endDay.getValue() -1);
+                        }
+
+                    }
+                } else if (endMonth.textProperty().getValue().matches("April") || endMonth.textProperty().getValue().matches("June") || endMonth.textProperty().getValue().matches("September") || endMonth.textProperty().getValue().matches("November"))
+                {
+                    if((int) startDay.getValue() > 30 ){
+                        endDay.decrement(30 );
+                    } else if ((int) endDay.getValue() < 1){
+                        endDay.increment(30);
+                    }
+                } else {
+
+                    if((int) endDay.getValue() > 31){
+                        endDay.decrement(31 );
+                    } else if ((int) endDay.getValue() < 1){
+                        endDay.increment(31);
+                    }
+
+                }
+            }
+        });
+        startYear.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1969, Calendar.getInstance().get(Calendar.YEAR)+1, Calendar.getInstance().get(Calendar.YEAR), 1));
+        endYear.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1969, Calendar.getInstance().get(Calendar.YEAR)+1, Calendar.getInstance().get(Calendar.YEAR), 1));
+        startDay.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(00, 32, Calendar.getInstance().get(Calendar.DAY_OF_MONTH), 1));
+        endDay.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(00, 32, Calendar.getInstance().get(Calendar.DAY_OF_MONTH), 1));
+
+        startHour.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(-1, 24, Calendar.getInstance().get(Calendar.HOUR), 1));
+        startMin.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(-1, 60, Calendar.getInstance().get(Calendar.MINUTE), 1));
+        endHour.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(-1, 24, Calendar.getInstance().get(Calendar.HOUR), 1));
+        endMin.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(-1, 60, Calendar.getInstance().get(Calendar.MINUTE), 1));
+
+        endDay.valueProperty().addListener(new ChangeListener() {
+            @Override
+            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+
+                if((endMonth.textProperty().getValue() == "April" || endMonth.textProperty().getValue() == "June" || endMonth.textProperty().getValue() == "September" || endMonth.textProperty().getValue() == "November")){
+                    if((int) newValue > 30 ){
+                        endDay.decrement(30 );
+                    } else if ((int) newValue < 1){
+                        endDay.increment(30);
+                    }
+                } else if (endMonth.textProperty().getValue() == "February"){
+                    if((int) startYear.getValue() % 4 == 0){
+                        if((int) newValue > 29 ){
+                            endDay.decrement(29);
+                        } else if ((int) newValue < 1){
+                            endDay.increment(29);
+                        }
+                    } else {
+                        if((int) newValue > 28 ){
+                            endDay.decrement(28);
+                        } else if ((int) newValue < 1){
+                            endDay.increment(28);
+                        }
+
+                    }
+
+                }
+                else {
+                    if((int) newValue > 31){
+                        endDay.decrement(31 );
+                    } else if ((int) newValue < 1){
+                        endDay.increment(31);
+                    }
+                }
+            }
+        });
+        startDay.valueProperty().addListener(new ChangeListener() {
+            @Override
+            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+                if((startMonth.textProperty().getValue() == "April" || startMonth.textProperty().getValue() == "June" || startMonth.textProperty().getValue() == "September" || startMonth.textProperty().getValue() == "November")){
+                    if((int) newValue > 30 ){
+                        startDay.decrement(30 );
+                    } else if ((int) newValue < 1){
+                        startDay.increment(30);
+                    }
+                }
+                else if (startMonth.textProperty().getValue() == "February" )
+                {
+                    if((int) startYear.getValue() % 4 == 0){
+                        if((int) newValue > 29 ){
+                            startDay.decrement(29 );
+                        } else if ((int) newValue < 1){
+                            startDay.increment(29 );
+                        }
+                    } else {
+                        if((int) newValue > 28 ){
+                            startDay.decrement(28 );
+                        }else if ((int) newValue < 1){
+                            startDay.increment(28 );
+                        }
+
+                    }
+                }
+                else {
+                    if((int) newValue > 31){
+                        startDay.decrement(31 );
+                    } else if ((int) newValue < 1){
+                        startDay.increment(31);
+                    }
+                }
+            }
+        });
+        endYear.valueProperty().addListener(new ChangeListener() {
+            @Override
+            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+
+                if((int) newValue > Calendar.getInstance().get(Calendar.YEAR) ){
+                    //System.out.println(newValue);
+                    endYear.decrement(Calendar.getInstance().get(Calendar.YEAR) - 1969);
+                }
+                else if((int) newValue < 1970){
+                    endYear.increment(Calendar.getInstance().get(Calendar.YEAR) - 1969);
+                }
+            }
+        });
+
+        startYear.valueProperty().addListener(new ChangeListener() {
+            @Override
+            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+
+                if((int) newValue > Calendar.getInstance().get(Calendar.YEAR) ){
+                    //System.out.println(newValue);
+                    startYear.decrement(Calendar.getInstance().get(Calendar.YEAR) - 1969);
+                }
+                else if((int) newValue < 1970){
+                    startYear.increment(Calendar.getInstance().get(Calendar.YEAR) - 1969);
+                }
+            }
+        });
+        endHour.valueProperty().addListener(new ChangeListener() {
+            @Override
+            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+
+                if((int) newValue > 23 ){
+                    //System.out.println(newValue);
+                    endHour.decrement(24);
+                }
+                else if((int) newValue < 0){
+                    endHour.increment(24);
+                }
+            }
+        });
+        startHour.valueProperty().addListener(new ChangeListener() {
+            @Override
+            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+
+                if((int) newValue > 23 ){
+                    //System.out.println(newValue);
+                    startHour.decrement(24);
+                }
+                else if((int) newValue < 0){
+                    startHour.increment(24);
+                }
+            }
+        });
+        startMin.valueProperty().addListener(new ChangeListener() {
+            @Override
+            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+
+                if((int) newValue > 59 ){
+                    //System.out.println(newValue);
+                    startMin.decrement(60);
+                }
+                else if((int) newValue < 0){
+                    startMin.increment(60);
+                }
+            }
+        });
+        endMin.valueProperty().addListener(new ChangeListener() {
+            @Override
+            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+
+                if((int) newValue > 59 ){
+                    //System.out.println(newValue);
+                    endMin.decrement(60);
+                }
+                else if((int) newValue < 0){
+                    endMin.increment(60);
+                }
+            }
+        });
 
         genderMale.setSelected(true);
         genderFemale.setSelected(true);
@@ -574,18 +803,7 @@ public class MainController implements ScreenInterface {
         endMonth.getItems().add(new CheckMenuItem("December"));
 
         // Remove alphabetical and symbol input for numerical Fields
-        startDay.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d*")) {
-                startDay.setText(newValue.replaceAll("[^\\d]", ""));
-            }
-            System.out.println("textfield changed from " + oldValue + " to " + newValue);
-        });
-        endDay.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d*")) {
-                endDay.setText(newValue.replaceAll("[^\\d]", ""));
-            }
-            System.out.println("textfield changed from " + oldValue + " to " + newValue);
-        });
+
 
         addFilterToMap("Filter 1");
         //filters.put("Filter 1", currentFilter);
@@ -596,75 +814,7 @@ public class MainController implements ScreenInterface {
 
 
         // Remove alphabetical and symbol input for numerical Fields
-        startDay.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue.length() > 2 || newValue == "00") {
-                startDay.setText("01");
-            }
-            System.out.println("textfield changed from " + oldValue + " to " + newValue);
-        });
-        endDay.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue.length() > 2 || newValue == "00") {
-                endDay.setText("01");
-            }
-            System.out.println("textfield changed from " + oldValue + " to " + newValue);
-        });
 
-        endYear.valueProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println("textfield changed from " + oldValue + " to " + newValue);
-        });
-
-
-        startDay.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (Integer.valueOf(newValue) > 31) {
-                startDay.setText("01");
-            }
-        });
-        endDay.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (Integer.valueOf(newValue) > 31) {
-                endDay.setText("01");
-            }
-        });
-        startDay.textProperty().addListener((observable, oldValue, newValue) -> {
-
-            if (Integer.valueOf(newValue) > 30 && (startMonth.textProperty().getValue() == "April" || startMonth.textProperty().getValue() == "June" || startMonth.textProperty().getValue() == "September" || startMonth.textProperty().getValue() == "November")) {
-                startDay.setText("30");
-            } else if (Integer.valueOf((Integer) startYear.getValue()) % 4 == 0 && Integer.valueOf(newValue) > 29 && (startMonth.textProperty().getValue() == "February")) {
-                startDay.setText("29");
-            } else if (Integer.valueOf((Integer) startYear.getValue()) % 4 != 0 && Integer.valueOf(newValue) > 28 && (startMonth.textProperty().getValue() == "February")) {
-                startDay.setText("28");
-            }
-
-        });
-
-        endDay.textProperty().addListener((observable, oldValue, newValue) -> {
-
-            if (Integer.valueOf(newValue) > 30 && (endMonth.textProperty().getValue() == "April" || endMonth.textProperty().getValue() == "June" || endMonth.textProperty().getValue() == "September" || endMonth.textProperty().getValue() == "November")) {
-                endDay.setText("30");
-            } else if (Integer.valueOf((Integer) endYear.getValue()) % 4 == 0 && Integer.valueOf(newValue) > 29 && (endMonth.textProperty().getValue() == "February")) {
-                endDay.setText("29");
-            } else if (Integer.valueOf((Integer) endYear.getValue()) % 4 != 0 && Integer.valueOf(newValue) > 28 && (endMonth.textProperty().getValue() == "February")) {
-                endDay.setText("28");
-            }
-
-        });
-
-        endDay.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (Integer.valueOf(newValue) > 31) {
-                endDay.setText("30");
-            }
-        });
-
-        startDay.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue.matches("00")) {
-                startDay.setText("01");
-            }
-
-        });
-        endDay.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue.matches("00")) {
-                endDay.setText("01");
-            }
-        });
 
         for (MenuItem month : startMonth.getItems()) {
             month.setOnAction(r -> {
@@ -1550,36 +1700,8 @@ public class MainController implements ScreenInterface {
         GridPane content = new GridPane();
         content.setPrefSize(300, 50);
         Label label;
-        if (startDay.getText().equals("") || startMonth.getText().equals("Month")) {
-            alert.setHeaderText("Invalid start date!");
-            label = new Label("Please select a full start date.");
-            content.add(label, 0, 0);
-            alert.getDialogPane().setContent(content);
-            alert.showAndWait();
-        } else if (endDay.getText().equals("") || endMonth.getText().equals("Month")) {
-            alert.setHeaderText("Invalid end date!");
-            label = new Label("Please select a full end date.");
-            content.add(label, 0, 0);
-            alert.getDialogPane().setContent(content);
-            alert.showAndWait();
-        } else if (!startDay.getText().matches("[0-9]+")) {
-            alert.setHeaderText("Invalid start date!");
-            label = new Label("Please input a valid start date.");
-            Label l = new Label("Fields can only contain digits.");
-            content.add(label, 0, 0);
-            content.add(l, 0, 1);
-            alert.getDialogPane().setContent(content);
-            alert.showAndWait();
-        } else if (!endDay.getText().matches("[0-9]+")) {
-            alert.setHeaderText("Invalid end date!");
-            label = new Label("Please input a valid end date.");
-            Label l = new Label("Fields can only contain digits.");
-            content.add(label, 0, 0);
-            content.add(l, 0, 1);
-            alert.getDialogPane().setContent(content);
-            alert.showAndWait();
 
-        } else if (startDay.getText().length() != 2) {
+         if ((int)startDay.getValue() > 99) {
             alert.setHeaderText("Invalid start date!");
             label = new Label("Please input a valid start date.");
             Label l = new Label("Number of required digits for day: 2.");
@@ -1589,7 +1711,7 @@ public class MainController implements ScreenInterface {
             content.add(ll, 0, 2);
             alert.getDialogPane().setContent(content);
             alert.showAndWait();
-        } else if (endDay.getText().length() != 2) {
+        } else if ((int) endDay.getValue() > 99 ) {
             alert.setHeaderText("Invalid end date!");
             label = new Label("Please input a valid end date.");
             Label l = new Label("Number of required digits for day: 2.");
@@ -1599,50 +1721,50 @@ public class MainController implements ScreenInterface {
             content.add(ll, 0, 2);
             alert.getDialogPane().setContent(content);
             alert.showAndWait();
-        } else if (!isDateValid(startDay.getText() + "-" + convertMonth(startMonth.getText()) + "-" + startYear.getValue())) {
+        } else if (!isDateValid(startDay.getValue() + "-" + convertMonth(startMonth.getText()) + "-" + startYear.getValue())) {
             alert.setHeaderText("Invalid start date!");
-            label = new Label("The date " + startDay.getText() + "-" + convertMonth(startMonth.getText()) + "-" + startYear.getPromptText() + " is not valid.");
+            label = new Label("The date " + startDay.getValue() + "-" + convertMonth(startMonth.getText()) + "-" + startYear.getPromptText() + " is not valid.");
             content.add(label, 0, 0);
             alert.getDialogPane().setContent(content);
             alert.showAndWait();
-        } else if (!isDateValid(endDay.getText() + "-" + convertMonth(endMonth.getText()) + "-" + endYear.getValue())) {
+        } else if (!isDateValid(endDay.getValue() + "-" + convertMonth(endMonth.getText()) + "-" + endYear.getValue())) {
             alert.setHeaderText("Invalid end date!");
-            label = new Label("The date " + endDay.getText() + "-" + endMonth.getText() + "-" + endYear.getValue() + " is not valid.");
+            label = new Label("The date " + endDay.getValue() + "-" + endMonth.getText() + "-" + endYear.getValue() + " is not valid.");
             content.add(label, 0, 0);
             alert.getDialogPane().setContent(content);
             alert.showAndWait();
         } else if ((int) startYear.getValue() > (int) endYear.getValue()) {
             alert.setHeaderText("Start date must be before end date!");
-            label = new Label("The end date " + endDay.getText() + "-" + endMonth.getText() + "-" + endYear.getValue() + " is before the start date: "
-                    + startDay.getText() + "-" + startMonth.getText() + "-" + startYear.getValue());
+            label = new Label("The end date " + endDay.getValue() + "-" + endMonth.getText() + "-" + endYear.getValue() + " is before the start date: "
+                    + startDay.getValue() + "-" + startMonth.getText() + "-" + startYear.getValue());
             content.add(label, 0, 0);
             alert.getDialogPane().setContent(content);
             alert.showAndWait();
-        } else if (((int) startYear.getValue() <= (int) endYear.getValue() && (Integer.valueOf(convertMonth(startMonth.getText())) <= Integer.valueOf(convertMonth(endMonth.getText())))) && Integer.valueOf(startDay.getText()) > Integer.valueOf(endDay.getText())) {
+        } else if (((int) startYear.getValue() <= (int) endYear.getValue() && (Integer.valueOf(convertMonth(startMonth.getText())) <= Integer.valueOf(convertMonth(endMonth.getText())))) && Integer.valueOf((int)startDay.getValue()) > Integer.valueOf((int)endDay.getValue())) {
             alert.setHeaderText("Start date must be before end date!");
-            label = new Label("The end date " + endDay.getText() + "-" + endMonth.getText() + "-" + endYear.getValue() + " is before the start date: "
-                    + startDay.getText() + "-" + startMonth.getText() + "-" + startYear.getValue());
+            label = new Label("The end date " + endDay.getValue() + "-" + endMonth.getText() + "-" + endYear.getValue() + " is before the start date: "
+                    + startDay.getValue() + "-" + startMonth.getText() + "-" + startYear.getValue());
             content.add(label, 0, 0);
             alert.getDialogPane().setContent(content);
             alert.showAndWait();
         } else if (((int) startYear.getValue() <= (int) endYear.getValue() && Integer.valueOf(convertMonth(startMonth.getText())) > Integer.valueOf(convertMonth(endMonth.getText())))) {
             alert.setHeaderText("Start date must be before end date!");
-            label = new Label("The end date " + endDay.getText() + "-" + endMonth.getText() + "-" + endYear.getValue() + " is before the start date: "
-                    + startDay.getText() + "-" + startMonth.getText() + "-" + startYear.getValue());
+            label = new Label("The end date " + endDay.getValue() + "-" + endMonth.getText() + "-" + endYear.getValue() + " is before the start date: "
+                    + startDay.getValue() + "-" + startMonth.getText() + "-" + startYear.getValue());
             content.add(label, 0, 0);
             alert.getDialogPane().setContent(content);
             alert.showAndWait();
         } else {
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             StringBuilder sbS = new StringBuilder();
-            sbS.append(startDay.getText());
+            sbS.append(startDay.getValue());
             sbS.append("/");
             sbS.append(convertMonth(startMonth.getText()));
             sbS.append("/");
             sbS.append(startYear.getValue().toString());
             System.out.println(startYear.getValue().toString());
             StringBuilder sbE = new StringBuilder();
-            sbE.append(endDay.getText());
+            sbE.append(endDay.getValue());
             sbE.append("/");
             sbE.append(convertMonth(endMonth.getText()));
             System.out.println(endYear.getValue());
