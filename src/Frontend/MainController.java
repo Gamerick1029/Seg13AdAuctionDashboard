@@ -4,7 +4,7 @@ import Backend.DBHelper;
 import Backend.Model.CampaignModelDB;
 import Backend.Model.Interfaces.DataModel;
 import Backend.Model.Interfaces.Filter;
-import Backend.Model.Interfaces.Step;
+import Backend.Model.Interfaces.StepHolder.Step;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;

@@ -26,7 +26,7 @@ public class Filter {
     public boolean contextBlog;
     public boolean contextHobbies;
     public boolean contextTravel;
-    public Step step;
+    public StepHolder.Step step;
 
     public static int pagesViewedForBounce = 1;
     public static int timeOnSiteForBounce = 10;
@@ -60,7 +60,7 @@ public class Filter {
         contextHobbies = true;
         contextTravel = true;
 
-        step = Step.DAY;
+        step = StepHolder.Step.DAY;
 
         //If we set these to LONG.MIN and so on then many weird and wonderful issues arise. Just be aware of the
         //following initialisation and all will be well

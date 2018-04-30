@@ -1,7 +1,7 @@
 package Frontend;
 
 import Backend.Model.Interfaces.DataModel;
-import Backend.Model.Interfaces.Step;
+import Backend.Model.Interfaces.StepHolder.Step;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;

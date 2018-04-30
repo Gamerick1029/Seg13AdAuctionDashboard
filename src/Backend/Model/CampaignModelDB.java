@@ -4,7 +4,8 @@ import Backend.DBHelper;
 import Backend.FileIO.ReadCSVsToDB;
 import Backend.Model.Interfaces.DataModel;
 import Backend.Model.Interfaces.Filter;
-import Backend.Model.Interfaces.Step;
+import Backend.Model.Interfaces.StepHolder;
+import Backend.Model.Interfaces.StepHolder.Step;
 
 import java.io.File;
 import java.io.IOException;
@@ -208,6 +209,27 @@ public class CampaignModelDB implements DataModel{
                     e.printStackTrace();
                 }
                 break;
+            case HOUR_OF_DAY:
+                return StepHolder.hours[Integer.parseInt(date)];
+            case DAY_OF_WEEK:
+                return StepHolder.days.get(date);
+        }
+        return result;
+    }
+
+    private String stepToDate(Step step){
+        String result = "";
+        switch (step){
+            case DAY:   result = "\"%Y-%m-%d\"";
+                        break;
+            case WEEK:  result = "\"%Y-%u\"";
+                        break;
+            case MONTH: result = "\"%Y-%m\"";
+                        break;
+            case DAY_OF_WEEK: result = "\"%a\"";
+                              break;
+            case HOUR_OF_DAY: result = "\"%H\"";
+            default:
         }
         return result;
     }
@@ -225,20 +247,6 @@ public class CampaignModelDB implements DataModel{
         }
 
         return sb.toString();
-    }
-
-    private String stepToDate(Step step){
-        String result = "";
-        switch (step){
-            case DAY:   result = "\"%Y-%m-%d\"";
-                        break;
-            case WEEK:  result = "\"%Y-%u\"";
-                        break;
-            case MONTH: result = "\"%Y-%m\"";
-                        break;
-            default:
-        }
-        return result;
     }
 
     /**

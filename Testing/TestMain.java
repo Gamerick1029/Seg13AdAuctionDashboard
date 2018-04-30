@@ -1,11 +1,14 @@
-import Backend.FileIO.readCSVs;
 import Backend.DBHelper;
+import Backend.FileIO.readCSVs;
 import Backend.Model.CampaignModelDB;
 import Backend.Model.ClickData;
 import Backend.Model.ImpressionData;
 import Backend.Model.Interfaces.Filter;
-import Backend.Model.Interfaces.Step;
+import Backend.Model.Interfaces.StepHolder;
 import Backend.Model.ServerData;
+import javafx.application.Application;
+import javafx.print.PrinterJob;
+import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -16,7 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class TestMain {
+public class TestMain{
 
     private static final String defClickLog = "2_week_campaign_2\\click_log.csv";
     private static final String defImpressionLog = "2_week_campaign_2\\impression_log.csv";
@@ -26,11 +29,10 @@ public class TestMain {
 
     public static void main(String[] args) throws IOException, ParseException, SQLException {
 
-//        Filter filter = new Filter();
-
-
+        Filter filter = new Filter();
         DBHelper.initConnection(args[0], args[1]);
         DBHelper dbh = new DBHelper();
+
 
 //        File JUnitClicks = new File("TestRuns/Backend/Model/TestSamples/click_log.csv");
 //        File JUnitImpressions = new File("TestRuns/Backend/Model/TestSamples/impression_log.csv");
@@ -42,9 +44,12 @@ public class TestMain {
 
         Filter.bounceRateByPages = false;
         Filter.timeOnSiteForBounce = 10;
+//
+        cmdt.setFilter(filter);
+        System.out.println(cmdt.getFullImpressions(StepHolder.Step.HOUR_OF_DAY));
 
-        System.out.println(cmdt.getBouncesNumber());
-        System.out.println(cmdt.getFullBounces(Step.DAY));
+//        System.out.println(cmdt.getBouncesNumber());
+//        System.out.println(cmdt.getFullBounces(Step.DAY));
 
 //        System.out.println(cmdt.getImpressionsNumber());
 //        System.out.println(cmdt.getClicksNumber());
@@ -150,5 +155,6 @@ public class TestMain {
         System.out.println(campaignName + " campaign time to load (seconds): " + (System.nanoTime() - start)/1000000000.0);
 
     }
+
 
 }

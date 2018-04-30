@@ -9,7 +9,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static Backend.Model.Interfaces.Step.DAY;
+import static Backend.Model.Interfaces.StepHolder.Step.*;
 
 public class FilterTesting extends TestCase {
 

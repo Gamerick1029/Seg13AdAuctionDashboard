@@ -7,7 +7,7 @@ import org.junit.Test;
 import java.sql.SQLException;
 import java.util.Date;
 
-import static Backend.Model.Interfaces.Step.*;
+import static Backend.Model.Interfaces.StepHolder.Step.*;
 import static org.junit.Assert.fail;
 
 public class CampaignModelDBTrimmedTest extends TestCase {
