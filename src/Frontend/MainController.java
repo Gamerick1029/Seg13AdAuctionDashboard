@@ -992,6 +992,8 @@ public class MainController implements ScreenInterface {
                 setFilter(newFilter.getText());
                 filterDropDown.getItems().add(newFilter);
 
+//                System.out.println(newFilter.getText());
+                changeFilter(newFilter);
             }
         }
     }
@@ -1523,7 +1525,7 @@ public class MainController implements ScreenInterface {
             }
             myController.addDataModel(name, dataModel);
         }
-        populateMetric(currentMetricDisplayed, currentStep);
+
         //Creating a new CheckMenuItem for the new campaign
         CheckMenuItem checkMenuItem = new CheckMenuItem(name);
         //Adding an EventHandler for the new CheckMenuItem
@@ -1539,6 +1541,9 @@ public class MainController implements ScreenInterface {
         //Adding the new CheckMenuItem to the MenuButton for the current campaignsLoaded
         campaignName.getItems().add(checkMenuItem);
         setMetrics(name);
+//        populateMetric(currentMetricDisplayed, currentStep);
+
+//        applyFilters();
     }
 
 
@@ -1770,12 +1775,12 @@ public class MainController implements ScreenInterface {
             System.out.println(endYear.getValue());
             sbE.append("/");
             sbE.append(endYear.getValue());
-            for (DataModel dataModel : myController.getDataModelMap().values()) {
+            for (Filter f : filters.values()) {
                 try {
                     Date start = sdf.parse(sbS.toString());
                     Date end = sdf.parse(sbE.toString());
-                    dataModel.getFilter().setStartDate(start);
-                    dataModel.getFilter().setEndDate(end);
+                    f.setStartDate(start);
+                    f.setEndDate(end);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -2332,6 +2337,7 @@ public class MainController implements ScreenInterface {
                 if (campaign.getDisplayed().isSelected()) {
                     DataModel dataModel = myController.getDataModel(campaign.getName());
                     dataModel.getFilter().step = step;
+
 
                     for (String key : filters.keySet()) {
                         Task<String> tsk = new Task<>() {
