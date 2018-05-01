@@ -66,4 +66,15 @@ public class StepHolder {
         DAY, WEEK, MONTH, HOUR_OF_DAY, DAY_OF_WEEK
     }
 
+    public String dateToDayOfWeek(Date date){
+        return dateToDay.get(date);
+    }
+
+    public String dateToHourOfDay(Date date){
+        for (Integer i = 0; i < hours.length; i++) {
+            if (hours[i] == date) return i.toString();
+        }
+        return "";
+    }
+
 }
