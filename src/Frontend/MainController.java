@@ -250,10 +250,6 @@ public class MainController implements ScreenInterface {
     private CheckBox saturday;
     @FXML
     private CheckBox sunday;
-    @FXML
-    private Button applyPerTime;
-    @FXML
-    private Button applyPerDay;
 
     private XYChart.Series campaignMetricLC;
     private XYChart.Series campaignMetricBC;
@@ -279,10 +275,6 @@ public class MainController implements ScreenInterface {
         myController.setCampaignDataPopulator(new CampaignDataPopulator(x, y, lineChart, barChart, pieChart, areaChart));
         impressions.setStyle("-fx-font-weight: bold;");
         currentFilter = new Filter();
-
-
-
-
 
         /*
         Disable animation to preserve axis positions
@@ -358,8 +350,6 @@ public class MainController implements ScreenInterface {
         });
         pieType.setOnAction(t -> {
             changeToPieChart();
-
-
         });
         histogramType.setOnAction(t -> {
             changeToHistogram();
@@ -391,33 +381,32 @@ public class MainController implements ScreenInterface {
         startMonth.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if(startMonth.textProperty().getValue().matches("February")){
-                    if((int) startYear.getValue() % 4 == 0){
-                        if((int) startDay.getValue() > 29 ){
-                            startDay.decrement((int)startDay.getValue() -1 );
-                        } else if ((int) startDay.getValue() < 1){
-                            startDay.increment((int)startDay.getValue() -1);
+                if (startMonth.textProperty().getValue().matches("February")) {
+                    if ((int) startYear.getValue() % 4 == 0) {
+                        if ((int) startDay.getValue() > 29) {
+                            startDay.decrement((int) startDay.getValue() - 1);
+                        } else if ((int) startDay.getValue() < 1) {
+                            startDay.increment((int) startDay.getValue() - 1);
                         }
                     } else {
-                        if((int) startDay.getValue() > 28 ){
-                            startDay.decrement((int)startDay.getValue() -1);
-                        } else if ((int) startDay.getValue() < 1){
-                            startDay.increment((int)startDay.getValue() -1);
+                        if ((int) startDay.getValue() > 28) {
+                            startDay.decrement((int) startDay.getValue() - 1);
+                        } else if ((int) startDay.getValue() < 1) {
+                            startDay.increment((int) startDay.getValue() - 1);
                         }
 
                     }
-                } else if (startMonth.textProperty().getValue().matches("April") || startMonth.textProperty().getValue().matches("June") || startMonth.textProperty().getValue().matches("September") || startMonth.textProperty().getValue().matches("November"))
-                {
-                    if((int) startDay.getValue() > 30 ){
-                        startDay.decrement(30 );
-                    } else if ((int) startDay.getValue() < 1){
+                } else if (startMonth.textProperty().getValue().matches("April") || startMonth.textProperty().getValue().matches("June") || startMonth.textProperty().getValue().matches("September") || startMonth.textProperty().getValue().matches("November")) {
+                    if ((int) startDay.getValue() > 30) {
+                        startDay.decrement(30);
+                    } else if ((int) startDay.getValue() < 1) {
                         startDay.increment(30);
                     }
                 } else {
 
-                    if((int) startDay.getValue() > 31){
-                        startDay.decrement(31 );
-                    } else if ((int) startDay.getValue() < 1){
+                    if ((int) startDay.getValue() > 31) {
+                        startDay.decrement(31);
+                    } else if ((int) startDay.getValue() < 1) {
                         startDay.increment(31);
                     }
 
@@ -427,41 +416,40 @@ public class MainController implements ScreenInterface {
         endMonth.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if(endMonth.textProperty().getValue().matches("February")){
-                    if((int) endYear.getValue() % 4 == 0){
-                        if((int) endDay.getValue() > 29 ){
-                            endDay.decrement((int)endDay.getValue() -1 );
-                        } else if ((int) endDay.getValue() < 1){
-                            endDay.increment((int)endDay.getValue() -1);
+                if (endMonth.textProperty().getValue().matches("February")) {
+                    if ((int) endYear.getValue() % 4 == 0) {
+                        if ((int) endDay.getValue() > 29) {
+                            endDay.decrement((int) endDay.getValue() - 1);
+                        } else if ((int) endDay.getValue() < 1) {
+                            endDay.increment((int) endDay.getValue() - 1);
                         }
                     } else {
-                        if((int) endDay.getValue() > 28 ){
-                            endDay.decrement((int)endDay.getValue() -1);
-                        } else if ((int) startDay.getValue() < 1){
-                            endDay.increment((int)endDay.getValue() -1);
+                        if ((int) endDay.getValue() > 28) {
+                            endDay.decrement((int) endDay.getValue() - 1);
+                        } else if ((int) startDay.getValue() < 1) {
+                            endDay.increment((int) endDay.getValue() - 1);
                         }
 
                     }
-                } else if (endMonth.textProperty().getValue().matches("April") || endMonth.textProperty().getValue().matches("June") || endMonth.textProperty().getValue().matches("September") || endMonth.textProperty().getValue().matches("November"))
-                {
-                    if((int) startDay.getValue() > 30 ){
-                        endDay.decrement(30 );
-                    } else if ((int) endDay.getValue() < 1){
+                } else if (endMonth.textProperty().getValue().matches("April") || endMonth.textProperty().getValue().matches("June") || endMonth.textProperty().getValue().matches("September") || endMonth.textProperty().getValue().matches("November")) {
+                    if ((int) startDay.getValue() > 30) {
+                        endDay.decrement(30);
+                    } else if ((int) endDay.getValue() < 1) {
                         endDay.increment(30);
                     }
                 } else {
 
-                    if((int) endDay.getValue() > 31){
-                        endDay.decrement(31 );
-                    } else if ((int) endDay.getValue() < 1){
+                    if ((int) endDay.getValue() > 31) {
+                        endDay.decrement(31);
+                    } else if ((int) endDay.getValue() < 1) {
                         endDay.increment(31);
                     }
 
                 }
             }
         });
-        startYear.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1969, Calendar.getInstance().get(Calendar.YEAR)+1, Calendar.getInstance().get(Calendar.YEAR), 1));
-        endYear.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1969, Calendar.getInstance().get(Calendar.YEAR)+1, Calendar.getInstance().get(Calendar.YEAR), 1));
+        startYear.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1969, Calendar.getInstance().get(Calendar.YEAR) + 1, Calendar.getInstance().get(Calendar.YEAR), 1));
+        endYear.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1969, Calendar.getInstance().get(Calendar.YEAR) + 1, Calendar.getInstance().get(Calendar.YEAR), 1));
         startDay.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(00, 32, Calendar.getInstance().get(Calendar.DAY_OF_MONTH), 1));
         endDay.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(00, 32, Calendar.getInstance().get(Calendar.DAY_OF_MONTH), 1));
 
@@ -474,33 +462,32 @@ public class MainController implements ScreenInterface {
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
 
-                if((endMonth.textProperty().getValue() == "April" || endMonth.textProperty().getValue() == "June" || endMonth.textProperty().getValue() == "September" || endMonth.textProperty().getValue() == "November")){
-                    if((int) newValue > 30 ){
-                        endDay.decrement(30 );
-                    } else if ((int) newValue < 1){
+                if ((endMonth.textProperty().getValue() == "April" || endMonth.textProperty().getValue() == "June" || endMonth.textProperty().getValue() == "September" || endMonth.textProperty().getValue() == "November")) {
+                    if ((int) newValue > 30) {
+                        endDay.decrement(30);
+                    } else if ((int) newValue < 1) {
                         endDay.increment(30);
                     }
-                } else if (endMonth.textProperty().getValue() == "February"){
-                    if((int) startYear.getValue() % 4 == 0){
-                        if((int) newValue > 29 ){
+                } else if (endMonth.textProperty().getValue() == "February") {
+                    if ((int) startYear.getValue() % 4 == 0) {
+                        if ((int) newValue > 29) {
                             endDay.decrement(29);
-                        } else if ((int) newValue < 1){
+                        } else if ((int) newValue < 1) {
                             endDay.increment(29);
                         }
                     } else {
-                        if((int) newValue > 28 ){
+                        if ((int) newValue > 28) {
                             endDay.decrement(28);
-                        } else if ((int) newValue < 1){
+                        } else if ((int) newValue < 1) {
                             endDay.increment(28);
                         }
 
                     }
 
-                }
-                else {
-                    if((int) newValue > 31){
-                        endDay.decrement(31 );
-                    } else if ((int) newValue < 1){
+                } else {
+                    if ((int) newValue > 31) {
+                        endDay.decrement(31);
+                    } else if ((int) newValue < 1) {
                         endDay.increment(31);
                     }
                 }
@@ -509,34 +496,31 @@ public class MainController implements ScreenInterface {
         startDay.valueProperty().addListener(new ChangeListener() {
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-                if((startMonth.textProperty().getValue() == "April" || startMonth.textProperty().getValue() == "June" || startMonth.textProperty().getValue() == "September" || startMonth.textProperty().getValue() == "November")){
-                    if((int) newValue > 30 ){
-                        startDay.decrement(30 );
-                    } else if ((int) newValue < 1){
+                if ((startMonth.textProperty().getValue() == "April" || startMonth.textProperty().getValue() == "June" || startMonth.textProperty().getValue() == "September" || startMonth.textProperty().getValue() == "November")) {
+                    if ((int) newValue > 30) {
+                        startDay.decrement(30);
+                    } else if ((int) newValue < 1) {
                         startDay.increment(30);
                     }
-                }
-                else if (startMonth.textProperty().getValue() == "February" )
-                {
-                    if((int) startYear.getValue() % 4 == 0){
-                        if((int) newValue > 29 ){
-                            startDay.decrement(29 );
-                        } else if ((int) newValue < 1){
-                            startDay.increment(29 );
+                } else if (startMonth.textProperty().getValue() == "February") {
+                    if ((int) startYear.getValue() % 4 == 0) {
+                        if ((int) newValue > 29) {
+                            startDay.decrement(29);
+                        } else if ((int) newValue < 1) {
+                            startDay.increment(29);
                         }
                     } else {
-                        if((int) newValue > 28 ){
-                            startDay.decrement(28 );
-                        }else if ((int) newValue < 1){
-                            startDay.increment(28 );
+                        if ((int) newValue > 28) {
+                            startDay.decrement(28);
+                        } else if ((int) newValue < 1) {
+                            startDay.increment(28);
                         }
 
                     }
-                }
-                else {
-                    if((int) newValue > 31){
-                        startDay.decrement(31 );
-                    } else if ((int) newValue < 1){
+                } else {
+                    if ((int) newValue > 31) {
+                        startDay.decrement(31);
+                    } else if ((int) newValue < 1) {
                         startDay.increment(31);
                     }
                 }
@@ -546,11 +530,10 @@ public class MainController implements ScreenInterface {
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
 
-                if((int) newValue > Calendar.getInstance().get(Calendar.YEAR) ){
+                if ((int) newValue > Calendar.getInstance().get(Calendar.YEAR)) {
                     //System.out.println(newValue);
                     endYear.decrement(Calendar.getInstance().get(Calendar.YEAR) - 1969);
-                }
-                else if((int) newValue < 1970){
+                } else if ((int) newValue < 1970) {
                     endYear.increment(Calendar.getInstance().get(Calendar.YEAR) - 1969);
                 }
             }
@@ -560,11 +543,10 @@ public class MainController implements ScreenInterface {
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
 
-                if((int) newValue > Calendar.getInstance().get(Calendar.YEAR) ){
+                if ((int) newValue > Calendar.getInstance().get(Calendar.YEAR)) {
                     //System.out.println(newValue);
                     startYear.decrement(Calendar.getInstance().get(Calendar.YEAR) - 1969);
-                }
-                else if((int) newValue < 1970){
+                } else if ((int) newValue < 1970) {
                     startYear.increment(Calendar.getInstance().get(Calendar.YEAR) - 1969);
                 }
             }
@@ -573,11 +555,10 @@ public class MainController implements ScreenInterface {
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
 
-                if((int) newValue > 23 ){
+                if ((int) newValue > 23) {
                     //System.out.println(newValue);
                     endHour.decrement(24);
-                }
-                else if((int) newValue < 0){
+                } else if ((int) newValue < 0) {
                     endHour.increment(24);
                 }
             }
@@ -586,11 +567,10 @@ public class MainController implements ScreenInterface {
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
 
-                if((int) newValue > 23 ){
+                if ((int) newValue > 23) {
                     //System.out.println(newValue);
                     startHour.decrement(24);
-                }
-                else if((int) newValue < 0){
+                } else if ((int) newValue < 0) {
                     startHour.increment(24);
                 }
             }
@@ -599,11 +579,10 @@ public class MainController implements ScreenInterface {
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
 
-                if((int) newValue > 59 ){
+                if ((int) newValue > 59) {
                     //System.out.println(newValue);
                     startMin.decrement(60);
-                }
-                else if((int) newValue < 0){
+                } else if ((int) newValue < 0) {
                     startMin.increment(60);
                 }
             }
@@ -612,11 +591,10 @@ public class MainController implements ScreenInterface {
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
 
-                if((int) newValue > 59 ){
+                if ((int) newValue > 59) {
                     //System.out.println(newValue);
                     endMin.decrement(60);
-                }
-                else if((int) newValue < 0){
+                } else if ((int) newValue < 0) {
                     endMin.increment(60);
                 }
             }
@@ -638,6 +616,13 @@ public class MainController implements ScreenInterface {
         contextBlog.setSelected(true);
         contextHobbies.setSelected(true);
         contextTravel.setSelected(true);
+        monday.setSelected(true);
+        tuesday.setSelected(true);
+        wednesday.setSelected(true);
+        thursday.setSelected(true);
+        friday.setSelected(true);
+        saturday.setSelected(true);
+        sunday.setSelected(true);
 
         dbHelper = new DBHelper();
         try {
@@ -773,6 +758,56 @@ public class MainController implements ScreenInterface {
                 updateCurrentFilter("contextTravel", false);
             }
         });
+        monday.setOnAction(r -> {
+            if (monday.isSelected()) {
+                updateCurrentFilter("monday", true);
+            } else {
+                updateCurrentFilter("monday", false);
+            }
+        });
+        tuesday.setOnAction(r -> {
+            if (tuesday.isSelected()) {
+                updateCurrentFilter("tuesday", true);
+            } else {
+                updateCurrentFilter("tuesday", false);
+            }
+        });
+        wednesday.setOnAction(r -> {
+            if (wednesday.isSelected()) {
+                updateCurrentFilter("wednesday", true);
+            } else {
+                updateCurrentFilter("wednesday", false);
+            }
+        });
+        thursday.setOnAction(r -> {
+            if (thursday.isSelected()) {
+                updateCurrentFilter("thursday", true);
+            } else {
+                updateCurrentFilter("thursday", false);
+            }
+        });
+        friday.setOnAction(r -> {
+            if (friday.isSelected()) {
+                updateCurrentFilter("friday", true);
+            } else {
+                updateCurrentFilter("friday", false);
+            }
+        });
+        saturday.setOnAction(r -> {
+            if (saturday.isSelected()) {
+                updateCurrentFilter("saturday", true);
+            } else {
+                updateCurrentFilter("saturday", false);
+            }
+        });
+        sunday.setOnAction(r -> {
+            if (sunday.isSelected()) {
+                updateCurrentFilter("sunday", true);
+            } else {
+                updateCurrentFilter("sunday", false);
+            }
+        });
+
         searchDate.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
                     applyDateFilter();
@@ -898,15 +933,6 @@ public class MainController implements ScreenInterface {
                 e -> {
                     addNewFilter();
                 });
-
-        applyPerDay.addEventHandler(MouseEvent.MOUSE_CLICKED,
-                e -> {
-                    applyPerDayFilter();
-                });
-        applyPerTime.addEventHandler(MouseEvent.MOUSE_CLICKED,
-                e -> {
-                    applyPerTimeFilter();
-                });
         campaignsTable.setPrefSize(250, 225);
         campaignsTable.setPlaceholder(new Label("No campaigns loaded!"));
 
@@ -946,24 +972,13 @@ public class MainController implements ScreenInterface {
 
     private void applyFilters() {
 
-        if(!currentChartType.equals("Histogram"))
-        {
-            populateMetric(currentMetricDisplayed, currentStep);
+        if (!currentChartType.equals("Histogram")) {
+
             setMetrics(campaignName.getText());
-            // This is what I understood Yoanna wants :D
             applyDateFilter();
-            applyPerTimeFilter();
+            //applyDateFilter already calls populateGraph
+            //populateMetric(currentMetricDisplayed, currentStep);
         }
-    }
-
-    private void applyPerTimeFilter() {
-        //TODO: apply filter
-        populateMetric(currentMetricDisplayed, currentStep);
-    }
-
-    private void applyPerDayFilter() {
-        //TODO: apply filter
-        populateMetric(currentMetricDisplayed, currentStep);
     }
 
     private void addNewFilter() {
@@ -1051,6 +1066,7 @@ public class MainController implements ScreenInterface {
         contextBlog.setSelected(filter.contextBlog);
         contextHobbies.setSelected(filter.contextHobbies);
         contextTravel.setSelected(filter.contextTravel);
+        //TODO: DAY OF WEEK AND TIME OF DAY >?????????
 
         setMetrics(campaignName.getText());
     }
@@ -1058,7 +1074,7 @@ public class MainController implements ScreenInterface {
     private File openDirectoryChooser() {
         DirectoryChooser chooser = new DirectoryChooser();
         chooser.setTitle("Select Directory");
-        File defaultDirectory = new File("c://");
+        File defaultDirectory = new File("C://");
         chooser.setInitialDirectory(defaultDirectory);
         return chooser.showDialog(node.getScene().getWindow());
     }
@@ -1419,7 +1435,6 @@ public class MainController implements ScreenInterface {
                     }
                 });
 
-
         Label serverL = new Label("Select Server Log");
         TextField serverF = new TextField();
         serverF.setPrefWidth(300);
@@ -1538,7 +1553,7 @@ public class MainController implements ScreenInterface {
             task.setOnFailed(e -> alert.close());
             new Thread(task).start();
 
-            } else {
+        } else {
             DataModel dataModel = null;
             try {
                 dataModel = new CampaignModelDB(name);
@@ -1728,7 +1743,7 @@ public class MainController implements ScreenInterface {
         content.setPrefSize(300, 50);
         Label label;
 
-         if ((int)startDay.getValue() > 99) {
+        if ((int) startDay.getValue() > 99) {
             alert.setHeaderText("Invalid start date!");
             label = new Label("Please input a valid start date.");
             Label l = new Label("Number of required digits for day: 2.");
@@ -1738,7 +1753,7 @@ public class MainController implements ScreenInterface {
             content.add(ll, 0, 2);
             alert.getDialogPane().setContent(content);
             alert.showAndWait();
-        } else if ((int) endDay.getValue() > 99 ) {
+        } else if ((int) endDay.getValue() > 99) {
             alert.setHeaderText("Invalid end date!");
             label = new Label("Please input a valid end date.");
             Label l = new Label("Number of required digits for day: 2.");
@@ -1767,7 +1782,7 @@ public class MainController implements ScreenInterface {
             content.add(label, 0, 0);
             alert.getDialogPane().setContent(content);
             alert.showAndWait();
-        } else if (((int) startYear.getValue() <= (int) endYear.getValue() && (Integer.valueOf(convertMonth(startMonth.getText())) <= Integer.valueOf(convertMonth(endMonth.getText())))) && Integer.valueOf((int)startDay.getValue()) > Integer.valueOf((int)endDay.getValue())) {
+        } else if (((int) startYear.getValue() <= (int) endYear.getValue() && (Integer.valueOf(convertMonth(startMonth.getText())) <= Integer.valueOf(convertMonth(endMonth.getText())))) && Integer.valueOf((int) startDay.getValue()) > Integer.valueOf((int) endDay.getValue())) {
             alert.setHeaderText("Start date must be before end date!");
             label = new Label("The end date " + endDay.getValue() + "-" + endMonth.getText() + "-" + endYear.getValue() + " is before the start date: "
                     + startDay.getValue() + "-" + startMonth.getText() + "-" + startYear.getValue());
@@ -1885,6 +1900,13 @@ public class MainController implements ScreenInterface {
         contextBlog.setSelected(false);
         contextHobbies.setSelected(false);
         contextTravel.setSelected(false);
+        monday.setSelected(false);
+        tuesday.setSelected(false);
+        wednesday.setSelected(false);
+        thursday.setSelected(false);
+        friday.setSelected(false);
+        saturday.setSelected(false);
+        sunday.setSelected(false);
 
         currentFilter.genderMale = false;
         currentFilter.genderFemale = false;
@@ -1904,7 +1926,8 @@ public class MainController implements ScreenInterface {
         currentFilter.contextHobbies = false;
         currentFilter.contextTravel = false;
 
-        populateMetric(currentMetricDisplayed, currentStep);
+        //TODO: NOT SURE IF THIS IS RIGHT
+        currentFilter.step = currentStep;
     }
 
     private void selectAll() {
@@ -1924,6 +1947,13 @@ public class MainController implements ScreenInterface {
         contextBlog.setSelected(true);
         contextHobbies.setSelected(true);
         contextTravel.setSelected(true);
+        monday.setSelected(true);
+        tuesday.setSelected(true);
+        wednesday.setSelected(true);
+        thursday.setSelected(true);
+        friday.setSelected(true);
+        saturday.setSelected(true);
+        sunday.setSelected(true);
 
         currentFilter.genderMale = true;
         currentFilter.genderFemale = true;
@@ -1943,7 +1973,8 @@ public class MainController implements ScreenInterface {
         currentFilter.contextHobbies = true;
         currentFilter.contextTravel = true;
 
-        populateMetric(currentMetricDisplayed, currentStep);
+        //TODO: NOT SURE IF THIS IS RIGHT
+        currentFilter.step = Step.DAY_OF_WEEK;
     }
 
     private void updateCurrentFilter(String name, Boolean filter) {
@@ -2001,6 +2032,27 @@ public class MainController implements ScreenInterface {
             case "contextTravel":
                 currentFilter.contextTravel = filter;
                 break;
+            case "monday":
+                currentFilter.step = Step.DAY_OF_WEEK;
+                break;
+            case "tuesday":
+                currentFilter.step = Step.DAY_OF_WEEK;
+                break;
+            case "wednesday":
+                currentFilter.step = Step.DAY_OF_WEEK;
+                break;
+            case "thursday":
+                currentFilter.step = Step.DAY_OF_WEEK;
+                break;
+            case "friday":
+                currentFilter.step = Step.DAY_OF_WEEK;
+                break;
+            case "saturday":
+                currentFilter.step = Step.DAY_OF_WEEK;
+                break;
+            case "sunday":
+                currentFilter.step = Step.DAY_OF_WEEK;
+                break;
         }
     }
 
@@ -2016,9 +2068,7 @@ public class MainController implements ScreenInterface {
             Task<String> tsk = new Task<>() {
                 @Override
                 protected String call() throws Exception {
-                    try
-
-                    {
+                    try {
                         impressionsF.setText(String.valueOf(dm.getImpressionsNumber()));
                         clicksF.setText(String.valueOf(dm.getClicksNumber()));
                         uniquesF.setText(String.valueOf(dm.getUniquesNumber()));
@@ -2030,10 +2080,7 @@ public class MainController implements ScreenInterface {
                         CPCF.setText(String.valueOf(df.format(dm.getCPC())));
                         CPMF.setText(String.valueOf(df.format(dm.getCPM())));
                         bounceRateF.setText(String.valueOf(df.format(dm.getBounceRate())));
-                    } catch (
-                            SQLException e)
-
-                    {
+                    } catch (SQLException e) {
                         reportError(e);
                         metricsLoading = false;
                     }
@@ -2066,7 +2113,6 @@ public class MainController implements ScreenInterface {
 
 
     private void groupByStep() {
-
         if (currentChartType.equals("Histogram")) {
             changeToHistogram();
         } else {
@@ -2091,7 +2137,7 @@ public class MainController implements ScreenInterface {
     }
 
     private void changeToBarChart() {
-        if(currentChartType.equals("Histogram"))
+        if (currentChartType.equals("Histogram"))
             populateMetric(currentMetricDisplayed, currentStep);
         currentChartType = "BarChart";
         x.animatedProperty().setValue(false);
@@ -2165,12 +2211,12 @@ public class MainController implements ScreenInterface {
                 DataModel dataModel = myController.getDataModel(campaign.getName());
                 histogramSeries = new XYChart.Series();
                 try {
-                        LinkedHashMap<String, Integer> data = dataModel.getHistogramData();
-                        for (String range : data.keySet()){
-                            histogramSeries.getData().add(new XYChart.Data(range, data.get(range)));
-                        }
-                        barChart.getData().add(histogramSeries);
-                        histogramSeries.setName(dataModel.getName() + " Click Cost Histogram");
+                    LinkedHashMap<String, Integer> data = dataModel.getHistogramData();
+                    for (String range : data.keySet()) {
+                        histogramSeries.getData().add(new XYChart.Data(range, data.get(range)));
+                    }
+                    barChart.getData().add(histogramSeries);
+                    histogramSeries.setName(dataModel.getName() + " Click Cost Histogram");
                 } catch (SQLException e) {
                     reportError(e);
                 }

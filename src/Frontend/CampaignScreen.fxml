@@ -559,7 +559,6 @@
 							  <CheckBox id="checkBox" fx:id="saturday" mnemonicParsing="false" text="Saturday" GridPane.columnIndex="1" />
 							  <CheckBox id="checkBox" fx:id="sunday" mnemonicParsing="false" text="Sunday" GridPane.columnIndex="1" />
 
-                              <Button fx:id="applyPerDay" text="Apply Filter" visible="false" />
                           </children>
                              <padding>
                          	 	<Insets top="20" />
@@ -639,7 +638,6 @@
 							  <Spinner fx:id="endMin" maxHeight="26.0" maxWidth="100.0" minHeight="26.0" minWidth="100.0" />
 						  </children>
 					  </HBox>
-                      <Button fx:id="applyPerTime" text="Apply Filter" visible="false" />
 					<Button id="menuButton" fx:id="applyFilters" contentDisplay="CENTER" mnemonicParsing="false" text="Apply Filters" textAlignment="CENTER" />
 						
                   </VBox>
@@ -679,7 +677,7 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
                   <items>
-                    <MenuItem mnemonicParsing="false" text="About" />
+                    <MenuItem fx:id="about" mnemonicParsing="false" text="About" />
                   </items>
                 </Menu>
               </menus>
