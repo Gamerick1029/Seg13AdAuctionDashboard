@@ -4,6 +4,7 @@ import Backend.DBHelper;
 import Backend.Model.CampaignModelDB;
 import Backend.Model.Interfaces.DataModel;
 import Backend.Model.Stubs.DataModelStub;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -63,9 +64,29 @@ public class WelcomeController implements ScreenInterface {
             myController.setCurrentModel(dataModel);
             myController.setDataModelMap(new HashMap<>());
             myController.addDataModel(name, dataModel);
-            myController.getDataFieldPopulator().populateFields();
-            myController.getCampaignDataPopulator().populateGraph();
-            myController.setScreen(Main.campaignScreenID);
+
+            Task<Boolean> task = new Task<Boolean>() {
+                @Override
+                protected Boolean call() throws Exception {
+                    myController.getDataFieldPopulator().populateFields();
+                    myController.getCampaignDataPopulator().populateGraph();
+                    return true;
+                }
+            };
+
+            Alert alert = Main.loadBox;
+            alert.setHeaderText("");
+            alert.setContentText("Loading selected campaign. Please wait...");
+
+            task.setOnRunning(e -> alert.show());
+            task.setOnSucceeded(e -> {
+                myController.setScreen(Main.campaignScreenID);
+                alert.close();
+            });
+            task.setOnFailed(e -> alert.close());
+
+            new Thread(task).start();
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Cannot load campaign! Please try again."
                     , "Warning", 1);

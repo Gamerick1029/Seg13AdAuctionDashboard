@@ -74,11 +74,14 @@ public class LoadDataController implements ScreenInterface {
                 alert.showAndWait();
             } else {
 
+                Alert alert = Main.loadBox;
+                alert.setTitle("Creating Campaign");
+                alert.setHeaderText("");
+                alert.setContentText("Please wait. Campaign creation in progress.");
 
                 Task<DataModel> task = new Task<>() {
                     @Override
                     protected DataModel call() throws Exception {
-
                         try {
                             return new CampaignModelDB(campaignName.getText(), impressions, clicks, server);
                         } catch (Exception e){
@@ -87,10 +90,6 @@ public class LoadDataController implements ScreenInterface {
                         return null;
                     }
                 };
-
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Creating Campaign");
-                alert.setContentText("Please wait. Campaign creation in progress.");
 
                 task.setOnRunning(e -> alert.show());
 
@@ -106,8 +105,11 @@ public class LoadDataController implements ScreenInterface {
                     myController.setScreen(Main.campaignScreenID);
                 });
 
-                task.setOnFailed(e -> JOptionPane.showMessageDialog(null, "Cannot load campaign! Please try again."
-                        , "Warning", 1));
+                task.setOnFailed(e -> {
+                    JOptionPane.showMessageDialog(null, "Cannot load campaign! Please try again."
+                            , "Warning", 1);
+                    alert.close();
+                });
 
                 new Thread(task).start();
             }

@@ -5,7 +5,10 @@ import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 
 /**
@@ -14,6 +17,21 @@ import javafx.stage.Stage;
  * connect all of the screen controllers to the FXML files.
  */
 public class Main extends Application {
+
+    public static final Alert loadBox = new Alert(Alert.AlertType.INFORMATION);
+
+    static {
+        loadBox.setContentText("Change me");
+        loadBox.setHeaderText("Change me");
+        loadBox.setTitle("Loading...");
+
+        loadBox.getButtonTypes().clear();
+        loadBox.getDialogPane().getButtonTypes().clear();
+        loadBox.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
+        Node closeButton = loadBox.getDialogPane().lookupButton(ButtonType.CLOSE);
+        closeButton.managedProperty().bind(closeButton.visibleProperty());
+        closeButton.setVisible(false);
+    }
 
     public static String welcomeScreenID = "welcomeScreen";
     public static String welcomeScreen = "WelcomeScreen.fxml";

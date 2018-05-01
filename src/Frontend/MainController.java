@@ -945,6 +945,11 @@ public class MainController implements ScreenInterface {
     }
 
     private void applyFilters() {
+        populateMetric(currentMetricDisplayed, currentStep);
+        setMetrics(campaignName.getText());
+        // This is what I understood Yoanna wants :D
+        applyDateFilter();
+        applyPerTimeFilter();
         if(!currentChartType.equals("Histogram"))
         {
             populateMetric(currentMetricDisplayed, currentStep);
@@ -1513,13 +1518,28 @@ public class MainController implements ScreenInterface {
         // if an existing one is loaded - False
         if (source) {
             DataModel dataModel = null;
-            try {
-                dataModel = new CampaignModelDB(campaign.getName(), currentImpressions, currentClick, currentServer);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            myController.addDataModel(campaign.getName(), dataModel);
-        } else {
+
+            Task<DataModel> task = new Task<DataModel>() {
+                @Override
+                protected DataModel call() throws Exception {
+                    return new CampaignModelDB(campaign.getName(), currentImpressions, currentClick, currentServer);
+                }
+            };
+
+            Alert alert = Main.loadBox;
+            alert.setTitle("Creating campaign");
+            alert.setHeaderText("");
+            alert.setContentText("Creating new Campaign. Please wait...");
+
+            task.setOnRunning(e -> alert.show());
+            task.setOnSucceeded(event -> {
+                myController.addDataModel(campaign.getName(), task.getValue());
+                alert.close();
+            });
+            task.setOnFailed(e -> alert.close());
+            new Thread(task).start();
+
+            } else {
             DataModel dataModel = null;
             try {
                 dataModel = new CampaignModelDB(name);
@@ -2339,7 +2359,6 @@ public class MainController implements ScreenInterface {
             for (Campaign campaign : this.campaignsLoaded) {
                 if (campaign.getDisplayed().isSelected()) {
                     DataModel dataModel = myController.getDataModel(campaign.getName());
-                    dataModel.getFilter().step = step;
 
 
                     for (String key : filters.keySet()) {
