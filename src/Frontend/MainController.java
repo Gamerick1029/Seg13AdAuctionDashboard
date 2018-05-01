@@ -4,6 +4,7 @@ import Backend.DBHelper;
 import Backend.Model.CampaignModelDB;
 import Backend.Model.Interfaces.DataModel;
 import Backend.Model.Interfaces.Filter;
+import Backend.Model.Interfaces.StepHolder;
 import Backend.Model.Interfaces.StepHolder.Step;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -266,6 +267,7 @@ public class MainController implements ScreenInterface {
     private HashMap<String, File> files = new HashMap<>();
     private HashMap<String, Filter> filters = new HashMap<>();
     private Filter currentFilter;
+    StepHolder stepHolder = new StepHolder();
 
     @Override
     public void setScreenParent(ScreensController parent) {
@@ -281,9 +283,8 @@ public class MainController implements ScreenInterface {
          */
         lineChart.animatedProperty().set(false);
         barChart.animatedProperty().set(false);
-        pieChart.animatedProperty().set(false);
+        //pieChart.animatedProperty().set(false);
         areaChart.animatedProperty().set(false);
-
 
         currentCampaign.getDisplayed().addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
@@ -378,74 +379,68 @@ public class MainController implements ScreenInterface {
             groupByStep();
         });
 
-        startMonth.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if (startMonth.textProperty().getValue().matches("February")) {
-                    if ((int) startYear.getValue() % 4 == 0) {
-                        if ((int) startDay.getValue() > 29) {
-                            startDay.decrement((int) startDay.getValue() - 1);
-                        } else if ((int) startDay.getValue() < 1) {
-                            startDay.increment((int) startDay.getValue() - 1);
-                        }
-                    } else {
-                        if ((int) startDay.getValue() > 28) {
-                            startDay.decrement((int) startDay.getValue() - 1);
-                        } else if ((int) startDay.getValue() < 1) {
-                            startDay.increment((int) startDay.getValue() - 1);
-                        }
-
-                    }
-                } else if (startMonth.textProperty().getValue().matches("April") || startMonth.textProperty().getValue().matches("June") || startMonth.textProperty().getValue().matches("September") || startMonth.textProperty().getValue().matches("November")) {
-                    if ((int) startDay.getValue() > 30) {
-                        startDay.decrement(30);
+        startMonth.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (startMonth.textProperty().getValue().matches("February")) {
+                if ((int) startYear.getValue() % 4 == 0) {
+                    if ((int) startDay.getValue() > 29) {
+                        startDay.decrement((int) startDay.getValue() - 1);
                     } else if ((int) startDay.getValue() < 1) {
-                        startDay.increment(30);
+                        startDay.increment((int) startDay.getValue() - 1);
                     }
                 } else {
-
-                    if ((int) startDay.getValue() > 31) {
-                        startDay.decrement(31);
+                    if ((int) startDay.getValue() > 28) {
+                        startDay.decrement((int) startDay.getValue() - 1);
                     } else if ((int) startDay.getValue() < 1) {
-                        startDay.increment(31);
+                        startDay.increment((int) startDay.getValue() - 1);
                     }
 
                 }
+            } else if (startMonth.textProperty().getValue().matches("April") || startMonth.textProperty().getValue().matches("June") || startMonth.textProperty().getValue().matches("September") || startMonth.textProperty().getValue().matches("November")) {
+                if ((int) startDay.getValue() > 30) {
+                    startDay.decrement(30);
+                } else if ((int) startDay.getValue() < 1) {
+                    startDay.increment(30);
+                }
+            } else {
+
+                if ((int) startDay.getValue() > 31) {
+                    startDay.decrement(31);
+                } else if ((int) startDay.getValue() < 1) {
+                    startDay.increment(31);
+                }
+
             }
         });
-        endMonth.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if (endMonth.textProperty().getValue().matches("February")) {
-                    if ((int) endYear.getValue() % 4 == 0) {
-                        if ((int) endDay.getValue() > 29) {
-                            endDay.decrement((int) endDay.getValue() - 1);
-                        } else if ((int) endDay.getValue() < 1) {
-                            endDay.increment((int) endDay.getValue() - 1);
-                        }
-                    } else {
-                        if ((int) endDay.getValue() > 28) {
-                            endDay.decrement((int) endDay.getValue() - 1);
-                        } else if ((int) startDay.getValue() < 1) {
-                            endDay.increment((int) endDay.getValue() - 1);
-                        }
-
-                    }
-                } else if (endMonth.textProperty().getValue().matches("April") || endMonth.textProperty().getValue().matches("June") || endMonth.textProperty().getValue().matches("September") || endMonth.textProperty().getValue().matches("November")) {
-                    if ((int) startDay.getValue() > 30) {
-                        endDay.decrement(30);
+        endMonth.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (endMonth.textProperty().getValue().matches("February")) {
+                if ((int) endYear.getValue() % 4 == 0) {
+                    if ((int) endDay.getValue() > 29) {
+                        endDay.decrement((int) endDay.getValue() - 1);
                     } else if ((int) endDay.getValue() < 1) {
-                        endDay.increment(30);
+                        endDay.increment((int) endDay.getValue() - 1);
                     }
                 } else {
-
-                    if ((int) endDay.getValue() > 31) {
-                        endDay.decrement(31);
-                    } else if ((int) endDay.getValue() < 1) {
-                        endDay.increment(31);
+                    if ((int) endDay.getValue() > 28) {
+                        endDay.decrement((int) endDay.getValue() - 1);
+                    } else if ((int) startDay.getValue() < 1) {
+                        endDay.increment((int) endDay.getValue() - 1);
                     }
 
                 }
+            } else if (endMonth.textProperty().getValue().matches("April") || endMonth.textProperty().getValue().matches("June") || endMonth.textProperty().getValue().matches("September") || endMonth.textProperty().getValue().matches("November")) {
+                if ((int) startDay.getValue() > 30) {
+                    endDay.decrement(30);
+                } else if ((int) endDay.getValue() < 1) {
+                    endDay.increment(30);
+                }
+            } else {
+
+                if ((int) endDay.getValue() > 31) {
+                    endDay.decrement(31);
+                } else if ((int) endDay.getValue() < 1) {
+                    endDay.increment(31);
+                }
+
             }
         });
         startYear.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1969, Calendar.getInstance().get(Calendar.YEAR) + 1, Calendar.getInstance().get(Calendar.YEAR), 1));
@@ -493,110 +488,89 @@ public class MainController implements ScreenInterface {
                 }
             }
         });
-        startDay.valueProperty().addListener(new ChangeListener() {
-            @Override
-            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-                if ((startMonth.textProperty().getValue() == "April" || startMonth.textProperty().getValue() == "June" || startMonth.textProperty().getValue() == "September" || startMonth.textProperty().getValue() == "November")) {
-                    if ((int) newValue > 30) {
-                        startDay.decrement(30);
+        startDay.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if ((startMonth.textProperty().getValue() == "April" || startMonth.textProperty().getValue() == "June" || startMonth.textProperty().getValue() == "September" || startMonth.textProperty().getValue() == "November")) {
+                if ((int) newValue > 30) {
+                    startDay.decrement(30);
+                } else if ((int) newValue < 1) {
+                    startDay.increment(30);
+                }
+            } else if (startMonth.textProperty().getValue() == "February") {
+                if ((int) startYear.getValue() % 4 == 0) {
+                    if ((int) newValue > 29) {
+                        startDay.decrement(29);
                     } else if ((int) newValue < 1) {
-                        startDay.increment(30);
-                    }
-                } else if (startMonth.textProperty().getValue() == "February") {
-                    if ((int) startYear.getValue() % 4 == 0) {
-                        if ((int) newValue > 29) {
-                            startDay.decrement(29);
-                        } else if ((int) newValue < 1) {
-                            startDay.increment(29);
-                        }
-                    } else {
-                        if ((int) newValue > 28) {
-                            startDay.decrement(28);
-                        } else if ((int) newValue < 1) {
-                            startDay.increment(28);
-                        }
-
+                        startDay.increment(29);
                     }
                 } else {
-                    if ((int) newValue > 31) {
-                        startDay.decrement(31);
+                    if ((int) newValue > 28) {
+                        startDay.decrement(28);
                     } else if ((int) newValue < 1) {
-                        startDay.increment(31);
+                        startDay.increment(28);
                     }
+
+                }
+            } else {
+                if ((int) newValue > 31) {
+                    startDay.decrement(31);
+                } else if ((int) newValue < 1) {
+                    startDay.increment(31);
                 }
             }
         });
-        endYear.valueProperty().addListener(new ChangeListener() {
-            @Override
-            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+        endYear.valueProperty().addListener((observable, oldValue, newValue) -> {
 
-                if ((int) newValue > Calendar.getInstance().get(Calendar.YEAR)) {
-                    //System.out.println(newValue);
-                    endYear.decrement(Calendar.getInstance().get(Calendar.YEAR) - 1969);
-                } else if ((int) newValue < 1970) {
-                    endYear.increment(Calendar.getInstance().get(Calendar.YEAR) - 1969);
-                }
+            if ((int) newValue > Calendar.getInstance().get(Calendar.YEAR)) {
+                //System.out.println(newValue);
+                endYear.decrement(Calendar.getInstance().get(Calendar.YEAR) - 1969);
+            } else if ((int) newValue < 1970) {
+                endYear.increment(Calendar.getInstance().get(Calendar.YEAR) - 1969);
             }
         });
 
-        startYear.valueProperty().addListener(new ChangeListener() {
-            @Override
-            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+        startYear.valueProperty().addListener((observable, oldValue, newValue) -> {
 
-                if ((int) newValue > Calendar.getInstance().get(Calendar.YEAR)) {
-                    //System.out.println(newValue);
-                    startYear.decrement(Calendar.getInstance().get(Calendar.YEAR) - 1969);
-                } else if ((int) newValue < 1970) {
-                    startYear.increment(Calendar.getInstance().get(Calendar.YEAR) - 1969);
-                }
+            if ((int) newValue > Calendar.getInstance().get(Calendar.YEAR)) {
+                //System.out.println(newValue);
+                startYear.decrement(Calendar.getInstance().get(Calendar.YEAR) - 1969);
+            } else if ((int) newValue < 1970) {
+                startYear.increment(Calendar.getInstance().get(Calendar.YEAR) - 1969);
             }
         });
-        endHour.valueProperty().addListener(new ChangeListener() {
-            @Override
-            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+        endHour.valueProperty().addListener((observable, oldValue, newValue) -> {
 
-                if ((int) newValue > 23) {
-                    //System.out.println(newValue);
-                    endHour.decrement(24);
-                } else if ((int) newValue < 0) {
-                    endHour.increment(24);
-                }
+            if ((int) newValue > 23) {
+                //System.out.println(newValue);
+                endHour.decrement(24);
+            } else if ((int) newValue < 0) {
+                endHour.increment(24);
             }
         });
-        startHour.valueProperty().addListener(new ChangeListener() {
-            @Override
-            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+        startHour.valueProperty().addListener((observable, oldValue, newValue) -> {
 
-                if ((int) newValue > 23) {
-                    //System.out.println(newValue);
-                    startHour.decrement(24);
-                } else if ((int) newValue < 0) {
-                    startHour.increment(24);
-                }
+            if ((int) newValue > 23) {
+                //System.out.println(newValue);
+                startHour.decrement(24);
+            } else if ((int) newValue < 0) {
+                startHour.increment(24);
             }
         });
-        startMin.valueProperty().addListener(new ChangeListener() {
-            @Override
-            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+        startMin.valueProperty().addListener((observable, oldValue, newValue) -> {
 
-                if ((int) newValue > 59) {
-                    //System.out.println(newValue);
-                    startMin.decrement(60);
-                } else if ((int) newValue < 0) {
-                    startMin.increment(60);
-                }
+            if ((int) newValue > 59) {
+                //System.out.println(newValue);
+                startMin.decrement(60);
+            } else if ((int) newValue < 0) {
+                startMin.increment(60);
             }
         });
-        endMin.valueProperty().addListener(new ChangeListener() {
-            @Override
-            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+        endMin.valueProperty().addListener((observable, oldValue, newValue) -> {
 
-                if ((int) newValue > 59) {
-                    //System.out.println(newValue);
-                    endMin.decrement(60);
-                } else if ((int) newValue < 0) {
-                    endMin.increment(60);
-                }
+            if ((int) newValue > 59) {
+                //System.out.println(newValue);
+                endMin.decrement(60);
+            } else if ((int) newValue < 0) {
+                endMin.increment(60);
             }
         });
 
@@ -973,12 +947,28 @@ public class MainController implements ScreenInterface {
     private void applyFilters() {
 
         if (!currentChartType.equals("Histogram")) {
-
+            applyDayFilters();
             setMetrics(campaignName.getText());
             applyDateFilter();
-            //applyDateFilter already calls populateGraph
-            //populateMetric(currentMetricDisplayed, currentStep);
         }
+    }
+
+    //TODO: MAKE THIS WORK
+    private void applyDayFilters(){
+        String startH = String.valueOf(startHour.getValue());
+        String startM = String.valueOf(startMin.getValue());
+        String endH = String.valueOf(endHour.getValue());
+        String endM = String.valueOf(endMin.getValue());
+
+
+
+        //NO IDEA
+
+
+        //HashMap<String, Date>
+        stepHolder.dayToDate.get("");
+        //HashMap<Date, String>
+        // dateToDay
     }
 
     private void addNewFilter() {
@@ -1007,7 +997,6 @@ public class MainController implements ScreenInterface {
                 newFilter.setOnAction(t -> {
                     changeFilter(newFilter);
                 });
-
 
                 filterDropDown.setText(newFilter.getText());
                 currentFilter = filters.get(newFilter.getText());
