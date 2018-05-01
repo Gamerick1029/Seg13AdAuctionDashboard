@@ -947,6 +947,9 @@ public class MainController implements ScreenInterface {
     private void applyFilters() {
         populateMetric(currentMetricDisplayed, currentStep);
         setMetrics(campaignName.getText());
+        // This is what I understood Yoanna wants :D
+        applyDateFilter();
+        applyPerTimeFilter();
     }
 
     private void applyPerTimeFilter() {
