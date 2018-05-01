@@ -945,15 +945,14 @@ public class MainController implements ScreenInterface {
     }
 
     private void applyFilters() {
-        populateMetric(currentMetricDisplayed, currentStep);
-        setMetrics(campaignName.getText());
-        // This is what I understood Yoanna wants :D
-        applyDateFilter();
-        applyPerTimeFilter();
+
         if(!currentChartType.equals("Histogram"))
         {
             populateMetric(currentMetricDisplayed, currentStep);
             setMetrics(campaignName.getText());
+            // This is what I understood Yoanna wants :D
+            applyDateFilter();
+            applyPerTimeFilter();
         }
     }
 
@@ -2092,6 +2091,8 @@ public class MainController implements ScreenInterface {
     }
 
     private void changeToBarChart() {
+        if(currentChartType.equals("Histogram"))
+            populateMetric(currentMetricDisplayed, currentStep);
         currentChartType = "BarChart";
         x.animatedProperty().setValue(false);
         y.animatedProperty().setValue(false);
