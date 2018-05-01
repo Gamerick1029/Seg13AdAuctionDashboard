@@ -94,11 +94,6 @@ public class MainController implements ScreenInterface {
     private javafx.scene.control.Spinner startHour;
     @FXML
     javafx.scene.control.Spinner endHour;
-    @FXML
-    javafx.scene.control.Spinner startMin;
-    @FXML
-    javafx.scene.control.Spinner endMin;
-
 
     @FXML
     private javafx.scene.text.Text impressions;
@@ -449,9 +444,7 @@ public class MainController implements ScreenInterface {
         endDay.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(00, 32, Calendar.getInstance().get(Calendar.DAY_OF_MONTH), 1));
 
         startHour.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(-1, 24, Calendar.getInstance().get(Calendar.HOUR), 1));
-        startMin.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(-1, 60, Calendar.getInstance().get(Calendar.MINUTE), 1));
         endHour.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(-1, 24, Calendar.getInstance().get(Calendar.HOUR), 1));
-        endMin.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(-1, 60, Calendar.getInstance().get(Calendar.MINUTE), 1));
 
         endDay.valueProperty().addListener(new ChangeListener() {
             @Override
@@ -553,24 +546,6 @@ public class MainController implements ScreenInterface {
                 startHour.decrement(24);
             } else if ((int) newValue < 0) {
                 startHour.increment(24);
-            }
-        });
-        startMin.valueProperty().addListener((observable, oldValue, newValue) -> {
-
-            if ((int) newValue > 59) {
-                //System.out.println(newValue);
-                startMin.decrement(60);
-            } else if ((int) newValue < 0) {
-                startMin.increment(60);
-            }
-        });
-        endMin.valueProperty().addListener((observable, oldValue, newValue) -> {
-
-            if ((int) newValue > 59) {
-                //System.out.println(newValue);
-                endMin.decrement(60);
-            } else if ((int) newValue < 0) {
-                endMin.increment(60);
             }
         });
 
@@ -956,9 +931,7 @@ public class MainController implements ScreenInterface {
     //TODO: MAKE THIS WORK
     private void applyDayFilters(){
         String startH = String.valueOf(startHour.getValue());
-        String startM = String.valueOf(startMin.getValue());
         String endH = String.valueOf(endHour.getValue());
-        String endM = String.valueOf(endMin.getValue());
 
 
 

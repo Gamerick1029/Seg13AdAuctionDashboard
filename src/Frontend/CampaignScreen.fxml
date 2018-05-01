@@ -581,7 +581,7 @@
                         		<Insets top="20" />
                         	</VBox.margin>
                         </Text>
-                        <Text id="text" text="Start" />
+                        <Text id="text" text="Start Date" />
                         
                         <HBox spacing="5.0">
                            <children>
@@ -592,7 +592,7 @@
                            </children>
                         </HBox>
                         
-                        <Text id="text" text="End" />
+                        <Text id="text" text="End Date" />
                         
                         <HBox spacing="5.0">
                            <children>
@@ -622,20 +622,18 @@
 					  
 
 					  <Text text="Time of Day" id="h1"/>
-					  <Text text="Start" id="text" />
+					  <Text text="Start Hour" id="text" />
 					  <HBox spacing="5.0">
 						  <children>
 							  <Spinner fx:id="startHour" maxHeight="26.0" maxWidth="100.0" minHeight="26.0" minWidth="100.0" />
-							  <Spinner fx:id="startMin" maxHeight="26.0" maxWidth="100.0" minHeight="26.0" minWidth="100.0" />
 						  </children>
 					  </HBox>
 					  
-					  <Text text="End" id="text" />
+					  <Text text="End Hour" id="text" />
 					  <HBox spacing="5.0">
 						  <children>
 	
 							  <Spinner fx:id="endHour" maxHeight="26.0" maxWidth="100.0" minHeight="26.0" minWidth="100.0" />
-							  <Spinner fx:id="endMin" maxHeight="26.0" maxWidth="100.0" minHeight="26.0" minWidth="100.0" />
 						  </children>
 					  </HBox>
 					<Button id="menuButton" fx:id="applyFilters" contentDisplay="CENTER" mnemonicParsing="false" text="Apply Filters" textAlignment="CENTER" />
