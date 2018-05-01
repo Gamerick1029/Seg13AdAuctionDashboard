@@ -945,8 +945,11 @@ public class MainController implements ScreenInterface {
     }
 
     private void applyFilters() {
-        populateMetric(currentMetricDisplayed, currentStep);
-        setMetrics(campaignName.getText());
+        if(!currentChartType.equals("Histogram"))
+        {
+            populateMetric(currentMetricDisplayed, currentStep);
+            setMetrics(campaignName.getText());
+        }
     }
 
     private void applyPerTimeFilter() {
