@@ -44,21 +44,31 @@
                                     <HBox alignment="TOP_LEFT" spacing="10">
                                        <children>
       									<Text id="text" text="Timescale:" />
-                                          <RadioButton id="text" fx:id="byDay" contentDisplay="CENTER" mnemonicParsing="false" selected="true" text="by day">
+                                          <RadioButton id="text" fx:id="byDay" contentDisplay="CENTER" mnemonicParsing="false" selected="true" text="By Day">
                                              <cursor>
                                                 <Cursor fx:constant="HAND" />
                                              </cursor>
                                           </RadioButton>
-                                          <RadioButton id="text" fx:id="byWeek" contentDisplay="CENTER" mnemonicParsing="false" text="by week">
+                                          <RadioButton id="text" fx:id="byWeek" contentDisplay="CENTER" mnemonicParsing="false" text="By Week">
                                              <cursor>
                                                 <Cursor fx:constant="HAND" />
                                              </cursor>
                                           </RadioButton>
-                                          <RadioButton id="text" fx:id="byMonth" contentDisplay="CENTER" mnemonicParsing="false" text="by month">
+                                          <RadioButton id="text" fx:id="byMonth" contentDisplay="CENTER" mnemonicParsing="false" text="By Month">
                                              <cursor>
                                                 <Cursor fx:constant="HAND" />
                                              </cursor>
                                           </RadioButton>
+										   <RadioButton id="text" fx:id="dailyA" contentDisplay="CENTER" mnemonicParsing="false" selected="true" text="Daily Aggregate">
+											   <cursor>
+												   <Cursor fx:constant="HAND" />
+											   </cursor>
+										   </RadioButton>
+										   <RadioButton id="text" fx:id="weeklyA" contentDisplay="CENTER" mnemonicParsing="false" selected="true" text="Weekly Aggregate">
+											   <cursor>
+												   <Cursor fx:constant="HAND" />
+											   </cursor>
+										   </RadioButton>
                                        </children>
                                     </HBox>
       
@@ -544,26 +554,7 @@
                                   <CheckBox id="checkBox" fx:id="contextBlog" mnemonicParsing="false" text="Blog" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                            </children>
                         </GridPane>
-                       
-                        <VBox spacing="5.0">
-						  <children>
 
-							  <Text text="Day of Week" id="h1" />
-							  <CheckBox id="checkBox" fx:id="monday" mnemonicParsing="false" text="Monday" GridPane.columnIndex="1" />
-							  <CheckBox id="checkBox" fx:id="tuesday" mnemonicParsing="false" text="Tuesday" GridPane.columnIndex="1" />
-
-							  <CheckBox id="checkBox" fx:id="wednesday" mnemonicParsing="false" text="Wednesday" GridPane.columnIndex="1" />
-
-							  <CheckBox id="checkBox" fx:id="thursday" mnemonicParsing="false" text="Thursday" GridPane.columnIndex="1" />
-							  <CheckBox id="checkBox" fx:id="friday" mnemonicParsing="false" text="Friday" GridPane.columnIndex="1" />
-							  <CheckBox id="checkBox" fx:id="saturday" mnemonicParsing="false" text="Saturday" GridPane.columnIndex="1" />
-							  <CheckBox id="checkBox" fx:id="sunday" mnemonicParsing="false" text="Sunday" GridPane.columnIndex="1" />
-
-                          </children>
-                             <padding>
-                         	 	<Insets top="20" />
-                         	 </padding>
-					  </VBox>
                         
                         <HBox spacing="5">
                         	 <children>
@@ -619,25 +610,9 @@
        	           	<Insets left="20" right="20" />
        	           </padding>
 
-					  
 
-					  <Text text="Time of Day" id="h1"/>
-					  <Text text="Start Hour" id="text" />
-					  <HBox spacing="5.0">
-						  <children>
-							  <Spinner fx:id="startHour" maxHeight="26.0" maxWidth="100.0" minHeight="26.0" minWidth="100.0" />
-						  </children>
-					  </HBox>
-					  
-					  <Text text="End Hour" id="text" />
-					  <HBox spacing="5.0">
-						  <children>
-	
-							  <Spinner fx:id="endHour" maxHeight="26.0" maxWidth="100.0" minHeight="26.0" minWidth="100.0" />
-						  </children>
-					  </HBox>
 					<Button id="menuButton" fx:id="applyFilters" contentDisplay="CENTER" mnemonicParsing="false" text="Apply Filters" textAlignment="CENTER" />
-						
+
                   </VBox>
                   
        	           </children>

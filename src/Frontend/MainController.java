@@ -155,6 +155,10 @@ public class MainController implements ScreenInterface {
     @FXML
     private RadioButton byMonth;
     @FXML
+    private RadioButton dailyA;
+    @FXML
+    private RadioButton weeklyA;
+    @FXML
     private CheckBox genderMale;
     @FXML
     private CheckBox genderFemale;
@@ -232,20 +236,6 @@ public class MainController implements ScreenInterface {
     private MenuItem lightThemeOption;
     @FXML
     private MenuItem mintThemeOption;
-    @FXML
-    private CheckBox monday;
-    @FXML
-    private CheckBox tuesday;
-    @FXML
-    private CheckBox wednesday;
-    @FXML
-    private CheckBox thursday;
-    @FXML
-    private CheckBox friday;
-    @FXML
-    private CheckBox saturday;
-    @FXML
-    private CheckBox sunday;
 
     private XYChart.Series campaignMetricLC;
     private XYChart.Series campaignMetricBC;
@@ -357,6 +347,8 @@ public class MainController implements ScreenInterface {
             byDay.setSelected(true);
             byWeek.setSelected(false);
             byMonth.setSelected(false);
+            dailyA.setSelected(false);
+            weeklyA.setSelected(false);
             groupByStep();
         });
         byWeek.setOnAction(r -> {
@@ -364,6 +356,8 @@ public class MainController implements ScreenInterface {
             byWeek.setSelected(true);
             byDay.setSelected(false);
             byMonth.setSelected(false);
+            dailyA.setSelected(false);
+            weeklyA.setSelected(false);
             groupByStep();
         });
         byMonth.setOnAction(r -> {
@@ -371,6 +365,26 @@ public class MainController implements ScreenInterface {
             byMonth.setSelected(true);
             byWeek.setSelected(false);
             byDay.setSelected(false);
+            dailyA.setSelected(false);
+            weeklyA.setSelected(false);
+            groupByStep();
+        });
+        dailyA.setOnAction(r -> {
+            currentStep = Step.HOUR_OF_DAY;
+            byMonth.setSelected(true);
+            byWeek.setSelected(false);
+            byDay.setSelected(false);
+            dailyA.setSelected(true);
+            weeklyA.setSelected(false);
+            groupByStep();
+        });
+        weeklyA.setOnAction(r -> {
+            currentStep = Step.DAY_OF_WEEK;
+            byMonth.setSelected(true);
+            byWeek.setSelected(false);
+            byDay.setSelected(false);
+            dailyA.setSelected(false);
+            weeklyA.setSelected(false);
             groupByStep();
         });
 
@@ -442,11 +456,7 @@ public class MainController implements ScreenInterface {
         endYear.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1969, Calendar.getInstance().get(Calendar.YEAR) + 1, Calendar.getInstance().get(Calendar.YEAR), 1));
         startDay.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(00, 32, Calendar.getInstance().get(Calendar.DAY_OF_MONTH), 1));
         endDay.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(00, 32, Calendar.getInstance().get(Calendar.DAY_OF_MONTH), 1));
-
-        startHour.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(-1, 24, Calendar.getInstance().get(Calendar.HOUR), 1));
-        endHour.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(-1, 24, Calendar.getInstance().get(Calendar.HOUR), 1));
-
-        endDay.valueProperty().addListener(new ChangeListener() {
+          endDay.valueProperty().addListener(new ChangeListener() {
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
 
@@ -567,13 +577,6 @@ public class MainController implements ScreenInterface {
         contextBlog.setSelected(true);
         contextHobbies.setSelected(true);
         contextTravel.setSelected(true);
-        monday.setSelected(true);
-        tuesday.setSelected(true);
-        wednesday.setSelected(true);
-        thursday.setSelected(true);
-        friday.setSelected(true);
-        saturday.setSelected(true);
-        sunday.setSelected(true);
 
         dbHelper = new DBHelper();
         try {
@@ -707,55 +710,6 @@ public class MainController implements ScreenInterface {
                 updateCurrentFilter("contextTravel", true);
             } else {
                 updateCurrentFilter("contextTravel", false);
-            }
-        });
-        monday.setOnAction(r -> {
-            if (monday.isSelected()) {
-                updateCurrentFilter("monday", true);
-            } else {
-                updateCurrentFilter("monday", false);
-            }
-        });
-        tuesday.setOnAction(r -> {
-            if (tuesday.isSelected()) {
-                updateCurrentFilter("tuesday", true);
-            } else {
-                updateCurrentFilter("tuesday", false);
-            }
-        });
-        wednesday.setOnAction(r -> {
-            if (wednesday.isSelected()) {
-                updateCurrentFilter("wednesday", true);
-            } else {
-                updateCurrentFilter("wednesday", false);
-            }
-        });
-        thursday.setOnAction(r -> {
-            if (thursday.isSelected()) {
-                updateCurrentFilter("thursday", true);
-            } else {
-                updateCurrentFilter("thursday", false);
-            }
-        });
-        friday.setOnAction(r -> {
-            if (friday.isSelected()) {
-                updateCurrentFilter("friday", true);
-            } else {
-                updateCurrentFilter("friday", false);
-            }
-        });
-        saturday.setOnAction(r -> {
-            if (saturday.isSelected()) {
-                updateCurrentFilter("saturday", true);
-            } else {
-                updateCurrentFilter("saturday", false);
-            }
-        });
-        sunday.setOnAction(r -> {
-            if (sunday.isSelected()) {
-                updateCurrentFilter("sunday", true);
-            } else {
-                updateCurrentFilter("sunday", false);
             }
         });
 
@@ -922,7 +876,6 @@ public class MainController implements ScreenInterface {
     }
 
     private void applyFilters() {
-
         if (!currentChartType.equals("Histogram")) {
             setMetrics(campaignName.getText());
             if (!(startMonth.getText().equals("Month") || endMonth.getText().equals("Month"))) {
@@ -931,7 +884,6 @@ public class MainController implements ScreenInterface {
             populateMetric(currentMetricDisplayed,currentStep);
         }
     }
-
 
     private void addNewFilter() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -1851,13 +1803,6 @@ public class MainController implements ScreenInterface {
         contextBlog.setSelected(false);
         contextHobbies.setSelected(false);
         contextTravel.setSelected(false);
-        monday.setSelected(false);
-        tuesday.setSelected(false);
-        wednesday.setSelected(false);
-        thursday.setSelected(false);
-        friday.setSelected(false);
-        saturday.setSelected(false);
-        sunday.setSelected(false);
 
         currentFilter.genderMale = false;
         currentFilter.genderFemale = false;
@@ -1897,13 +1842,6 @@ public class MainController implements ScreenInterface {
         contextBlog.setSelected(true);
         contextHobbies.setSelected(true);
         contextTravel.setSelected(true);
-        monday.setSelected(true);
-        tuesday.setSelected(true);
-        wednesday.setSelected(true);
-        thursday.setSelected(true);
-        friday.setSelected(true);
-        saturday.setSelected(true);
-        sunday.setSelected(true);
 
         currentFilter.genderMale = true;
         currentFilter.genderFemale = true;
@@ -1980,27 +1918,6 @@ public class MainController implements ScreenInterface {
                 break;
             case "contextTravel":
                 currentFilter.contextTravel = filter;
-                break;
-            case "monday":
-                currentFilter.step = Step.DAY_OF_WEEK;
-                break;
-            case "tuesday":
-                currentFilter.step = Step.DAY_OF_WEEK;
-                break;
-            case "wednesday":
-                currentFilter.step = Step.DAY_OF_WEEK;
-                break;
-            case "thursday":
-                currentFilter.step = Step.DAY_OF_WEEK;
-                break;
-            case "friday":
-                currentFilter.step = Step.DAY_OF_WEEK;
-                break;
-            case "saturday":
-                currentFilter.step = Step.DAY_OF_WEEK;
-                break;
-            case "sunday":
-                currentFilter.step = Step.DAY_OF_WEEK;
                 break;
         }
     }
