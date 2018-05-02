@@ -951,6 +951,7 @@ public class MainController implements ScreenInterface {
         contextBlog.setSelected(filter.contextBlog);
         contextHobbies.setSelected(filter.contextHobbies);
         contextTravel.setSelected(filter.contextTravel);
+        //TODO: DAY OF WEEK AND TIME OF DAY >?????????
 
         setMetrics(campaignName.getText());
     }
@@ -1172,10 +1173,11 @@ public class MainController implements ScreenInterface {
         aset.add(new Copies(1));
         aset.add(Sides.DUPLEX);
 
-        PrintService[] services = PrintServiceLookup.lookupPrintServices(null, null);
+        PrintService[] services = PrintServiceLookup.lookupPrintServices(
+                null, null);
         PrintService defaultService = PrintServiceLookup.lookupDefaultPrintService();
 
-        if (services.length == 0) {
+        if (services.length == 0 && defaultService == null) {
 
             Label label = new Label("No printers connected!");
             content.add(label, 0, 0);
@@ -1461,9 +1463,8 @@ public class MainController implements ScreenInterface {
         //Adding the new CheckMenuItem to the MenuButton for the current campaignsLoaded
         campaignName.getItems().add(checkMenuItem);
         setMetrics(name);
-//        populateMetric(currentMetricDisplayed, currentStep);
-
-//        applyFilters();
+        populateMetric(currentMetricDisplayed, currentStep);
+        applyFilters();
     }
 
 
