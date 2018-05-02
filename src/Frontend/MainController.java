@@ -341,7 +341,8 @@ public class MainController implements ScreenInterface {
             changeToHistogram();
         });
 
-
+        weeklyA.setSelected(false);
+        dailyA.setSelected(false);
         byDay.setOnAction(r -> {
             currentStep = Step.DAY;
             byDay.setSelected(true);
@@ -371,7 +372,7 @@ public class MainController implements ScreenInterface {
         });
         dailyA.setOnAction(r -> {
             currentStep = Step.HOUR_OF_DAY;
-            byMonth.setSelected(true);
+            byMonth.setSelected(false);
             byWeek.setSelected(false);
             byDay.setSelected(false);
             dailyA.setSelected(true);
@@ -380,11 +381,11 @@ public class MainController implements ScreenInterface {
         });
         weeklyA.setOnAction(r -> {
             currentStep = Step.DAY_OF_WEEK;
-            byMonth.setSelected(true);
+            byMonth.setSelected(false);
             byWeek.setSelected(false);
             byDay.setSelected(false);
             dailyA.setSelected(false);
-            weeklyA.setSelected(false);
+            weeklyA.setSelected(true);
             groupByStep();
         });
 
@@ -539,26 +540,6 @@ public class MainController implements ScreenInterface {
             } else if ((int) newValue < 1970) {
                 startYear.increment(Calendar.getInstance().get(Calendar.YEAR) - 1969);
             }
-        });
-        endHour.valueProperty().addListener((observable, oldValue, newValue) -> {
-
-            if ((int) newValue > 23) {
-                //System.out.println(newValue);
-                endHour.decrement(24);
-            } else if ((int) newValue < 0) {
-                endHour.increment(24);
-            }
-            currentStep = Step.HOUR_OF_DAY;
-        });
-        startHour.valueProperty().addListener((observable, oldValue, newValue) -> {
-
-            if ((int) newValue > 23) {
-                //System.out.println(newValue);
-                startHour.decrement(24);
-            } else if ((int) newValue < 0) {
-                startHour.increment(24);
-            }
-            currentStep = Step.HOUR_OF_DAY;
         });
 
         genderMale.setSelected(true);
@@ -1976,7 +1957,6 @@ public class MainController implements ScreenInterface {
             th.start();
         }
     }
-
 
     private void groupByStep() {
         if (currentChartType.equals("Histogram")) {
