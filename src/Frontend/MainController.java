@@ -155,6 +155,10 @@ public class MainController implements ScreenInterface {
     @FXML
     private RadioButton byMonth;
     @FXML
+    private RadioButton weeklyA;
+    @FXML
+    private RadioButton dailyA;
+    @FXML
     private CheckBox genderMale;
     @FXML
     private CheckBox genderFemale;
@@ -232,20 +236,6 @@ public class MainController implements ScreenInterface {
     private MenuItem lightThemeOption;
     @FXML
     private MenuItem mintThemeOption;
-    @FXML
-    private CheckBox monday;
-    @FXML
-    private CheckBox tuesday;
-    @FXML
-    private CheckBox wednesday;
-    @FXML
-    private CheckBox thursday;
-    @FXML
-    private CheckBox friday;
-    @FXML
-    private CheckBox saturday;
-    @FXML
-    private CheckBox sunday;
 
     private XYChart.Series campaignMetricLC;
     private XYChart.Series campaignMetricBC;
@@ -351,12 +341,15 @@ public class MainController implements ScreenInterface {
             changeToHistogram();
         });
 
-
+        weeklyA.setSelected(false);
+        dailyA.setSelected(false);
         byDay.setOnAction(r -> {
             currentStep = Step.DAY;
             byDay.setSelected(true);
             byWeek.setSelected(false);
             byMonth.setSelected(false);
+            dailyA.setSelected(false);
+            weeklyA.setSelected(false);
             groupByStep();
         });
         byWeek.setOnAction(r -> {
@@ -364,6 +357,8 @@ public class MainController implements ScreenInterface {
             byWeek.setSelected(true);
             byDay.setSelected(false);
             byMonth.setSelected(false);
+            dailyA.setSelected(false);
+            weeklyA.setSelected(false);
             groupByStep();
         });
         byMonth.setOnAction(r -> {
@@ -371,6 +366,26 @@ public class MainController implements ScreenInterface {
             byMonth.setSelected(true);
             byWeek.setSelected(false);
             byDay.setSelected(false);
+            dailyA.setSelected(false);
+            weeklyA.setSelected(false);
+            groupByStep();
+        });
+        dailyA.setOnAction(r -> {
+            currentStep = Step.HOUR_OF_DAY;
+            byMonth.setSelected(false);
+            byWeek.setSelected(false);
+            byDay.setSelected(false);
+            dailyA.setSelected(true);
+            weeklyA.setSelected(false);
+            groupByStep();
+        });
+        weeklyA.setOnAction(r -> {
+            currentStep = Step.DAY_OF_WEEK;
+            byMonth.setSelected(false);
+            byWeek.setSelected(false);
+            byDay.setSelected(false);
+            dailyA.setSelected(false);
+            weeklyA.setSelected(true);
             groupByStep();
         });
 
@@ -442,11 +457,7 @@ public class MainController implements ScreenInterface {
         endYear.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1969, Calendar.getInstance().get(Calendar.YEAR) + 1, Calendar.getInstance().get(Calendar.YEAR), 1));
         startDay.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(00, 32, Calendar.getInstance().get(Calendar.DAY_OF_MONTH), 1));
         endDay.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(00, 32, Calendar.getInstance().get(Calendar.DAY_OF_MONTH), 1));
-
-        startHour.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(-1, 24, Calendar.getInstance().get(Calendar.HOUR), 1));
-        endHour.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(-1, 24, Calendar.getInstance().get(Calendar.HOUR), 1));
-
-        endDay.valueProperty().addListener(new ChangeListener() {
+          endDay.valueProperty().addListener(new ChangeListener() {
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
 
@@ -530,26 +541,6 @@ public class MainController implements ScreenInterface {
                 startYear.increment(Calendar.getInstance().get(Calendar.YEAR) - 1969);
             }
         });
-        endHour.valueProperty().addListener((observable, oldValue, newValue) -> {
-
-            if ((int) newValue > 23) {
-                //System.out.println(newValue);
-                endHour.decrement(24);
-            } else if ((int) newValue < 0) {
-                endHour.increment(24);
-            }
-            currentStep = Step.HOUR_OF_DAY;
-        });
-        startHour.valueProperty().addListener((observable, oldValue, newValue) -> {
-
-            if ((int) newValue > 23) {
-                //System.out.println(newValue);
-                startHour.decrement(24);
-            } else if ((int) newValue < 0) {
-                startHour.increment(24);
-            }
-            currentStep = Step.HOUR_OF_DAY;
-        });
 
         genderMale.setSelected(true);
         genderFemale.setSelected(true);
@@ -567,13 +558,6 @@ public class MainController implements ScreenInterface {
         contextBlog.setSelected(true);
         contextHobbies.setSelected(true);
         contextTravel.setSelected(true);
-        monday.setSelected(true);
-        tuesday.setSelected(true);
-        wednesday.setSelected(true);
-        thursday.setSelected(true);
-        friday.setSelected(true);
-        saturday.setSelected(true);
-        sunday.setSelected(true);
 
         dbHelper = new DBHelper();
         try {
@@ -707,55 +691,6 @@ public class MainController implements ScreenInterface {
                 updateCurrentFilter("contextTravel", true);
             } else {
                 updateCurrentFilter("contextTravel", false);
-            }
-        });
-        monday.setOnAction(r -> {
-            if (monday.isSelected()) {
-                updateCurrentFilter("monday", true);
-            } else {
-                updateCurrentFilter("monday", false);
-            }
-        });
-        tuesday.setOnAction(r -> {
-            if (tuesday.isSelected()) {
-                updateCurrentFilter("tuesday", true);
-            } else {
-                updateCurrentFilter("tuesday", false);
-            }
-        });
-        wednesday.setOnAction(r -> {
-            if (wednesday.isSelected()) {
-                updateCurrentFilter("wednesday", true);
-            } else {
-                updateCurrentFilter("wednesday", false);
-            }
-        });
-        thursday.setOnAction(r -> {
-            if (thursday.isSelected()) {
-                updateCurrentFilter("thursday", true);
-            } else {
-                updateCurrentFilter("thursday", false);
-            }
-        });
-        friday.setOnAction(r -> {
-            if (friday.isSelected()) {
-                updateCurrentFilter("friday", true);
-            } else {
-                updateCurrentFilter("friday", false);
-            }
-        });
-        saturday.setOnAction(r -> {
-            if (saturday.isSelected()) {
-                updateCurrentFilter("saturday", true);
-            } else {
-                updateCurrentFilter("saturday", false);
-            }
-        });
-        sunday.setOnAction(r -> {
-            if (sunday.isSelected()) {
-                updateCurrentFilter("sunday", true);
-            } else {
-                updateCurrentFilter("sunday", false);
             }
         });
 
@@ -922,16 +857,15 @@ public class MainController implements ScreenInterface {
     }
 
     private void applyFilters() {
-
         if (!currentChartType.equals("Histogram")) {
             setMetrics(campaignName.getText());
             if (!(startMonth.getText().equals("Month") || endMonth.getText().equals("Month"))) {
                 applyDateFilter();
             }
+            setMetrics(campaignName.getText());
             populateMetric(currentMetricDisplayed,currentStep);
         }
     }
-
 
     private void addNewFilter() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -1025,7 +959,7 @@ public class MainController implements ScreenInterface {
     private File openDirectoryChooser() {
         DirectoryChooser chooser = new DirectoryChooser();
         chooser.setTitle("Select Directory");
-        File defaultDirectory = new File("C://");
+        File defaultDirectory = new File(System.getProperty("user.home"));
         chooser.setInitialDirectory(defaultDirectory);
         return chooser.showDialog(node.getScene().getWindow());
     }
@@ -1240,10 +1174,10 @@ public class MainController implements ScreenInterface {
         aset.add(Sides.DUPLEX);
 
         PrintService[] services = PrintServiceLookup.lookupPrintServices(
-                flavor, aset);
+                null, null);
         PrintService defaultService = PrintServiceLookup.lookupDefaultPrintService();
 
-        if (services.length == 0) {
+        if (services.length == 0 && defaultService == null) {
 
             Label label = new Label("No printers connected!");
             content.add(label, 0, 0);
@@ -1529,9 +1463,8 @@ public class MainController implements ScreenInterface {
         //Adding the new CheckMenuItem to the MenuButton for the current campaignsLoaded
         campaignName.getItems().add(checkMenuItem);
         setMetrics(name);
-//        populateMetric(currentMetricDisplayed, currentStep);
-
-//        applyFilters();
+        populateMetric(currentMetricDisplayed, currentStep);
+        applyFilters();
     }
 
 
@@ -1851,13 +1784,6 @@ public class MainController implements ScreenInterface {
         contextBlog.setSelected(false);
         contextHobbies.setSelected(false);
         contextTravel.setSelected(false);
-        monday.setSelected(false);
-        tuesday.setSelected(false);
-        wednesday.setSelected(false);
-        thursday.setSelected(false);
-        friday.setSelected(false);
-        saturday.setSelected(false);
-        sunday.setSelected(false);
 
         currentFilter.genderMale = false;
         currentFilter.genderFemale = false;
@@ -1897,13 +1823,6 @@ public class MainController implements ScreenInterface {
         contextBlog.setSelected(true);
         contextHobbies.setSelected(true);
         contextTravel.setSelected(true);
-        monday.setSelected(true);
-        tuesday.setSelected(true);
-        wednesday.setSelected(true);
-        thursday.setSelected(true);
-        friday.setSelected(true);
-        saturday.setSelected(true);
-        sunday.setSelected(true);
 
         currentFilter.genderMale = true;
         currentFilter.genderFemale = true;
@@ -1981,27 +1900,6 @@ public class MainController implements ScreenInterface {
             case "contextTravel":
                 currentFilter.contextTravel = filter;
                 break;
-            case "monday":
-                currentFilter.step = Step.DAY_OF_WEEK;
-                break;
-            case "tuesday":
-                currentFilter.step = Step.DAY_OF_WEEK;
-                break;
-            case "wednesday":
-                currentFilter.step = Step.DAY_OF_WEEK;
-                break;
-            case "thursday":
-                currentFilter.step = Step.DAY_OF_WEEK;
-                break;
-            case "friday":
-                currentFilter.step = Step.DAY_OF_WEEK;
-                break;
-            case "saturday":
-                currentFilter.step = Step.DAY_OF_WEEK;
-                break;
-            case "sunday":
-                currentFilter.step = Step.DAY_OF_WEEK;
-                break;
         }
     }
 
@@ -2060,7 +1958,6 @@ public class MainController implements ScreenInterface {
         }
     }
 
-
     private void groupByStep() {
         if (currentChartType.equals("Histogram")) {
             changeToHistogram();
@@ -2083,6 +1980,7 @@ public class MainController implements ScreenInterface {
         areaType.setSelected(false);
         pieType.setSelected(false);
         histogramType.setSelected(false);
+        x.setLabel("Time");
     }
 
     private void changeToBarChart() {
@@ -2104,6 +2002,7 @@ public class MainController implements ScreenInterface {
         histogramType.setSelected(false);
         barChart.setCategoryGap(1);
         barChart.setBarGap(1);
+        x.setLabel("Time");
     }
 
     private void changeToAreaChart() {
@@ -2120,6 +2019,7 @@ public class MainController implements ScreenInterface {
         areaType.setSelected(true);
         pieType.setSelected(false);
         histogramType.setSelected(false);
+        x.setLabel("Time");
     }
 
     private void changeToPieChart() {
@@ -2135,6 +2035,7 @@ public class MainController implements ScreenInterface {
         pieType.setSelected(true);
         histogramType.setSelected(false);
         pieChart.setLabelsVisible(true);
+        x.setLabel("Time");
     }
 
     private void changeToHistogram() {
@@ -2155,6 +2056,7 @@ public class MainController implements ScreenInterface {
         barChart.setTitle("Click Cost Histogram");
         barChart.setCategoryGap(0);
         barChart.setBarGap(0);
+        x.setLabel("Cost (pence)");
         for (Campaign campaign : this.campaignsLoaded) {
             if (campaign.getDisplayed().isSelected()) {
                 DataModel dataModel = myController.getDataModel(campaign.getName());
@@ -2363,46 +2265,44 @@ public class MainController implements ScreenInterface {
                             protected String call() {
                                 String name = dataModel.getName() + " " + metric + " - " + key;
                                 dataModel.setFilter(filters.get(key));
+
                                 try {
-
-                                    if (step != Step.HOUR_OF_DAY && step != Step.DAY_OF_WEEK) {
-
-                                        switch (metric) {
+                                    switch (metric) {
                                             case "Impressions":
-                                                sortAndSet_I(dataModel.getFullImpressions(step), name);
+                                                sortAndSet_I(dataModel.getFullImpressions(step), name, step);
                                                 break;
                                             case "Clicks":
-                                                sortAndSet_I(dataModel.getFullClicks(step), name);
+                                                sortAndSet_I(dataModel.getFullClicks(step), name, step);
                                                 break;
                                             case "Uniques":
-                                                sortAndSet_I(dataModel.getFullUniques(step), name);
+                                                sortAndSet_I(dataModel.getFullUniques(step), name, step);
                                                 break;
                                             case "Bounces":
-                                                sortAndSet_I(dataModel.getFullBounces(step), name);
+                                                sortAndSet_I(dataModel.getFullBounces(step), name, step);
                                                 break;
                                             case "Conversions":
-                                                sortAndSet_I(dataModel.getFullConversions(step), name);
+                                                sortAndSet_I(dataModel.getFullConversions(step), name, step);
                                                 break;
                                             case "Total Cost":
-                                                sortAndSet_F(dataModel.getFullCost(step), name);
+                                                sortAndSet_F(dataModel.getFullCost(step), name, step);
                                                 break;
                                             case "CTR":
-                                                sortAndSet_F(dataModel.getFullCTR(step), name);
+                                                sortAndSet_F(dataModel.getFullCTR(step), name, step);
                                                 break;
                                             case "CPA":
-                                                sortAndSet_F(dataModel.getFullCPA(step), name);
+                                                sortAndSet_F(dataModel.getFullCPA(step), name, step);
                                                 break;
                                             case "CPC":
-                                                sortAndSet_F(dataModel.getFullCPC(step), name);
+                                                sortAndSet_F(dataModel.getFullCPC(step), name, step);
                                                 break;
                                             case "CPM":
-                                                sortAndSet_F(dataModel.getFullCPC(step), name);
+                                                sortAndSet_F(dataModel.getFullCPC(step), name, step);
                                                 break;
                                             case "Bounce Rate":
-                                                sortAndSet_F(dataModel.getFullBounceRate(step), name);
+                                                sortAndSet_F(dataModel.getFullBounceRate(step), name, step);
                                                 break;
                                         }
-                                    }
+
                                 } catch (SQLException e) {
                                     reportError(e);
                                     graphLoading = false;
@@ -2425,12 +2325,42 @@ public class MainController implements ScreenInterface {
         }
     }
 
+    private <T> List<Map.Entry<String, T>> dayOfWeekConverter(List<Map.Entry<Date, T>> data){
+        List<Map.Entry<String, T>> result = new LinkedList<>();
+
+        for (Map.Entry<Date, T> point : data){
+            result.add(Map.entry(StepHolder.dateToDay.get(point.getKey()), point.getValue()));
+        }
+
+        return result;
+    }
+
+    private <T> List<Map.Entry<String, T>> hourOfDayConverter(List<Map.Entry<Date, T>> data){
+        List<Map.Entry<String, T>> result = new LinkedList<>();
+
+        for (Map.Entry<Date, T> point : data){
+            result.add(Map.entry(StepHolder.dateToHourOfDay(point.getKey()), point.getValue()));
+        }
+
+        return result;
+    }
+
+    private <T> List<Map.Entry<String, T>> genericConverter(List<Map.Entry<Date, T>> data){
+        List<Map.Entry<String, T>> result = new LinkedList<>();
+
+        for (Map.Entry<Date, T> point : data){
+            result.add(Map.entry(simpleDateRep(point.getKey()), point.getValue()));
+        }
+
+        return result;
+    }
+
 
     /*
     I tried to do this with generics, but it locked up
     at the getData().add stage.
      */
-    private void sortAndSet_I(Map<Date, Integer> dataPoints, String name) {
+    private void sortAndSet_I(Map<Date, Integer> dataPoints, String name, Step step) {
         XYChart.Series LC = new XYChart.Series();
         XYChart.Series AC = new XYChart.Series();
         XYChart.Series BC = new XYChart.Series();
@@ -2441,16 +2371,25 @@ public class MainController implements ScreenInterface {
         BC.setName(name);
 
         List<Map.Entry<Date, Integer>> sortedPoints = sortMap(dataPoints);
-        for (Map.Entry<Date, Integer> point : sortedPoints) {
-            LC.getData().add(new XYChart.Data(simpleDateRep(point.getKey()), point.getValue()));
-            AC.getData().add(new XYChart.Data(simpleDateRep(point.getKey()), point.getValue()));
-            BC.getData().add(new XYChart.Data(simpleDateRep(point.getKey()), point.getValue()));
-            PC.add(new PieChart.Data(simpleDateRep(point.getKey()), (double) point.getValue()));
+        List<Map.Entry<String, Integer>> points;
+        if (step == Step.DAY_OF_WEEK) {
+             points = dayOfWeekConverter(sortedPoints);
+        } else if (step == Step.HOUR_OF_DAY) {
+             points = hourOfDayConverter(sortedPoints);
+        } else {
+            points = genericConverter(sortedPoints);
+        }
+
+        for (Map.Entry<String, Integer> point : points) {
+            LC.getData().add(new XYChart.Data(point.getKey(), point.getValue()));
+            AC.getData().add(new XYChart.Data(point.getKey(), point.getValue()));
+            BC.getData().add(new XYChart.Data(point.getKey(), point.getValue()));
+            PC.add(new PieChart.Data(point.getKey(), (double) point.getValue()));
         }
         runLater(LC, AC, BC, PC);
     }
 
-    private void sortAndSet_F(Map<Date, Float> dataPoints, String name) {
+    private void sortAndSet_F(Map<Date, Float> dataPoints, String name, Step step) {
         XYChart.Series LC = new XYChart.Series();
         XYChart.Series AC = new XYChart.Series();
         XYChart.Series BC = new XYChart.Series();
@@ -2461,12 +2400,22 @@ public class MainController implements ScreenInterface {
         BC.setName(name);
 
         List<Map.Entry<Date, Float>> sortedPoints = sortMap(dataPoints);
-        for (Map.Entry<Date, Float> point : sortedPoints) {
-            LC.getData().add(new XYChart.Data(simpleDateRep(point.getKey()), point.getValue()));
-            AC.getData().add(new XYChart.Data(simpleDateRep(point.getKey()), point.getValue()));
-            BC.getData().add(new XYChart.Data(simpleDateRep(point.getKey()), point.getValue()));
-            PC.add(new PieChart.Data(simpleDateRep(point.getKey()), (double) point.getValue()));
+        List<Map.Entry<String, Float>> points;
+        if (step == Step.DAY_OF_WEEK) {
+            points = dayOfWeekConverter(sortedPoints);
+        } else if (step == Step.HOUR_OF_DAY) {
+            points = hourOfDayConverter(sortedPoints);
+        } else {
+            points = genericConverter(sortedPoints);
         }
+
+        for (Map.Entry<String, Float> point : points) {
+            LC.getData().add(new XYChart.Data(point.getKey(), point.getValue()));
+            AC.getData().add(new XYChart.Data(point.getKey(), point.getValue()));
+            BC.getData().add(new XYChart.Data(point.getKey(), point.getValue()));
+            PC.add(new PieChart.Data(point.getKey(), (double) point.getValue()));
+        }
+
         runLater(LC, AC, BC, PC);
     }
 
@@ -2476,6 +2425,7 @@ public class MainController implements ScreenInterface {
             lineChart.getData().add(AC);
             barChart.getData().add(BC);
             pieChart.getData().addAll(PC);
+            pieChart.autosize();
         });
     }
 
