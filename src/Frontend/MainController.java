@@ -925,7 +925,10 @@ public class MainController implements ScreenInterface {
 
         if (!currentChartType.equals("Histogram")) {
             setMetrics(campaignName.getText());
-            applyDateFilter();
+            if (!(startMonth.getText().equals("Month") || endMonth.getText().equals("Month"))) {
+                applyDateFilter();
+            }
+            populateMetric(currentMetricDisplayed,currentStep);
         }
     }
 
@@ -1772,7 +1775,7 @@ public class MainController implements ScreenInterface {
             }
             System.out.println(sbS.toString());
             System.out.println(sbE.toString());
-            populateMetric(currentMetricDisplayed, currentStep);
+            //populateMetric(currentMetricDisplayed, currentStep);
         }
     }
 
@@ -2399,10 +2402,6 @@ public class MainController implements ScreenInterface {
                                                 sortAndSet_F(dataModel.getFullBounceRate(step), name);
                                                 break;
                                         }
-                                    } else if (currentStep == Step.DAY_OF_WEEK) {
-                                        sortAndSet_S(StepHolder.dateToDay, name);
-                                    } else if (currentStep == Step.HOUR_OF_DAY) {
-                                        applyTime(StepHolder.hours, name);
                                     }
                                 } catch (SQLException e) {
                                     reportError(e);
@@ -2447,92 +2446,6 @@ public class MainController implements ScreenInterface {
             AC.getData().add(new XYChart.Data(simpleDateRep(point.getKey()), point.getValue()));
             BC.getData().add(new XYChart.Data(simpleDateRep(point.getKey()), point.getValue()));
             PC.add(new PieChart.Data(simpleDateRep(point.getKey()), (double) point.getValue()));
-        }
-        runLater(LC, AC, BC, PC);
-    }
-
-    private void sortAndSet_S(Map<Date, String> dataPoints, String name) {
-        XYChart.Series LC = new XYChart.Series();
-        XYChart.Series AC = new XYChart.Series();
-        XYChart.Series BC = new XYChart.Series();
-        ObservableList PC = FXCollections.observableArrayList();
-
-        LC.setName(name);
-        AC.setName(name);
-        BC.setName(name);
-
-        if (monday.isSelected()) {
-            String s = dataPoints.get(StepHolder.MONDAY);
-            LC.getData().add(new XYChart.Data(StepHolder.MONDAY, s));
-            AC.getData().add(new XYChart.Data(StepHolder.MONDAY, s));
-            BC.getData().add(new XYChart.Data(StepHolder.MONDAY, s));
-            //PC.add(new PieChart.Data(StepHolder.MONDAY, s));
-        }
-        if (tuesday.isSelected()) {
-            String s = dataPoints.get(StepHolder.TUESDAY);
-            LC.getData().add(new XYChart.Data(StepHolder.TUESDAY, s));
-            AC.getData().add(new XYChart.Data(StepHolder.TUESDAY, s));
-            BC.getData().add(new XYChart.Data(StepHolder.TUESDAY, s));
-            //PC.add(new PieChart.Data(StepHolder.MONDAY, s));
-        }
-        if (wednesday.isSelected()) {
-            String s = dataPoints.get(StepHolder.WEDNESDAY);
-            LC.getData().add(new XYChart.Data(StepHolder.WEDNESDAY, s));
-            AC.getData().add(new XYChart.Data(StepHolder.WEDNESDAY, s));
-            BC.getData().add(new XYChart.Data(StepHolder.WEDNESDAY, s));
-            //PC.add(new PieChart.Data(StepHolder.MONDAY, s));
-        }
-        if (thursday.isSelected()) {
-            String s = dataPoints.get(StepHolder.THURSDAY);
-            LC.getData().add(new XYChart.Data(StepHolder.THURSDAY, s));
-            AC.getData().add(new XYChart.Data(StepHolder.THURSDAY, s));
-            BC.getData().add(new XYChart.Data(StepHolder.THURSDAY, s));
-            //PC.add(new PieChart.Data(StepHolder.MONDAY, s));
-        }
-        if (friday.isSelected()) {
-            String s = dataPoints.get(StepHolder.FRIDAY);
-            LC.getData().add(new XYChart.Data(StepHolder.FRIDAY, s));
-            AC.getData().add(new XYChart.Data(StepHolder.FRIDAY, s));
-            BC.getData().add(new XYChart.Data(StepHolder.FRIDAY, s));
-            //PC.add(new PieChart.Data(StepHolder.MONDAY, s));
-        }
-        if (saturday.isSelected()) {
-            String s = dataPoints.get(StepHolder.SATURDAY);
-            LC.getData().add(new XYChart.Data(StepHolder.SATURDAY, s));
-            AC.getData().add(new XYChart.Data(StepHolder.SATURDAY, s));
-            BC.getData().add(new XYChart.Data(StepHolder.SATURDAY, s));
-            //PC.add(new PieChart.Data(StepHolder.MONDAY, s));
-        }
-        if (sunday.isSelected()) {
-            String s = dataPoints.get(StepHolder.SUNDAY);
-            LC.getData().add(new XYChart.Data(StepHolder.SUNDAY, s));
-            AC.getData().add(new XYChart.Data(StepHolder.SUNDAY, s));
-            BC.getData().add(new XYChart.Data(StepHolder.SUNDAY, s));
-            //PC.add(new PieChart.Data(StepHolder.MONDAY, s));
-        }
-        runLater(LC, AC, BC, PC);
-    }
-
-    private void applyTime(Date[] hours, String name) {
-        XYChart.Series LC = new XYChart.Series();
-        XYChart.Series AC = new XYChart.Series();
-        XYChart.Series BC = new XYChart.Series();
-        ObservableList PC = FXCollections.observableArrayList();
-
-        LC.setName(name);
-        AC.setName(name);
-        BC.setName(name);
-
-        Date sd = StepHolder.hours[(Integer) startHour.getValue()];
-        Date ed = StepHolder.hours[(Integer) endHour.getValue()];
-
-        for (Date hour : hours) {
-            if (hour.getTime() > sd.getTime() && hour.getTime() < ed.getTime()) {
-                LC.getData().add(new XYChart.Data(simpleDateRep(hour), StepHolder.dateToHourOfDay(hour)));
-                AC.getData().add(new XYChart.Data(simpleDateRep(hour), StepHolder.dateToHourOfDay(hour)));
-                BC.getData().add(new XYChart.Data(simpleDateRep(hour), StepHolder.dateToHourOfDay(hour)));
-                //PC.add(new PieChart.Data(simpleDateRep(hour), StepHolder.dateToHourOfDay(hour)));
-            }
         }
         runLater(LC, AC, BC, PC);
     }
