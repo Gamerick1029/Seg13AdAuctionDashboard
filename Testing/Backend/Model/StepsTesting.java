@@ -149,7 +149,7 @@ public class StepsTesting extends TestCase {
         }
 
     }
-
+    /*
     // Tests for two Months Campaign
     @Test
     public void testGetFullImpressionsNoOfElementsTwoMonth() {
@@ -256,4 +256,5 @@ public class StepsTesting extends TestCase {
         }
 
     }
+    */
 }

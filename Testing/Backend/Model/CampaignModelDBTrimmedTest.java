@@ -112,7 +112,7 @@ public class CampaignModelDBTrimmedTest extends TestCase {
 
     public void testGetBouncesNumber() {
         try {
-            assertEquals(10, cm.getBouncesNumber());
+            assertEquals(2, cm.getBouncesNumber());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -130,7 +130,7 @@ public class CampaignModelDBTrimmedTest extends TestCase {
 
     public void testGetConversionsNumber() {
         try {
-            assertEquals(10, cm.getConversionsNumber());
+            assertEquals(2, cm.getConversionsNumber());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -241,7 +241,7 @@ public class CampaignModelDBTrimmedTest extends TestCase {
 
     public void testGetBounceRate() {
         try {
-            assertEquals((float) 1.0, cm.getBounceRate());
+            assertEquals((float) 0.2, cm.getBounceRate());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -282,7 +282,7 @@ public class CampaignModelDBTrimmedTest extends TestCase {
 
     public void testGetFullBouncesValues() {
         Date date = new Date("Thu Jan 01 00:00:00 GMT 2015");
-        Integer i = 10;
+        Integer i = 2;
         try {
             assertEquals(i, cm.getFullBounces(DAY).get(date));
         } catch (SQLException e) {
@@ -313,7 +313,7 @@ public class CampaignModelDBTrimmedTest extends TestCase {
         try
 
         {
-            assertEquals((float) 1.0, cm.getFullBounceRate(
+            assertEquals((float) 0.2, cm.getFullBounceRate(
                     DAY).get(date));
 
         } catch (
@@ -326,7 +326,7 @@ public class CampaignModelDBTrimmedTest extends TestCase {
 
     public void testGetFullConversionsValues() {
         Date date = new Date("Thu Jan 01 00:00:00 GMT 2015");
-        Integer i = 10;
+        Integer i = 2;
         try
 
         {
