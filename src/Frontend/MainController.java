@@ -155,10 +155,6 @@ public class MainController implements ScreenInterface {
     @FXML
     private RadioButton byMonth;
     @FXML
-    private RadioButton dailyA;
-    @FXML
-    private RadioButton weeklyA;
-    @FXML
     private CheckBox genderMale;
     @FXML
     private CheckBox genderFemale;
@@ -862,6 +858,7 @@ public class MainController implements ScreenInterface {
             if (!(startMonth.getText().equals("Month") || endMonth.getText().equals("Month"))) {
                 applyDateFilter();
             }
+            setMetrics(campaignName.getText());
             populateMetric(currentMetricDisplayed,currentStep);
         }
     }
@@ -2260,6 +2257,7 @@ public class MainController implements ScreenInterface {
                             protected String call() {
                                 String name = dataModel.getName() + " " + metric + " - " + key;
                                 dataModel.setFilter(filters.get(key));
+
                                 try {
 
                                     if (step != Step.HOUR_OF_DAY && step != Step.DAY_OF_WEEK) {
@@ -2373,6 +2371,7 @@ public class MainController implements ScreenInterface {
             lineChart.getData().add(AC);
             barChart.getData().add(BC);
             pieChart.getData().addAll(PC);
+            pieChart.autosize();
         });
     }
 
