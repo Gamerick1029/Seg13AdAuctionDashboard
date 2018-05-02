@@ -152,7 +152,7 @@
          </center>
           <left>
             <ScrollPane hbarPolicy="NEVER" vbarPolicy="ALWAYS">
-              <Pane id="leftPane" prefHeight="800">
+              <Pane id="leftPane" prefHeight="1050">
                  <children>
          			<VBox>
                      <children>
@@ -477,7 +477,7 @@
           </left>
           <right>
           	<ScrollPane hbarPolicy="NEVER" vbarPolicy="ALWAYS">
-              <Pane fx:id="rightPane" BorderPane.alignment="TOP_RIGHT" prefHeight="800">
+              <Pane fx:id="rightPane" BorderPane.alignment="TOP_RIGHT" prefHeight="1050">
                   <children>
                   <VBox>
                      <children>
