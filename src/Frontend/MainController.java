@@ -923,11 +923,13 @@ public class MainController implements ScreenInterface {
 
     private void applyFilters() {
 
+        System.out.print(startMonth.getText());
         if (!currentChartType.equals("Histogram")) {
             setMetrics(campaignName.getText());
             if (!(startMonth.getText().equals("Month") || endMonth.getText().equals("Month"))) {
                 applyDateFilter();
             }
+            setMetrics(campaignName.getText());
             populateMetric(currentMetricDisplayed,currentStep);
         }
     }
@@ -2363,6 +2365,7 @@ public class MainController implements ScreenInterface {
                             protected String call() {
                                 String name = dataModel.getName() + " " + metric + " - " + key;
                                 dataModel.setFilter(filters.get(key));
+
                                 try {
 
                                     if (step != Step.HOUR_OF_DAY && step != Step.DAY_OF_WEEK) {
@@ -2476,6 +2479,7 @@ public class MainController implements ScreenInterface {
             lineChart.getData().add(AC);
             barChart.getData().add(BC);
             pieChart.getData().addAll(PC);
+            pieChart.autosize();
         });
     }
 
