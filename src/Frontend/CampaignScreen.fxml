@@ -22,6 +22,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -41,40 +42,61 @@
                            <children>
                               <HBox alignment="TOP_LEFT" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0">
                                  <children>
-                                    <HBox alignment="TOP_LEFT" spacing="10">
+                                    <FlowPane alignment="TOP_LEFT" prefWidth="600" HBox.hgrow="ALWAYS">
                                        <children>
-      									<Text id="text" text="Timescale:" />
+      									<Text id="text" text="Timescale:">
+      										<FlowPane.margin>
+                                             	<Insets right="10" />
+                                             </FlowPane.margin>
+      									</Text>
                                           <RadioButton id="text" fx:id="byDay" contentDisplay="CENTER" mnemonicParsing="false" selected="true" text="By Day">
                                              <cursor>
                                                 <Cursor fx:constant="HAND" />
                                              </cursor>
+                                             <FlowPane.margin>
+                                             	<Insets right="10" />
+                                             </FlowPane.margin>
                                           </RadioButton>
                                           <RadioButton id="text" fx:id="byWeek" contentDisplay="CENTER" mnemonicParsing="false" text="By Week">
                                              <cursor>
                                                 <Cursor fx:constant="HAND" />
                                              </cursor>
+                                             <FlowPane.margin>
+                                             	<Insets right="10" />
+                                             </FlowPane.margin>
                                           </RadioButton>
                                           <RadioButton id="text" fx:id="byMonth" contentDisplay="CENTER" mnemonicParsing="false" text="By Month">
                                              <cursor>
                                                 <Cursor fx:constant="HAND" />
                                              </cursor>
+                                             
+                                             <FlowPane.margin>
+                                             	<Insets right="10" />
+                                             </FlowPane.margin>
                                           </RadioButton>
-										   <RadioButton id="text" fx:id="dailyA" contentDisplay="CENTER" mnemonicParsing="false" selected="true" text="Daily Aggregate">
+										   <RadioButton id="text" fx:id="dailyA" contentDisplay="CENTER" mnemonicParsing="false" selected="true" text="Hourly Aggregate">
 											   <cursor>
 												   <Cursor fx:constant="HAND" />
 											   </cursor>
+											   
+                                             <FlowPane.margin>
+                                             	<Insets right="10" />
+                                             </FlowPane.margin>
 										   </RadioButton>
-										   <RadioButton id="text" fx:id="weeklyA" contentDisplay="CENTER" mnemonicParsing="false" selected="true" text="Weekly Aggregate">
+										   <RadioButton id="text" fx:id="weeklyA" contentDisplay="CENTER" mnemonicParsing="false" selected="true" text="Daily Aggregate">
 											   <cursor>
 												   <Cursor fx:constant="HAND" />
 											   </cursor>
+											   
+                                             <FlowPane.margin>
+                                             	<Insets right="10" />
+                                             </FlowPane.margin>
 										   </RadioButton>
                                        </children>
-                                    </HBox>
+                                    </FlowPane>
       
-      								<HBox HBox.hgrow="ALWAYS" />
       								
-      								<HBox alignment="TOP_RIGHT" spacing="15">
+      								<HBox alignment="TOP_RIGHT" spacing="15" minWidth="170">
       									<Text id="text" text="Chart type:" />
       								
                                     	<MenuButton id="menuButton" fx:id="graphType" mnemonicParsing="false" text="Line Chart">
@@ -130,7 +152,7 @@
          </center>
           <left>
             <ScrollPane hbarPolicy="NEVER" vbarPolicy="ALWAYS">
-              <Pane id="leftPane" prefHeight="1000">
+              <Pane id="leftPane" prefHeight="800">
                  <children>
          			<VBox>
                      <children>
@@ -455,7 +477,7 @@
           </left>
           <right>
           	<ScrollPane hbarPolicy="NEVER" vbarPolicy="ALWAYS">
-              <Pane fx:id="rightPane" BorderPane.alignment="TOP_RIGHT">
+              <Pane fx:id="rightPane" BorderPane.alignment="TOP_RIGHT" prefHeight="800">
                   <children>
                   <VBox>
                      <children>
