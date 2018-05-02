@@ -41,7 +41,7 @@ public class TestMain{
 //
 //        ReadCSVsToDB.makeCampaign(dbh, "JUnit", JUnitClicks, JUnitImpressions, JUnitServerLogs);
 //
-        CampaignModelDB cmdt = new CampaignModelDB("JUnit");
+        CampaignModelDB cmdt = new CampaignModelDB("2week");
 //
 //        cmdt.setFilter(filter);
         System.out.println(cmdt.getHistogramData());

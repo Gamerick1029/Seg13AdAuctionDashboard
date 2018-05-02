@@ -951,7 +951,6 @@ public class MainController implements ScreenInterface {
         contextBlog.setSelected(filter.contextBlog);
         contextHobbies.setSelected(filter.contextHobbies);
         contextTravel.setSelected(filter.contextTravel);
-        //TODO: DAY OF WEEK AND TIME OF DAY >?????????
 
         setMetrics(campaignName.getText());
     }
@@ -959,7 +958,7 @@ public class MainController implements ScreenInterface {
     private File openDirectoryChooser() {
         DirectoryChooser chooser = new DirectoryChooser();
         chooser.setTitle("Select Directory");
-        File defaultDirectory = new File("C://");
+        File defaultDirectory = new File(System.getProperty("user.home"));
         chooser.setInitialDirectory(defaultDirectory);
         return chooser.showDialog(node.getScene().getWindow());
     }
@@ -1173,8 +1172,7 @@ public class MainController implements ScreenInterface {
         aset.add(new Copies(1));
         aset.add(Sides.DUPLEX);
 
-        PrintService[] services = PrintServiceLookup.lookupPrintServices(
-                flavor, aset);
+        PrintService[] services = PrintServiceLookup.lookupPrintServices(null, null);
         PrintService defaultService = PrintServiceLookup.lookupDefaultPrintService();
 
         if (services.length == 0) {
@@ -1981,6 +1979,7 @@ public class MainController implements ScreenInterface {
         areaType.setSelected(false);
         pieType.setSelected(false);
         histogramType.setSelected(false);
+        x.setLabel("Time");
     }
 
     private void changeToBarChart() {
@@ -2002,6 +2001,7 @@ public class MainController implements ScreenInterface {
         histogramType.setSelected(false);
         barChart.setCategoryGap(1);
         barChart.setBarGap(1);
+        x.setLabel("Time");
     }
 
     private void changeToAreaChart() {
@@ -2018,6 +2018,7 @@ public class MainController implements ScreenInterface {
         areaType.setSelected(true);
         pieType.setSelected(false);
         histogramType.setSelected(false);
+        x.setLabel("Time");
     }
 
     private void changeToPieChart() {
@@ -2033,6 +2034,7 @@ public class MainController implements ScreenInterface {
         pieType.setSelected(true);
         histogramType.setSelected(false);
         pieChart.setLabelsVisible(true);
+        x.setLabel("Time");
     }
 
     private void changeToHistogram() {
@@ -2053,6 +2055,7 @@ public class MainController implements ScreenInterface {
         barChart.setTitle("Click Cost Histogram");
         barChart.setCategoryGap(0);
         barChart.setBarGap(0);
+        x.setLabel("Cost (pence)");
         for (Campaign campaign : this.campaignsLoaded) {
             if (campaign.getDisplayed().isSelected()) {
                 DataModel dataModel = myController.getDataModel(campaign.getName());
@@ -2263,45 +2266,42 @@ public class MainController implements ScreenInterface {
                                 dataModel.setFilter(filters.get(key));
 
                                 try {
-
-                                    if (step != Step.HOUR_OF_DAY && step != Step.DAY_OF_WEEK) {
-
-                                        switch (metric) {
+                                    switch (metric) {
                                             case "Impressions":
-                                                sortAndSet_I(dataModel.getFullImpressions(step), name);
+                                                sortAndSet_I(dataModel.getFullImpressions(step), name, step);
                                                 break;
                                             case "Clicks":
-                                                sortAndSet_I(dataModel.getFullClicks(step), name);
+                                                sortAndSet_I(dataModel.getFullClicks(step), name, step);
                                                 break;
                                             case "Uniques":
-                                                sortAndSet_I(dataModel.getFullUniques(step), name);
+                                                sortAndSet_I(dataModel.getFullUniques(step), name, step);
                                                 break;
                                             case "Bounces":
-                                                sortAndSet_I(dataModel.getFullBounces(step), name);
+                                                sortAndSet_I(dataModel.getFullBounces(step), name, step);
                                                 break;
                                             case "Conversions":
-                                                sortAndSet_I(dataModel.getFullConversions(step), name);
+                                                sortAndSet_I(dataModel.getFullConversions(step), name, step);
                                                 break;
                                             case "Total Cost":
-                                                sortAndSet_F(dataModel.getFullCost(step), name);
+                                                sortAndSet_F(dataModel.getFullCost(step), name, step);
                                                 break;
                                             case "CTR":
-                                                sortAndSet_F(dataModel.getFullCTR(step), name);
+                                                sortAndSet_F(dataModel.getFullCTR(step), name, step);
                                                 break;
                                             case "CPA":
-                                                sortAndSet_F(dataModel.getFullCPA(step), name);
+                                                sortAndSet_F(dataModel.getFullCPA(step), name, step);
                                                 break;
                                             case "CPC":
-                                                sortAndSet_F(dataModel.getFullCPC(step), name);
+                                                sortAndSet_F(dataModel.getFullCPC(step), name, step);
                                                 break;
                                             case "CPM":
-                                                sortAndSet_F(dataModel.getFullCPC(step), name);
+                                                sortAndSet_F(dataModel.getFullCPC(step), name, step);
                                                 break;
                                             case "Bounce Rate":
-                                                sortAndSet_F(dataModel.getFullBounceRate(step), name);
+                                                sortAndSet_F(dataModel.getFullBounceRate(step), name, step);
                                                 break;
                                         }
-                                    }
+
                                 } catch (SQLException e) {
                                     reportError(e);
                                     graphLoading = false;
@@ -2324,12 +2324,42 @@ public class MainController implements ScreenInterface {
         }
     }
 
+    private <T> List<Map.Entry<String, T>> dayOfWeekConverter(List<Map.Entry<Date, T>> data){
+        List<Map.Entry<String, T>> result = new LinkedList<>();
+
+        for (Map.Entry<Date, T> point : data){
+            result.add(Map.entry(StepHolder.dateToDay.get(point.getKey()), point.getValue()));
+        }
+
+        return result;
+    }
+
+    private <T> List<Map.Entry<String, T>> hourOfDayConverter(List<Map.Entry<Date, T>> data){
+        List<Map.Entry<String, T>> result = new LinkedList<>();
+
+        for (Map.Entry<Date, T> point : data){
+            result.add(Map.entry(StepHolder.dateToHourOfDay(point.getKey()), point.getValue()));
+        }
+
+        return result;
+    }
+
+    private <T> List<Map.Entry<String, T>> genericConverter(List<Map.Entry<Date, T>> data){
+        List<Map.Entry<String, T>> result = new LinkedList<>();
+
+        for (Map.Entry<Date, T> point : data){
+            result.add(Map.entry(simpleDateRep(point.getKey()), point.getValue()));
+        }
+
+        return result;
+    }
+
 
     /*
     I tried to do this with generics, but it locked up
     at the getData().add stage.
      */
-    private void sortAndSet_I(Map<Date, Integer> dataPoints, String name) {
+    private void sortAndSet_I(Map<Date, Integer> dataPoints, String name, Step step) {
         XYChart.Series LC = new XYChart.Series();
         XYChart.Series AC = new XYChart.Series();
         XYChart.Series BC = new XYChart.Series();
@@ -2340,16 +2370,25 @@ public class MainController implements ScreenInterface {
         BC.setName(name);
 
         List<Map.Entry<Date, Integer>> sortedPoints = sortMap(dataPoints);
-        for (Map.Entry<Date, Integer> point : sortedPoints) {
-            LC.getData().add(new XYChart.Data(simpleDateRep(point.getKey()), point.getValue()));
-            AC.getData().add(new XYChart.Data(simpleDateRep(point.getKey()), point.getValue()));
-            BC.getData().add(new XYChart.Data(simpleDateRep(point.getKey()), point.getValue()));
-            PC.add(new PieChart.Data(simpleDateRep(point.getKey()), (double) point.getValue()));
+        List<Map.Entry<String, Integer>> points;
+        if (step == Step.DAY_OF_WEEK) {
+             points = dayOfWeekConverter(sortedPoints);
+        } else if (step == Step.HOUR_OF_DAY) {
+             points = hourOfDayConverter(sortedPoints);
+        } else {
+            points = genericConverter(sortedPoints);
+        }
+
+        for (Map.Entry<String, Integer> point : points) {
+            LC.getData().add(new XYChart.Data(point.getKey(), point.getValue()));
+            AC.getData().add(new XYChart.Data(point.getKey(), point.getValue()));
+            BC.getData().add(new XYChart.Data(point.getKey(), point.getValue()));
+            PC.add(new PieChart.Data(point.getKey(), (double) point.getValue()));
         }
         runLater(LC, AC, BC, PC);
     }
 
-    private void sortAndSet_F(Map<Date, Float> dataPoints, String name) {
+    private void sortAndSet_F(Map<Date, Float> dataPoints, String name, Step step) {
         XYChart.Series LC = new XYChart.Series();
         XYChart.Series AC = new XYChart.Series();
         XYChart.Series BC = new XYChart.Series();
@@ -2360,12 +2399,22 @@ public class MainController implements ScreenInterface {
         BC.setName(name);
 
         List<Map.Entry<Date, Float>> sortedPoints = sortMap(dataPoints);
-        for (Map.Entry<Date, Float> point : sortedPoints) {
-            LC.getData().add(new XYChart.Data(simpleDateRep(point.getKey()), point.getValue()));
-            AC.getData().add(new XYChart.Data(simpleDateRep(point.getKey()), point.getValue()));
-            BC.getData().add(new XYChart.Data(simpleDateRep(point.getKey()), point.getValue()));
-            PC.add(new PieChart.Data(simpleDateRep(point.getKey()), (double) point.getValue()));
+        List<Map.Entry<String, Float>> points;
+        if (step == Step.DAY_OF_WEEK) {
+            points = dayOfWeekConverter(sortedPoints);
+        } else if (step == Step.HOUR_OF_DAY) {
+            points = hourOfDayConverter(sortedPoints);
+        } else {
+            points = genericConverter(sortedPoints);
         }
+
+        for (Map.Entry<String, Float> point : points) {
+            LC.getData().add(new XYChart.Data(point.getKey(), point.getValue()));
+            AC.getData().add(new XYChart.Data(point.getKey(), point.getValue()));
+            BC.getData().add(new XYChart.Data(point.getKey(), point.getValue()));
+            PC.add(new PieChart.Data(point.getKey(), (double) point.getValue()));
+        }
+
         runLater(LC, AC, BC, PC);
     }
 
