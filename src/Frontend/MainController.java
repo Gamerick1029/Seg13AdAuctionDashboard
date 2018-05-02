@@ -155,6 +155,10 @@ public class MainController implements ScreenInterface {
     @FXML
     private RadioButton byMonth;
     @FXML
+    private RadioButton weeklyA;
+    @FXML
+    private RadioButton dailyA;
+    @FXML
     private CheckBox genderMale;
     @FXML
     private CheckBox genderFemale;
