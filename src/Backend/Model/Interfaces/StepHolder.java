@@ -5,13 +5,13 @@ import java.util.HashMap;
 
 public class StepHolder {
 
-    private static final Date SUNDAY = new Date(0);
-    private static final Date MONDAY = new Date(1);
-    private static final Date TUESDAY = new Date(2);
-    private static final Date WEDNESDAY = new Date(3);
-    private static final Date THURSDAY = new Date(4);
-    private static final Date FRIDAY = new Date(5);
-    private static final Date SATURDAY = new Date(6);
+    public static final Date SUNDAY = new Date(0);
+    public static final Date MONDAY = new Date(1);
+    public static final Date TUESDAY = new Date(2);
+    public static final Date WEDNESDAY = new Date(3);
+    public static final Date THURSDAY = new Date(4);
+    public static final Date FRIDAY = new Date(5);
+    public static final Date SATURDAY = new Date(6);
 
     //Use these to get the dates corresponding with specific dayToDate in the week or hours in the day
     //hours are from 0-23
@@ -70,7 +70,7 @@ public class StepHolder {
         return dateToDay.get(date);
     }
 
-    public String dateToHourOfDay(Date date){
+    public static String dateToHourOfDay(Date date){
         for (Integer i = 0; i < hours.length; i++) {
             if (hours[i] == date) return i.toString();
         }

@@ -538,6 +538,7 @@ public class MainController implements ScreenInterface {
             } else if ((int) newValue < 0) {
                 endHour.increment(24);
             }
+            currentStep = Step.HOUR_OF_DAY;
         });
         startHour.valueProperty().addListener((observable, oldValue, newValue) -> {
 
@@ -547,6 +548,7 @@ public class MainController implements ScreenInterface {
             } else if ((int) newValue < 0) {
                 startHour.increment(24);
             }
+            currentStep = Step.HOUR_OF_DAY;
         });
 
         genderMale.setSelected(true);
@@ -922,27 +924,11 @@ public class MainController implements ScreenInterface {
     private void applyFilters() {
 
         if (!currentChartType.equals("Histogram")) {
-            applyDayFilters();
             setMetrics(campaignName.getText());
             applyDateFilter();
         }
     }
 
-    //TODO: MAKE THIS WORK
-    private void applyDayFilters(){
-        String startH = String.valueOf(startHour.getValue());
-        String endH = String.valueOf(endHour.getValue());
-
-
-
-        //NO IDEA
-
-
-        //HashMap<String, Date>
-        stepHolder.dayToDate.get("");
-        //HashMap<Date, String>
-        // dateToDay
-    }
 
     private void addNewFilter() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -1247,7 +1233,7 @@ public class MainController implements ScreenInterface {
         Doc mydoc = new SimpleDoc(textStream, flavor, null);
 
         PrintRequestAttributeSet aset = new HashPrintRequestAttributeSet();
-        aset.add(new Copies(5));
+        aset.add(new Copies(1));
         aset.add(Sides.DUPLEX);
 
         PrintService[] services = PrintServiceLookup.lookupPrintServices(
@@ -1505,7 +1491,7 @@ public class MainController implements ScreenInterface {
             Alert alert = Main.loadBox;
             alert.setTitle("Creating campaign");
             alert.setHeaderText("");
-            alert.setContentText("Creating new Campaign. Please wait...");
+            alert.setContentText("Creating new campaign. Please wait...");
 
             task.setOnRunning(e -> alert.show());
             task.setOnSucceeded(event -> {
@@ -1888,8 +1874,7 @@ public class MainController implements ScreenInterface {
         currentFilter.contextHobbies = false;
         currentFilter.contextTravel = false;
 
-        //TODO: NOT SURE IF THIS IS RIGHT
-        currentFilter.step = currentStep;
+        //TODO: Set step here
     }
 
     private void selectAll() {
@@ -1935,8 +1920,7 @@ public class MainController implements ScreenInterface {
         currentFilter.contextHobbies = true;
         currentFilter.contextTravel = true;
 
-        //TODO: NOT SURE IF THIS IS RIGHT
-        currentFilter.step = Step.DAY_OF_WEEK;
+        //TODO: Set step here
     }
 
     private void updateCurrentFilter(String name, Boolean filter) {
@@ -2377,41 +2361,48 @@ public class MainController implements ScreenInterface {
                                 String name = dataModel.getName() + " " + metric + " - " + key;
                                 dataModel.setFilter(filters.get(key));
                                 try {
-                                    switch (metric) {
-                                        case "Impressions":
-                                            sortAndSet_I(dataModel.getFullImpressions(step), name);
-                                            break;
-                                        case "Clicks":
-                                            sortAndSet_I(dataModel.getFullClicks(step), name);
-                                            break;
-                                        case "Uniques":
-                                            sortAndSet_I(dataModel.getFullUniques(step), name);
-                                            break;
-                                        case "Bounces":
-                                            sortAndSet_I(dataModel.getFullBounces(step), name);
-                                            break;
-                                        case "Conversions":
-                                            sortAndSet_I(dataModel.getFullConversions(step), name);
-                                            break;
-                                        case "Total Cost":
-                                            sortAndSet_F(dataModel.getFullCost(step), name);
-                                            break;
-                                        case "CTR":
-                                            sortAndSet_F(dataModel.getFullCTR(step), name);
-                                            break;
-                                        case "CPA":
-                                            sortAndSet_F(dataModel.getFullCPA(step), name);
-                                            break;
-                                        case "CPC":
-                                            sortAndSet_F(dataModel.getFullCPC(step), name);
-                                            break;
-                                        case "CPM":
-//                                    setData_F(sortMap(dataModel.getFullCPM(step)), tempCampaignMetricLC, tempCampaignMetricPC);
-                                            sortAndSet_F(dataModel.getFullCPC(step), name);
-                                            break;
-                                        case "Bounce Rate":
-                                            sortAndSet_F(dataModel.getFullBounceRate(step), name);
-                                            break;
+
+                                    if (step != Step.HOUR_OF_DAY && step != Step.DAY_OF_WEEK) {
+
+                                        switch (metric) {
+                                            case "Impressions":
+                                                sortAndSet_I(dataModel.getFullImpressions(step), name);
+                                                break;
+                                            case "Clicks":
+                                                sortAndSet_I(dataModel.getFullClicks(step), name);
+                                                break;
+                                            case "Uniques":
+                                                sortAndSet_I(dataModel.getFullUniques(step), name);
+                                                break;
+                                            case "Bounces":
+                                                sortAndSet_I(dataModel.getFullBounces(step), name);
+                                                break;
+                                            case "Conversions":
+                                                sortAndSet_I(dataModel.getFullConversions(step), name);
+                                                break;
+                                            case "Total Cost":
+                                                sortAndSet_F(dataModel.getFullCost(step), name);
+                                                break;
+                                            case "CTR":
+                                                sortAndSet_F(dataModel.getFullCTR(step), name);
+                                                break;
+                                            case "CPA":
+                                                sortAndSet_F(dataModel.getFullCPA(step), name);
+                                                break;
+                                            case "CPC":
+                                                sortAndSet_F(dataModel.getFullCPC(step), name);
+                                                break;
+                                            case "CPM":
+                                                sortAndSet_F(dataModel.getFullCPC(step), name);
+                                                break;
+                                            case "Bounce Rate":
+                                                sortAndSet_F(dataModel.getFullBounceRate(step), name);
+                                                break;
+                                        }
+                                    } else if (currentStep == Step.DAY_OF_WEEK) {
+                                        sortAndSet_S(StepHolder.dateToDay, name);
+                                    } else if (currentStep == Step.HOUR_OF_DAY) {
+                                        applyTime(StepHolder.hours, name);
                                     }
                                 } catch (SQLException e) {
                                     reportError(e);
@@ -2457,16 +2448,93 @@ public class MainController implements ScreenInterface {
             BC.getData().add(new XYChart.Data(simpleDateRep(point.getKey()), point.getValue()));
             PC.add(new PieChart.Data(simpleDateRep(point.getKey()), (double) point.getValue()));
         }
-        Platform.runLater(() -> {
-            lineChart.animatedProperty().setValue(false);
-            areaChart.animatedProperty().setValue(false);
-            barChart.animatedProperty().setValue(false);
-            pieChart.animatedProperty().setValue(false);
-            areaChart.getData().add(LC);
-            lineChart.getData().add(AC);
-            barChart.getData().add(BC);
-            pieChart.getData().addAll(PC);
-        });
+        runLater(LC, AC, BC, PC);
+    }
+
+    private void sortAndSet_S(Map<Date, String> dataPoints, String name) {
+        XYChart.Series LC = new XYChart.Series();
+        XYChart.Series AC = new XYChart.Series();
+        XYChart.Series BC = new XYChart.Series();
+        ObservableList PC = FXCollections.observableArrayList();
+
+        LC.setName(name);
+        AC.setName(name);
+        BC.setName(name);
+
+        if (monday.isSelected()) {
+            String s = dataPoints.get(StepHolder.MONDAY);
+            LC.getData().add(new XYChart.Data(StepHolder.MONDAY, s));
+            AC.getData().add(new XYChart.Data(StepHolder.MONDAY, s));
+            BC.getData().add(new XYChart.Data(StepHolder.MONDAY, s));
+            //PC.add(new PieChart.Data(StepHolder.MONDAY, s));
+        }
+        if (tuesday.isSelected()) {
+            String s = dataPoints.get(StepHolder.TUESDAY);
+            LC.getData().add(new XYChart.Data(StepHolder.TUESDAY, s));
+            AC.getData().add(new XYChart.Data(StepHolder.TUESDAY, s));
+            BC.getData().add(new XYChart.Data(StepHolder.TUESDAY, s));
+            //PC.add(new PieChart.Data(StepHolder.MONDAY, s));
+        }
+        if (wednesday.isSelected()) {
+            String s = dataPoints.get(StepHolder.WEDNESDAY);
+            LC.getData().add(new XYChart.Data(StepHolder.WEDNESDAY, s));
+            AC.getData().add(new XYChart.Data(StepHolder.WEDNESDAY, s));
+            BC.getData().add(new XYChart.Data(StepHolder.WEDNESDAY, s));
+            //PC.add(new PieChart.Data(StepHolder.MONDAY, s));
+        }
+        if (thursday.isSelected()) {
+            String s = dataPoints.get(StepHolder.THURSDAY);
+            LC.getData().add(new XYChart.Data(StepHolder.THURSDAY, s));
+            AC.getData().add(new XYChart.Data(StepHolder.THURSDAY, s));
+            BC.getData().add(new XYChart.Data(StepHolder.THURSDAY, s));
+            //PC.add(new PieChart.Data(StepHolder.MONDAY, s));
+        }
+        if (friday.isSelected()) {
+            String s = dataPoints.get(StepHolder.FRIDAY);
+            LC.getData().add(new XYChart.Data(StepHolder.FRIDAY, s));
+            AC.getData().add(new XYChart.Data(StepHolder.FRIDAY, s));
+            BC.getData().add(new XYChart.Data(StepHolder.FRIDAY, s));
+            //PC.add(new PieChart.Data(StepHolder.MONDAY, s));
+        }
+        if (saturday.isSelected()) {
+            String s = dataPoints.get(StepHolder.SATURDAY);
+            LC.getData().add(new XYChart.Data(StepHolder.SATURDAY, s));
+            AC.getData().add(new XYChart.Data(StepHolder.SATURDAY, s));
+            BC.getData().add(new XYChart.Data(StepHolder.SATURDAY, s));
+            //PC.add(new PieChart.Data(StepHolder.MONDAY, s));
+        }
+        if (sunday.isSelected()) {
+            String s = dataPoints.get(StepHolder.SUNDAY);
+            LC.getData().add(new XYChart.Data(StepHolder.SUNDAY, s));
+            AC.getData().add(new XYChart.Data(StepHolder.SUNDAY, s));
+            BC.getData().add(new XYChart.Data(StepHolder.SUNDAY, s));
+            //PC.add(new PieChart.Data(StepHolder.MONDAY, s));
+        }
+        runLater(LC, AC, BC, PC);
+    }
+
+    private void applyTime(Date[] hours, String name) {
+        XYChart.Series LC = new XYChart.Series();
+        XYChart.Series AC = new XYChart.Series();
+        XYChart.Series BC = new XYChart.Series();
+        ObservableList PC = FXCollections.observableArrayList();
+
+        LC.setName(name);
+        AC.setName(name);
+        BC.setName(name);
+
+        Date sd = StepHolder.hours[(Integer) startHour.getValue()];
+        Date ed = StepHolder.hours[(Integer) endHour.getValue()];
+
+        for (Date hour : hours) {
+            if (hour.getTime() > sd.getTime() && hour.getTime() < ed.getTime()) {
+                LC.getData().add(new XYChart.Data(simpleDateRep(hour), StepHolder.dateToHourOfDay(hour)));
+                AC.getData().add(new XYChart.Data(simpleDateRep(hour), StepHolder.dateToHourOfDay(hour)));
+                BC.getData().add(new XYChart.Data(simpleDateRep(hour), StepHolder.dateToHourOfDay(hour)));
+                //PC.add(new PieChart.Data(simpleDateRep(hour), StepHolder.dateToHourOfDay(hour)));
+            }
+        }
+        runLater(LC, AC, BC, PC);
     }
 
     private void sortAndSet_F(Map<Date, Float> dataPoints, String name) {
@@ -2486,8 +2554,11 @@ public class MainController implements ScreenInterface {
             BC.getData().add(new XYChart.Data(simpleDateRep(point.getKey()), point.getValue()));
             PC.add(new PieChart.Data(simpleDateRep(point.getKey()), (double) point.getValue()));
         }
+        runLater(LC, AC, BC, PC);
+    }
+
+    private void runLater(XYChart.Series LC, XYChart.Series AC, XYChart.Series BC, ObservableList PC) {
         Platform.runLater(() -> {
-            lineChart.animatedProperty().setValue(false);
             areaChart.getData().add(LC);
             lineChart.getData().add(AC);
             barChart.getData().add(BC);
