@@ -12,7 +12,7 @@ import java.util.Date;
 import static Backend.Model.Interfaces.StepHolder.Step.*;
 
 public class FilterTesting extends TestCase {
-
+    int result;
     CampaignModelDB cm;
 
     {
@@ -26,7 +26,7 @@ public class FilterTesting extends TestCase {
     }
 
     public void testGetImpressionsNumberAllFilters() {
-        try {
+
             cm.getFilter().genderMale = true;
             cm.getFilter().genderFemale = true;
             cm.getFilter().genderOther = true;
@@ -45,10 +45,18 @@ public class FilterTesting extends TestCase {
             cm.getFilter().contextMedia = true;
             cm.getFilter().contextBlog = true;
             cm.setFilter(cm.getFilter());
-            Assert.assertEquals(10, cm.getImpressionsNumber());
+        try {
+            result = cm.getImpressionsNumber();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+
+        System.out.println("Testing all filters set to true:");
+            System.out.println("    Expected value is: 10, " + "Actual Value is: "+ result);
+            System.out.println();
+            Assert.assertEquals(10, result);
+
 
     }
 
@@ -74,6 +82,11 @@ public class FilterTesting extends TestCase {
             cm.getFilter().setStartDate(null);
             cm.getFilter().setEndDate(null);
             cm.setFilter(cm.getFilter());
+            result = cm.getImpressionsNumber();
+
+            System.out.println("Testing all filters set to false:");
+            System.out.println("    Expected value is: 10, " + "Actual Value is: "+ result);
+            System.out.println();
             Assert.assertEquals(10, cm.getImpressionsNumber());
         } catch (SQLException e) {
             e.printStackTrace();
@@ -87,6 +100,11 @@ public class FilterTesting extends TestCase {
         try {
             cm.getFilter().genderMale = false;
             cm.setFilter(cm.getFilter());
+            result = cm.getImpressionsNumber();
+
+            System.out.println("Testing male filter set to false:");
+            System.out.println("    Expected value is: 8, " + "Actual Value is: "+ result);
+            System.out.println();
             Assert.assertEquals(8, cm.getImpressionsNumber());
         } catch (SQLException e) {
             e.printStackTrace();
@@ -99,6 +117,12 @@ public class FilterTesting extends TestCase {
             cm.getFilter().genderMale = true;
             cm.getFilter().genderFemale = false;
             cm.setFilter(cm.getFilter());
+
+            result = cm.getImpressionsNumber();
+
+            System.out.println("Testing female filter set to false:");
+            System.out.println("    Expected value is: 2, " + "Actual Value is: "+ result);
+            System.out.println();
             Assert.assertEquals(2, cm.getImpressionsNumber());
         } catch (SQLException e) {
             e.printStackTrace();
@@ -112,6 +136,11 @@ public class FilterTesting extends TestCase {
             cm.getFilter().genderFemale = true;
             cm.getFilter().genderOther = false;
             cm.setFilter(cm.getFilter());
+            result = cm.getImpressionsNumber();
+
+            System.out.println("Testing other filter set to false:");
+            System.out.println("    Expected value is: 10, " + "Actual Value is: "+ result);
+            System.out.println();
             Assert.assertEquals(10, cm.getImpressionsNumber());
         } catch (SQLException e) {
             e.printStackTrace();
@@ -123,6 +152,11 @@ public class FilterTesting extends TestCase {
             cm.getFilter().genderOther = true;
             cm.getFilter().ageBelow25 = false;
             cm.setFilter(cm.getFilter());
+            result = cm.getImpressionsNumber();
+
+            System.out.println("Testing noBelow25 filter set to false:");
+            System.out.println("    Expected value is: 7, " + "Actual Value is: "+ result);
+            System.out.println();
             Assert.assertEquals(7, cm.getImpressionsNumber());
         } catch (SQLException e) {
             e.printStackTrace();
@@ -136,6 +170,11 @@ public class FilterTesting extends TestCase {
             cm.getFilter().ageBelow25 = true;
             cm.getFilter().age25to34  = false;
             cm.setFilter(cm.getFilter());
+            result = cm.getImpressionsNumber();
+
+            System.out.println("Testing age25to34 filter set to false:");
+            System.out.println("    Expected value is: 8, " + "Actual Value is: "+ result);
+            System.out.println();
             Assert.assertEquals(8, cm.getImpressionsNumber());
         } catch (SQLException e) {
             e.printStackTrace();
@@ -149,6 +188,11 @@ public class FilterTesting extends TestCase {
             cm.getFilter().age25to34  = true;
             cm.getFilter().age35to44 = false;
             cm.setFilter(cm.getFilter());
+            result = cm.getImpressionsNumber();
+
+            System.out.println("Testing age34to44 filter set to false:");
+            System.out.println("    Expected value is: 9, " + "Actual Value is: "+ result);
+            System.out.println();
             Assert.assertEquals(9, cm.getImpressionsNumber());
         } catch (SQLException e) {
             e.printStackTrace();
@@ -161,6 +205,11 @@ public class FilterTesting extends TestCase {
             cm.getFilter().age35to44  = true;
             cm.getFilter().age45to54  = false;
             cm.setFilter(cm.getFilter());
+            result = cm.getImpressionsNumber();
+
+            System.out.println("Testing age45to54 filter set to false:");
+            System.out.println("    Expected value is: 9, " + "Actual Value is: "+ result);
+            System.out.println();
             Assert.assertEquals(9, cm.getImpressionsNumber());
         } catch (SQLException e) {
             e.printStackTrace();
@@ -172,6 +221,11 @@ public class FilterTesting extends TestCase {
             cm.getFilter().age45to54  = true;
             cm.getFilter().ageAbove54  = false;
             cm.setFilter(cm.getFilter());
+            result = cm.getImpressionsNumber();
+
+            System.out.println("Testing above54 filter set to false:");
+            System.out.println("    Expected value is: 7, " + "Actual Value is: "+ result);
+            System.out.println();
             Assert.assertEquals(7, cm.getImpressionsNumber());
         } catch (SQLException e) {
             e.printStackTrace();
@@ -184,6 +238,11 @@ public class FilterTesting extends TestCase {
             cm.getFilter().ageAbove54  = true;
             cm.getFilter().incomeLow = false;
             cm.setFilter(cm.getFilter());
+            result = cm.getImpressionsNumber();
+
+            System.out.println("Testing incomeLow filter set to false:");
+            System.out.println("    Expected value is: 7, " + "Actual Value is: "+ result);
+            System.out.println();
             Assert.assertEquals(7, cm.getImpressionsNumber());
         } catch (SQLException e) {
             e.printStackTrace();
@@ -195,6 +254,11 @@ public class FilterTesting extends TestCase {
             cm.getFilter().incomeLow = true;
             cm.getFilter().incomeMedium = false;
             cm.setFilter(cm.getFilter());
+            result = cm.getImpressionsNumber();
+
+            System.out.println("Testing incomeMedium filter set to false:");
+            System.out.println("    Expected value is: 4, " + "Actual Value is: "+ result);
+            System.out.println();
             Assert.assertEquals(4, cm.getImpressionsNumber());
         } catch (SQLException e) {
             e.printStackTrace();
@@ -206,6 +270,11 @@ public class FilterTesting extends TestCase {
             cm.getFilter().incomeMedium = true;
             cm.getFilter().incomeHigh = false;
             cm.setFilter(cm.getFilter());
+            result = cm.getImpressionsNumber();
+
+            System.out.println("Testing incomeHigh filter set to false:");
+            System.out.println("    Expected value is: 9, " + "Actual Value is: "+ result);
+            System.out.println();
             Assert.assertEquals(9, cm.getImpressionsNumber());
         } catch (SQLException e) {
             e.printStackTrace();
@@ -218,6 +287,11 @@ public class FilterTesting extends TestCase {
             cm.getFilter().contextTravel = false;
             cm.getFilter().incomeHigh = true;
             cm.setFilter(cm.getFilter());
+            result = cm.getImpressionsNumber();
+
+            System.out.println("Testing travel filter set to false:");
+            System.out.println("    Expected value is: 10, " + "Actual Value is: "+ result);
+            System.out.println();
             Assert.assertEquals(10, cm.getImpressionsNumber());
         } catch (SQLException e) {
             e.printStackTrace();
@@ -229,6 +303,11 @@ public class FilterTesting extends TestCase {
             cm.getFilter().contextTravel = true;
             cm.getFilter().contextNews = false;
             cm.setFilter(cm.getFilter());
+            result = cm.getImpressionsNumber();
+
+            System.out.println("Testing news filter set to false:");
+            System.out.println("    Expected value is: 6, " + "Actual Value is: "+ result);
+            System.out.println();
             Assert.assertEquals(6, cm.getImpressionsNumber());
         } catch (SQLException e) {
             e.printStackTrace();
@@ -240,6 +319,11 @@ public class FilterTesting extends TestCase {
             cm.getFilter().contextHobbies = false;
             cm.getFilter().contextNews = true;
             cm.setFilter(cm.getFilter());
+            result = cm.getImpressionsNumber();
+
+            System.out.println("Testing hobbies filter set to false:");
+            System.out.println("    Expected value is: 10, " + "Actual Value is: "+ result);
+            System.out.println();
             Assert.assertEquals(10, cm.getImpressionsNumber());
         } catch (SQLException e) {
             e.printStackTrace();
@@ -251,6 +335,11 @@ public class FilterTesting extends TestCase {
             cm.getFilter().contextMedia = false;
             cm.getFilter().contextHobbies = true;
             cm.setFilter(cm.getFilter());
+            result = cm.getImpressionsNumber();
+
+            System.out.println("Testing media filter set to false:");
+            System.out.println("    Expected value is: 10, " + "Actual Value is: "+ result);
+            System.out.println();
             Assert.assertEquals(10, cm.getImpressionsNumber());
         } catch (SQLException e) {
             e.printStackTrace();
@@ -262,6 +351,11 @@ public class FilterTesting extends TestCase {
             cm.getFilter().contextBlog = false;
             cm.getFilter().contextMedia = true;
             cm.setFilter(cm.getFilter());
+            result = cm.getImpressionsNumber();
+
+            System.out.println("Testing blog filter set to false:");
+            System.out.println("    Expected value is: 6, " + "Actual Value is: "+ result);
+            System.out.println();
             Assert.assertEquals(6, cm.getImpressionsNumber());
         } catch (SQLException e) {
             e.printStackTrace();
@@ -273,8 +367,12 @@ public class FilterTesting extends TestCase {
             cm.getFilter().contextBlog = true;
             cm.getFilter().contextShopping = false;
             cm.setFilter(cm.getFilter());
-            for(Date d:cm.getFullImpressions(DAY).keySet())
-            System.out.println(d);
+            for(Date d:cm.getFullImpressions(DAY).keySet()) ;
+            result = cm.getImpressionsNumber();
+
+            System.out.println("Testing shopping filter set to false:");
+            System.out.println("    Expected value is: 8, " + "Actual Value is: "+ result);
+            System.out.println();
             Assert.assertEquals(8, cm.getImpressionsNumber());
         } catch (SQLException e) {
             e.printStackTrace();
@@ -296,6 +394,11 @@ public class FilterTesting extends TestCase {
             cm.getFilter().setStartDate(start);
             cm.getFilter().setEndDate(end);
             cm.setFilter(cm.getFilter());
+            result = cm.getImpressionsNumber();
+
+            System.out.println("Testing Start-End Date filter with values within the range: "); System.out.println( " Start Date: " + start ); System.out.println(" End Date: " + end);
+            System.out.println("    Expected value is: 10, " + "Actual Value is: "+ result);
+            System.out.println();
             Assert.assertEquals(10, cm.getImpressionsNumber());
         } catch (SQLException e) {
             e.printStackTrace();
@@ -317,7 +420,10 @@ public class FilterTesting extends TestCase {
             cm.getFilter().setEndDate(end);
             cm.setFilter(cm.getFilter());
 
-                Assert.assertEquals(0, cm.getImpressionsNumber());}
+            System.out.println("Testing Start-End Date filter with values within the range: "); System.out.println( " Start Date: " + start ); System.out.println(" End Date: " + end);
+            System.out.println("    Expected value is: 0, " + "Actual Value is: "+ result);
+            System.out.println();
+            Assert.assertEquals(0, cm.getImpressionsNumber());}
                 catch (SQLException e) {
                 e.printStackTrace();
             }

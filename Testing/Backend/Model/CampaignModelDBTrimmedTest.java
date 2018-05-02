@@ -24,10 +24,18 @@ public class CampaignModelDBTrimmedTest extends TestCase {
         }
     }
 
-    CampaignModelDB threeWeeks; {
+    CampaignModelDB twoWeek; {
         try {
-            threeWeeks = new CampaignModelDB("jahdjasdjag");
-            threeWeeks.setFilter(new Filter());
+            twoWeek = new CampaignModelDB("two_week");
+            twoWeek.setFilter(new Filter());
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+    CampaignModelDB twoMonth; {
+        try {
+            twoMonth = new CampaignModelDB("two_month");
+            twoMonth.setFilter(new Filter());
         }catch (SQLException e){
             e.printStackTrace();
         }
@@ -64,121 +72,6 @@ public class CampaignModelDBTrimmedTest extends TestCase {
     }
 
 
-    @Test
-    public void testGetFullImpressionsNoOfElementsthreeWeeks() {
-        try {
-            assertEquals(14, threeWeeks.getFullImpressions(DAY).size());
-            assertEquals(3, threeWeeks.getFullImpressions(WEEK).size());
-            assertEquals(1, threeWeeks.getFullImpressions(MONTH).size());
-            //cm.getFullImpressions(DAY).get()
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void testGetFullClicksthreeWeeks() {
-        try {
-            assertEquals(14, threeWeeks.getFullClicks(DAY).size());
-            assertEquals(3, threeWeeks.getFullClicks(WEEK).size());
-            assertEquals(1, threeWeeks.getFullClicks(MONTH).size());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void testGetFullUniquesthreeWeeks() {
-        try {
-            assertEquals(14, threeWeeks.getFullUniques(DAY).size());
-            assertEquals(3, threeWeeks.getFullUniques(WEEK).size());
-            assertEquals(1, threeWeeks.getFullUniques(MONTH).size());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void testGetFullBouncesthreeWeeks() {
-        try {
-            assertEquals(14, threeWeeks.getFullBounces(DAY).size());
-            assertEquals(3, threeWeeks.getFullBounces(WEEK).size());
-            assertEquals(1, threeWeeks.getFullBounces(MONTH).size());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void testGetFullConversionsthreeWeeks() {
-        try {
-            assertEquals(14, threeWeeks.getFullConversions(DAY).size());
-            assertEquals(3, threeWeeks.getFullConversions(WEEK).size());
-            assertEquals(1, threeWeeks.getFullConversions(MONTH).size());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    public void testGetFullCostthreeWeeks() {
-        try {
-            assertEquals(14, threeWeeks.getFullCost(DAY).size());
-            assertEquals(3, threeWeeks.getFullCost(WEEK).size());
-            assertEquals(1, threeWeeks.getFullCost(MONTH).size());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-    public void testGetFullCTRthreeWeeks() {
-        try {
-            assertEquals(14, threeWeeks.getFullCTR(DAY).size());
-            assertEquals(3, threeWeeks.getFullCTR(WEEK).size());
-            assertEquals(1, threeWeeks.getFullCTR(MONTH).size());
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void testGetFullCPAthreeWeeks() {
-        try {
-            assertEquals(14, threeWeeks.getFullCPA(DAY).size());
-            assertEquals(3, threeWeeks.getFullCPA(WEEK).size());
-            assertEquals(1, threeWeeks.getFullCPA(MONTH).size());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    public void testGetFullCPCthreeWeeks() {
-        try {
-            assertEquals(14, threeWeeks.getFullCPC(DAY).size());
-            assertEquals(3, threeWeeks.getFullCPC(WEEK).size());
-            assertEquals(1, threeWeeks.getFullCPC(MONTH).size());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void testGetFullCPMthreeWeeks() {
-        try {
-            assertEquals(14, threeWeeks.getFullCPM(DAY).size());
-            assertEquals(3, threeWeeks.getFullCPM(WEEK).size());
-            assertEquals(1, threeWeeks.getFullCPM(MONTH).size());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void testGetFullBounceRatethreeWeeks() {
-        try {
-            assertEquals(14, threeWeeks.getFullBounceRate(DAY).size());
-            assertEquals(3, threeWeeks.getFullBounceRate(WEEK).size());
-            assertEquals(1, threeWeeks.getFullBounceRate(MONTH).size());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-    }
 
 
     public void testGetClicksNumber() {
@@ -219,7 +112,7 @@ public class CampaignModelDBTrimmedTest extends TestCase {
 
     public void testGetBouncesNumber() {
         try {
-            assertEquals(2, cm.getBouncesNumber());
+            assertEquals(10, cm.getBouncesNumber());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -237,7 +130,7 @@ public class CampaignModelDBTrimmedTest extends TestCase {
 
     public void testGetConversionsNumber() {
         try {
-            assertEquals(2, cm.getConversionsNumber());
+            assertEquals(10, cm.getConversionsNumber());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -348,7 +241,7 @@ public class CampaignModelDBTrimmedTest extends TestCase {
 
     public void testGetBounceRate() {
         try {
-            assertEquals((float) 0.2, cm.getBounceRate());
+            assertEquals((float) 1.0, cm.getBounceRate());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -389,7 +282,7 @@ public class CampaignModelDBTrimmedTest extends TestCase {
 
     public void testGetFullBouncesValues() {
         Date date = new Date("Thu Jan 01 00:00:00 GMT 2015");
-        Integer i = 2;
+        Integer i = 10;
         try {
             assertEquals(i, cm.getFullBounces(DAY).get(date));
         } catch (SQLException e) {
@@ -420,7 +313,7 @@ public class CampaignModelDBTrimmedTest extends TestCase {
         try
 
         {
-            assertEquals((float) 0.2, cm.getFullBounceRate(
+            assertEquals((float) 1.0, cm.getFullBounceRate(
                     DAY).get(date));
 
         } catch (
@@ -433,7 +326,7 @@ public class CampaignModelDBTrimmedTest extends TestCase {
 
     public void testGetFullConversionsValues() {
         Date date = new Date("Thu Jan 01 00:00:00 GMT 2015");
-        Integer i = 2;
+        Integer i = 10;
         try
 
         {
